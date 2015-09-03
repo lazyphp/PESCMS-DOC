@@ -1,0 +1,121 @@
+/*---------------公用杂项---------------*/
+/*白色背景*/
+.tm-background-color-white{
+    background: #ffffff;
+}
+/*背景颜色efefef*/
+.tm-background-color-efefef{
+    background: #EFEFEF;
+}
+/*移除链接的背景色*/
+.tm-remove-a-background-color-hover:hover{
+    background: none !important;
+}
+/*移除浮动*/
+.tm-float-none{
+    float: none !important;
+}
+/*移除h2的margin-top*/
+.am-article-bd h2{
+    margin-top: 0;
+}
+
+/*---------------字体类---------------*/
+/*字体加粗*/
+.tm-text-font-weight{
+    font-weight: 600;
+}
+
+/*字体颜色*/
+.tm-text-color-white{
+    color: #ffffff !important;
+}
+
+/*at提示中的链接颜色*/
+.tm-at-tips-a-color a{
+    color: #0e90d2;
+}
+
+/*设置文章字体为14 rem*/
+.tm-article{
+    font-size: 1.4rem;
+}
+
+/*---------------边框类---------------*/
+/*移除边框*/
+.tm-remove-border{
+    border: none !important;
+}
+/*左边框*/
+.tm-border-left{
+    border-left: 1px solid #B1B1B1;
+}
+/*右边框*/
+.tm-border-right{
+    border-right: 1px solid #B1B1B1;
+}
+.tm-article .edui-default .edui-editor {
+    border: 1px solid #d4d4d4;
+    background-color: white;
+    position: relative;
+    overflow: visible;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+/*---------------表单类---------------*/
+/*输入框颜色*/
+.tm-input-background-color{
+    background-color:#F9F9F9;
+}
+/*加强表单验证的显示边框颜色*/
+.am-field-error{
+    border:1px solid;
+}
+/*---------------侧栏---------------*/
+.tm-sidebar{
+    border-right: 1px solid #eee;
+    width: 259px;
+    min-height: 100%;
+    float: left;
+}
+
+@media only screen and (min-width: 641px) {
+    .tm-sidebar {
+        display: block;
+        position: static;
+        background: none;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .tm-sidebar {
+        width: inherit;
+    }
+
+}
+.am-nav-header{
+    padding: .4em 1em;
+    border-width: 3px !important;
+    border-left: 3px solid #3bb4f2;
+    padding: 0 1em;
+    margin-top: .4em;
+    margin-bottom: .4em;
+}
+.tm-sidebar li a{
+    padding: 0.7rem;
+}
+/*---------------列表---------------*/
+.tm-content{
+    width: auto;
+    overflow: hidden;
+    height: 100%;
+}
+/*---------------页脚---------------*/
+.my-footer {
+    background: #fff;
+    border-top: 1px solid #eeeeee;
+    padding: 10px 0;
+    text-align: center;
+}
