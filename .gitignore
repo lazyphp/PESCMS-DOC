@@ -2,5 +2,7 @@
 /upload
 /Temp
 /log
+/Core
+
 /Install/Temp
 .DS_Store

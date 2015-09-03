@@ -9,7 +9,7 @@ class Login extends \App\Doc\Common {
         if ($this->login === true && ACTION !== 'logout') {
             $this->jump('/');
         }
-//        $this->checkVerify();
+        $this->checkVerify();
     }
 
     /**
@@ -23,7 +23,7 @@ class Login extends \App\Doc\Common {
             $this->error('帐号不存在或者密码错误');
         }
         $this->setLogin($check);
-        $this->success('登录成功', $this->backUrl('/'));
+        $this->success('登录成功', $this->backUrl('/d/manage'));
     }
 
 }

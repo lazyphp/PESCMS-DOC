@@ -33,7 +33,7 @@ class Login extends \App\Doc\Common {
     public function logout() {
         setcookie('tm', NULL, time() - 10, '/');
         session_destroy();
-        $this->success('您已安全退出', $this->backUrl('/'));
+        $this->success('您已安全退出', $this->backUrl('/d/index'));
     }
 
 }
