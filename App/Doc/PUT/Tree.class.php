@@ -12,7 +12,7 @@ class Tree extends Content {
      */
     public function listsort() {
         foreach ($_POST as $pk => $pv) {
-            if (in_array($pk, array('tree', 'key'))) {
+            if (in_array($pk, array('tree', 'doc'))) {
                 foreach ($pv as $key => $value) {
                     \Model\ModelManage::updateSortFromModel($pk, $key, $value);
                 }
