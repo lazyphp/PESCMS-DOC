@@ -16,6 +16,8 @@ return array(
     'd/login' => 'Doc-Login-login',
     //注销登录
     'd/logout' => 'Doc-Login-logout',
+    //文档首页
+    'd/index' => 'Doc-Index-index',
     //发表新文档
     'd/new' => 'Doc-Article-action',
     //更新标题(PUT)
