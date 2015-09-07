@@ -12,7 +12,7 @@ class Tree extends \App\Doc\Common {
             $this->error('树目录必须预留一个');
         }
         //检查是否有文章使用
-        $check = $this->db('doc')->where('tree_id = :id')->find(array('id' => $id));
+        $check = $this->db('doc')->where('doc_tree_id = :id')->find(array('id' => $id));
         if(!empty($check)){
             $this->error('删除前需要先迁移旗下文章到别的树');
         }

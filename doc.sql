@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2015-09-04 00:24:22
+-- Generation Time: 2015-09-07 21:55:01
 -- 服务器版本： 5.6.20
 -- PHP Version: 5.6.0
 
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `d_doc_content` (
   `doc_content` text NOT NULL COMMENT '内容',
   `doc_content_createtime` int(11) NOT NULL COMMENT '创建时间',
   `doc_content_updatetime` int(11) NOT NULL COMMENT '内容更新时间'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='时间日志内容';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='文档内容';
 
 --
 -- 转存表中的数据 `d_doc_content`
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `d_doc_join` (
   `doc_id` int(11) NOT NULL COMMENT '日志ID',
   `user_id` int(11) NOT NULL COMMENT '参与者ID',
   `doc_join_time` int(11) NOT NULL COMMENT '加入时间'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='时间日志参与者';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='文档参与者';
 
 --
 -- 转存表中的数据 `d_doc_join`
@@ -129,7 +129,14 @@ CREATE TABLE IF NOT EXISTS `d_login_user` (
   `login_cookie` varchar(64) NOT NULL COMMENT 'cookie值',
   `user_id` int(11) NOT NULL COMMENT '用户ID',
   `login_agent` varchar(128) NOT NULL COMMENT '登录的浏览器信息'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录cookie';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='登录cookie';
+
+--
+-- 转存表中的数据 `d_login_user`
+--
+
+INSERT INTO `d_login_user` (`login_id`, `login_cookie`, `user_id`, `login_agent`) VALUES
+(1, '4d435192adcea84499e12877e6048a78', 1, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36');
 
 -- --------------------------------------------------------
 
@@ -283,7 +290,7 @@ MODIFY `field_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 -- AUTO_INCREMENT for table `d_login_user`
 --
 ALTER TABLE `d_login_user`
-MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `d_model`
 --
