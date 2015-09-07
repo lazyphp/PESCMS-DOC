@@ -152,7 +152,7 @@
                 var id = $(this).attr("data");
                 var progress = $.AMUI.progress;
                 if (editor[id].hasContents() != true) {
-                    $('#am-alert').modal();
+                    $('#am-alert').modal('open');
                     $(".alert-tips").html("请填写内容");
                 }
                 progress.start();
@@ -163,7 +163,7 @@
                     dataType: 'JSON',
                     success: function (data) {
                         progress.done();
-                        $('#am-alert').modal();
+                        $('#am-alert').modal('open');
                         try {
                             if (data.status == '200') {
                                 setTimeout(function () {
@@ -177,7 +177,7 @@
 
                     },
                     error: function () {
-                        $('#am-alert').modal();
+                        $('#am-alert').modal('open');
                         $(".alert-tips").html("请求错误");
                         progress.done();
                     }
@@ -209,7 +209,7 @@
                     dataType: 'JSON',
                     success: function (data) {
                         progress.done();
-                        $('#am-alert').modal();
+                        $('#am-alert').modal('open');
                         try {
                             if (data.status == '200') {
                                 setTimeout(function () {
@@ -223,7 +223,7 @@
 
                     },
                     error: function () {
-                        $('#am-alert').modal();
+                        $('#am-alert').modal('open');
                         $(".alert-tips").html("请求错误");
                         progress.done();
                     }
