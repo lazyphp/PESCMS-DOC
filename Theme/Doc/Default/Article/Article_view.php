@@ -19,16 +19,9 @@
 
                 <a class="am-btn am-btn-default update-title" style="padding:0.51rem">更新标题</a>
             </div>
-
-            <div class="am-text-xs">
-                <a href="/tm/type/<?= $doc_type; ?>" class="am-badge"><?= $type_name; ?></a>
-                <?php if ($doc_createtime != $doc_updatetime): ?>
-                    <time datetime="<?= date('Y-m-d H:i', $doc_updatetime); ?>" title="<?= date('Y-m-d H:i', $doc_updatetime); ?>">最后更新 <?= $label->timing($doc_updatetime); ?></time>
-                <?php endif; ?>
-            </div>
-            <?php if (time() - $doc_updatetime > 2592000): ?>
+            <?php if (time() - $doc_updatetime > 15768000): ?>
                 <div class="am-alert am-alert-secondary am-text-xs am-margin-bottom-0">
-                    <p><i class="am-icon-exclamation-triangle"></i> 该日志已超过30天没有更新，可能不再具备参考价值</p>
+                    <p><i class="am-icon-exclamation-triangle"></i> 该文档已超过半年没有更新，可能不再具备参考价值</p>
                 </div>
             <?php endif; ?>
         </li>
