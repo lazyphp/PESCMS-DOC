@@ -112,6 +112,17 @@
     overflow: hidden;
     height: 100%;
 }
+/*---------------内容---------------*/
+.tm-article .selectTdClass{background-color:#edf5fa !important}
+.tm-article table.noBorderTable td,.tm-article table.noBorderTable th,.tm-article table.noBorderTable caption{border:1px dashed #ddd !important}
+.tm-article table{margin-bottom:10px;border-collapse:collapse;display:table;}
+.tm-article td,th{padding: 5px 10px;border: 1px solid #DDD;text-align: inherit !important;}
+.tm-article caption{border:1px dashed #DDD;border-bottom:0;padding:3px;text-align:center;}
+.tm-article th{border-top:1px solid #BBB;background-color:#F7F7F7;}
+.tm-article table tr.firstRow th{border-top-width:2px;}
+.tm-article .ue-table-interlace-color-single{ background-color: #fcfcfc; } 
+.tm-article .ue-table-interlace-color-double{ background-color: #f7faff; }
+.tm-article td p{margin:0;padding:0;}
 /*---------------页脚---------------*/
 .my-footer {
     background: #fff;
