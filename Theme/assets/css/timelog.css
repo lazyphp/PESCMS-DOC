@@ -124,7 +124,7 @@
 .tm-article .ue-table-interlace-color-double{ background-color: #f7faff; }
 .tm-article td p{margin:0;padding:0;}
 
-.tm-article blockquote ul{margin-bottom: 0;}
+.tm-article blockquote ul, .tm-article blockquote ol{margin-bottom: 0;}
 /*---------------页脚---------------*/
 .my-footer {
     background: #fff;
