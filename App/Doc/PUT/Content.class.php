@@ -5,7 +5,7 @@ namespace App\Doc\PUT;
 /**
  * 公用内容更新
  */
-class Content extends \App\Doc\Common {
+class Content extends \App\Doc\CheckUser {
 
     /**
      * 更新内容
