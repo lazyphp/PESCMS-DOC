@@ -2,7 +2,7 @@
 
 namespace App\Doc\DELETE;
 
-class Tree extends \App\Doc\Common {
+class Tree extends \App\Doc\CheckUser {
     /**
      * 删除树
      */

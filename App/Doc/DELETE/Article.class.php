@@ -2,7 +2,7 @@
 
 namespace App\Doc\DELETE;
 
-class Article extends \App\Doc\Common {
+class Article extends \App\Doc\CheckUser {
 
     /**
      * 发表文档

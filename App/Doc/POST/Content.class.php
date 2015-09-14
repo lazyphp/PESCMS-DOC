@@ -5,7 +5,7 @@ namespace App\Doc\POST;
 /**
  * 公用内容插入
  */
-class Content extends \App\Doc\Common {
+class Content extends \App\Doc\CheckUser {
 
     /**
      * 添加内容
