@@ -83,8 +83,15 @@ class Article extends \App\Doc\CheckUser {
         if (empty($checkUser)) {
             $this->error('没有找到您要更新的内容');
         }
+        
+        $updateTime = time();
+        
+        $history = $this->db('doc_content_history')->insert(array('doc_content_id' => $id, 'doc_content' => $checkUser['doc_content'], 'doc_content_updatetime' => $updateTime));
+        if($history === false){
+            $this->error('记录历史出错');
+        }
 
-        $update = $this->db('doc_content')->where('doc_content_id = :doc_content_id AND user_id = :user_id ')->update(array('doc_content' => $content, 'doc_content_updatetime' => time(), 'noset' => array('doc_content_id' => $id, 'user_id' => $_SESSION['user']['user_id'])));
+        $update = $this->db('doc_content')->where('doc_content_id = :doc_content_id AND user_id = :user_id ')->update(array('doc_content' => $content, 'doc_content_updatetime' => $updateTime, 'noset' => array('doc_content_id' => $id, 'user_id' => $_SESSION['user']['user_id'])));
         if ($update === false) {
             $this->error('更新出错');
         }

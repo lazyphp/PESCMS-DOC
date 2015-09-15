@@ -1,39 +1,57 @@
 <!doctype html>
 <html class="no-js">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title><?= empty($title) ? '' : "{$title} - "; ?>PESCMS DOC</title>
-        <meta name="author" content="PESCMS">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="renderer" content="webkit">
-        <meta http-equiv="Cache-Control" content="no-siteapp" />
-        <link rel="icon" type="image/png" href="/favicon.ico">
-        <!--部分样式和脚本在页脚-->
-        <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/amazeui.min.css"/>
-        <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/timelog.css"/>
-        <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/admin.css"/>
-        <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/js/jquery.min.js"></script>
-        <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js"></script>
-        <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
-        <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
-    </head>
-    <body>
-        <header class="am-topbar am-margin-bottom-0 tm-background-color-white">
-            <h1 class="am-topbar-brand">
-                <a href="/">PESCMS 文档系统</a>
-            </h1>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><?= empty($title) ? '' : "{$title} - "; ?>PESCMS DOC</title>
+    <meta name="author" content="PESCMS">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    <!--部分样式和脚本在页脚-->
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/timelog.css"/>
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/admin.css"/>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/js/jquery.min.js"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body>
+<header class="am-topbar am-margin-bottom-0 tm-background-color-white">
+    <h1 class="am-topbar-brand">
+        <a href="/">PESCMS 文档系统</a>
+    </h1>
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+            data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+            class="am-icon-bars"></span></button>
 
-            <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
 
-                <div class="am-topbar-right">
-                    <?php if ($login === false): ?>
-                        <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="/d/login">管理</a>
-                    <?php else: ?>
-                        <a class="am-btn am-btn-success am-topbar-btn am-btn-sm tm-text-color-white" href="/d/new"><i class="am-icon-edit"></i> 新文档</a>
-                        <a class="am-btn am-btn-warning am-topbar-btn am-btn-sm tm-text-color-white" href="/d/manage"><i class="am-icon-code-fork"></i> 管理文档</a>
-                        <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="/d/logout"><i class="am-icon-power-off"></i> 注销</a>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </header>
+        <ul class="am-nav am-nav-pills am-topbar-nav">
+            <li class="am-dropdown" data-am-dropdown>
+                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                    文档列表 <span class="am-icon-caret-down"></span>
+                </a>
+                <ul class="am-dropdown-content">
+                    <li class="am-active"><a href="#">PESCMS开发文档</a></li>
+                    <li class=""><a href="#">PESCMS开发文档</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="am-topbar-right">
+            <?php if ($login === false): ?>
+                <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="/d/login">管理</a>
+            <?php else: ?>
+                <a class="am-btn am-btn-success am-topbar-btn am-btn-sm tm-text-color-white" href="/d/new"><i
+                        class="am-icon-edit"></i> 新文档</a>
+                <a class="am-btn am-btn-warning am-topbar-btn am-btn-sm tm-text-color-white" href="/d/manage"><i
+                        class="am-icon-code-fork"></i> 管理文档</a>
+                <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="/d/logout"><i
+                        class="am-icon-power-off"></i> 注销</a>
+            <?php endif; ?>
+        </div>
+    </div>
+</header>
