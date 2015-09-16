@@ -3,16 +3,30 @@
     <ul class="am-list ">
         <li class="am-padding tm-remove-border">
             <h1 class="am-article-title am-margin-top-0 display-doc-title"><?= $doc_title; ?></h1>
+
             <div class="am-form-inline am-padding-bottom-sm update-title-form am-hide">
                 <div class="am-form-group" style="width:40%">
                     <input type="text" name="title" data="<?= $doc_id; ?>" value="<?= $doc_title; ?>" class="am-form-field" placeholder="标题" style="width:100%;padding:0.5rem">
                 </div>
 
                 <div class="am-form-group">
-                    <select  name="tree" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
+                    <select id="tree-parent" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
                         <option value="">请选择</option>
                         <?php foreach ($treeList as $key => $value) : ?>
-                            <option value="<?= $value['tree_id']; ?>" <?= $doc_tree_id == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
+                            <?php if ($value['tree_parent'] == 0): ?>
+                                <option value="<?= $value['tree_id']; ?>" <?= $treeList[$doc_tree_id]['tree_parent'] == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="am-form-group">
+                    <select id="tree-child" name="tree" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
+                        <option value="">请选择</option>
+                        <?php foreach ($treeList as $key => $value) : ?>
+                            <?php if ($value['tree_parent'] == $treeList[$doc_tree_id]['tree_parent']): ?>
+                                <option value="<?= $value['tree_id']; ?>" <?= $doc_tree_id == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -31,18 +45,20 @@
                     <div class="am-article-hd">
                         <p class="am-article-meta">
                             <span><?= $value['user_name']; ?></span>
-                            <time datetime="<?= date('Y-m-d H:i', $value['doc_content_createtime']); ?>" title="<?= date('Y-m-d H:i', $value['doc_content_createtime']); ?>">发表于 <?= $label->timing($value['doc_content_createtime']); ?></time>
+                            <time datetime="<?= date('Y-m-d H:i', $value['doc_content_createtime']); ?>" title="<?= date('Y-m-d H:i', $value['doc_content_createtime']); ?>">
+                                发表于 <?= $label->timing($value['doc_content_createtime']); ?></time>
                             <?php if (!empty($value['doc_content_updatetime'])): ?>
-                                <time datetime="<?= date('Y-m-d H:i', $value['doc_content_updatetime']); ?>" title="<?= date('Y-m-d H:i', $doc_updatetime); ?>">最后更新 <?= $label->timing($value['doc_content_updatetime']); ?></time>
+                                <time datetime="<?= date('Y-m-d H:i', $value['doc_content_updatetime']); ?>" title="<?= date('Y-m-d H:i', $doc_updatetime); ?>">
+                                    最后更新 <?= $label->timing($value['doc_content_updatetime']); ?></time>
                             <?php endif; ?>
-                            <?php if ($_SESSION['user']['user_id'] == $value['user_id']): ?>
+                            <?php if ($_SESSION['user']['user_id']): ?>
                                 <a href="javascript:;" id="update-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary update-button">更新</a>
                             <?php endif; ?>
                         </p>
                     </div>
 
                     <div class="am-article-bd tm-article" data="<?= $value['doc_content_id'] ?>">
-                        <?php if ($_SESSION['user']['user_id'] == $value['user_id']): ?>
+                        <?php if ($_SESSION['user']['user_id']): ?>
                             <script id="content_<?= $value['doc_content_id'] ?>" type="text/plain" style="height:250px;"><?= htmlspecialchars_decode($value['doc_content']); ?></script>
                         <?php endif; ?>
                         <div class="content_html">
@@ -52,7 +68,7 @@
                 </article>
             </li>
         <?php endforeach; ?>
-        <?php if (!empty($docJoin[$_SESSION['user']['user_id']])): ?>
+        <?php if (!empty($_SESSION['user']['user_id'])): ?>
             <form action="/d/addContent/<?= $doc_id; ?>" method="POST">
                 <li class="am-padding-xs am-text-sm">
                     添加内容
@@ -76,9 +92,25 @@
 
 
 </div>
-<?php if ($_SESSION['user']['user_id'] == $value['user_id']): ?>
+<?php if ($_SESSION['user']['user_id']): ?>
     <script type="text/javascript">
         $(function () {
+
+            /**
+             * 选择分类
+             */
+            var treeList = eval('(' + '<?= json_encode($treeList) ?>' + ')');
+            $("#tree-parent").on("change", function(){
+                var tree_parent = $(this).val();
+                var optionStr = '<option value="">请选择</option>';
+                for(var key in treeList){
+                    if(tree_parent == treeList[key]['tree_parent']) {
+                        optionStr += '<option value="' + treeList[key]['tree_id'] + '">' + treeList[key]['tree_title'] + '</option>';
+                    }
+                }
+                $("#tree-child").html(optionStr);
+            })
+
             /**
              * 记录已经生成的编辑器
              */

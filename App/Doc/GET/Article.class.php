@@ -8,11 +8,14 @@ class Article extends \App\Doc\Common {
         parent::__init();
     }
 
+
     /**
-     * 管理文档
+     * 首页
      */
-    public function index() {
-        $this->display();
+    public function index(){
+        $_GET['tree'] = (string) $this->indexTreeID;
+        $_GET['id'] = (string) $this->indexPageID;
+        $this->view();
     }
 
     /**
@@ -32,18 +35,18 @@ class Article extends \App\Doc\Common {
         $condition = "doc_id = :doc_id";
         $param = array('doc_id' => $id);
 
-        //参与者
-        $join = $this->db('doc_join AS tj')->field('u.user_id, u.user_name')->join("{$this->prefix}user AS u ON u.user_id =  tj.user_id")->where($condition)->select($param);
-        foreach ($join as $value) {
-            $docJoin[$value['user_id']] = $value;
-        }
-        $this->assign('docJoin', $docJoin);
-
         //内容层数
         $content = $this->db('doc_content AS tc')->field('tc.*, u.user_id, u.user_name')->join("{$this->prefix}user AS u ON u.user_id =  tc.user_id")->where($condition)->order('tc.doc_content_createtime ASC')->select($param);
         $this->assign('content', $content);
 
-        $this->layout();
+        $this->layout('Article_view');
+    }
+
+    /**
+     * 管理文档
+     */
+    public function manage() {
+        $this->display();
     }
 
     /**

@@ -19,7 +19,13 @@ class Tree extends Content {
             }
         }
 
-        $this->success('排序完成!', '/d/manage');
+        if (!empty($_POST['back_url'])) {
+            $url = $_POST['back_url'];
+        } else {
+            $url = "/d/manage";
+        }
+
+        $this->success('排序完成!', $url);
     }
 
 }

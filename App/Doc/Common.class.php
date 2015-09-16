@@ -38,16 +38,15 @@ abstract class Common extends \Core\Controller\Controller {
          * @todo 当然，我觉得不如直接新建一个文档项目，区分对外和对内，避免因为本系统的越权而产生资料泄密。
          */
         $treeList = $this->db('tree')->order('tree_parent,tree_listsort ASC, tree_id DESC')->select();
-        $this->assign('treeList', $treeList);
+        $tmpArray = array();
+        foreach($treeList as $value){
+            $tmpArray[$value['tree_id']] = $value;
+        }
+        $this->assign('treeList', $tmpArray);
         $this->indexTreeID = !empty($_GET['tree']) ? $this->g('tree') : $treeList['0']['tree_id'];
 
         //依据顶层树的ID获取对应的侧栏文档树结构
         $list = $this->db('doc AS d')->field('d.doc_title, d.doc_id, d.doc_listsort, t.tree_id, t.tree_title, t.tree_listsort')->join("{$this->prefix}tree AS t ON t.tree_id = d.doc_tree_id")->where("d.doc_delete = '0' AND t.tree_parent = :tree_parent ")->order('t.tree_listsort ASC, t.tree_id DESC, d.doc_listsort ASC, d.doc_id DESC')->select(array('tree_parent' => $this->indexTreeID));
-        if(empty($list)){
-            header('HTTP/1.1 404');
-            $this->display('404');
-            exit;
-        }
 
         $this->indexPageID = !empty($_GET['id']) ? $this->g('id') : $list['0']['doc_id'];
         $tree = array();

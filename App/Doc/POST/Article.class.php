@@ -27,12 +27,6 @@ class Article extends \App\Doc\CheckUser {
             $this->error('创建文档出错');
         }
 
-        $addJoin = $this->db('doc_join')->insert(array('doc_id' => $baseInsert, 'user_id' => $data['user_id'], 'doc_join_time' => $data['doc_createtime']));
-        if ($addJoin === false) {
-            $this->db()->rollBack();
-            $this->error('添加参与者失败');
-        }
-
         $addContent = $this->db('doc_content')->insert(array('doc_id' => $baseInsert, 'user_id' => $data['user_id'], 'doc_content' => $content, 'doc_content_createtime' => $data['doc_createtime']));
         if ($addContent === false) {
             $this->db()->rollBack();
@@ -51,12 +45,8 @@ class Article extends \App\Doc\CheckUser {
         $id = $this->isG('id', '丢失日志');
         $content = $this->isP('content', '请填写内容');
 
-        $checkJoin = $this->db('doc AS d')->join("{$this->prefix}doc_join AS dj ON dj.doc_id = d.doc_id")->where("d.user_id = :user_id AND d.doc_id = :doc_id AND d.doc_delete = '0'")->find(array('user_id' => $_SESSION['user']['user_id'], 'doc_id' => $id));
-        $checkTree = \Model\Content::findContent('tree', $checkJoin['doc_tree_id'], 'tree_id');
-
-        if (empty($checkJoin) || $checkJoin['doc_type'] == '4') {
-            $this->error('您不是本文档的参与者或者文档不存在/被删除');
-        }
+        $checkDoc = $this->db('doc')->where("doc_id = :doc_id AND doc_delete = '0'")->find(array('doc_id' => $id));
+        $checkTree = \Model\Content::findContent('tree', $checkDoc['doc_tree_id'], 'tree_id');
 
         $this->db()->transaction();
         $time = time();
@@ -82,14 +72,14 @@ class Article extends \App\Doc\CheckUser {
     public function updateContent() {
         $id = $this->isG('id', '请提交您要编辑的内容');
         $content = $this->isP('content', '请填写内容');
-        $checkUser = $this->db('doc_content')->where('doc_content_id = :doc_content_id AND user_id = :user_id ')->find(array('doc_content_id' => $id, 'user_id' => $_SESSION['user']['user_id']));
+        $checkUser = $this->db('doc_content')->where('doc_content_id = :doc_content_id ')->find(array('doc_content_id' => $id));
         if (empty($checkUser)) {
             $this->error('没有找到您要更新的内容');
         }
         
         $updateTime = time();
         
-        $history = $this->db('doc_content_history')->insert(array('doc_content_id' => $id, 'doc_content' => $checkUser['doc_content'], 'doc_content_updatetime' => $updateTime));
+        $history = $this->db('doc_content_history')->insert(array('doc_content_id' => $id, 'doc_content' => $checkUser['doc_content'], 'doc_content_user_id' => $checkUser['user_id'], 'doc_content_updatetime' => $updateTime));
         if($history === false){
             $this->error('记录历史出错');
         }

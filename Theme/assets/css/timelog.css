@@ -19,9 +19,13 @@
 .am-article-bd h2{
     margin-top: 0;
 }
-
+/*移除overflow*/
 .tm-remove-overflow{
     overflow: visible !important;
+}
+/*全满宽度*/
+.tm-full-width{
+    width: 100%;
 }
 
 /*---------------字体类---------------*/
@@ -76,6 +80,10 @@
 /*加强表单验证的显示边框颜色*/
 .am-field-error{
     border:1px solid;
+}
+/*排序用的输入框*/
+.tm-input-sotr{
+    width: 30px;
 }
 /*---------------侧栏---------------*/
 .tm-sidebar{

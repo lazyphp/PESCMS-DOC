@@ -17,15 +17,15 @@ return array(
     //注销登录
     'd/logout' => 'Doc-Login-logout',
     //文档首页
-    'd/index' => 'Doc-Index-index',
+    'd/index' => 'Doc-Article-index',
     //文档首页切换文档
-    'd/index/{tree}' => 'Doc-Index-index',
+    'd/index/{tree}' => 'Doc-Article-index',
     //发表新文档
     'd/new' => 'Doc-Article-action',
     //更新标题(PUT)
     'd/updateTitle' => 'Doc-Doc-action',
     //文档列表
-    'd/manage' => 'Doc-Article-index',
+    'd/manage' => 'Doc-Article-manage',
     //文档详情
     'd/v/{tree}/{id}' => 'Doc-Article-view',
     //文档操作

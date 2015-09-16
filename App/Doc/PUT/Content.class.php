@@ -40,8 +40,8 @@ class Content extends \App\Doc\CheckUser {
             \Model\ModelManage::updateSortFromModel(MODULE, $key, $value);
         }
 
-        if (!empty($_SERVER['HTTP_REFERER'])) {
-            $url = $_SERVER['HTTP_REFERER'];
+        if (!empty($_POST['back_url'])) {
+            $url = $_POST['back_url'];
         } else {
             $url = "";
         }
