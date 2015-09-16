@@ -78,16 +78,21 @@ class Article extends \App\Doc\CheckUser {
         }
         
         $updateTime = time();
+
+        $this->db()->transaction();
         
         $history = $this->db('doc_content_history')->insert(array('doc_content_id' => $id, 'doc_content' => $checkUser['doc_content'], 'doc_content_user_id' => $checkUser['user_id'], 'doc_content_updatetime' => $updateTime));
         if($history === false){
+            $this->db()->rollBack();
             $this->error('记录历史出错');
         }
 
-        $update = $this->db('doc_content')->where('doc_content_id = :doc_content_id AND user_id = :user_id ')->update(array('doc_content' => $content, 'doc_content_updatetime' => $updateTime, 'noset' => array('doc_content_id' => $id, 'user_id' => $_SESSION['user']['user_id'])));
+        $update = $this->db('doc_content')->where('doc_content_id = :doc_content_id')->update(array('doc_content' => $content, 'doc_content_updatetime' => $updateTime, 'user_id' => $_SESSION['user']['user_id'], 'noset' => array('doc_content_id' => $id)));
         if ($update === false) {
+            $this->db()->rollBack();
             $this->error('更新出错');
         }
+        $this->db()->commit();
 
         $this->success('更新成功');
     }
