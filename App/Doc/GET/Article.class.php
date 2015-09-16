@@ -6,8 +6,6 @@ class Article extends \App\Doc\Common {
 
     public function __init() {
         parent::__init();
-        $treeList = $this->db('tree')->order('tree_listsort ASC, tree_id DESC')->select();
-        $this->assign('treeList', $treeList);
     }
 
     /**
@@ -22,9 +20,11 @@ class Article extends \App\Doc\Common {
      */
     public function view() {
         $id = $this->isG('id', '请提交内容值');
-        $base = \Model\Content::findContent('doc', $id, 'doc_id');
-        if (empty($base) || $base['doc_delete'] === '1') {
-            $this->error('该时间日志不存在或者被删除');
+        $treeID = $this->isG('tree', '请提交目录树');
+
+        $base = $this->db('doc AS d')->join("{$this->prefix}tree AS t ON t.tree_id = d.doc_tree_id")->where('d.doc_delete = 0 AND t.tree_parent = :tree_parent AND d.doc_id = :doc_id')->find(array('tree_parent' => $treeID, 'doc_id' => $id));
+        if (empty($base)) {
+            $this->layout('404');
         }
         $this->assign($base);
         $this->assign('title', $base['doc_title']);

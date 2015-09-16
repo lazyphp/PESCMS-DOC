@@ -19,6 +19,4 @@
     </div>
 </div>
 </body>
-<script src="<?= DOCUMENT_ROOT ?>/Theme/assets/js/amazeui.min.js"></script>
-<script src="<?= DOCUMENT_ROOT ?>/Theme/assets/js/timelog.js"></script>
 </html>

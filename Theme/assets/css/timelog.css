@@ -20,6 +20,10 @@
     margin-top: 0;
 }
 
+.tm-remove-overflow{
+    overflow: visible !important;
+}
+
 /*---------------字体类---------------*/
 /*字体加粗*/
 .tm-text-font-weight{

@@ -1,6 +1,6 @@
 <?php $this->header(); ?>
     <!-- content start -->
-    <div class="admin-content am-padding-top">
+    <div class=" am-padding-top">
 
         <div class="am-g">
             <div class="am-u-sm-12">
@@ -27,10 +27,9 @@
                     <button class="am-btn am-btn-default">
                         <i class="am-icon-sitemap"></i> 新建树
                     </button>
-                    <a class="am-btn am-btn-primary" data-am-collapse="{target: '#collapse-nav'}">管理树 <i
-                            class="am-icon-bars"></i></a>
+
                     <nav>
-                        <ul id="collapse-nav" class="am-nav am-collapse">
+                        <ul id="" class="am-nav am-collapse">
                             <?php foreach ($treeList as $key => $value) : ?>
                                 <li><a href="/d/tree/action/<?= $value['tree_id'] ?>/DELETE"
                                        onclick="return confirm('确定删除吗?')"><?= $value['tree_title']; ?></a></li>
@@ -46,38 +45,86 @@
                 <form class="am-form" action="/d/tree/listsort" method="POST">
                     <input type="hidden" name="method" value="PUT"/>
                     <table class="am-table am-table-striped am-table-hover table-main">
-                        <tbody>
                         <?php foreach ($treeList as $value) : ?>
-                            <tr>
-                                <td class="table-sort am-text-middle">
-                                    <input type="text" name="tree[<?= $value['tree_id']; ?>]"
-                                           value="<?= $value['tree_listsort']; ?>">
-                                </td>
-                                <td class="am-text-middle">
-                                    <span
-                                        class="display-tree-<?= $value['tree_id']; ?>"><?= $value['tree_title']; ?></span>
-                                    <input class="am-hide update-tree-input update-tree-<?= $value['tree_id']; ?>"
-                                           type="text"
-                                           name="title" value="<?= $value['tree_title']; ?>"
-                                           data="<?= $value['tree_id']; ?>">
-                                </td>
-                                <td class="am-text-middle">
-                                    <div class="am-btn-toolbar">
-                                        <div class="am-btn-group am-btn-group-xs">
-                                            <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;"
-                                               data="<?= $value['tree_id']; ?>"><span
-                                                    class="am-icon-pencil-square-o"></span> 编辑</a>
-                                            <a class="am-btn am-btn-danger"
-                                               href="/d/tree/action/<?= $value['tree_id'] ?>/DELETE"
-                                               onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span>
-                                                删除</a>
+                            <?php if ($value['tree_parent'] == 0): ?>
+                                <tr>
+                                    <td class="table-sort am-text-middle">
+                                        <input type="text" name="tree[<?= $value['tree_id']; ?>]" value="<?= $value['tree_listsort']; ?>">
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <span class="display-tree-<?= $value['tree_id']; ?>"><?= $value['tree_title']; ?></span>
+
+                                        <div class="am-form am-form-inline am-hide update-tree-<?= $value['tree_id']; ?>">
+                                            <div class="am-form-group">
+                                                <input class="update-tree-input-<?= $value['tree_id']; ?>  am-form-field" type="text" name="title" value="<?= $value['tree_title']; ?>">
+                                            </div>
+                                            <div class="am-form-group">
+                                                <select name="parent" class="parent-<?= $value['tree_id']; ?>" data-am-selected>
+                                                </select>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <a class="am-btn am-btn-secondary submit-tree" data="<?= $value['tree_id']; ?>" href="javascript:;">提交</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $value['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
+                                                <a class="am-btn am-btn-primary show-child" data="#tree-child-<?= $value['tree_id']; ?>"><i class="am-icon-bars"></i> 查看子树</a>
+                                                <a class="am-btn am-btn-danger" href="/d/tree/action/<?= $value['tree_id'] ?>/DELETE" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tbody id="tree-child-<?= $value['tree_id']; ?>" class="am-hide">
+                                <?php foreach ($treeList as $child): ?>
+                                    <?php if ($child['tree_parent'] == $value['tree_id']): ?>
+                                        <tr>
+                                            <td class="table-sort am-text-middle">
+                                                <input type="text" name="tree[<?= $child['tree_id']; ?>]"
+                                                       value="<?= $child['tree_listsort']; ?>">
+                                            </td>
+                                            <td class="am-text-middle">
+                                                <div class="am-form am-form-inline">
+                                                    <div class="am-form-group">
+                                                        <span class="plus_icon plus_end_icon"></span>
+                                                        <span class="display-tree-<?= $child['tree_id']; ?>"><?= $child['tree_title']; ?></span>
+                                                    </div>
+
+                                                    <div class="am-form-group am-hide update-tree-<?= $child['tree_id']; ?>">
+                                                        <div class="am-form-group">
+                                                            <input class="update-tree-input-<?= $child['tree_id']; ?>  am-form-field" type="text" name="title" value="<?= $child['tree_title']; ?>">
+                                                        </div>
+                                                        <div class="am-form-group">
+                                                            <select name="parent" data="<?= $child['tree_parent']; ?>" class="parent-<?= $child['tree_id']; ?>" data-am-selected>
+                                                            </select>
+                                                        </div>
+                                                        <div class="am-form-group">
+                                                            <a class="am-btn am-btn-secondary submit-tree" data="<?= $child['tree_id']; ?>" href="javascript:;">提交</a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td class="am-text-middle">
+                                                <div class="am-btn-toolbar">
+                                                    <div class="am-btn-group am-btn-group-xs">
+                                                        <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $child['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
+                                                        <a class="am-btn am-btn-danger" href="/d/tree/action/<?= $child['tree_id'] ?>/DELETE" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                                </tbody>
+                            <?php endif; ?>
                         <?php endforeach; ?>
 
-                        </tbody>
+
                     </table>
                     <div class="am-margin">
                         <button type="submit" class="am-btn am-btn-primary am-btn-xs">排序</button>
@@ -89,65 +136,65 @@
     </div>
     <script>
         $(function () {
+
+            //初始化树目录
+            var treeList = eval('(' + '<?= json_encode($treeList) ?>' + ')');
+
+            /**
+             * 显示子树
+             */
+            $(".show-child").on("click", function(){
+                var data = $(this).attr("data");
+                $("tbody[id*='tree-child']").addClass("am-hide")
+                $(data).removeClass("am-hide")
+            })
+
+            /**
+             * 显示编辑树结构的表单
+             */
             $(".update-tree-button").on("click", function () {
                 var tree_id = $(this).attr("data");
+                var tree_parent = $(".parent-" + tree_id).attr("data");
+                var optionStr = '<option value="0">顶层文档树</option>';
+                for (var key in treeList) {
+                    if (treeList[key]['tree_parent'] == '0') {
+                        var disabled = treeList[key]['tree_id'] == tree_id ? 'disabled' : ''
+                        var selected = treeList[key]['tree_id'] == tree_parent ? 'selected' : ''
+                        optionStr += '<option value="' + treeList[key]['tree_id'] + '" ' + disabled + selected + ' >' + treeList[key]['tree_title'] + '</option>';
+                    }
+                }
+                $(".parent-" + tree_id).html(optionStr);
+                $("div[class*='update-tree']").addClass("am-hide")
+                $("span[class*='display-tree']").removeClass("am-hide");
+
                 $(".display-tree-" + tree_id).addClass("am-hide");
                 $(".update-tree-" + tree_id).removeClass("am-hide");
             })
 
-            $(".update-tree-input").on("blur", function () {
-                var dom = $(this)
-                var title = $(this).val();
-                var id = $(this).attr("data")
+            /**
+             * 输入框表单离开，表示更新树
+             */
+            $(".submit-tree").on("click", function () {
+                var id = $(this).attr('data');
+                var title = $(".update-tree-input-" + id).val()
+                var parent = $(".parent-" + id).val();
                 if (title == '') {
                     alert("请填写名称");
                     return false;
                 }
 
-                ajax({url:'', data:{title: title, id: id, method: 'PUT'}}, function(data){
+                ajax({
+                    url: '/d/tree/action', data: {title: title, id: id, parent: parent, method: 'PUT'}
+                }, function (data) {
                     if (data.status == '200') {
-                        dom.addClass("am-hide");
-                        $(".display-tree-" + id).removeClass("am-hide").html(title)
+                        setTimeout(function () {
+                            location.reload()
+                        }, 1200)
                     }
                 })
 
             })
 
-
-            function ajax(data, callback) {
-                var obj = {type:'POST', 'dataType':'JSON'};
-                Object.assign(obj,data)
-                console.dir(obj);
-                return true;
-                var progress = $.AMUI.progress;
-                progress.start();
-                $.ajax({
-                    url: '/d/tree/action',
-                    data: data,
-                    type: 'POST',
-                    dataType: 'JSON',
-                    success: function (data) {
-                        $('#am-alert').modal();
-                        $(".alert-tips").html(data.msg);
-                        setTimeout(function () {
-                            $('#am-alert').modal('close');
-                        }, '1000')
-
-                        callback(data)
-                        progress.done();
-                    },
-                    error: function () {
-                        $('#am-alert').modal();
-                        $(".alert-tips").html("数据异常");
-
-                        setTimeout(function () {
-                            $('#am-alert').modal('close');
-                        }, '1000')
-                        progress.done();
-                        return false;
-                    }
-                })
-            }
         })
     </script>
     <!-- content end -->

@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/timelog.css"/>
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/admin.css"/>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/js/jquery.min.js"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/js/amazeui.min.js"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/js/timelog.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
@@ -35,8 +37,13 @@
                     文档列表 <span class="am-icon-caret-down"></span>
                 </a>
                 <ul class="am-dropdown-content">
-                    <li class="am-active"><a href="#">PESCMS开发文档</a></li>
-                    <li class=""><a href="#">PESCMS开发文档</a></li>
+                    <?php foreach ($treeList as $key => $value): ?>
+                        <?php if ($value['tree_parent'] == '0'): ?>
+                            <li class="<?= ($key == 0 && empty($_GET['tree'])) || $_GET['tree'] == $value['tree_id']   ? 'am-active' : ''; ?>">
+                                <a href="<?= $label->url("/d/index/{$value['tree_id']}", true); ?>"><?= $value['tree_title']; ?></a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
                 </ul>
             </li>
         </ul>

@@ -18,6 +18,8 @@ class Article extends \App\Doc\CheckUser {
         $data['doc_updatetime'] = $data['doc_createtime'] = time();
         $data['doc_delete'] = '0';
 
+        $checkTree = \Model\Content::findContent('tree', $data['doc_tree_id'], 'tree_id');
+
         $this->db()->transaction();
         $baseInsert = $this->db('doc')->insert($data);
         if ($baseInsert === false) {
@@ -39,7 +41,7 @@ class Article extends \App\Doc\CheckUser {
 
         $this->db()->commit();
 
-        $this->success('发表新文档成功!', "/d/{$baseInsert}");
+        $this->success('发表新文档成功!', $this->url("/d/v/{$checkTree['tree_parent']}/{$baseInsert}", true));
     }
 
     /**
@@ -50,6 +52,7 @@ class Article extends \App\Doc\CheckUser {
         $content = $this->isP('content', '请填写内容');
 
         $checkJoin = $this->db('doc AS d')->join("{$this->prefix}doc_join AS dj ON dj.doc_id = d.doc_id")->where("d.user_id = :user_id AND d.doc_id = :doc_id AND d.doc_delete = '0'")->find(array('user_id' => $_SESSION['user']['user_id'], 'doc_id' => $id));
+        $checkTree = \Model\Content::findContent('tree', $checkJoin['doc_tree_id'], 'tree_id');
 
         if (empty($checkJoin) || $checkJoin['doc_type'] == '4') {
             $this->error('您不是本文档的参与者或者文档不存在/被删除');
@@ -70,7 +73,7 @@ class Article extends \App\Doc\CheckUser {
         }
 
         $this->db()->commit();
-        $this->success('添加内容成功!', "/d/{$id}");
+        $this->success('添加内容成功!', $this->url("/d/v/{$checkTree['tree_parent']}/{$id}", true));
     }
 
     /**

@@ -18,6 +18,8 @@ return array(
     'd/logout' => 'Doc-Login-logout',
     //文档首页
     'd/index' => 'Doc-Index-index',
+    //文档首页切换文档
+    'd/index/{tree}' => 'Doc-Index-index',
     //发表新文档
     'd/new' => 'Doc-Article-action',
     //更新标题(PUT)
@@ -25,7 +27,7 @@ return array(
     //文档列表
     'd/manage' => 'Doc-Article-index',
     //文档详情
-    'd/{id}' => 'Doc-Article-view',
+    'd/v/{tree}/{id}' => 'Doc-Article-view',
     //文档操作
     'd/action/{id}/{method}' => 'Doc-Article-Action',
     //添加文档内容
