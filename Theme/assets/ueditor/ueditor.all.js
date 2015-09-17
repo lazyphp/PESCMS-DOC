@@ -8028,7 +8028,7 @@ UE.Editor.defaultOptions = function(editor){
         initialContent: '',
         initialStyle:'',
         autoClearinitialContent: false,
-        iframeCssUrl: '/Theme/assets/css/amazeui.min.css',
+        iframeCssUrl: path +'/Theme/assets/css/amazeui.min.css',
         textarea: 'editorValue',
         focus: false,
         focusInEnd: true,
