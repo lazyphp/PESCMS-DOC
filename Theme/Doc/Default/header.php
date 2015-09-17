@@ -19,6 +19,12 @@
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script>
+        /**
+         * 本变量作用为防止用户在二级目录下安装PESCMS DOC，导致ajax之类请求异常
+         */
+        var path = '<?=DOCUMENT_ROOT?>';
+    </script>
 </head>
 <body>
 <header class="am-topbar am-margin-bottom-0 tm-background-color-white">
@@ -50,13 +56,13 @@
 
         <div class="am-topbar-right">
             <?php if ($login === false): ?>
-                <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="/d/login">管理</a>
+                <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('/d/login', true); ?>">管理</a>
             <?php else: ?>
-                <a class="am-btn am-btn-success am-topbar-btn am-btn-sm tm-text-color-white" href="/d/new"><i
+                <a class="am-btn am-btn-success am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('/d/new', true); ?>"><i
                         class="am-icon-edit"></i> 新文档</a>
-                <a class="am-btn am-btn-warning am-topbar-btn am-btn-sm tm-text-color-white" href="/d/manage"><i
+                <a class="am-btn am-btn-warning am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('/d/manage', true); ?>"><i
                         class="am-icon-code-fork"></i> 管理文档</a>
-                <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="/d/logout"><i
+                <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('/d/logout', true); ?>"><i
                         class="am-icon-power-off"></i> 注销</a>
             <?php endif; ?>
         </div>

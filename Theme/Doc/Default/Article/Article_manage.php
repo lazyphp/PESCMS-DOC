@@ -44,7 +44,7 @@
 
         <div class="am-g">
             <div class="am-u-sm-12">
-                <form class="am-form" action="/d/tree/listsort" method="POST">
+                <form class="am-form" action="<?= $label->url('/d/tree/listsort', true); ?>" method="POST">
                     <input type="hidden" name="method" value="PUT"/>
                     <table class="am-table am-table-striped am-table-hover table-main">
                         <?php foreach ($treeList as $value) : ?>
@@ -186,7 +186,7 @@
                 }
 
                 ajax({
-                    url: '/d/tree/action', data: {title: title, id: id, parent: parent, method: 'PUT'}
+                    url: path+'/d/tree/action', data: {title: title, id: id, parent: parent, method: 'PUT'}
                 }, function (data) {
                     if (data.status == '200') {
                         setTimeout(function () {

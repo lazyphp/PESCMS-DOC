@@ -70,7 +70,7 @@
             </li>
         <?php endforeach; ?>
         <?php if (!empty($_SESSION['user']['user_id'])): ?>
-            <form action="/d/addContent/<?= $doc_id; ?>" method="POST">
+            <form action="<?= $label->url("/d/addContent/{$doc_id}"); ?>" method="POST">
                 <li class="am-padding-xs am-text-sm">
                     添加内容
                 </li>
@@ -85,7 +85,7 @@
             <script>
                 var ue = UE.getEditor('editor', {
                     textarea: 'content',
-                    serverUrl: '/d/uedition/?method=POST'
+                    serverUrl: path + '/d/uedition/?method=POST'
                 });
             </script>
         <?php endif; ?>
@@ -126,7 +126,7 @@
                 var data = $(this).attr("data");
                 //记录启用过和初始化编辑器
                 if (!editor[data]) {
-                    editor[data] = UE.getEditor('content_' + data, {serverUrl: '/d/uedition/?method=POST'});
+                    editor[data] = UE.getEditor('content_' + data, {serverUrl: path + '/d/uedition/?method=POST'});
                 } else {
                     editor[data].setShow()
                 }
@@ -181,7 +181,7 @@
                     $(".alert-tips").html("请填写内容");
                 }
 
-                ajax({url: '/d/edit/' + id, data: {content: editor[id].getContent()}}, function (data) {
+                ajax({url: path + '/d/edit/' + id, data: {content: editor[id].getContent()}}, function (data) {
                     if (data.status == '200') {
                         setTimeout(function () {
                             location.reload()
@@ -207,7 +207,7 @@
                     return false;
                 }
                 ajax({
-                    url: '/d/updateTitle',
+                    url: path + '/d/updateTitle',
                     data: {id: id, title: title, tree_id: tree, method: 'PUT'}
                 }, function (data) {
                     if (data.status == '200') {
@@ -222,10 +222,8 @@
              * 查看版本历史
              */
             $(".history-button").on("click", function () {
-
-                var path = '<?=DOCUMENT_ROOT?>';
                 var id = $(this).attr("data");
-                ajax({url: '/d/gh/' + id, 'type': 'GET', 'dialog': false}, function (data) {
+                ajax({url: path + '/d/gh/' + id, 'type': 'GET', 'dialog': false}, function (data) {
                     if (data.status == '0') {
                         $('#am-alert').modal();
                         $(".alert-tips").html(data.msg);
@@ -236,7 +234,7 @@
                         $('#history-modal').modal();
                         var trStr = "";
                         for (var key in data.msg) {
-                            var use = data['msg'][key]['doc_content_current'] == '1' ? '<a class="am-btn am-btn-danger am-btn-xs" disabled="disabled">当前版本</a>' : '<a class="am-btn am-btn-default am-btn-xs" href="'+path+'/d/h/'+data['msg'][key]['doc_content_history_id']+'" target="_blank">预览</a><a class="am-btn am-btn-warning am-btn-xs" href="'+path+'/d/h/c/'+data['msg'][key]['doc_content_history_id']+'" target="_blank">对比</a><a class="am-btn am-btn-success am-btn-xs" href="'+path+'/d/h/u/'+data['msg'][key]['doc_content_history_id']+'">使用此版本</a>';
+                            var use = data['msg'][key]['doc_content_current'] == '1' ? '<a class="am-btn am-btn-danger am-btn-xs" disabled="disabled">当前版本</a>' : '<a class="am-btn am-btn-default am-btn-xs" href="' + path + '/d/h/' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">预览</a><a class="am-btn am-btn-warning am-btn-xs" href="' + path + '/d/h/c/' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">对比</a><a class="am-btn am-btn-success am-btn-xs" href="' + path + '/d/h/u/' + data['msg'][key]['doc_content_history_id'] + '">使用此版本</a>';
                             trStr += '<tr><td>' + data['msg'][key]['doc_content_history_id'] + '</td><td>' + data['msg'][key]['user_name'] + '</td><td>' + data['msg'][key]['doc_content_createtime'] + '</td><td>' + use + '</td></tr>';
                         }
                         $(".history-list").html(trStr)

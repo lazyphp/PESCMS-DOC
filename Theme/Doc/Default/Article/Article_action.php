@@ -44,14 +44,14 @@
     <script type="text/javascript">
         var ue = UE.getEditor('editor', {
             textarea: 'content',
-            serverUrl: '/d/uedition/?method=POST'
+            serverUrl: path + '/d/uedition/?method=POST'
         });
         var treeList = eval('(' + '<?= json_encode($treeList) ?>' + ')');
-        $("#tree-parent").on("change", function(){
+        $("#tree-parent").on("change", function () {
             var tree_parent = $(this).val();
             var optionStr = '<option value="">请选择</option>';
-            for(var key in treeList){
-                if(tree_parent == treeList[key]['tree_parent']) {
+            for (var key in treeList) {
+                if (tree_parent == treeList[key]['tree_parent']) {
                     optionStr += '<option value="' + treeList[key]['tree_id'] + '">' + treeList[key]['tree_title'] + '</option>';
                 }
             }
