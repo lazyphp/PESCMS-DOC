@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?= empty($title) ? '' : "{$title} - "; ?>PESCMS DOC</title>
+    <title><?= empty($title) ? '' : "{$title} - "; ?><?= $siteTitle; ?></title>
     <meta name="author" content="PESCMS">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="renderer" content="webkit">
@@ -30,7 +30,7 @@
 <body>
 <header class="am-topbar am-margin-bottom-0 tm-background-color-white">
     <h1 class="am-topbar-brand">
-        <a href="<?= DOCUMENT_ROOT; ?>/">PESCMS 文档系统</a>
+        <a href="<?= DOCUMENT_ROOT; ?>/"><?= $siteTitle; ?></a>
     </h1>
     <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
             data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
