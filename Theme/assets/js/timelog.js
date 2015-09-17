@@ -4,7 +4,7 @@ $(function () {
      * 刷新验证码
      */
     $(".verify").on("click", function () {
-        $(this).attr("src", "/d/verify/" + Date.parse(new Date()) + Math.random())
+        $(this).attr("src", path + "/d/verify/" + Date.parse(new Date()) + Math.random())
     })
 
     /**
@@ -15,7 +15,7 @@ $(function () {
      * @returns {boolean}
      */
     ajax = function (data, callback) {
-        var obj = {url: '', data: {}, type: 'POST', 'dataType': 'JSON', dialog:true};
+        var obj = {url: '', data: {}, type: 'POST', 'dataType': 'JSON', dialog: true};
         $.extend(obj, data)
         if (obj.url == '') {
             $('#am-alert').modal();
@@ -30,7 +30,7 @@ $(function () {
             type: obj.type,
             dataType: obj.dataType,
             success: function (data) {
-                if(obj.dialog == true){
+                if (obj.dialog == true) {
                     $('#am-alert').modal();
                     $(".alert-tips").html(data.msg);
                     setTimeout(function () {

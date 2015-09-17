@@ -80,9 +80,6 @@ class Article extends \App\Doc\CheckUser {
 
         $this->db()->transaction();
 
-        //记录旧版的历史
-        \Model\Doc\Doc::recordHistory(array('doc_content_id' => $id, 'doc_content' => $checkUser['doc_content'], 'doc_content_user_id' => $checkUser['user_id'], 'doc_content_createtime' => $checkUser['doc_content_createtime']));
-
         $update = $this->db('doc_content')->where('doc_content_id = :doc_content_id')->update(array('doc_content' => $content, 'doc_content_updatetime' => $updateTime, 'user_id' => $_SESSION['user']['user_id'], 'noset' => array('doc_content_id' => $id)));
 
         //记录新版的历史

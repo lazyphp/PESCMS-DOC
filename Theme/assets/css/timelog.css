@@ -137,6 +137,7 @@
 .tm-article td p{margin:0;padding:0;}
 
 .tm-article blockquote ul, .tm-article blockquote ol{margin-bottom: 0;}
+.am-article-bd img{display: inline !important;}
 /*---------------页脚---------------*/
 .my-footer {
     background: #fff;

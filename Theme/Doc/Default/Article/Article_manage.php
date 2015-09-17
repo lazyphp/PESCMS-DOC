@@ -4,7 +4,7 @@
 
         <div class="am-g">
             <div class="am-u-sm-12">
-                <form action="/d/tree/action" method="POST" class="am-form am-form-inline">
+                <form action="<?= $label->url('/d/tree/action', true); ?>" method="POST" class="am-form am-form-inline">
                     <div class="am-form-group">
                         <input type="text" name="title" class="am-form-field" placeholder="树名称">
                     </div>
@@ -29,15 +29,6 @@
                     </button>
 
                     <a href="<?= $label->url('User-index') ?>" class="am-btn am-btn-warning"><i class="am-icon-user"></i> 管理帐号</a>
-
-                    <nav>
-                        <ul id="" class="am-nav am-collapse">
-                            <?php foreach ($treeList as $key => $value) : ?>
-                                <li><a href="/d/tree/action/<?= $value['tree_id'] ?>/DELETE"
-                                       onclick="return confirm('确定删除吗?')"><?= $value['tree_title']; ?></a></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </nav>
                 </form>
             </div>
         </div>
@@ -75,7 +66,7 @@
                                             <div class="am-btn-group am-btn-group-xs">
                                                 <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $value['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
                                                 <a class="am-btn am-btn-primary show-child" data="#tree-child-<?= $value['tree_id']; ?>"><i class="am-icon-bars"></i> 查看子树</a>
-                                                <a class="am-btn am-btn-danger" href="/d/tree/action/<?= $value['tree_id'] ?>/DELETE" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+                                                <a class="am-btn am-btn-danger" href="<?= $label->url("/d/tree/action/{$value['tree_id']}/DELETE", true); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
                                             </div>
                                         </div>
                                     </td>
@@ -115,7 +106,7 @@
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
                                                         <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $child['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
-                                                        <a class="am-btn am-btn-danger" href="/d/tree/action/<?= $child['tree_id'] ?>/DELETE" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+                                                        <a class="am-btn am-btn-danger" href="<?= $label->url("/d/tree/action/{$child['tree_id']}/DELETE", true); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
                                                     </div>
                                                 </div>
                                             </td>

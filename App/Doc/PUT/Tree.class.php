@@ -22,7 +22,7 @@ class Tree extends Content {
         if (!empty($_POST['back_url'])) {
             $url = $_POST['back_url'];
         } else {
-            $url = "/d/manage";
+            $url = $this->url('/d/manage', true);
         }
 
         $this->success('排序完成!', $url);

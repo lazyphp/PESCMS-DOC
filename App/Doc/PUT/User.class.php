@@ -22,6 +22,8 @@ class User extends Content {
             }
 
             $_POST['password'] = (string) \Core\Func\CoreFunc::generatePwd($this->isP('account', '请提交帐号') . $password, 'PRIVATE_KEY');
+        }else{
+            $_POST['password'] = $user['user_password'];
         }
         parent::action();
     }

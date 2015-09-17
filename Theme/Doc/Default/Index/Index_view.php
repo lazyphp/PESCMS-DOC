@@ -70,7 +70,7 @@
             </li>
         <?php endforeach; ?>
         <?php if (!empty($_SESSION['user']['user_id'])): ?>
-            <form action="<?= $label->url("/d/addContent/{$doc_id}"); ?>" method="POST">
+            <form action="<?= $label->url("/d/addContent/{$doc_id}", true); ?>" method="POST">
                 <li class="am-padding-xs am-text-sm">
                     添加内容
                 </li>

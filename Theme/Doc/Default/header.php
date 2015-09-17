@@ -10,6 +10,12 @@
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="icon" type="image/png" href="/favicon.ico">
     <!--部分样式和脚本在页脚-->
+    <script>
+        /**
+         * 本变量作用为防止用户在二级目录下安装PESCMS DOC，导致ajax之类请求异常
+         */
+        var path = '<?=DOCUMENT_ROOT?>';
+    </script>
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/timelog.css"/>
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/admin.css"/>
@@ -19,17 +25,12 @@
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
-    <script>
-        /**
-         * 本变量作用为防止用户在二级目录下安装PESCMS DOC，导致ajax之类请求异常
-         */
-        var path = '<?=DOCUMENT_ROOT?>';
-    </script>
+
 </head>
 <body>
 <header class="am-topbar am-margin-bottom-0 tm-background-color-white">
     <h1 class="am-topbar-brand">
-        <a href="/">PESCMS 文档系统</a>
+        <a href="<?= DOCUMENT_ROOT; ?>/">PESCMS 文档系统</a>
     </h1>
     <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
             data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span

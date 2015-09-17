@@ -7,7 +7,7 @@
             <strong class="am-text-primary am-text-lg"><?= $title; ?></strong>
         </div>
     </div>
-    <form class="am-form" action="<?= $url; ?>" method="post" data-am-validator>
+    <form class="am-form" action="<?= $label->url('User-action'); ?>" method="post" data-am-validator>
         <input type="hidden" name="method" value="<?= $method ?>" />
         <input type="hidden" name="id" value="<?= $id ?>" />
         <input type="hidden" name="back_url" value="<?= $label->url('User-index') ?>" />
