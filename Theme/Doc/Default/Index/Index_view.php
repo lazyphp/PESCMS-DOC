@@ -53,6 +53,7 @@
                             <?php endif; ?>
                             <?php if ($_SESSION['user']['user_id']): ?>
                                 <a href="javascript:;" id="update-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary update-button">更新</a>
+                                <a href="javascript:;" id="history-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary history-button">版本历史</a>
                             <?php endif; ?>
                         </p>
                     </div>
@@ -100,11 +101,11 @@
              * 选择分类
              */
             var treeList = eval('(' + '<?= json_encode($treeList) ?>' + ')');
-            $("#tree-parent").on("change", function(){
+            $("#tree-parent").on("change", function () {
                 var tree_parent = $(this).val();
                 var optionStr = '<option value="">请选择</option>';
-                for(var key in treeList){
-                    if(tree_parent == treeList[key]['tree_parent']) {
+                for (var key in treeList) {
+                    if (tree_parent == treeList[key]['tree_parent']) {
                         optionStr += '<option value="' + treeList[key]['tree_id'] + '">' + treeList[key]['tree_title'] + '</option>';
                     }
                 }
@@ -131,11 +132,11 @@
                 }
 
                 //移除所有隐藏得元素
-                $(".update-button").addClass("am-hide");
+                $(".update-button, .history-button").addClass("am-hide");
                 $(".content_html").removeClass("am-hide");
                 //隐藏当前内容
                 $(this).children(".content_html").addClass("am-hide");
-                $("#update-button_" + data).removeClass("am-hide");
+                $("#update-button_" + data + ", #history-button_" + data).removeClass("am-hide");
                 for (var key in editor) {
                     if (key != data) {
                         editor[key].setHide();
@@ -160,7 +161,7 @@
                 if (editor && currentUse == false) {
                     $(".content_html, .display-doc-title").removeClass("am-hide");
                     for (var key in editor) {
-                        $(".update-button").addClass("am-hide");
+                        $(".update-button, .history-button").addClass("am-hide");
                         editor[key].setHide();
                     }
                     $(".update-title-form").addClass("am-hide");
@@ -175,36 +176,16 @@
              */
             $(".update-button").on("click", function () {
                 var id = $(this).attr("data");
-                var progress = $.AMUI.progress;
                 if (editor[id].hasContents() != true) {
                     $('#am-alert').modal('open');
                     $(".alert-tips").html("请填写内容");
                 }
-                progress.start();
-                $.ajax({
-                    url: '/d/edit/' + id,
-                    data: {content: editor[id].getContent()},
-                    type: 'POST',
-                    dataType: 'JSON',
-                    success: function (data) {
-                        progress.done();
-                        $('#am-alert').modal('open');
-                        try {
-                            if (data.status == '200') {
-                                setTimeout(function () {
-                                    location.reload()
-                                }, '1000')
-                            }
-                            $(".alert-tips").html(data.msg);
-                        } catch (e) {
-                            $(".alert-tips").html("数据异常");
-                        }
 
-                    },
-                    error: function () {
-                        $('#am-alert').modal('open');
-                        $(".alert-tips").html("请求错误");
-                        progress.done();
+                ajax({url: '/d/edit/' + id, data: {content: editor[id].getContent()}}, function (data) {
+                    if (data.status == '200') {
+                        setTimeout(function () {
+                            location.reload()
+                        }, '1000')
                     }
                 })
                 return false;
@@ -214,7 +195,6 @@
              * 更新标题
              */
             $(".update-title").on("click", function () {
-                var progress = $.AMUI.progress;
                 var title = $("input[name=title]").val()
                 var id = $("input[name=title]").attr("data")
                 var tree = $("select[name=tree]").val()
@@ -226,34 +206,63 @@
                     alert("请选择树");
                     return false;
                 }
-                progress.start()
-                $.ajax({
+                ajax({
                     url: '/d/updateTitle',
-                    data: {id: id, title: title, tree_id: tree, method: 'PUT'},
-                    type: 'POST',
-                    dataType: 'JSON',
-                    success: function (data) {
-                        progress.done();
-                        $('#am-alert').modal('open');
-                        try {
-                            if (data.status == '200') {
-                                setTimeout(function () {
-                                    location.reload()
-                                }, '1000')
-                            }
-                            $(".alert-tips").html(data.msg);
-                        } catch (e) {
-                            $(".alert-tips").html("数据异常");
-                        }
-
-                    },
-                    error: function () {
-                        $('#am-alert').modal('open');
-                        $(".alert-tips").html("请求错误");
-                        progress.done();
+                    data: {id: id, title: title, tree_id: tree, method: 'PUT'}
+                }, function (data) {
+                    if (data.status == '200') {
+                        setTimeout(function () {
+                            location.reload()
+                        }, '1000')
                     }
+                })
+            })
+
+            /**
+             * 查看版本历史
+             */
+            $(".history-button").on("click", function () {
+
+                var path = '<?=DOCUMENT_ROOT?>';
+                var id = $(this).attr("data");
+                ajax({url: '/d/gh/' + id, 'type': 'GET', 'dialog': false}, function (data) {
+                    if (data.status == '0') {
+                        $('#am-alert').modal();
+                        $(".alert-tips").html(data.msg);
+                        setTimeout(function () {
+                            $('#am-alert').modal('close');
+                        }, '1200');
+                    } else if (data.status == '200') {
+                        $('#history-modal').modal();
+                        var trStr = "";
+                        for (var key in data.msg) {
+                            var use = data['msg'][key]['doc_content_current'] == '1' ? '<a class="am-btn am-btn-danger am-btn-xs" disabled="disabled">当前版本</a>' : '<a class="am-btn am-btn-default am-btn-xs" href="'+path+'/d/h/'+data['msg'][key]['doc_content_history_id']+'" target="_blank">预览</a><a class="am-btn am-btn-warning am-btn-xs" href="'+path+'/d/h/c/'+data['msg'][key]['doc_content_history_id']+'" target="_blank">对比</a><a class="am-btn am-btn-success am-btn-xs" href="'+path+'/d/h/u/'+data['msg'][key]['doc_content_history_id']+'">使用此版本</a>';
+                            trStr += '<tr><td>' + data['msg'][key]['doc_content_history_id'] + '</td><td>' + data['msg'][key]['user_name'] + '</td><td>' + data['msg'][key]['doc_content_createtime'] + '</td><td>' + use + '</td></tr>';
+                        }
+                        $(".history-list").html(trStr)
+
+                    }
+
                 })
             })
         })
     </script>
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="history-modal">
+        <div class="am-modal-dialog">
+            <div class="am-modal-bd" style="height: 250px;overflow-y: scroll">
+                <table class="am-table am-table-bordered am-table-radius am-table-striped">
+                    <thead>
+                    <tr>
+                        <th>版本序号</th>
+                        <th>操作者</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="history-list">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 <?php endif; ?>

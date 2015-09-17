@@ -21,17 +21,14 @@ class Article extends \App\Doc\CheckUser {
         $checkTree = \Model\Content::findContent('tree', $data['doc_tree_id'], 'tree_id');
 
         $this->db()->transaction();
+
         $baseInsert = $this->db('doc')->insert($data);
         if ($baseInsert === false) {
             $this->db()->rollBack();
             $this->error('创建文档出错');
         }
 
-        $addContent = $this->db('doc_content')->insert(array('doc_id' => $baseInsert, 'user_id' => $data['user_id'], 'doc_content' => $content, 'doc_content_createtime' => $data['doc_createtime']));
-        if ($addContent === false) {
-            $this->db()->rollBack();
-            $this->error('添加时间文档内容层数出错');
-        }
+        \Model\Doc\Doc::addContent(array('doc_id' => $baseInsert, 'user_id' => $data['user_id'], 'doc_content' => $content, 'doc_content_createtime' => $data['doc_createtime']));
 
         $this->db()->commit();
 
@@ -49,18 +46,16 @@ class Article extends \App\Doc\CheckUser {
         $checkTree = \Model\Content::findContent('tree', $checkDoc['doc_tree_id'], 'tree_id');
 
         $this->db()->transaction();
+
         $time = time();
+
         $updateTime = $this->db()->query("UPDATE {$this->prefix}doc SET doc_updatetime = '{$time}' WHERE doc_id = :doc_id ", array('doc_id' => $id));
         if ($updateTime === FALSE) {
             $this->db()->rollBack();
             $this->error('更新时间出错');
         }
 
-        $addContent = $this->db('doc_content')->insert(array('doc_id' => $id, 'user_id' => $_SESSION['user']['user_id'], 'doc_content' => $content, 'doc_content_createtime' => $time));
-        if ($addContent === FALSE) {
-            $this->db()->rollBack();
-            $this->error('添加内容时出错');
-        }
+        \Model\Doc\Doc::addContent(array('doc_id' => $id, 'user_id' => $_SESSION['user']['user_id'], 'doc_content' => $content, 'doc_content_createtime' => $time));
 
         $this->db()->commit();
         $this->success('添加内容成功!', $this->url("/d/v/{$checkTree['tree_parent']}/{$id}", true));
@@ -76,18 +71,23 @@ class Article extends \App\Doc\CheckUser {
         if (empty($checkUser)) {
             $this->error('没有找到您要更新的内容');
         }
+
+        if($checkUser['doc_content'] == $content){
+            $this->error('内容并没有变化');
+        }
         
         $updateTime = time();
 
         $this->db()->transaction();
-        
-        $history = $this->db('doc_content_history')->insert(array('doc_content_id' => $id, 'doc_content' => $checkUser['doc_content'], 'doc_content_user_id' => $checkUser['user_id'], 'doc_content_updatetime' => $updateTime));
-        if($history === false){
-            $this->db()->rollBack();
-            $this->error('记录历史出错');
-        }
+
+        //记录旧版的历史
+        \Model\Doc\Doc::recordHistory(array('doc_content_id' => $id, 'doc_content' => $checkUser['doc_content'], 'doc_content_user_id' => $checkUser['user_id'], 'doc_content_createtime' => $checkUser['doc_content_createtime']));
 
         $update = $this->db('doc_content')->where('doc_content_id = :doc_content_id')->update(array('doc_content' => $content, 'doc_content_updatetime' => $updateTime, 'user_id' => $_SESSION['user']['user_id'], 'noset' => array('doc_content_id' => $id)));
+
+        //记录新版的历史
+        \Model\Doc\Doc::recordHistory(array('doc_content_id' => $id, 'doc_content' => $content, 'doc_content_user_id' => $_SESSION['user']['user_id'], 'doc_content_createtime' => $updateTime));
+
         if ($update === false) {
             $this->db()->rollBack();
             $this->error('更新出错');
