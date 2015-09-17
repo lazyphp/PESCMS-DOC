@@ -12,16 +12,20 @@ class Tree extends \App\Doc\CheckUser {
             $this->error('树目录必须预留一个');
         }
         //检查是否有文章使用
-        $check = $this->db('doc')->where('doc_tree_id = :id')->find(array('id' => $id));
+        $check = \Model\Content::findContent('doc', $id, 'doc_tree_id');
         if(!empty($check)){
             $this->error('删除前需要先迁移旗下文章到别的树');
+        }
+        $checkChild = \Model\Content::findContent('tree', $id, 'tree_parent');
+        if(!empty($checkChild)){
+            $this->error('删除前需要先迁移旗下的子树');
         }
         
         $result = $this->db('tree')->where('tree_id = :id')->delete(array('id' => $id));
         if($result === false){
             $this->error('删除出错');
         }
-        $this->success('删除成功', '/d/manage');
+        $this->success('删除成功', $this->url('/d/manage', true));
         
     }
 

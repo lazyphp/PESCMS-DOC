@@ -9,12 +9,12 @@
         <div class="am-u-sm-12 am-u-md-6">
             <div class="am-btn-toolbar">
                 <div class="am-btn-group am-btn-group-xs">
-                    <a href="<?= $label->url(GROUP . '-User-action'); ?>" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</a>
+                    <a href="<?= $label->url('User-action'); ?>" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</a>
                 </div>
             </div>
         </div>
         <div class="am-u-sm-12 am-u-md-3">
-            <form>
+            <form action="<?= DOCUMENT_ROOT; ?>">
                 <div class="am-input-group am-input-group-sm">
                     <input type="hidden" name="g" value="<?= GROUP; ?>" />
                     <input type="hidden" name="m" value="<?= MODULE ?>" />
