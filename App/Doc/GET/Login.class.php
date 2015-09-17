@@ -12,14 +12,6 @@ class Login extends \App\Doc\Common {
     }
 
     /**
-     * 注册帐号
-     */
-    public function signup() {
-        $this->assign('title', '注册帐号');
-        $this->layout('Login_form');
-    }
-
-    /**
      * 登录帐号
      */
     public function login() {

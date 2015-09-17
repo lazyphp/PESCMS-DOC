@@ -28,6 +28,8 @@
                         <i class="am-icon-sitemap"></i> 新建树
                     </button>
 
+                    <a href="<?= $label->url('User-index') ?>" class="am-btn am-btn-warning"><i class="am-icon-user"></i> 管理帐号</a>
+
                     <nav>
                         <ul id="" class="am-nav am-collapse">
                             <?php foreach ($treeList as $key => $value) : ?>
