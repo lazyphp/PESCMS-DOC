@@ -62,7 +62,7 @@
                         process++;
                     }, '100');
                 } else if (data['status'] != '200') {
-                    $(".action").prepend("<p>" + data['info'] + "</p>");
+                    $(".action").prepend("<p>" + data['msg'] + "</p>");
                 } else {
                     $(".action").prepend("<p>安装遇到无法解析的错误!</p>");
                 }

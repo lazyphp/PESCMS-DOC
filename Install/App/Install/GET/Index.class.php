@@ -137,10 +137,18 @@ class Index extends \Core\Controller\Controller {
         //配置PDO信息
         $config = \Core\Func\CoreFunc::loadConfig();
         try {
+            //创建数据库
+            $tmp = new \PDO("mysql:host={$config['DB_HOST']};port={$config['DB_PORT']}", $config['DB_USER'], $config['DB_PWD']);
+            $createDb = "CREATE DATABASE IF NOT EXISTS {$config['DB_NAME']} DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
+            $tmp->exec($createDb);
+            //连接数据库
             $db = new \PDO("mysql:host={$config['DB_HOST']};port={$config['DB_PORT']};dbname={$config['DB_NAME']}", $config['DB_USER'], $config['DB_PWD']);
+
         } catch (\PDOException $e) {
             $this->error($e->getMessage());
         }
+
+
         //安装数据库文件
         $db->exec($sqlFile);
 
