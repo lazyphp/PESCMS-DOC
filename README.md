@@ -17,7 +17,12 @@ Mysql：5.1及以上（推荐5.5及以上版本）
 
 ##加入我们或捐助开发者
 PESCMS系列开源产品一直以来都是我一个人在奋斗为主。期间尽管不少人告诉我要加入其中，但他们几乎都是雷声大雨点小，几天后他们都会陆陆续续都消失在开源事业上。若您也想加入PESCMS开发中，可以先对我们的产品进行了解，通过GIT pull request，小试牛刀。等您得到官方许可后，您将会得到对应的任务权限  
-开源也需要时间和金钱的投入，若您想让PESCMS开源做的更好，可以考虑对我们捐助。具体请参考：[点击我](http://www.pescms.com/index.php?m=Page&a=view&id=1)
+开源也需要时间和金钱的投入，若您想让PESCMS开源做的更好，可以考虑对我们捐助。具体请参考：[点击我](http://www.pescms.com/index.php?m=Page&a=view&id=1)  
+
+##软件下载
+PESCMS官网:[PESCMS](http://www.pescms.com/)  
+  
+所有PESCMS系列开源产品可以到此处下载： [点击访问](http://www.pescms.com/d/2)  
 
 ##软件截图
 ######文档首页：
