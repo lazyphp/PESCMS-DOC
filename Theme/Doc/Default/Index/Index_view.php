@@ -4,35 +4,38 @@
         <li class="am-padding tm-remove-border">
             <h1 class="am-article-title am-margin-top-0 display-doc-title"><?= $doc_title; ?></h1>
 
-            <div class="am-form-inline am-padding-bottom-sm update-title-form am-hide">
-                <div class="am-form-group" style="width:40%">
-                    <input type="text" name="title" data="<?= $doc_id; ?>" value="<?= $doc_title; ?>" class="am-form-field" placeholder="标题" style="width:100%;padding:0.5rem">
-                </div>
+            <?php if (!empty($_SESSION['user']['user_id'])): ?>
+                <div class="am-form-inline am-padding-bottom-sm update-title-form am-hide">
+                    <div class="am-form-group" style="width:40%">
+                        <input type="text" name="title" data="<?= $doc_id; ?>" value="<?= $doc_title; ?>" class="am-form-field" placeholder="标题" style="width:100%;padding:0.5rem">
+                    </div>
 
-                <div class="am-form-group">
-                    <select id="tree-parent" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
-                        <option value="">请选择</option>
-                        <?php foreach ($treeList as $key => $value) : ?>
-                            <?php if ($value['tree_parent'] == 0): ?>
-                                <option value="<?= $value['tree_id']; ?>" <?= $treeList[$doc_tree_id]['tree_parent'] == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                    <div class="am-form-group">
+                        <select id="tree-parent" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
+                            <option value="">请选择</option>
+                            <?php foreach ($treeList as $key => $value) : ?>
+                                <?php if ($value['tree_parent'] == 0): ?>
+                                    <option value="<?= $value['tree_id']; ?>" <?= $treeList[$doc_tree_id]['tree_parent'] == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-                <div class="am-form-group">
-                    <select id="tree-child" name="tree" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
-                        <option value="">请选择</option>
-                        <?php foreach ($treeList as $key => $value) : ?>
-                            <?php if ($value['tree_parent'] == $treeList[$doc_tree_id]['tree_parent']): ?>
-                                <option value="<?= $value['tree_id']; ?>" <?= $doc_tree_id == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                    <div class="am-form-group">
+                        <select id="tree-child" name="tree" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
+                            <option value="">请选择</option>
+                            <?php foreach ($treeList as $key => $value) : ?>
+                                <?php if ($value['tree_parent'] == $treeList[$doc_tree_id]['tree_parent']): ?>
+                                    <option value="<?= $value['tree_id']; ?>" <?= $doc_tree_id == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-                <a class="am-btn am-btn-default update-title" style="padding:0.51rem">更新标题</a>
-            </div>
+                    <a class="am-btn am-btn-default update-title" style="padding:0.51rem">更新标题</a>
+                    <a href="<?= $label->url("/d/action/{$doc_id}/DELETE", true); ?>" class="am-btn am-btn-danger" onclick="return confirm('确定删除吗?文档将无法恢复的!')" style="padding:0.51rem">删除文档</a>
+                </div>
+            <?php endif; ?>
             <?php if (time() - $doc_updatetime > 15768000): ?>
                 <div class="am-alert am-alert-secondary am-text-xs am-margin-bottom-0">
                     <p><i class="am-icon-exclamation-triangle"></i> 该文档已超过半年没有更新，可能不再具备参考价值</p>
@@ -54,6 +57,7 @@
                             <?php if ($_SESSION['user']['user_id']): ?>
                                 <a href="javascript:;" id="update-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary update-button">更新</a>
                                 <a href="javascript:;" id="history-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary history-button">版本历史</a>
+                                <a href="<?= $label->url("/d/dc/{$value['doc_content_id']}/DELETE", true); ?>" id="delete-content-button_<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-danger delete-content-button" onclick="return confirm('确定删除吗?文档内容将无法恢复的!')">删除文档</a>
                             <?php endif; ?>
                         </p>
                     </div>
@@ -132,11 +136,11 @@
                 }
 
                 //移除所有隐藏得元素
-                $(".update-button, .history-button").addClass("am-hide");
+                $(".update-button, .history-button, .delete-content-button").addClass("am-hide");
                 $(".content_html").removeClass("am-hide");
                 //隐藏当前内容
                 $(this).children(".content_html").addClass("am-hide");
-                $("#update-button_" + data + ", #history-button_" + data).removeClass("am-hide");
+                $("#update-button_" + data + ", #history-button_" + data + ", #delete-content-button_" + data).removeClass("am-hide");
                 for (var key in editor) {
                     if (key != data) {
                         editor[key].setHide();
@@ -161,7 +165,7 @@
                 if (editor && currentUse == false) {
                     $(".content_html, .display-doc-title").removeClass("am-hide");
                     for (var key in editor) {
-                        $(".update-button, .history-button").addClass("am-hide");
+                        $(".update-button, .history-button, .delete-content-button").addClass("am-hide");
                         editor[key].setHide();
                     }
                     $(".update-title-form").addClass("am-hide");

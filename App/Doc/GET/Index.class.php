@@ -28,7 +28,7 @@ class Index extends \App\Doc\Common {
         $this->assign($base);
         $this->assign('title', $base['doc_title']);
 
-        $condition = "doc_id = :doc_id";
+        $condition = "doc_id = :doc_id AND doc_content_delete = 0 ";
         $param = array('doc_id' => $id);
 
         //内容层数

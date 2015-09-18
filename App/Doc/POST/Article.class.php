@@ -67,7 +67,7 @@ class Article extends \App\Doc\CheckUser {
     public function updateContent() {
         $id = $this->isG('id', '请提交您要编辑的内容');
         $content = $this->isP('content', '请填写内容');
-        $checkUser = $this->db('doc_content')->where('doc_content_id = :doc_content_id ')->find(array('doc_content_id' => $id));
+        $checkUser = $this->db('doc_content')->where('doc_content_id = :doc_content_id AND doc_content_delete = 0 ')->find(array('doc_content_id' => $id));
         if (empty($checkUser)) {
             $this->error('没有找到您要更新的内容');
         }
