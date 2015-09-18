@@ -1,6 +1,8 @@
 #PESCMS DOC
 PESCMS DOC是一款基于PESCMS2.5开发的文档系统：管理文档原来可以做到如此便捷！  
-本程序基于GPLV2协议进行开源发布，个人/商业用户在不进行闭源销售情况下，没有任何使用限制！  
+本程序基于GPLV2协议进行开源发布，个人/商业用户在不进行闭源销售情况下，没有任何使用限制！
+QQ群：451828934 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=70b9d382c5751b7b64117191a71d083fbab885f1fb7c009f0dc427851300be3a"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PESCMS TEAM官方群" title="PESCMS TEAM官方群"></a>  
+演示地址:[http://doc.pescms.com](http://doc.pescms.com)  
 ##设计初衷
 日常工作经常需要涉及到文档的编写。文档如何保存成为一个让人头疼的事情。而文档如何便于查阅又是一个让人头疼的事情。  
 为此，PESCMS官方根据自身实际的业务需求，开发一套简单，便捷，易容的文档管理系统。  
@@ -21,18 +23,18 @@ PESCMS系列开源产品一直以来都是我一个人在奋斗为主。期间�
 
 ##软件下载
 PESCMS官网:[PESCMS](http://www.pescms.com/)  
-  
+
 所有PESCMS系列开源产品可以到此处下载： [点击访问](http://www.pescms.com/d/2)  
 
 ##软件截图
 ######文档首页：
 <a href="http://ww2.sinaimg.cn/large/d2d33fbfgw1ew6efha745j213i0sljx4.jpg" target="_blank"><img src="http://ww2.sinaimg.cn/large/d2d33fbfgw1ew6efha745j213i0sljx4.jpg" width="500" /></a>
 #####管理文档树：
-<a href="http://ww4.sinaimg.cn/mw690/d2d33fbfgw1ew6efgzv6lj20pm08idh1.jpg" target="_blank"><img src="http://ww4.sinaimg.cn/mw690/d2d33fbfgw1ew6efgzv6lj20pm08idh1.jpg" width="500" /></a>
+<a href="http://ww4.sinaimg.cn/large/d2d33fbfgw1ew6efgzv6lj20pm08idh1.jpg" target="_blank"><img src="http://ww4.sinaimg.cn/mw690/d2d33fbfgw1ew6efgzv6lj20pm08idh1.jpg" width="500" /></a>
 #####新增文档：
-<a href="http://ww4.sinaimg.cn/mw690/d2d33fbfgw1ew6efjprdkj20sn0hbwg4.jpg" target="_blank"><img src="http://ww4.sinaimg.cn/mw690/d2d33fbfgw1ew6efjprdkj20sn0hbwg4.jpg" width="500" /></a>
+<a href="http://ww4.sinaimg.cn/large/d2d33fbfgw1ew6efjprdkj20sn0hbwg4.jpg" target="_blank"><img src="http://ww4.sinaimg.cn/large/d2d33fbfgw1ew6efjprdkj20sn0hbwg4.jpg" width="500" /></a>
 #####编辑文档：
-<a href="http://ww2.sinaimg.cn/mw690/d2d33fbfgw1ew6efk33ncj20i00elmy7.jpg" target="_blank"><img src="http://ww2.sinaimg.cn/mw690/d2d33fbfgw1ew6efk33ncj20i00elmy7.jpg" width="500" /></a>
+<a href="http://ww2.sinaimg.cn/large/d2d33fbfgw1ew6efk33ncj20i00elmy7.jpg" target="_blank"><img src="http://ww2.sinaimg.cn/large/d2d33fbfgw1ew6efk33ncj20i00elmy7.jpg" width="500" /></a>
 #####文档历史版本:
 <a href="http://ww2.sinaimg.cn/mw690/d2d33fbfgw1ew6efgm3jlj20fe07774m.jpg" target="_blank"><img src="http://ww2.sinaimg.cn/mw690/d2d33fbfgw1ew6efgm3jlj20fe07774m.jpg" width="500" /></a>
 #####历史版本对比:
