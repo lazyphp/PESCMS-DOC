@@ -38,6 +38,8 @@ return array(
     'd/h/u/{id}' => 'Doc-History-useVersion',
     //文档操作
     'd/action/{id}/{method}' => 'Doc-Article-Action',
+    //删除文档内容
+    'd/dc/{id}/{method}' => 'Doc-Article-deleteContent',
     //添加文档内容
     'd/addContent/{id}' => 'Doc-Article-addContent',
     //更新内容
