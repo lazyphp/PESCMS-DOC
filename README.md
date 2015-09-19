@@ -1,6 +1,6 @@
 #PESCMS DOC
 PESCMS DOC是一款基于PESCMS2.5开发的文档系统：管理文档原来可以做到如此便捷！  
-本程序基于GPLV2协议进行开源发布，个人/商业用户在不进行闭源销售情况下，没有任何使用限制！
+本程序基于GPLV2协议进行开源发布，个人/商业用户在不进行闭源销售情况下，没有任何使用限制！  
 QQ群：451828934 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=70b9d382c5751b7b64117191a71d083fbab885f1fb7c009f0dc427851300be3a"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PESCMS TEAM官方群" title="PESCMS TEAM官方群"></a>  
 演示地址:[http://doc.pescms.com](http://doc.pescms.com)  
 ##设计初衷
@@ -24,7 +24,7 @@ PESCMS系列开源产品一直以来都是我一个人在奋斗为主。期间�
 ##软件下载
 PESCMS官网:[PESCMS](http://www.pescms.com/)  
 
-所有PESCMS系列开源产品可以到此处下载： [点击访问](http://www.pescms.com/d/2)  
+所有PESCMS系列开源产品可以到此处下载： [点击访问](http://www.pescms.com/d/v/9/2.html)  
 
 ##软件截图
 ######文档首页：
