@@ -24,7 +24,7 @@ PESCMS系列开源产品一直以来都是我一个人在奋斗为主。期间�
 ##软件下载
 PESCMS官网:[PESCMS](http://www.pescms.com/)  
 
-所有PESCMS系列开源产品可以到此处下载： [点击访问](http://www.pescms.com/d/v/9/2.html)  
+所有PESCMS系列开源产品可以到此处下载： [点击访问](http://www.pescms.com/d/v/10/2.html)  
 
 ##软件截图
 ######文档首页：
