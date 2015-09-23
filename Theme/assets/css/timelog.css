@@ -135,6 +135,7 @@
 .tm-article .ue-table-interlace-color-single{ background-color: #fcfcfc; } 
 .tm-article .ue-table-interlace-color-double{ background-color: #f7faff; }
 .tm-article td p{margin:0;padding:0;}
+.content_html h1, h2{margin-top:0}
 
 .tm-article blockquote ul, .tm-article blockquote ol{margin-bottom: 0;}
 .am-article-bd img{display: inline !important;}
