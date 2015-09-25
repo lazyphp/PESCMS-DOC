@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2015-09-18 04:14:09
+-- Generation Time: 2015-09-25 05:33:15
 -- 服务器版本： 5.5.16
 -- PHP Version: 5.4.39
 
@@ -28,13 +28,13 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `d_doc` (
   `doc_id` int(11) NOT NULL AUTO_INCREMENT,
-  `doc_title` varchar(128) NOT NULL COMMENT '标题',
-  `user_id` int(11) NOT NULL COMMENT '用户ID',
-  `doc_tree_id` int(11) NOT NULL COMMENT '时间日志类型',
-  `doc_createtime` int(11) NOT NULL COMMENT '创建时间',
-  `doc_updatetime` int(11) NOT NULL COMMENT '最后更新时间',
-  `doc_delete` tinyint(1) NOT NULL COMMENT '是否被删除',
-  `doc_listsort` int(11) NOT NULL,
+  `doc_title` varchar(128) NOT NULL DEFAULT '' COMMENT '标题',
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `doc_tree_id` int(11) NOT NULL DEFAULT '0' COMMENT '时间日志类型',
+  `doc_createtime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `doc_updatetime` int(11) NOT NULL DEFAULT '0' COMMENT '最后更新时间',
+  `doc_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否被删除',
+  `doc_listsort` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`doc_id`),
   KEY `timelog_type` (`doc_tree_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='文档基础表' AUTO_INCREMENT=2 ;
@@ -54,13 +54,13 @@ INSERT INTO `d_doc` (`doc_id`, `doc_title`, `user_id`, `doc_tree_id`, `doc_creat
 
 CREATE TABLE IF NOT EXISTS `d_doc_content` (
   `doc_content_id` int(11) NOT NULL AUTO_INCREMENT,
-  `doc_id` int(11) NOT NULL COMMENT '关联的时间日志基础表',
-  `user_id` int(11) NOT NULL COMMENT '参与者',
+  `doc_id` int(11) NOT NULL DEFAULT '0' COMMENT '关联的时间日志基础表',
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '参与者',
   `doc_content` text NOT NULL COMMENT '内容',
-  `doc_content_createtime` int(11) NOT NULL COMMENT '创建时间',
-  `doc_content_updatetime` int(11) NOT NULL COMMENT '内容更新时间',
-  `doc_content_version` tinyint(1) NOT NULL COMMENT '用于作版本标记。切换则记录对应的版本ID，反之为0',
-  `doc_content_delete` tinyint(1) NOT NULL COMMENT '1为删除',
+  `doc_content_createtime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `doc_content_updatetime` int(11) NOT NULL DEFAULT '0' COMMENT '内容更新时间',
+  `doc_content_version` tinyint(1) NOT NULL DEFAULT '0' COMMENT '用于作版本标记。切换则记录对应的版本ID，反之为0',
+  `doc_content_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1为删除',
   PRIMARY KEY (`doc_content_id`),
   KEY `doc_id` (`doc_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='文档内容' AUTO_INCREMENT=3 ;
@@ -81,11 +81,11 @@ INSERT INTO `d_doc_content` (`doc_content_id`, `doc_id`, `user_id`, `doc_content
 
 CREATE TABLE IF NOT EXISTS `d_doc_content_history` (
   `doc_content_history_id` int(11) NOT NULL AUTO_INCREMENT,
-  `doc_content_id` int(11) NOT NULL COMMENT '文档内容的ID',
-  `doc_content_user_id` int(11) NOT NULL COMMENT '该版本操作者ID',
+  `doc_content_id` int(11) NOT NULL DEFAULT '0' COMMENT '文档内容的ID',
+  `doc_content_user_id` int(11) NOT NULL DEFAULT '0' COMMENT '该版本操作者ID',
   `doc_content` text NOT NULL COMMENT '内容',
-  `doc_content_createtime` int(11) NOT NULL COMMENT '内容创建时间',
-  `doc_content_current` tinyint(1) NOT NULL COMMENT '当前在使用该版本:1',
+  `doc_content_createtime` int(11) NOT NULL DEFAULT '0' COMMENT '内容创建时间',
+  `doc_content_current` tinyint(1) NOT NULL DEFAULT '0' COMMENT '当前在使用该版本:1',
   PRIMARY KEY (`doc_content_history_id`),
   KEY `doc_content_id` (`doc_content_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文档内容' AUTO_INCREMENT=1 ;
@@ -138,9 +138,9 @@ INSERT INTO `d_field` (`field_id`, `model_id`, `field_name`, `display_name`, `fi
 
 CREATE TABLE IF NOT EXISTS `d_login_user` (
   `login_id` int(11) NOT NULL AUTO_INCREMENT,
-  `login_cookie` varchar(64) NOT NULL COMMENT 'cookie值',
-  `user_id` int(11) NOT NULL COMMENT '用户ID',
-  `login_agent` varchar(128) NOT NULL COMMENT '登录的浏览器信息',
+  `login_cookie` varchar(64) NOT NULL DEFAULT '' COMMENT 'cookie值',
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `login_agent` varchar(128) NOT NULL DEFAULT '' COMMENT '登录的浏览器信息',
   PRIMARY KEY (`login_id`),
   UNIQUE KEY `login_cookie` (`login_cookie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录cookie' AUTO_INCREMENT=1 ;
@@ -180,11 +180,11 @@ INSERT INTO `d_model` (`model_id`, `model_name`, `lang_key`, `status`, `is_searc
 CREATE TABLE IF NOT EXISTS `d_tree` (
   `tree_id` int(11) NOT NULL AUTO_INCREMENT,
   `tree_listsort` int(11) NOT NULL,
-  `tree_status` tinyint(4) NOT NULL,
-  `tree_lang` tinyint(4) NOT NULL,
-  `tree_createtime` int(11) NOT NULL,
-  `tree_title` varchar(255) NOT NULL,
-  `tree_parent` int(11) NOT NULL,
+  `tree_status` tinyint(4) NOT NULL DEFAULT '0',
+  `tree_lang` tinyint(4) NOT NULL DEFAULT '0',
+  `tree_createtime` int(11) NOT NULL DEFAULT '0',
+  `tree_title` varchar(255) NOT NULL DEFAULT '',
+  `tree_parent` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`tree_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='文档树' AUTO_INCREMENT=3 ;
 
@@ -204,14 +204,14 @@ INSERT INTO `d_tree` (`tree_id`, `tree_listsort`, `tree_status`, `tree_lang`, `t
 
 CREATE TABLE IF NOT EXISTS `d_user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_account` varchar(255) NOT NULL,
-  `user_password` varchar(255) NOT NULL,
-  `user_mail` varchar(255) NOT NULL,
-  `user_name` varchar(255) NOT NULL,
-  `user_status` tinyint(4) NOT NULL,
-  `user_createtime` int(11) NOT NULL,
-  `user_last_login` int(11) NOT NULL,
-  `user_listsort` varchar(255) NOT NULL,
+  `user_account` varchar(255) NOT NULL DEFAULT '',
+  `user_password` varchar(255) NOT NULL DEFAULT '',
+  `user_mail` varchar(255) NOT NULL DEFAULT '',
+  `user_name` varchar(255) NOT NULL DEFAULT '',
+  `user_status` tinyint(4) NOT NULL DEFAULT '0',
+  `user_createtime` int(11) NOT NULL DEFAULT '0',
+  `user_last_login` int(11) NOT NULL DEFAULT '0',
+  `user_listsort` int(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
