@@ -32,7 +32,7 @@ class Index extends \Core\Controller\Controller {
      */
     public function config() {
         $phpVersion = explode('.', phpversion());
-        $check['version'] =  $phpVersion['0'] >= 5 && $phpVersion['1'] >= 4 ? true : false;
+        $check['version'] =  $phpVersion['0'] >= 5 ? ($phpVersion['1'] >= 4 ? true : false ) : false;
 
         $check['pdo'] = in_array('pdo_mysql', get_loaded_extensions()) ? true : false;
 
