@@ -127,6 +127,13 @@ class Error {
             }
             header("HTTP/1.1 500 Internal Server Error");
             $title = "500 Internal Server Error";
+            if (!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+                if (!empty($db->errorInfo)) {
+                    echo $errorSql.'<br/>'.$errorSqlString;
+                }
+                echo $errorMes.'<br/>'.$errorFile;
+                exit;
+            }
             require self::promptPage();
             exit;
         }
@@ -164,6 +171,10 @@ class Error {
         }
         header("HTTP/1.1 500 Internal Server Error");
         $title = "500 Internal Server Error";
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+            echo $errorMes.'<br/>'.$errorFile;
+            exit;
+        }
         require self::promptPage();
         exit;
     }

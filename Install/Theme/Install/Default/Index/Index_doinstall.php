@@ -68,7 +68,7 @@
                 }
             },
             error:function(obj){
-                $(".action").prepend("<p>安装出错,未知原因!</p><p>"+obj+"</p>");
+                $(".action").prepend("<p>安装出错,未知原因!</p><p>"+obj.responseText+"</p>");
             }
         })
     })
