@@ -167,11 +167,12 @@ class Index extends \Core\Controller\Controller {
 
         $str = "<?php\n \$config = array(\n";
         $str .= "'SITETITLE' => '{$title}',\n";
-        foreach (array_merge($config, json_decode($urlModel, true)) as $key => $value) {
+        $urlModelArray['URLMODEL'] = json_decode($urlModel, true);
+        foreach (array_merge($config, $urlModelArray) as $key => $value) {
             if(is_array($value)){
                 $str .= "'{$key}' => array(\n";
                 foreach($value as $ik => $iv){
-                    $str .= "'{$ik}' => '{$iv}',\n";
+                    $str .= "'".strtoupper($ik)."' => '{$iv}',\n";
                 }
                 $str .= "),";
             }else{
