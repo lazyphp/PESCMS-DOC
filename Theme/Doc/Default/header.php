@@ -14,7 +14,7 @@
         /**
          * 本变量作用为防止用户在二级目录下安装PESCMS DOC，导致ajax之类请求异常
          */
-        var path = '<?=DOCUMENT_ROOT?>';
+        var path = '<?=DOCUMENT_ROOT?><?=$URLMODEL['INDEX'] == '1' ? '' : '/index.php' ?>';
     </script>
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/timelog.css"/>

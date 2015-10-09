@@ -46,6 +46,7 @@ class Controller {
         $this->prefix = self::$modelPrefix = empty($config[GROUP]) ? $config['DB_PREFIX'] : $config[GROUP]['DB_PREFIX'];
         $this->chooseTheme();
         $this->assign('siteTitle', $config['SITETITLE']);
+        $this->assign('URLMODEL', $config['URLMODEL']);
         $this->__init();
     }
 
