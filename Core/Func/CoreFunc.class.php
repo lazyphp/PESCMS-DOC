@@ -61,7 +61,7 @@ class CoreFunc {
             $totalDismantling = count($dismantling);
 
             if ($totalDismantling == 2) {
-                switch ($urlModel['URLMODE']) {
+                switch ($urlModel['URLMODEL']) {
                     case '2':
                         $url .= implode('-', $dismantling);
                         $url .= self::urlLinkStr($param, '-');
