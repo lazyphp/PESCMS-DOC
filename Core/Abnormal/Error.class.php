@@ -83,6 +83,11 @@ class Error {
     public static function getShutdown() {
         $error = error_get_last();
         if ($error) {
+			if( strstr($error['message'], 'PHP Startup') ){
+				echo '当前PHP环境有扩展加载失败';
+				exit;
+			}
+        
             $db = \Core\Func\CoreFunc::db();
             if (!empty($db->errorInfo)) {
                 self::recordLog(implode("\r", $db->errorInfo), false);
