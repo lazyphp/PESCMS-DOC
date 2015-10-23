@@ -185,7 +185,7 @@
                     $(".alert-tips").html("请填写内容");
                 }
 
-                ajax({url: path + '/d/edit/' + id, data: {content: editor[id].getContent()}}, function (data) {
+                ajax({url: request + '/d/edit/' + id, data: {content: editor[id].getContent()}}, function (data) {
                     if (data.status == '200') {
                         setTimeout(function () {
                             location.reload()
@@ -211,7 +211,7 @@
                     return false;
                 }
                 ajax({
-                    url: path + '/d/updateTitle',
+                    url: request + '/d/updateTitle',
                     data: {id: id, title: title, tree_id: tree, method: 'PUT'}
                 }, function (data) {
                     if (data.status == '200') {
@@ -227,7 +227,7 @@
              */
             $(".history-button").on("click", function () {
                 var id = $(this).attr("data");
-                ajax({url: path + '/d/gh/' + id, 'type': 'GET', 'dialog': false}, function (data) {
+                ajax({url: request + '/d/gh/' + id, 'type': 'GET', 'dialog': false}, function (data) {
                     if (data.status == '0') {
                         $('#am-alert').modal();
                         $(".alert-tips").html(data.msg);
@@ -238,7 +238,7 @@
                         $('#history-modal').modal();
                         var trStr = "";
                         for (var key in data.msg) {
-                            var use = data['msg'][key]['doc_content_current'] == '1' ? '<a class="am-btn am-btn-danger am-btn-xs" disabled="disabled">当前版本</a>' : '<a class="am-btn am-btn-default am-btn-xs" href="' + path + '/d/h/' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">预览</a><a class="am-btn am-btn-warning am-btn-xs" href="' + path + '/d/h/c/' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">对比</a><a class="am-btn am-btn-success am-btn-xs" href="' + path + '/d/h/u/' + data['msg'][key]['doc_content_history_id'] + '">使用此版本</a>';
+                            var use = data['msg'][key]['doc_content_current'] == '1' ? '<a class="am-btn am-btn-danger am-btn-xs" disabled="disabled">当前版本</a>' : '<a class="am-btn am-btn-default am-btn-xs" href="' + request + '/d/h/' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">预览</a><a class="am-btn am-btn-warning am-btn-xs" href="' + request + '/d/h/c/' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">对比</a><a class="am-btn am-btn-success am-btn-xs" href="' + request + '/d/h/u/' + data['msg'][key]['doc_content_history_id'] + '">使用此版本</a>';
                             trStr += '<tr><td>' + data['msg'][key]['doc_content_history_id'] + '</td><td>' + data['msg'][key]['user_name'] + '</td><td>' + data['msg'][key]['doc_content_createtime'] + '</td><td>' + use + '</td></tr>';
                         }
                         $(".history-list").html(trStr)

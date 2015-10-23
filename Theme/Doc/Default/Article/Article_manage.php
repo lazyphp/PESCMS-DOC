@@ -177,7 +177,7 @@
                 }
 
                 ajax({
-                    url: path+'/d/tree/action', data: {title: title, id: id, parent: parent, method: 'PUT'}
+                    url: request+'/d/tree/action', data: {title: title, id: id, parent: parent, method: 'PUT'}
                 }, function (data) {
                     if (data.status == '200') {
                         setTimeout(function () {

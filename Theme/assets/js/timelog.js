@@ -4,7 +4,7 @@ $(function () {
      * 刷新验证码
      */
     $(".verify").on("click", function () {
-        $(this).attr("src", path + "/d/verify/" + Date.parse(new Date()) + Math.random())
+        $(this).attr("src", request + "/d/verify/" + Date.parse(new Date()) + Math.random())
     })
 
     /**
