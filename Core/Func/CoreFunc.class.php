@@ -56,12 +56,12 @@ class CoreFunc {
             $url = $urlModel['INDEX'] == '0' ? '/index.php' : '';
             $url .= $controller;
         } else {
-            $url = $urlModel['INDEX'] == '0' ? '/index.php' : '/';
+            $url = $urlModel['INDEX'] == '0' ? '/index.php/' : '/';
             $dismantling = explode('-', $controller);
             $totalDismantling = count($dismantling);
 
             if ($totalDismantling == 2) {
-                switch ($urlModel['URLMODE']) {
+                switch ($urlModel['URLMODEL']) {
                     case '2':
                         $url .= implode('-', $dismantling);
                         $url .= self::urlLinkStr($param, '-');
@@ -76,7 +76,7 @@ class CoreFunc {
                         $url .= self::urlLinkStr($param);
                 }
             } else {
-                switch ($urlModel['URLMODE']) {
+                switch ($urlModel['URLMODEL']) {
                     case '2':
                         $url .= implode('-', $dismantling);
                         $url .= self::urlLinkStr($param, '-');
@@ -96,7 +96,7 @@ class CoreFunc {
         /**
          * 正常模式不会生成HTML后缀
          */
-        if ($urlModel['SUFFIX'] == '1' && $urlModel['URLMODE'] != '1') {
+        if ($urlModel['SUFFIX'] == '1' && $urlModel['URLMODEL'] != '1') {
             $url .= ".html";
         }
         return DOCUMENT_ROOT . $url;
