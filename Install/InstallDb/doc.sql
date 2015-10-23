@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `d_doc` (
 --
 
 INSERT INTO `d_doc` (`doc_id`, `doc_title`, `user_id`, `doc_tree_id`, `doc_createtime`, `doc_updatetime`, `doc_delete`, `doc_listsort`) VALUES
-(1, '序言', 1, 2, 1441274302, 1442499505, 0, 1);
+(1, '序言', 1, 2, 1441274302, 1445575327, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `d_doc_content` (
   `doc_content_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1为删除',
   PRIMARY KEY (`doc_content_id`),
   KEY `doc_id` (`doc_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='文档内容' AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='文档内容' AUTO_INCREMENT=4 ;
 
 --
 -- 转存表中的数据 `d_doc_content`
@@ -71,7 +71,8 @@ CREATE TABLE IF NOT EXISTS `d_doc_content` (
 
 INSERT INTO `d_doc_content` (`doc_content_id`, `doc_id`, `user_id`, `doc_content`, `doc_content_createtime`, `doc_content_updatetime`, `doc_content_version`, `doc_content_delete`) VALUES
 (1, 1, 1, '&lt;p&gt;欢迎使用PESCMS 文档系统。&lt;/p&gt;&lt;p&gt;本系统基于PESCMS 2.5开发的无植入式文档系统，您可以快速部署在任意PESCMS 2.5开发的系统中。&lt;/p&gt;&lt;h4&gt;专注编写和查阅&lt;/h4&gt;&lt;p&gt;PESCMS 文档系统让用户只需专注于文档的编写和查阅上。没有设计过多且复杂功能，一级文档树 + 文档文章的组合，让文档结构一目了然。结合优秀的Amazeui UI前端框架，使本系统适配所有平台。&lt;/p&gt;&lt;h4&gt;轻松的编辑方式&lt;/h4&gt;&lt;p&gt;登录文档系统后，您在任何文档内容中，只要轻轻双击内容任意区域，即可进入编辑模式。同时UE百度编辑器，让我们写文档变得更加轻松便捷。&lt;/p&gt;&lt;h4&gt;永存的版本历史&lt;/h4&gt;&lt;p&gt;PESCMS DOC自带便捷的版本历史功能，任何操作都记录在案，历史记录尽在瞬间。&lt;/p&gt;', 1441274302, 1442481201, 0, 0),
-(2, 1, 1, '&lt;h2&gt;建议和反馈&lt;/h2&gt;&lt;p&gt;如果您有什么建议或者需要反馈的，可以通过如下方式联系我们：&lt;/p&gt;&lt;p&gt;官方群Q：451828934 &lt;a target=&quot;_blank&quot; href=&quot;http://shang.qq.com/wpa/qunwpa?idkey=cac31728dc4b0838c5e881747f44698bf87197cb3743354a6b02ff13489c57a3&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://pub.idqqimg.com/wpa/images/group.png&quot; alt=&quot;PESCMS TEAM官方群&quot; title=&quot;PESCMS TEAM官方群&quot;/&gt;&lt;/a&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;访问Timelog发表的您看法：&lt;a href=&quot;http://www.timelog.xyz/tm/type/4&quot; _src=&quot;http://www.timelog.xyz/tm/type/4&quot;&gt;http://www.timelog.xyz/tm/type/4&lt;/a&gt;&amp;nbsp;&lt;/p&gt;', 1442499505, 1442499631, 0, 0);
+(2, 1, 1, '&lt;h2&gt;建议和反馈&lt;/h2&gt;&lt;p&gt;如果您有什么建议或者需要反馈的，可以通过如下方式联系我们：&lt;/p&gt;&lt;p&gt;官方群Q：451828934 &lt;a target=&quot;_blank&quot; href=&quot;http://shang.qq.com/wpa/qunwpa?idkey=cac31728dc4b0838c5e881747f44698bf87197cb3743354a6b02ff13489c57a3&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://pub.idqqimg.com/wpa/images/group.png&quot; alt=&quot;PESCMS TEAM官方群&quot; title=&quot;PESCMS TEAM官方群&quot;/&gt;&lt;/a&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;访问Timelog发表的您看法：&lt;a href=&quot;http://www.timelog.xyz/tm/type/4&quot; _src=&quot;http://www.timelog.xyz/tm/type/4&quot;&gt;http://www.timelog.xyz/tm/type/4&lt;/a&gt;&amp;nbsp;&lt;/p&gt;', 1442499505, 1442499631, 0, 0),
+(3, 1, 1, '&lt;h2&gt;使用帮助&lt;/h2&gt;&lt;p&gt;所有文档管理都需要登录帐号后方可操作。大部分功能都是显式布局，此部分功能就不进行详细说明了，相信大家摸索1分钟即可上手了。下面简单介绍隐式功能：&lt;/p&gt;&lt;p&gt;&lt;strong&gt;编辑文档：&lt;/strong&gt;将鼠标移动至文档内容区域，&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;双击&lt;/span&gt;之。系统将会进入编辑模式。在编辑模式下，将会出现&lt;strong&gt;&lt;span style=&quot;color: rgb(0, 176, 240);&quot;&gt;更新&lt;/span&gt;&lt;/strong&gt;、&lt;span style=&quot;color: rgb(0, 176, 240);&quot;&gt;&lt;strong&gt;版本历史&lt;/strong&gt;&lt;/span&gt;、&lt;span style=&quot;color: rgb(0, 176, 240);&quot;&gt;&lt;strong&gt;删除&lt;/strong&gt;&lt;/span&gt;三种类别按钮（&lt;strong&gt;此操作不可恢复&lt;/strong&gt;）&lt;/p&gt;&lt;p&gt;&lt;strong&gt;更新文档标题：&lt;/strong&gt;双击文档标题，&lt;span style=&quot;text-decoration: underline;&quot;&gt;即可快速编辑文档标题，切换文档树位置。还可以删除文档&lt;/span&gt;（&lt;strong&gt;本操作不可恢复&lt;/strong&gt;）。&lt;/p&gt;', 1445575327, 0, 0, 0);
 
 -- --------------------------------------------------------
 
