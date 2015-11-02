@@ -53,7 +53,7 @@ class Index extends \Core\Controller\Controller {
         $data['DB_HOST'] = $this->isP('host', '请填写数据库地址!');
         $data['DB_NAME'] = $this->isP('name', '请填写数据库名称!');
         $data['DB_USER'] = $this->isP('account', '请填写数据库帐号!');
-        $data['DB_PWD'] = $this->p('passwd', '请填写数据库密码!');
+        $data['DB_PWD'] = $this->p('passwd');
         $data['DB_PORT'] = $this->isP('port', '请填写数据库端口!');
         $data['DB_PREFIX'] = 'd_';
         $data['PRIVATE_KEY'] = substr(md5(uniqid()), '0', '10');
