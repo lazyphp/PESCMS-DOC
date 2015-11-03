@@ -1,7 +1,7 @@
 <?php $this->header(); ?>
 <div class="am-cf am-padding-top am-padding-bottom">
     <div class="tm-sidebar am-offcanvas am-margin-left-xs" id="admin-offcanvas">
-        <div class="am-offcanvas-bar admin-offcanvas-bar">
+        <div class="am-offcanvas-bar admin-offcanvas-bar" style="z-index: 1">
             <?php include 'sidebar.php'; ?>
         </div>
     </div>

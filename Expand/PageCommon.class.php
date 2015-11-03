@@ -42,12 +42,12 @@ class PageCommon {
         /**
          * 正常模式不会生成HTML后缀
          */
-        if ($urlModel['SUFFIX'] == '1' && $urlModel['URLMODE'] != '1') {
+        if ($urlModel['SUFFIX'] == '1' && $urlModel['URLMODEL'] != '1') {
             $this->suffix = true;
         }
 
 
-        switch ($urlModel['URLMODE']) {
+        switch ($urlModel['URLMODEL']) {
             case '2':
                 $group = empty($group) ? '' : "{$group}-";
                 $url .= $group . MODULE . "-" . ACTION;

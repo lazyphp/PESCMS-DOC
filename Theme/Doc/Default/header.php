@@ -15,7 +15,7 @@
          * 本变量作用为防止用户在二级目录下安装PESCMS DOC，导致ajax之类请求异常
          */
         var path = '<?=DOCUMENT_ROOT?>';
-        var request = path+'<?=$URLMODEL['INDEX'] == '1' ? '' : '/index.php' ?>'
+        var request = path + '<?=$URLMODEL['INDEX'] == '1' ? '' : '/index.php' ?>'
     </script>
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/timelog.css"/>
@@ -47,7 +47,7 @@
                 <ul class="am-dropdown-content">
                     <?php foreach ($treeList as $key => $value): ?>
                         <?php if ($value['tree_parent'] == '0'): ?>
-                            <li class="<?= ($key == 0 && empty($_GET['tree'])) || $_GET['tree'] == $value['tree_id']   ? 'am-active' : ''; ?>">
+                            <li class="<?= ($key == 0 && empty($_GET['tree'])) || $_GET['tree'] == $value['tree_id'] ? 'am-active' : ''; ?>">
                                 <a href="<?= $label->url("/d/index/{$value['tree_id']}", true); ?>"><?= $value['tree_title']; ?></a>
                             </li>
                         <?php endif; ?>
@@ -55,6 +55,17 @@
                 </ul>
             </li>
         </ul>
+        <form class="am-topbar-form am-topbar-left am-form-inline" method="GET" action="<?= DOCUMENT_ROOT ?>/" role="search">
+            <input type="hidden" name="m" value="Search">
+            <input type="hidden" name="a" value="index">
+            <input type="hidden" name="tree" value="<?= (int) $_GET['tree']; ?>">
+            <div class="am-form-group am-input-group">
+                <input type="text" class="am-form-field" name="keyword" value="<?= htmlspecialchars($_GET['keyword']); ?>" placeholder="搜索">
+                <span class="am-input-group-btn">
+                    <button class="am-btn am-btn-default" type="submit"><span class="am-icon-search"></span></button>
+                </span>
+            </div>
+        </form>
 
         <div class="am-topbar-right">
             <?php if ($login === false): ?>

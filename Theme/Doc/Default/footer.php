@@ -18,5 +18,6 @@
 
     </div>
 </div>
+<div class="am-hide">Power By PESCMS DOC</div>
 </body>
 </html>

@@ -171,13 +171,14 @@
                 var id = $(this).attr('data');
                 var title = $(".update-tree-input-" + id).val()
                 var parent = $(".parent-" + id).val();
+                var listsort = $('input[name="tree['+id+']"]').val()
                 if (title == '') {
                     alert("请填写名称");
                     return false;
                 }
 
                 ajax({
-                    url: request+'/d/tree/action', data: {title: title, id: id, parent: parent, method: 'PUT'}
+                    url: request+'/d/tree/action', data: {title: title, id: id, parent: parent, listsort:listsort, method: 'PUT'}
                 }, function (data) {
                     if (data.status == '200') {
                         setTimeout(function () {
