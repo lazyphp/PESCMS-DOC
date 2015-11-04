@@ -247,16 +247,7 @@ class Controller {
      */
     private function chooseTheme() {
         if (empty($this->theme)) {
-            $privateKey = md5(GROUP . \Core\Func\CoreFunc::loadConfig('PRIVATE_KEY'));
-            $checkTheme = THEME . "/" . GROUP . "/$privateKey";
-            if (is_file($checkTheme)) {
-                $this->theme = trim(file($checkTheme)['0']);
-            } else {
-                $this->theme = 'Default';
-                $f = fopen($checkTheme, 'w');
-                fwrite($f, $this->theme);
-                fclose($f);
-            }
+            $this->theme = \Core\Func\CoreFunc::getThemeName();
         }
         return $this->theme;
     }

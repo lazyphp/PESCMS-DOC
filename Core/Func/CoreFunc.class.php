@@ -27,6 +27,12 @@ class CoreFunc {
     public static $defaultPath = true;
 
     /**
+     * 快速获取程序当前的主题名称
+     * @var string
+     */
+    private static $ThemeName;
+
+    /**
      * 获取系统配置信息
      * @param type $name
      * @return type
@@ -121,6 +127,13 @@ class CoreFunc {
         return $url;
     }
 
+    /**
+     * 连接数据库
+     * @param string $name 要连接数据库表名称
+     * @param string $database 要连接数据库名称
+     * @param string $dbPrefix 要连接数据库表的前缀
+     * @return \Core\Db\Mysql
+     */
     public static function db($name = '', $database = '', $dbPrefix = '') {
         static $db;
 
@@ -136,11 +149,31 @@ class CoreFunc {
      * 生成密码
      * @param type $pwd 密码
      * @param type $key 混淆配置
+     * @todo 需要升级加密方法, 2016年PESCMS系列软件将淘汰MD5加密用户的密码的方式
      */
     public static function generatePwd($pwd, $key) {
         $config = self::loadConfig();
         $salt = $config[GROUP][$key] ?: $config[$key];
         return md5(md5($pwd . $salt));
+    }
+
+    /**
+     * 获取主题目录的名称
+     */
+    public static function getThemeName(){
+        if (empty(self::$ThemeName)) {
+            $privateKey = md5(GROUP . self::loadConfig('PRIVATE_KEY'));
+            $checkTheme = THEME . "/" . GROUP . "/{$privateKey}";
+            if (is_file($checkTheme)) {
+                self::$ThemeName = trim(file($checkTheme)['0']);
+            } else {
+                self::$ThemeName = 'Default';
+                $f = fopen($checkTheme, 'w');
+                fwrite($f, self::$ThemeName);
+                fclose($f);
+            }
+        }
+        return self::$ThemeName;
     }
 
 }
