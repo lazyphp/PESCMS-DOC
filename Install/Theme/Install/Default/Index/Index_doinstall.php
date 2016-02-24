@@ -25,7 +25,7 @@
         $(".action").prepend("<p class=\"wait-begin\">等待响应</p><p>执行安装程序...</p>");
         $.ajax({
             url: '<?=DOCUMENT_ROOT?>/?m=Index&a=import&method=GET',
-            data: {title: '<?= $sitetitle ?>', account: '<?= $account ?>', passwd: '<?= $passwd ?>', mail: '<?= $mail ?>', name: '<?= $name ?>', urlModel: '<?= $urlModel ?>'},
+            data: {sitetitle: '<?= $sitetitle ?>', account: '<?= $account ?>', passwd: '<?= $passwd ?>', mail: '<?= $mail ?>', name: '<?= $name ?>', verify: '<?= $verify ?>',},
             type: 'POST',
             dataType: 'json',
             beforeSend: function () {
@@ -64,11 +64,11 @@
                 } else if (data['status'] != '200') {
                     $(".action").prepend("<p>" + data['msg'] + "</p>");
                 } else {
-                    $(".action").prepend("<p>安装遇到无法解析的错误!</p><p>"+data+"</p>");
+                    $(".action").prepend("<p>安装遇到无法解析的错误!</p><p>"+data+"</p><p>请访问<a href=\"http://www.pescms.com/d/v/10/37\">本链接</a>获取解决方案</p>");
                 }
             },
             error:function(obj){
-                $(".action").prepend("<p>安装出错,未知原因!</p><p>"+obj.responseText+"</p>");
+                $(".action").prepend("<p>安装出错,未知原因!</p><p>"+obj.responseText+"</p><p>请访问<a href=\"http://www.pescms.com/d/v/10/37\">本链接</a>获取解决方案</p>");
             }
         })
     })

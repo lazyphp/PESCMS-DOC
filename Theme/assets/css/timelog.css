@@ -139,6 +139,42 @@
 
 .tm-article blockquote ul, .tm-article blockquote ol{margin-bottom: 0;}
 .am-article-bd img{display: inline !important;}
+
+
+/*---------------文章目录---------------*/
+.article-review{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: -ms-flex;
+    display: flex;
+    border-top: 1px solid #eee;
+    border-bottom: 2px solid #eee;
+}
+.article-review h2{
+    position: relative;
+    background: #f8f8f8;
+    padding: 10px 0 10px 20px;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+.article-review h2 span{
+    background: #0e90d2;
+    display: inline-block;
+    padding: 8px 10px 8px 20px;
+    font-weight: 400;
+    color: #fff;
+}
+.article-review div{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 10px 10px 10px 20px;
+}
+
 /*---------------页脚---------------*/
 .my-footer {
     background: #fff;

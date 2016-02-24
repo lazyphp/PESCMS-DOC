@@ -43,7 +43,7 @@ return array(
     //添加文档内容
     'd/addContent/{id}' => 'Doc-Article-addContent',
     //更新内容
-    'd/edit/{id}' => 'Doc-Article-updateContent',
+    'd/edit/{id}' => 'Doc-Doc-updateContent',
     //UE编辑器上传地址
     'd/uedition/{all}' => 'Doc-Uedtior-index',
     //验证码

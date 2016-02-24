@@ -1,31 +1,36 @@
 <?php
+/**
+ * PESCMS for PHP 5.4+
+ *
+ * Copyright (c) 2014 PESCMS (http://www.pescms.com)
+ *
+ * For the full copyright and license information, please view
+ * the file LICENSE.md that was distributed with this source code.
+ * @core version 2.6
+ * @version 1.0
+ */
 
 namespace App\Doc\GET;
 
-class Login extends \App\Doc\Common {
+class Login extends \Core\Controller\Controller{
 
-    public function __init() {
-        parent::__init();
-        if ($this->login === true && ACTION !== 'logout') {
-            $this->jump('/');
-        }
-    }
-
-    /**
-     * 登录帐号
-     */
-    public function login() {
-        $this->assign('title', '登录');
+    public function index(){
+        $this->assign('title', '登录系统');
         $this->display('Login_form');
     }
 
-    /**
-     * 安全退出
-     */
-    public function logout() {
-        setcookie('tm', NULL, time() - 10, '/');
+    public function logout(){
+        setcookie('tm', '', '-1000', '/');
         session_destroy();
-        $this->success('您已安全退出', $this->url('/d/index', true));
+        $this->success('您已安全退出', '/');
+    }
+
+    /**
+     * 验证码
+     */
+    public function verify() {
+        $verify = new \Expand\Verify();
+        $verify->createVerify('7');
     }
 
 }

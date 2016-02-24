@@ -56,4 +56,29 @@ class Doc extends \Core\Model\Model {
         return $result;
     }
 
+    /**
+     * 创建内容标签
+     * @param $id 内容ID
+     * @return bool
+     */
+    public static function createTag($id){
+        self::db('doc_content_tag')->where('content_id = :content_id')->delete([
+            'content_id' => $id
+        ]);
+        if(empty($_POST['tag'])){
+            return true;
+        }
+
+        $tag = explode(',', self::p('tag'));
+        if(!empty($tag)){
+            foreach($tag as $value){
+                self::db('doc_content_tag')->insert([
+                    'content_id' => $id,
+                    'content_tag_name' => htmlspecialchars(trim($value))
+                ]);
+            }
+        }
+
+    }
+
 }

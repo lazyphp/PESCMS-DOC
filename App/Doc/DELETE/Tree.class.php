@@ -2,7 +2,7 @@
 
 namespace App\Doc\DELETE;
 
-class Tree extends \App\Doc\CheckUser {
+class Tree extends \Core\Controller\Controller {
     /**
      * 删除树
      */
@@ -25,7 +25,7 @@ class Tree extends \App\Doc\CheckUser {
         if($result === false){
             $this->error('删除出错');
         }
-        $this->success('删除成功', $this->url('/d/manage', true));
+        $this->success('删除成功', $this->url('Doc-Article-manage'));
         
     }
 

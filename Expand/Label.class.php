@@ -22,6 +22,7 @@ class Label {
 
     /**
      * 此是语法糖，将一些写法近似的方法整合一起，减少重复
+     * @todo 此方法以后可能会废弃。有点多余
      * @param type $name
      * @param type $arguments
      * @return type
@@ -48,7 +49,7 @@ class Label {
     public function findContent($table, $field, $id) {
         static $array = array();
         if (empty($array[$table])) {
-            $list = \Model\Content::listContent($table);
+            $list = \Model\Content::listContent(['table' => $table]);
             foreach ($list as $value) {
                 $array[$table][$value[$field]] = $value;
             }
@@ -84,108 +85,6 @@ class Label {
         return "<input type=\"hidden\" name=\"token\" value=\"{$token}\" />";
     }
 
-    /**
-     * 标准状态输出
-     * 0 禁用
-     * 1 启用
-     */
-    public function status($type) {
-        switch ($type) {
-            case '0':
-                return "<font color=\"red\">禁用</font>";
-            case '1':
-                return "<font color=\"green\">启用</font>";
-            default:
-                return '未知状态';
-        }
-    }
-
-    /**
-     * 是否搜索
-     */
-    public function isSearch($type) {
-        switch ($type) {
-            case '0':
-                return "<font color=\"red\">禁止</font>";
-            case '1':
-                return "<font color=\"green\">允许</font>";
-            default:
-                return '未知状态';
-        }
-    }
-
-    /**
-     * 是否必填
-     */
-    public function isQequired($type) {
-        switch ($type) {
-            case '0':
-                return "<font color=\"red\">不</font>";
-            case '1':
-                return "<font color=\"green\">是</font>";
-            default:
-                return '未知状态';
-        }
-    }
-
-    /**
-     * 模型属性
-     * @param type $attr 属性值
-     */
-    public function modelAttr($attr) {
-        switch ($attr) {
-            case '1':
-                return "<font color=\"green\">前台</font>";
-            case '2':
-                return "<font color=\"#E7790E\">后台</font>";
-            default:
-                return '未知状态';
-        }
-    }
-
-    /**
-     * 字段类型
-     * @param type $type
-     */
-    public function fieldType($type) {
-        switch ($type) {
-            case 'category':
-                return '分类列表';
-
-            case 'text':
-                return '单行输入框';
-
-            case 'select':
-                return '单选下拉框';
-
-            case 'checkbox':
-                return '复选框';
-
-            case 'radio':
-                return '单选按钮';
-
-            case 'textarea':
-                return '多行文本框';
-
-            case 'thumb':
-                return '缩略图';
-
-            case 'editor':
-                return '编辑器';
-
-            case 'img':
-                return '图组';
-
-            case 'file':
-                return '上传文件';
-
-            case 'date':
-                return '日期组件';
-
-            default:
-                return '未知类型';
-        }
-    }
 
     /**
      * 返回字段选项值的内容
@@ -291,7 +190,7 @@ class Label {
      */
     public function getFieldOptionToMatch($fieldId, $value) {
         $fieldContent = \Model\Content::findContent('field', $fieldId, 'field_id');
-        $option = json_decode($fieldContent['field_option'], true);
+        $option = json_decode(htmlspecialchars_decode($fieldContent['field_option']), true);
         $search = array_search($value, $option);
         if (empty($search)) {
             return '未知值';
@@ -300,37 +199,24 @@ class Label {
         }
     }
 
-    /**
-     * 任务进度条
-     * @param type $task 任务信息 | 必须包含 任务所有时间信息
-     */
-    public function taskProgress($task) {
-        if ($task['task_status'] == '4') {
-            return '<div class="am-progress-bar am-progress-bar-success"  style="width: 100%"></div>';
-        } elseif ($task['task_status'] > 0) {
-            $oneDay = 86400;
-
-            //任务最长天数
-            $totalDay = round(($task['task_expecttime'] >= $task['task_estimatetime'] ? ($task['task_expecttime'] - $task['task_createtime']) : $task['task_estimatetime'] - $task['task_createtime']) / $oneDay);
-
-            //当前已流逝的天数
-            $processDay = round((time() - $task['task_createtime']) / $oneDay);
-
-            if ($totalDay > $processDay) {
-                //离执行人选择的期望的天数
-                $actionDay = $task['task_estimatetime'] > $task['task_expecttime'] ? round(($task['task_estimatetime'] - time()) / $oneDay) : round(($task['task_expecttime'] -  $task['task_estimatetime'] - time()) / $oneDay) ;
-
-                //离任务发起人的期望天数
-                $expectDay = $task['task_estimatetime'] < $task['task_expecttime'] ? round(($task['task_expecttime'] - time()) / $oneDay) : round(($task['task_estimatetime'] - $task['task_expecttime'] - time()) / $oneDay) ;
-
-                $str = '<div class="am-progress-bar am-progress-bar-danger"  style="width: ' . round($processDay / $totalDay, 4) * 100 . '%"></div>';
-                $str .= '<div class="am-progress-bar am-progress-bar-secondary"  style="width: ' . round($actionDay / $totalDay, 4) * 100 . '%"></div>';
-                $str .= '<div class="am-progress-bar am-progress-bar-warning"  style="width: ' . round($expectDay / $totalDay, 4) * 100 . '%"></div>';
-                return $str;
-            } else {
-                return '<div class="am-progress-bar am-progress-bar-danger"  style="width: 100%"></div>';
-            }
+    public function listtag($id){
+        $list = \Model\Content::listContent([
+            'table' => 'doc_content_tag',
+            'condition' => 'content_id = :id',
+            'param' => [
+                'id' => $id
+            ]
+        ]);
+        if(empty($list)){
+            return [];
         }
+        $tag = [];
+        foreach($list as $value){
+            $tag[] = $value['content_tag_name'];
+        }
+        return $tag;
     }
+
+
 
 }
