@@ -16,7 +16,7 @@ namespace Model;
  */
 class Field extends \Core\Model\Model {
 
-    private static $model;
+    public static $model;
 
     /**
      * 列出对应的模型的字段
@@ -25,7 +25,7 @@ class Field extends \Core\Model\Model {
      * @return type
      */
     public static function fieldList($modelId, array $condition = array()) {
-        $where = "model_id = :model_id ";
+        $where = "field_model_id = :model_id ";
         $data = array('model_id' => $modelId);
         if (!empty($condition)) {
             foreach ($condition as $key => $value) {
@@ -81,22 +81,15 @@ class Field extends \Core\Model\Model {
     /**
      * 插入字段
      */
-    public static function addField() {
-        $data = self::baseForm();
-        $addResult = self::db('field')->insert($data);
-        if ($addResult === false) {
-            return self::error('添加字段失败');
-        }
+    public static function addField($fieldID) {
 
-        $fieldType = self::returnFieldType($data['field_type']);
-        $alterTableResult = self::addTableField(self::$model['model_name'], $data['field_name'], $fieldType);
+        $fieldType = self::returnFieldType($_POST['type']);
+        $alterTableResult = self::addTableField(self::$model['model_name'], self::p('name'), $fieldType);
 
         if ($alterTableResult === FALSE) {
-            self::removeField($addResult);
+            self::removeField($fieldID);
             self::error('添加字段失败');
         }
-
-        return $data;
     }
 
     /**
@@ -117,7 +110,10 @@ class Field extends \Core\Model\Model {
             case 'checkbox':
             case 'thumb':
                 return ' VARCHAR( 255 ) ';
-
+            case 'color':
+                return ' VARCHAR( 8 ) ';
+            case 'icon':
+                return ' VARCHAR( 32 ) ';
             case 'textarea':
             case 'editor':
             case 'img':
@@ -133,69 +129,30 @@ class Field extends \Core\Model\Model {
     }
 
     /**
-     * 更新字段
-     */
-    public static function updateField() {
-        $data = self::baseForm();
-
-        $updateResult = self::db('field')->where('field_id = :field_id')->update($data);
-        if ($updateResult === false) {
-            return self::error('更新字段失败');
-        }
-        return $data;
-    }
-
-    /**
      * 基础表单
      */
     public static function baseForm() {
-        $data['model_id'] = self::isP('model_id', '丢失模型ID');
 
-        if (!self::$model = \Model\ModelManage::findModel($data['model_id'])) {
+        if (!self::$model = \Model\ModelManage::findModel(self::isP('model_id', '丢失模型ID'))) {
             self::error('不存在的模型');
         }
 
-        if (self::p('method') == 'PUT') {
-            $data['noset']['field_id'] = self::isP('field_id', '丢失字段ID');
+        $option = self::splitOption(self::p('option'));
 
-            if (!self::findField($data['noset']['field_id'])) {
-                self::error('不存在的模型');
-            }
-        } else {
-            $data['field_type'] = self::isP('field_type', '请选择字段类型');
-            $data['field_name'] = self::isP('field_name', '请填写字段名称');
-        }
-
-        $data['display_name'] = self::isP('display_name', '请填写字段显示名称');
-
-        $data['field_option'] = self::splitOption();
-
-        if ($data['field_option'] === false) {
+        if ($option === false) {
             self::error('拆分字段选项出错');
         }
-
-        if (!($data['field_required'] = self::p('field_required')) && !is_numeric($_POST['field_required'])) {
-            return self::error('请选择是否为必填');
-        }
-
-        if (!($data['field_status'] = self::p('field_status')) && !is_numeric($_POST['field_status'])) {
-            return self::error('请选择启用状态');
-        }
-
-        $data['field_default'] = self::p('field_default');
-        $data['field_listsort'] = self::p('field_listsort');
-        $data['field_explain'] = self::p('field_explain');
-        $data['field_list'] = self::p('field_list');
-
-        return $data;
+        $_POST['option'] = (string) $option;
     }
 
     /**
-     * 拆分选项框
+     * 拆分选项值，返回为一个数组
+     * @param $fieldOption 提交过来的选项值， 以：名称|值 提交的字符串
+     * @return json
      */
-    private static function splitOption() {
-        if (self::p('field_option')) {
-            $splitNewline = explode("\n", self::p('field_option'));
+    public static function splitOption($fieldOption) {
+        if (!empty($fieldOption)) {
+            $splitNewline = explode("\n", $fieldOption);
         } else {
             return '';
         }
@@ -216,7 +173,7 @@ class Field extends \Core\Model\Model {
      * @param type $modelId 模型 ID
      */
     public static function deleteModelField($modelId) {
-        return self::db('field')->where('model_id = :model_id')->delete(array('model_id' => $modelId));
+        return self::db('field')->where('field_model_id = :model_id')->delete(array('model_id' => $modelId));
     }
 
 }

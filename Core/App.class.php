@@ -22,6 +22,8 @@ use Core\Abnormal\Abnormal as Abnormal,
  */
 class App {
 
+    private $unixPath;
+
     public function __construct() {
 
         //自动注册类
@@ -41,13 +43,27 @@ class App {
         $route->index();
         unset($route);
 
+        include PES_PATH . '/Slice/registerSlice.php';
+
+        array_walk(\Core\Slice\InitSlice::$slice, function($obj){
+            $obj->before();
+        });
+
         $runningNormally = false;
-        foreach (['getContorller', 'getContent', 'getTemplate'] as $value) {
+        foreach (['getContorller', 'getContent'] as $value) {
             if ($this->$value() !== false) {
                 $runningNormally = true;
                 break;
             }
         }
+
+        if(\Core\Slice\InitSlice::$beforeViewToExecAfter === false){
+            array_walk(\Core\Slice\InitSlice::$slice, function($obj){
+                $obj->after();
+            });
+        }
+
+
         if ($runningNormally === false) {
             $title = "404 Page Not Found";
             $errorMes = "<b>Debug route info:</b><br />Group:" . GROUP . ", Model:" . MODULE . ", Method:" . METHOD . ", Action:" . ACTION;
@@ -96,6 +112,7 @@ class App {
 
     /**
      * 获取模板
+     * @todo 本方法暂时被废弃。因为和智能表单功能产生了一些冲突。
      */
     private function getTemplate() {
         $theme = \Core\Func\CoreFunc::getThemeName();
@@ -114,16 +131,17 @@ class App {
      * @param type $className 加载类名
      */
     private function loader($className) {
-        $this->unixPath = str_replace("\\", "/", $className);
-        if (file_exists(PES_PATH . $this->unixPath . '.class.php')) {
-            require PES_PATH . $this->unixPath . '.class.php';
+        $unixPath = str_replace("\\", "/", $className);
+
+        if (file_exists(PES_PATH . $unixPath . '.class.php')) {
+            require PES_PATH . $unixPath . '.class.php';
         } else {
             if (\Core\Func\CoreFunc::$defaultPath == false) {
                 return true;
             } else {
                 $title = 'Class File Lose';
                 $errorMes = "<b>Debug info:</b><br /> Class undefined.";
-                $errorFile = "<b>File :</b> <br />" . PES_PATH . "{$this->unixPath}.class.php";
+                $errorFile = "<b>File :</b> <br />" . PES_PATH . "{$unixPath}.class.php";
                 $this->promptPage($title, $errorMes, $errorFile);
             }
         }

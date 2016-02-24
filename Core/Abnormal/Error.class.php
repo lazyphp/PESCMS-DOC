@@ -29,7 +29,9 @@ class Error {
      * @param type $errline 错误行数
      */
     public static function getError($errno, $errstr, $errfile, $errline) {
-
+        if(DEBUG === false){
+            return true;
+        }
         $str = "<b>%s</b></b>{$errstr}<br /><b>File</b>：{$errfile} <b>Line {$errline}</b><br />";
 
         switch ($errno) {
@@ -191,44 +193,16 @@ class Error {
      */
     private static function recordLog($error, $extract = true) {
         $fileName = 'error_' . md5(self::loadConfig('PRIVATE_KEY') . date("Ymd"));
-
+        $msg = 'Date:'.date('Y-m-d H:i:s')."\rTimestamp:".time()."\r";
         if ($extract == true) {
-            $mes = "Rank[{$error['type']}] PHP error: {$error['message']}\rFile:{$error['file']};Line:{$error['line']}\r\r";
+            $msg .= "Rank[{$error['type']}] PHP error: {$error['message']}\rFile:{$error['file']};Line:{$error['line']}\r\r";
         } else {
-            $mes = "{$error}\r";
+            $msg .= "{$error}\r";
         }
+        $msg .= "\r\r";
 
-
-        $loadLogPath = self::loadConfig('LOG_PATH');
-        $logPath = empty($loadLogPath) ? PES_PATH . './log' : PES_PATH . $loadLogPath;
-        if (!is_dir($logPath)) {
-            if (!mkdir($logPath)) {
-                header("HTTP/1.1 500 Internal Server Error");
-                $title = "500 Internal Server Error";
-                $errorMes = "Can not create log path.";
-                $errorFile = "That's all we know.";
-                require self::promptPage();
-                exit;
-            }
-        }
-        fopen("{$logPath}/index.html", 'w');
-        $time = date("Ymd");
-        $timePath = "{$logPath}/{$time}";
-        if (!is_dir($timePath)) {
-            if (!mkdir($timePath)) {
-                header("HTTP/1.1 500 Internal Server Error");
-                $title = "500 Internal Server Error";
-                $errorMes = "Can not create time path.";
-                $errorFile = "That's all we know.";
-                require self::promptPage();
-                exit;
-            }
-        }
-        fopen("{$timePath}/index.html", 'w');
-        $fp = fopen("{$timePath}/$fileName.txt", 'a');
-
-        fwrite($fp, $mes);
-        fclose($fp);
+        $log = new \Expand\Log();
+        $log->creatLog($fileName, $msg);
     }
 
     /**

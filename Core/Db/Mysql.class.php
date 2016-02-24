@@ -206,6 +206,7 @@ class Mysql {
         if ($this->dbh->lastInsertId() === false) {
             return false;
         } else {
+            $this->getLastInsert = $this->dbh->lastInsertId();
             return $this->dbh->lastInsertId();
         }
     }
@@ -314,7 +315,7 @@ class Mysql {
         $sth = $this->PDOBindArray();
         $statistics = $sth->rowCount();
         $this->emptyParam();
-        $lastInsertId = $this->dbh->lastInsertId();
+        $lastInsertId = $this->getLastInsert  = $this->dbh->lastInsertId();
         if (!empty($lastInsertId)) {
             return $lastInsertId;
         } elseif ($statistics >= 0) {

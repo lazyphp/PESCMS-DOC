@@ -29,10 +29,6 @@ class Controller {
      */
     public static $modelPrefix;
 
-    /**
-     * 模板赋值数组
-     */
-    protected $param = array();
 
     /**
      * 当前启用的主题
@@ -46,8 +42,6 @@ class Controller {
         }
         $this->prefix = self::$modelPrefix = empty($config[GROUP]) ? $config['DB_PREFIX'] : $config[GROUP]['DB_PREFIX'];
         $this->chooseTheme();
-        $this->assign('siteTitle', $config['SITETITLE']);
-        $this->assign('URLMODEL', $config['URLMODEL']);
         $this->__init();
     }
 
@@ -55,7 +49,7 @@ class Controller {
      * 实现自定义构造函数
      */
     public function __init() {
-        
+
     }
 
     /**
@@ -81,7 +75,7 @@ class Controller {
         if (is_array($_GET[$name])) {
             return $_GET[$name];
         }
-        if ((bool) $htmlentities) {
+        if ((bool)$htmlentities) {
             $name = htmlspecialchars(trim(preg_replace('/<script>.*?<\/script>/is', '', $_GET[$name])));
         } else {
             $name = trim($_GET[$name]);
@@ -104,7 +98,7 @@ class Controller {
         if (is_array($_POST[$name])) {
             return $_POST[$name];
         }
-        if ((bool) $htmlentities) {
+        if ((bool)$htmlentities) {
             $name = htmlspecialchars(trim(preg_replace('/<script>.*?<\/script>/is', '', $_POST[$name])));
         } else {
             $name = trim($_POST[$name]);
@@ -158,30 +152,15 @@ class Controller {
      * 模板变量赋值
      */
     protected function assign($name, $value = '') {
+
         if (is_array($name)) {
-            $this->param = array_merge($this->param, $name);
+            \Core\Func\CoreFunc::$param = array_merge(\Core\Func\CoreFunc::$param, $name);
         } elseif (is_object($name)) {
             foreach ($name as $key => $val)
-                $this->param[$key] = $val;
+                \Core\Func\CoreFunc::$param[$key] = $val;
         } else {
-            $this->param[$name] = $value;
+            \Core\Func\CoreFunc::$param[$name] = $value;
         }
-    }
-
-    /**
-     * 加载页眉
-     * @param type $theme 页眉名称
-     */
-    protected function header($theme = 'header') {
-        $this->display($theme);
-    }
-
-    /**
-     * 加载页脚
-     * @param type $theme 页脚名称
-     */
-    protected function footer($theme = 'footer') {
-        $this->display($theme);
     }
 
     /**
@@ -193,22 +172,11 @@ class Controller {
         /* 加载标签库 */
         $label = new \Expand\Label();
 
-        if (!empty($this->param)) {
-            extract($this->param, EXTR_OVERWRITE);
+        if (!empty(\Core\Func\CoreFunc::$param)) {
+            extract(\Core\Func\CoreFunc::$param, EXTR_OVERWRITE);
         }
 
-        if (empty($themeFile)) {
-            $file = THEME . '/' . GROUP . '/' . $this->theme . "/" . MODULE . '/' . MODULE . '_' . ACTION . '.php';
-            $this->checkThemeFileExist($file, MODULE . '_' . ACTION . '.php');
-            include $file;
-        } else {
-            $file = THEME . '/' . GROUP . '/' . $this->theme . "/" . MODULE . '/' . $themeFile . '.php';
-            if (!is_file($file)) {
-                $file = THEME . '/' . GROUP . '/' . $this->theme . "/" . $themeFile . '.php';
-            }
-            $this->checkThemeFileExist($file, "{$themeFile}.php");
-            include $file;
-        }
+        include $this->checkThemeFileExist($themeFile);
     }
 
     /**
@@ -216,29 +184,22 @@ class Controller {
      * @param string $layout 布局模板文件名称 | 默认调用 layout(参数不带.php后缀)
      */
     protected function layout($themeFile = '', $layout = "layout") {
-
-        if (empty($themeFile)) {
-            $file = THEME . '/' . GROUP . '/' . $this->theme . "/" . MODULE . '/' . MODULE . '_' . ACTION . '.php';
-            $this->checkThemeFileExist($file, MODULE . '_' . ACTION . '.php');
-        } else {
-            $file = THEME . '/' . GROUP . '/' . $this->theme . "/" . MODULE . '/' . $themeFile . '.php';
-            if (!is_file($file)) {
-                $file = THEME . '/' . GROUP . '/' . $this->theme . "/" . $themeFile . '.php';
-            }
-            $this->checkThemeFileExist($file, "{$themeFile}.php");
-        }
+        $file = $this->checkThemeFileExist($themeFile);
 
         /* 加载标签库 */
         $label = new \Expand\Label();
 
-        if (!empty($this->param)) {
-            extract($this->param, EXTR_OVERWRITE);
+        if (!empty(\Core\Func\CoreFunc::$param)) {
+            extract(\Core\Func\CoreFunc::$param, EXTR_OVERWRITE);
         }
 
         //检查布局文件是否存在
         $layout = THEME . '/' . GROUP . "/{$this->theme}/{$layout}.php";
 
-        $this->checkThemeFileExist($layout, "layout");
+        if (!is_file($layout)) {
+            $this->error("The theme file {$layout} not exist!");
+        }
+
         require $layout;
     }
 
@@ -247,7 +208,7 @@ class Controller {
      */
     private function chooseTheme() {
         if (empty($this->theme)) {
-            $this->theme = \Core\Func\CoreFunc::getThemeName();
+            $this->theme = \Core\Func\CoreFunc::getThemeName(GROUP);
         }
         return $this->theme;
     }
@@ -255,10 +216,31 @@ class Controller {
     /**
      * 检查主题文件是否存在
      */
-    protected function checkThemeFileExist($path, $fileName) {
-        if (!is_file($path)) {
-            $this->error("The theme file {$fileName} not exist!");
+    protected function checkThemeFileExist($themeFile) {
+        $this->beforeInitView();
+        if (empty($themeFile)) {
+            $file = THEME . '/' . GROUP . '/' . $this->theme . "/" . MODULE . '/' . MODULE . '_' . ACTION . '.php';
+        } else {
+            $file = THEME . '/' . GROUP . '/' . $this->theme . "/" . MODULE . '/' . $themeFile . '.php';
+            if (!is_file($file)) {
+                $file = THEME . '/' . GROUP . '/' . $this->theme . "/" . $themeFile . '.php';
+            }
         }
+
+        if (!is_file($file)) {
+            $this->error("The theme file {$themeFile} not exist!");
+        }
+        return $file;
+    }
+
+    /**
+     * 切片开始前执行的动作
+     */
+    private static function beforeInitView() {
+        array_walk(\Core\Slice\InitSlice::$slice, function ($obj) {
+            \Core\Slice\InitSlice::$beforeViewToExecAfter = true;
+            $obj->after();
+        });
     }
 
     /**
@@ -268,7 +250,8 @@ class Controller {
      * @param int $waitSecond 跳转等待时间
      */
     protected static function success($message, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3') {
-        self::isAjax('200', $message);
+        self::beforeInitView();
+        self::isAjax('200', $message, $jumpUrl);
 
         /* 加载标签库 */
         $label = new \Expand\Label();
@@ -284,7 +267,8 @@ class Controller {
      * @param int $waitSecond 跳转等待时间
      */
     protected static function error($message, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3') {
-        self::isAjax('0', $message);
+        self::beforeInitView();
+        self::isAjax('0', $message, $jumpUrl);
 
         /* 加载标签库 */
         $label = new \Expand\Label();
@@ -323,15 +307,23 @@ class Controller {
      * 判断是否ajax提交
      * @param str $code 状态码
      * @param str $msg 信息
-     * @return boolean|json|xml|str 返回对应的数据类型 
+     * @param str $jumpUrl 跳转的URL
+     * @return boolean|json|xml|str 返回对应的数据类型
      */
-    private static function isAjax($code, $msg) {
+    private static function isAjax($code, $msg, $jumpUrl = '') {
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
             return FALSE;
         }
+
+        //@todo 我觉得ajax请求不论失败还是什么，不应该存在返回上一页的。现在直接设置为空置，让本身的函数执行刷新功能。
+        if($jumpUrl == 'javascript:history.go(-1)'){
+            $jumpUrl = '';
+        }
+
         $type = explode(',', $_SERVER['HTTP_ACCEPT']);
         $status['status'] = $code;
         $status['msg'] = $msg;
+        $status['url'] = $jumpUrl;
         switch ($type[0]) {
             case 'application/json':
                 exit(json_encode($status));
@@ -353,7 +345,7 @@ class Controller {
     /**
      * 验证令牌
      */
-    protected static function chedkToken() {
+    protected static function checkToken() {
         if (empty($_REQUEST['token'])) {
             self::error('Lose Token');
         }

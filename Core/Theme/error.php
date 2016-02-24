@@ -13,14 +13,14 @@
         <div class="footer"></div>
         <div class="admin-content">
             <div class="am-g">
-                <div class="am-u-sm-12">
+                <div class="am-u-sm-12 am-u-sm-centered am-u-lg-centered">
                     <h2 class="am-text-center am-text-xxl am-margin-top-lg"><?= $title; ?></h2>
                     <?php if (DEBUG == false): ?>
                         <p class="am-text-center">
                             <?php echo $errorMes; ?>
                             <?php echo $errorFile ?>
                         </p>
-                        <pre class="page-404" style="width: 300px">
+                        <pre class="page-404" style="width: 300px;margin: 0 auto;">
          ._                __.
         / \"-.          ,-",'/ 
        (   \ ,"--.__.--".,' /  

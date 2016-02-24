@@ -48,7 +48,7 @@ class Label {
     public function findContent($table, $field, $id) {
         static $array = array();
         if (empty($array[$table])) {
-            $list = \Model\Content::listContent($table);
+            $list = \Model\Content::listContent(['table' => $table]);
             foreach ($list as $value) {
                 $array[$table][$value[$field]] = $value;
             }
@@ -291,7 +291,7 @@ class Label {
      */
     public function getFieldOptionToMatch($fieldId, $value) {
         $fieldContent = \Model\Content::findContent('field', $fieldId, 'field_id');
-        $option = json_decode($fieldContent['field_option'], true);
+        $option = json_decode(htmlspecialchars_decode($fieldContent['field_option']), true);
         $search = array_search($value, $option);
         if (empty($search)) {
             return '未知值';
@@ -300,37 +300,6 @@ class Label {
         }
     }
 
-    /**
-     * 任务进度条
-     * @param type $task 任务信息 | 必须包含 任务所有时间信息
-     */
-    public function taskProgress($task) {
-        if ($task['task_status'] == '4') {
-            return '<div class="am-progress-bar am-progress-bar-success"  style="width: 100%"></div>';
-        } elseif ($task['task_status'] > 0) {
-            $oneDay = 86400;
 
-            //任务最长天数
-            $totalDay = round(($task['task_expecttime'] >= $task['task_estimatetime'] ? ($task['task_expecttime'] - $task['task_createtime']) : $task['task_estimatetime'] - $task['task_createtime']) / $oneDay);
-
-            //当前已流逝的天数
-            $processDay = round((time() - $task['task_createtime']) / $oneDay);
-
-            if ($totalDay > $processDay) {
-                //离执行人选择的期望的天数
-                $actionDay = $task['task_estimatetime'] > $task['task_expecttime'] ? round(($task['task_estimatetime'] - time()) / $oneDay) : round(($task['task_expecttime'] -  $task['task_estimatetime'] - time()) / $oneDay) ;
-
-                //离任务发起人的期望天数
-                $expectDay = $task['task_estimatetime'] < $task['task_expecttime'] ? round(($task['task_expecttime'] - time()) / $oneDay) : round(($task['task_estimatetime'] - $task['task_expecttime'] - time()) / $oneDay) ;
-
-                $str = '<div class="am-progress-bar am-progress-bar-danger"  style="width: ' . round($processDay / $totalDay, 4) * 100 . '%"></div>';
-                $str .= '<div class="am-progress-bar am-progress-bar-secondary"  style="width: ' . round($actionDay / $totalDay, 4) * 100 . '%"></div>';
-                $str .= '<div class="am-progress-bar am-progress-bar-warning"  style="width: ' . round($expectDay / $totalDay, 4) * 100 . '%"></div>';
-                return $str;
-            } else {
-                return '<div class="am-progress-bar am-progress-bar-danger"  style="width: 100%"></div>';
-            }
-        }
-    }
 
 }

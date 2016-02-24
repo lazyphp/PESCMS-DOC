@@ -5,7 +5,7 @@ namespace App\Doc\PUT;
 /**
  * 公用内容更新
  */
-class Content extends \App\Doc\CheckUser {
+class Content extends \Core\Controller\Controller {
 
     /**
      * 更新内容
@@ -18,9 +18,9 @@ class Content extends \App\Doc\CheckUser {
         $updateResult = \Model\Content::updateContent();
 
         if (!empty($_POST['back_url'])) {
-            $url = $_POST['back_url'];
+            $url = base64_decode($_POST['back_url']);
         } else {
-            $url = '/d/manage';
+            $url = $this->url(GROUP . '-' . MODULE . '-index');
         }
 
         if ($commit === TRUE) {
@@ -40,8 +40,8 @@ class Content extends \App\Doc\CheckUser {
             \Model\ModelManage::updateSortFromModel(MODULE, $key, $value);
         }
 
-        if (!empty($_POST['back_url'])) {
-            $url = $_POST['back_url'];
+        if (!empty($_SERVER['HTTP_REFERER'])) {
+            $url = $_SERVER['HTTP_REFERER'];
         } else {
             $url = "";
         }

@@ -3,24 +3,34 @@
 namespace App\Doc\GET;
 
 /**
- * 公用内容
+ * 公用内容列表
  */
-class Content extends \App\Doc\CheckUser {
+class Content extends \Core\Controller\Controller {
 
-    private $model, $table, $fieldPrefix;
+    protected $model, $table, $fieldPrefix, $field = [], $modelThemePrefixPath;
 
     public function __init() {
         parent::__init();
 
+        //表名
         $this->table = strtolower(MODULE);
-        $this->fieldPrefix = $this->table . "_";
-        $this->model = \Model\ModelManage::findModel($this->table, 'model_name');
 
+        //表前缀
+        $this->fieldPrefix = $this->table . "_";
+        $this->assign('fieldPrefix', $this->fieldPrefix);
+
+        //验证模型是否存在
+        $this->model = \Model\ModelManage::findModel($this->table, 'model_name');
         if (empty($this->model)) {
             $this->error('不存在的模型');
         }
 
-        $this->assign('fieldPrefix', $this->fieldPrefix);
+        $this->modelThemePrefixPath = THEME_PATH.'/'.MODULE.'/'.MODULE;
+
+
+        //获取模型的字段列表
+        $fieldShowType = ACTION == 'index' ? 'field_list' : 'field_form';
+        $this->field = \Model\Field::fieldList($this->model['model_id'], ['field_status' => '1', $fieldShowType => '1']);
     }
 
     /**
@@ -29,11 +39,10 @@ class Content extends \App\Doc\CheckUser {
     public function index() {
         $condition = "";
         $param = array();
-        $field = \Model\Field::fieldList($this->model['model_id'], array('field_status' => '1', 'field_list' => '1'));
 
         //排序条件
-        $orderBy = "{$this->fieldPrefix}id desc";
-        foreach ($field as $key => $value) {
+        $orderBy = "{$this->fieldPrefix}id DESC";
+        foreach ($this->field as $key => $value) {
             if (!empty($_GET['keyword'])) {
                 $keyword = $this->g('keyword');
                 if (empty($condition)) {
@@ -45,12 +54,13 @@ class Content extends \App\Doc\CheckUser {
             }
             //判断是否存在排序字段
             if ($value['field_name'] == 'listsort') {
-                $orderBy = "{$this->fieldPrefix}listsort asc, {$orderBy}";
+                $orderBy = "{$this->fieldPrefix}listsort ASC, {$orderBy}";
                 $this->assign('listsort', true);
+                unset($this->field[$key]);
             }
         }
 
-        $pageNameSpace = "\\Expand\\" . GROUP . "\\Page";
+        $pageNameSpace = "\\Expand\\Page";
         $page = new $pageNameSpace();
         $total = count($this->db($this->table)->where($condition)->select($param));
         $count = $page->total($total);
@@ -59,24 +69,24 @@ class Content extends \App\Doc\CheckUser {
         $show = $page->show();
         $this->assign('page', $show);
         $this->assign('list', $list);
-        $this->assign('title', $this->model['lang_key']);
+        $this->assign('title', $this->model['model_title']);
+        $this->assign('field', $this->field);
+
+        $this->assign('operate', is_file("{$this->modelThemePrefixPath}_index_operate.php") ? '/'.MODULE.'/'.MODULE."_index_operate.php" : '');
 
 
-        $this->assign('field', $field);
-
-        $this->display(is_file(THEME . '/' . GROUP . "/{$this->theme}/" . MODULE . '/' . MODULE . "_index.php") ? MODULE . "_index" : 'Content_index');
+        $this->layout(is_file("{$this->modelThemePrefixPath}_index.php") ? MODULE . "_index" : 'Content_index');
     }
 
     /**
      * 添加/编辑内容
      */
     public function action() {
-        $field = \Model\Field::fieldList($this->model['model_id'], array('field_status' => '1'));
 
         $id = $this->g('id');
         if (empty($id)) {
             $this->assign('method', 'POST');
-            $this->assign('title', "添加 - {$this->model['lang_key']}");
+            $this->assign('title', "添加 - {$this->model['model_title']}");
         } else {
             $content = \Model\Content::findContent($this->table, $id, "{$this->fieldPrefix}id");
             if (empty($content)) {
@@ -85,18 +95,19 @@ class Content extends \App\Doc\CheckUser {
             $this->assign($content);
             $this->assign('method', 'PUT');
             $this->assign('id', $id);
-            $this->assign('title', "编辑 - {$this->model['lang_key']}");
+            $this->assign('title', "编辑 - {$this->model['model_title']}");
 
-            foreach ($field as $key => $value) {
-                $field[$key] = $value;
-                $field[$key]['value'] = $content["{$this->fieldPrefix}{$value['field_name']}"];
+            foreach ($this->field as $key => $value) {
+                $this->field[$key] = $value;
+                $this->field[$key]['field_option'] = $value['field_option'];
+                $this->field[$key]['value'] = $content["{$this->fieldPrefix}{$value['field_name']}"];
             }
         }
 
-        $this->assign('field', $field);
+        $this->assign('field', $this->field);
         $this->assign('form', new \Expand\Form\Form());
 
-        $this->display(is_file(THEME . '/' . GROUP . "/{$this->theme}/" . MODULE . '/' . MODULE . "_action.php") ? MODULE . "_action" : 'Content_action');
+        $this->layout(is_file("{$this->modelThemePrefixPath}_action.php") ? MODULE . "_action" : 'Content_action');
     }
 
 }
