@@ -1,4 +1,4 @@
-<?php $this->header(); ?>
+<?php include 'header.php'; ?>
 <div class="am-cf am-padding-top am-padding-bottom">
     <div class="tm-sidebar am-offcanvas am-margin-left-xs" id="admin-offcanvas">
         <div class="am-offcanvas-bar admin-offcanvas-bar" style="z-index: 1">
@@ -12,4 +12,4 @@
         <span class="am-icon-btn am-icon-th-list"></span>
     </a>
 </div>
-<?php $this->footer(); ?>
+<?php include "footer.php"; ?>

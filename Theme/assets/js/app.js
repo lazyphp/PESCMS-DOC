@@ -3,22 +3,6 @@
  */
 $(function () {
 
-
-    /**
-     * 日历语言包
-     * @type {{days: string[], daysShort: string[], daysMin: string[], months: string[], monthsShort: string[], today: string, suffix: Array, meridiem: string[]}}
-     */
-    $.fn.datetimepicker.dates['zh-CN'] = {
-        days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
-        daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-        daysMin:  ["日", "一", "二", "三", "四", "五", "六", "日"],
-        months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-        monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-        today: "今天",
-        suffix: [],
-        meridiem: ["上午", "下午"]
-    };
-
     /**
      * 触发表单提交功能。
      */
@@ -113,23 +97,4 @@ $(function () {
         $('.'+name).attr("class", $(this).val()+ ' '+ name);
     })
 
-    /**
-     * 拾色器
-     */
-    $(".color-input").spectrum({
-        preferredFormat: "hex",
-        showInput: true
-    });
-
-    /**
-     * 日期选择器
-     */
-    $('.datetimepicker').datetimepicker({
-        language: 'zh-CN',
-        format: 'yyyy-mm-dd hh:00',
-        maxView: '2',
-        minView: '1',
-        startDate: new Date(),
-        autoclose: true
-    });
 })

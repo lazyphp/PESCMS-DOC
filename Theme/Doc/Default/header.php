@@ -9,23 +9,33 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="icon" type="image/png" href="<?= DOCUMENT_ROOT ?>/favicon.ico">
-    <!--部分样式和脚本在页脚-->
-    <script>
-        /**
-         * 本变量作用为防止用户在二级目录下安装PESCMS DOC，导致ajax之类请求异常
-         */
-        var path = '<?=DOCUMENT_ROOT?>';
-        var request = path + '<?=$URLMODEL['INDEX'] == '1' ? '' : '/index.php' ?>'
-    </script>
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/timelog.css"/>
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/admin.css"/>
-    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/ui-dialog.css">
+
+
+    <!--[if (gte IE 9)|!(IE)]><!-->
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.min.js"></script>
+    <!--<![endif]-->
+    <!--[if lte IE 8 ]>
+    <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.ie8polyfill.min.js"></script>
+    <![endif]-->
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/js/amazeui.min.js"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-min.js"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-plus-min.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/js/timelog.js"></script>
+
+    <!--加载百度编辑器-->
+    <script>var path = '<?= DOCUMENT_ROOT; ?>';</script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <!--加载百度编辑器-->
+
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.js"></script>
 
 </head>
 <body>

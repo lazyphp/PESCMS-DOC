@@ -21,7 +21,7 @@
                 progress.start();
             },
             success:function(data){
-                $(".agree").html(data.replace(/\{program\}/g, "PESCMS TEAM"));
+                $(".agree").html(data.replace(/\{program\}/g, "PESCMS DOC"));
                 progress.done();
             },
             complete:function(){
