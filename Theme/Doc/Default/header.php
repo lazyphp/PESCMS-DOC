@@ -58,7 +58,7 @@
                     <?php foreach ($treeList as $key => $value): ?>
                         <?php if ($value['tree_parent'] == '0'): ?>
                             <li class="<?= ($key == 0 && empty($_GET['tree'])) || $_GET['tree'] == $value['tree_id'] ? 'am-active' : ''; ?>">
-                                <a href="<?= $label->url("/d/index/{$value['tree_id']}", true); ?>"><?= $value['tree_title']; ?></a>
+                                <a href="<?= $label->url("Doc-Index-index", ['tree' => $value['tree_id']]); ?>"><?= $value['tree_title']; ?></a>
                             </li>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -79,13 +79,13 @@
 
         <div class="am-topbar-right">
             <?php if ($login === false): ?>
-                <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('/d/login', true); ?>">管理</a>
+                <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('Doc-Login-index'); ?>">管理</a>
             <?php else: ?>
-                <a class="am-btn am-btn-success am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('/d/new', true); ?>"><i
+                <a class="am-btn am-btn-success am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('Doc-Article-action'); ?>"><i
                         class="am-icon-edit"></i> 新文档</a>
-                <a class="am-btn am-btn-warning am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('/d/manage', true); ?>"><i
+                <a class="am-btn am-btn-warning am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('Doc-Article-manage'); ?>"><i
                         class="am-icon-code-fork"></i> 管理文档</a>
-                <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('/d/logout', true); ?>"><i
+                <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('Doc-Login-logout'); ?>"><i
                         class="am-icon-power-off"></i> 注销</a>
             <?php endif; ?>
         </div>

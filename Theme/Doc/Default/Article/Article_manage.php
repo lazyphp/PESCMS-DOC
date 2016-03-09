@@ -4,7 +4,7 @@
 
         <div class="am-g">
             <div class="am-u-sm-12">
-                <form action="<?= $label->url('/d/tree/action', true); ?>" method="POST" class="am-form am-form-inline">
+                <form action="<?= $label->url('Doc-Tree-action'); ?>" method="POST" class="am-form am-form-inline">
                     <div class="am-form-group">
                         <input type="text" name="title" class="am-form-field" placeholder="树名称">
                     </div>
@@ -66,7 +66,7 @@
                                             <div class="am-btn-group am-btn-group-xs">
                                                 <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $value['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
                                                 <a class="am-btn am-btn-primary show-child" data="#tree-child-<?= $value['tree_id']; ?>"><i class="am-icon-bars"></i> 查看子树</a>
-                                                <a class="am-btn am-btn-danger" href="<?= $label->url("/d/tree/action/{$value['tree_id']}/DELETE", true); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+                                                <a class="am-btn am-btn-danger" href="<?= $label->url("Doc-Tree-action", ['id' => $value['tree_id'], 'method' => 'DELETE']); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
                                             </div>
                                         </div>
                                     </td>
@@ -106,7 +106,7 @@
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
                                                         <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $child['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
-                                                        <a class="am-btn am-btn-danger" href="<?= $label->url("/d/tree/action/{$child['tree_id']}/DELETE", true); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+                                                        <a class="am-btn am-btn-danger" href="<?= $label->url("Doc-Tree-action", ['id' => $child['tree_id'], 'method' => 'DELETE']); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -177,8 +177,10 @@
                     return false;
                 }
 
+                var actionUrl = '<?=$label->url('Doc-Tree-action') ?>';
+
                 ajax({
-                    url: request+'/d/tree/action', data: {title: title, id: id, parent: parent, listsort:listsort, method: 'PUT'}
+                    url: actionUrl, data: {title: title, id: id, parent: parent, listsort:listsort, method: 'PUT'}
                 }, function (data) {
                     if (data.status == '200') {
                         setTimeout(function () {

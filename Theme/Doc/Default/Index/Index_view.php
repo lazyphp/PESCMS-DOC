@@ -33,7 +33,7 @@
                     </div>
 
                     <a class="am-btn am-btn-default update-title" style="padding:0.51rem">更新标题</a>
-                    <a href="<?= $label->url("/d/action/{$doc_id}/DELETE", true); ?>" class="am-btn am-btn-danger" onclick="return confirm('确定删除吗?文档将无法恢复的!')" style="padding:0.51rem">删除文档</a>
+                    <a href="<?= $label->url("Doc-Article-Action", ['id' => $doc_id, 'method' => 'DELETE']); ?>" class="am-btn am-btn-danger" onclick="return confirm('确定删除吗?文档将无法恢复的!')" style="padding:0.51rem">删除文档</a>
                 </div>
             <?php endif; ?>
             <?php if (time() - $doc_updatetime > 15768000): ?>
@@ -57,7 +57,7 @@
                             <?php if ($_SESSION['user']['user_id']): ?>
                                 <a href="javascript:;" id="update-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary update-button">更新</a>
                                 <a href="javascript:;" id="history-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary history-button">版本历史</a>
-                                <a href="<?= $label->url("/d/dc/{$value['doc_content_id']}/DELETE", true); ?>" id="delete-content-button_<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-danger delete-content-button" onclick="return confirm('确定删除吗?文档内容将无法恢复的!')">删除文档</a>
+                                <a href="<?= $label->url("Doc-Article-deleteContent", ['id' => $value['doc_content_id'], 'method' => 'DELETE']); ?>" id="delete-content-button_<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-danger delete-content-button" onclick="return confirm('确定删除吗?文档内容将无法恢复的!')">删除文档</a>
                             <?php endif; ?>
                         </p>
                     </div>
@@ -74,7 +74,7 @@
             </li>
         <?php endforeach; ?>
         <?php if (!empty($_SESSION['user']['user_id'])): ?>
-            <form action="<?= $label->url("/d/addContent/{$doc_id}", true); ?>" method="POST">
+            <form action="<?= $label->url("Doc-Article-addContent", ['id' => $doc_id]); ?>" method="POST">
                 <li class="am-padding-xs am-text-sm">
                     添加内容
                 </li>
@@ -185,7 +185,7 @@
                     $(".alert-tips").html("请填写内容");
                 }
 
-                ajax({url: request + '/d/edit/' + id, data: {content: editor[id].getContent()}}, function (data) {
+                ajax({url: path+'/?g=Doc&m=Article&a=updateContent&id=' + id, data: {content: editor[id].getContent()}}, function (data) {
                     if (data.status == '200') {
                         setTimeout(function () {
                             location.reload()
@@ -210,8 +210,9 @@
                     alert("请选择树");
                     return false;
                 }
+                var urlAction = '<?=$label->url('Doc-Doc-action')?>';
                 ajax({
-                    url: request + '/d/updateTitle',
+                    url: urlAction,
                     data: {id: id, title: title, tree_id: tree, method: 'PUT'}
                 }, function (data) {
                     if (data.status == '200') {
@@ -227,7 +228,7 @@
              */
             $(".history-button").on("click", function () {
                 var id = $(this).attr("data");
-                ajax({url: request + '/d/gh/' + id, 'type': 'GET', 'dialog': false}, function (data) {
+                ajax({url: path + '/?&g=Doc&m=History&a=getHistory&id=' + id, 'type': 'GET', 'dialog': false}, function (data) {
                     if (data.status == '0') {
                         $('#am-alert').modal();
                         $(".alert-tips").html(data.msg);

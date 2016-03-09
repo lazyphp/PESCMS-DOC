@@ -43,8 +43,7 @@
     </div>
     <script type="text/javascript">
         var ue = UE.getEditor('editor', {
-            textarea: 'content',
-            serverUrl: path + '/d/uedition/?method=POST'
+            textarea: 'content'
         });
         var treeList = eval('(' + '<?= json_encode($treeList) ?>' + ')');
         $("#tree-parent").on("change", function () {
