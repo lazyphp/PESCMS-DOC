@@ -1,4 +1,4 @@
-<?=$this->header(); ?>
+<?php include THEME_PATH.'/header.php'; ?>
 <div class="admin-content">
 
     <div class="am-cf am-padding">
@@ -96,4 +96,4 @@
         </div>
     </form>
 </div>
-<?=$this->footer(); ?>
+<?php include THEME_PATH.'/footer.php'; ?>

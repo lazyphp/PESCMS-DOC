@@ -4,7 +4,7 @@ namespace App\Doc\GET;
 
 use App\Doc\Common;
 
-class Search extends Common {
+class Search extends \Core\Controller\Controller {
 
     public function index(){
         $keyword = $this->g('keyword');

@@ -2,7 +2,7 @@
 
 namespace App\Doc\DELETE;
 
-class Article extends \App\Doc\CheckUser {
+class Article extends \Core\Controller\Controller {
 
     /**
      * 删除文档

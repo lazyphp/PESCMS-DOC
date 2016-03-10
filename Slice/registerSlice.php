@@ -29,3 +29,6 @@
 |
 */
 use \Core\Slice\InitSlice as InitSlice;
+
+//注册登录切片
+InitSlice::any(['Doc-'], ['\Doc\Login'], ['Doc-Login-', 'Doc-Index-verify']);

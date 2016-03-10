@@ -5,7 +5,7 @@ namespace App\Doc\GET;
 /**
  * 版本历史
  */
-class History extends \App\Doc\CheckUser {
+class History extends \Core\Controller\Controller {
 
     /**
      * 查看历史

@@ -1,4 +1,4 @@
-<?= $this->header(); ?>
+<?php include THEME_PATH.'/header.php'; ?>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/js/jsdiff.js"></script>
     <div class="am-cf am-padding-top am-padding-bottom">
         <div class="tm-content am-margin">
@@ -32,4 +32,4 @@
             ))
         })
     </script>
-<?= $this->footer(); ?>
+<?php include THEME_PATH.'/footer.php'; ?>

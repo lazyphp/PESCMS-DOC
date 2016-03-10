@@ -1,4 +1,4 @@
-<?php $this->header(); ?>
+<?php include THEME_PATH.'/header.php'; ?>
     <!-- content start -->
     <div class=" am-padding-top">
 
@@ -194,4 +194,4 @@
         })
     </script>
     <!-- content end -->
-<?php $this->footer(); ?>
+<?php include THEME_PATH.'/footer.php'; ?>

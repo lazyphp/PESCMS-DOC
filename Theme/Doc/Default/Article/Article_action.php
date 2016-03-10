@@ -1,4 +1,4 @@
-<?php $this->header(); ?>
+<?php include THEME_PATH.'/header.php'; ?>
     <div class="tm-content am-g-fixed am-container am-padding-top am-padding-bottom">
         <form action="" method="POST" data-am-validator>
             <ul class="am-list am-list-border">
@@ -58,4 +58,4 @@
         })
 
     </script>
-<?php $this->footer(); ?>
+<?php include THEME_PATH.'/footer.php'; ?>

@@ -1,4 +1,4 @@
-<?= $this->header(); ?>
+<?php include THEME_PATH.'/header.php'; ?>
     <div class="am-cf am-padding-top am-padding-bottom">
         <div class="tm-content am-margin">
             <article class="am-article tm-article">
@@ -13,4 +13,4 @@
             </article>
         </div>
     </div>
-<?= $this->footer(); ?>
+<?php include THEME_PATH.'/footer.php'; ?>

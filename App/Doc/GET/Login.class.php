@@ -15,7 +15,8 @@ namespace App\Doc\GET;
 class Login extends \Core\Controller\Controller{
 
     public function index(){
-        $this->display();
+        $this->assign('title', '登录系统');
+        $this->display('Login_form');
     }
 
     public function logout(){

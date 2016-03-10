@@ -5,7 +5,7 @@ namespace App\Doc\POST;
 /**
  * 提交内容
  */
-class Article extends \App\Doc\CheckUser {
+class Article extends \Core\Controller\Controller {
 
     /**
      * 发表日志
