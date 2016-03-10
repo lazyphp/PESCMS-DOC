@@ -15,8 +15,6 @@ namespace Slice\Doc;
 
 /**
  * 登录验证切片
- * Class Login
- * @package Slice\Ticket
  */
 class Login extends \Core\Slice\Slice{
 

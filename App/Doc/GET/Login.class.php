@@ -24,4 +24,12 @@ class Login extends \Core\Controller\Controller{
         $this->success('您已安全退出', $this->url('Ticket-Login-index'));
     }
 
+    /**
+     * 验证码
+     */
+    public function verify() {
+        $verify = new \Expand\Verify();
+        $verify->createVerify('7');
+    }
+
 }

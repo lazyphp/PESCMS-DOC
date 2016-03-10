@@ -20,7 +20,7 @@ class Article extends \Core\Controller\Controller {
             $this->error('删除失败');
         }
 
-        $this->success('删除文档成功', $this->url('/d/manage', true));
+        $this->success('删除文档成功', $this->url('Doc-Article-manage'));
     }
 
     /**

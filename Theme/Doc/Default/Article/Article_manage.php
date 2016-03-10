@@ -1,10 +1,10 @@
-<?php include THEME_PATH.'/header.php'; ?>
+
     <!-- content start -->
     <div class=" am-padding-top">
 
         <div class="am-g">
             <div class="am-u-sm-12">
-                <form action="<?= $label->url('Doc-Tree-action'); ?>" method="POST" class="am-form am-form-inline">
+                <form action="<?= $label->url('Doc-Tree-action'); ?>" method="POST" class="am-form am-form-inline ajax-submit">
                     <div class="am-form-group">
                         <input type="text" name="title" class="am-form-field" placeholder="树名称">
                     </div>
@@ -35,7 +35,7 @@
 
         <div class="am-g">
             <div class="am-u-sm-12">
-                <form class="am-form" action="<?= $label->url('/d/tree/listsort', true); ?>" method="POST">
+                <form class="am-form ajax-submit" action="<?= $label->url('Doc-Tree-listsort'); ?>"  method="POST">
                     <input type="hidden" name="method" value="PUT"/>
                     <table class="am-table am-table-striped am-table-hover table-main">
                         <?php foreach ($treeList as $value) : ?>
@@ -179,7 +179,7 @@
 
                 var actionUrl = '<?=$label->url('Doc-Tree-action') ?>';
 
-                ajax({
+                $.ajaxsubmit({
                     url: actionUrl, data: {title: title, id: id, parent: parent, listsort:listsort, method: 'PUT'}
                 }, function (data) {
                     if (data.status == '200') {
@@ -194,4 +194,3 @@
         })
     </script>
     <!-- content end -->
-<?php include THEME_PATH.'/footer.php'; ?>

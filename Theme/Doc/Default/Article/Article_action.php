@@ -1,6 +1,6 @@
-<?php include THEME_PATH.'/header.php'; ?>
+
     <div class="tm-content am-g-fixed am-container am-padding-top am-padding-bottom">
-        <form action="" method="POST" data-am-validator>
+        <form action="" method="POST" class="ajax-submit" data-am-validator>
             <ul class="am-list am-list-border">
                 <li class="am-padding-xs">
                     <ol class="am-breadcrumb am-margin-0 am-padding-0">
@@ -58,4 +58,3 @@
         })
 
     </script>
-<?php include THEME_PATH.'/footer.php'; ?>

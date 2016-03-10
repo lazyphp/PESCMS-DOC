@@ -6,8 +6,11 @@
 
             <?php if (!empty($_SESSION['user']['user_id'])): ?>
                 <div class="am-form-inline am-padding-bottom-sm update-title-form am-hide">
+                    <form action="<?=$label->url('Doc-Doc-action')?>" class="ajax-submit" method="POST">
+                        <input type="hidden" name="method" value="PUT">
+                        <input type="hidden" name="id" value="<?= $doc_id; ?>">
                     <div class="am-form-group" style="width:40%">
-                        <input type="text" name="title" data="<?= $doc_id; ?>" value="<?= $doc_title; ?>" class="am-form-field" placeholder="标题" style="width:100%;padding:0.5rem">
+                        <input type="text" name="title"  value="<?= $doc_title; ?>" class="am-form-field" placeholder="标题" style="width:100%;padding:0.5rem">
                     </div>
 
                     <div class="am-form-group">
@@ -22,7 +25,7 @@
                     </div>
 
                     <div class="am-form-group">
-                        <select id="tree-child" name="tree" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
+                        <select id="tree-child" name="tree_id" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
                             <option value="">请选择</option>
                             <?php foreach ($treeList as $key => $value) : ?>
                                 <?php if ($value['tree_parent'] == $treeList[$doc_tree_id]['tree_parent']): ?>
@@ -32,8 +35,9 @@
                         </select>
                     </div>
 
-                    <a class="am-btn am-btn-default update-title" style="padding:0.51rem">更新标题</a>
+                    <button type="submit" class="am-btn am-btn-default" style="padding:0.51rem">更新标题</button>
                     <a href="<?= $label->url("Doc-Article-Action", ['id' => $doc_id, 'method' => 'DELETE']); ?>" class="am-btn am-btn-danger" onclick="return confirm('确定删除吗?文档将无法恢复的!')" style="padding:0.51rem">删除文档</a>
+                    </form>
                 </div>
             <?php endif; ?>
             <?php if (time() - $doc_updatetime > 15768000): ?>
@@ -64,7 +68,10 @@
 
                     <div class="am-article-bd tm-article" data="<?= $value['doc_content_id'] ?>">
                         <?php if ($_SESSION['user']['user_id']): ?>
-                            <script id="content_<?= $value['doc_content_id'] ?>" type="text/plain" style="height:250px;"><?= htmlspecialchars_decode($value['doc_content']); ?></script>
+                            <form id="submit_<?= $value['doc_content_id'] ?>" class="ajax-submit" action="<?= $label->url('Doc-Doc-updateContent', ['id' => $value['doc_content_id']]); ?>" method="POST">
+                                <input type="hidden" name="method" value="PUT">
+                                <script id="content_<?= $value['doc_content_id'] ?>" type="text/plain" style="height:250px;"><?= htmlspecialchars_decode($value['doc_content']); ?></script>
+                            </form>
                         <?php endif; ?>
                         <div class="content_html">
                             <?= html_entity_decode($value['doc_content']); ?>
@@ -88,8 +95,7 @@
             </form>
             <script>
                 var ue = UE.getEditor('editor', {
-                    textarea: 'content',
-                    serverUrl: path + '/d/uedition/?method=POST'
+                    textarea: 'content'
                 });
             </script>
         <?php endif; ?>
@@ -130,7 +136,7 @@
                 var data = $(this).attr("data");
                 //记录启用过和初始化编辑器
                 if (!editor[data]) {
-                    editor[data] = UE.getEditor('content_' + data, {serverUrl: path + '/d/uedition/?method=POST'});
+                    editor[data] = UE.getEditor('content_' + data, {textarea: 'content'});
                 } else {
                     editor[data].setShow()
                 }
@@ -180,47 +186,8 @@
              */
             $(".update-button").on("click", function () {
                 var id = $(this).attr("data");
-                if (editor[id].hasContents() != true) {
-                    $('#am-alert').modal('open');
-                    $(".alert-tips").html("请填写内容");
-                }
-
-                ajax({url: path+'/?g=Doc&m=Article&a=updateContent&id=' + id, data: {content: editor[id].getContent()}}, function (data) {
-                    if (data.status == '200') {
-                        setTimeout(function () {
-                            location.reload()
-                        }, '1000')
-                    }
-                })
+                $("#submit_"+id).submit();
                 return false;
-            })
-
-            /**
-             * 更新标题
-             */
-            $(".update-title").on("click", function () {
-                var title = $("input[name=title]").val()
-                var id = $("input[name=title]").attr("data")
-                var tree = $("select[name=tree]").val()
-                if (title == '') {
-                    alert("请填写标题");
-                    return false;
-                }
-                if (tree == "") {
-                    alert("请选择树");
-                    return false;
-                }
-                var urlAction = '<?=$label->url('Doc-Doc-action')?>';
-                ajax({
-                    url: urlAction,
-                    data: {id: id, title: title, tree_id: tree, method: 'PUT'}
-                }, function (data) {
-                    if (data.status == '200') {
-                        setTimeout(function () {
-                            location.reload()
-                        }, '1000')
-                    }
-                })
             })
 
             /**
@@ -228,7 +195,11 @@
              */
             $(".history-button").on("click", function () {
                 var id = $(this).attr("data");
-                ajax({url: path + '/?&g=Doc&m=History&a=getHistory&id=' + id, 'type': 'GET', 'dialog': false}, function (data) {
+                $.ajaxsubmit({
+                    url: path + '/?g=Doc&m=History&a=getHistory&id=' + id,
+                    'type': 'GET',
+                    'dialog': false
+                }, function (data) {
                     if (data.status == '0') {
                         $('#am-alert').modal();
                         $(".alert-tips").html(data.msg);

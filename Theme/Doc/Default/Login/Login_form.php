@@ -19,7 +19,7 @@
                 <input name="passwd" class="tm-remove-border tm-input-background-color am-form-field" type="password" placeholder="登录用的密码" required>
             </li>
             <li class="am-padding-xs am-text-sm">
-                验证码 <span class="am-text-xs">(不分大小写)</span><img src="<?= $label->url('Doc-Index-verify', ['time' => rand(0, 999)]); ?>" class="am-margin-left verify" height="20"/>
+                验证码 <span class="am-text-xs">(不分大小写)</span><img src="<?= $label->url('Doc-Login-verify', ['time' => rand(0, 999)]); ?>" class="am-margin-left verify" height="20"/>
             </li>
             <li>
                 <input name="verify" class="tm-remove-border tm-input-background-color am-form-field" type="text" placeholder="验证码" required>
@@ -36,7 +36,7 @@
          * 刷新验证码
          */
         $(".verify").on("click", function () {
-            $(this).attr("src", path + "/?g=Doc&m=Index&a=verify&time=" + Date.parse(new Date()) + Math.random())
+            $(this).attr("src", path + "/?g=Doc&m=Login&a=verify&time=" + Date.parse(new Date()) + Math.random())
         })
     })
 </script>

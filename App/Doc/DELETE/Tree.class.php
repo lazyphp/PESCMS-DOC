@@ -25,7 +25,7 @@ class Tree extends \Core\Controller\Controller {
         if($result === false){
             $this->error('删除出错');
         }
-        $this->success('删除成功', $this->url('/d/manage', true));
+        $this->success('删除成功', $this->url('Doc-Article-manage'));
         
     }
 
