@@ -240,3 +240,18 @@
         </div>
     </div>
 <?php endif; ?>
+<script>
+    $(function(){
+        /**
+         * 匹配文章内容建立锚点
+         * @todo 1.此处需要添加一个读取动态设置描点匹配的正则。
+         * @todo 2.用户访问描点时，内容区域应该有一个红框高亮！
+         */
+        $(".am-article").each(function(){
+            var matchTitle = $(this).html().match(/<h2>(.*)<\/h2>/g);
+            if(matchTitle){
+                $(this).before('<a name="'+matchTitle[1]+'" class="am-padding-0 am-margin-0"></a>');
+            }
+        })
+    })
+</script>
