@@ -20,8 +20,9 @@ class Login extends \Core\Controller\Controller{
     }
 
     public function logout(){
+        setcookie('tm', '', '-1000', '/');
         session_destroy();
-        $this->success('您已安全退出', $this->url('Ticket-Login-index'));
+        $this->success('您已安全退出', '/');
     }
 
     /**

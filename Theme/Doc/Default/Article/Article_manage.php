@@ -27,8 +27,6 @@
                     <button class="am-btn am-btn-default">
                         <i class="am-icon-sitemap"></i> 新建树
                     </button>
-
-                    <a href="<?= $label->url('User-index') ?>" class="am-btn am-btn-warning"><i class="am-icon-user"></i> 管理帐号</a>
                 </form>
             </div>
         </div>

@@ -74,18 +74,6 @@ class UEController {
             }
         } else {
             $info = json_decode($result, true);
-            if(!in_array($action, ['listimage', 'listfile'])){
-                //上传成功，顺便将文件信息记录数据库
-                if($info['state'] == 'SUCCESS'){
-                    \Model\Content::insert('attachment', [
-                        'attachment_name' => $info['original'],
-                        'attachment_upload_name' => $info['title'],
-                        'attachment_path' => $info['url'],
-                        'attachment_type' => in_array($info['type'], json_decode($imgsuffix, true)) ? '1' : '2',
-                        'attachment_createtime' => time(),
-                    ]);
-                }
-            }
             return $result;
         }
     }

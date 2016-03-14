@@ -1,42 +1,56 @@
 <div class="tm-content am-margin">
 
     <ul class="am-list ">
-        <li class="am-padding tm-remove-border">
+        <li class="am-padding tm-remove-border am-padding-top-0">
             <h1 class="am-article-title am-margin-top-0 display-doc-title"><?= $doc_title; ?></h1>
 
+            <?php if (!empty($system['articlereview'])): ?>
+                <div class="am-text-sm article-review">
+                    <script>
+                        <?=$system['articlereview']?>
+                    </script>
+                    <h2><span>目录</span></h2>
+
+                    <div>
+                        <ol>
+                        </ol>
+                    </div>
+                </div>
+            <?php endif; ?>
             <?php if (!empty($_SESSION['user']['user_id'])): ?>
                 <div class="am-form-inline am-padding-bottom-sm update-title-form am-hide">
-                    <form action="<?=$label->url('Doc-Doc-action')?>" class="ajax-submit" method="POST">
+                    <form action="<?= $label->url('Doc-Doc-action') ?>" class="ajax-submit" method="POST">
                         <input type="hidden" name="method" value="PUT">
                         <input type="hidden" name="id" value="<?= $doc_id; ?>">
-                    <div class="am-form-group" style="width:40%">
-                        <input type="text" name="title"  value="<?= $doc_title; ?>" class="am-form-field" placeholder="标题" style="width:100%;padding:0.5rem">
-                    </div>
 
-                    <div class="am-form-group">
-                        <select id="tree-parent" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
-                            <option value="">请选择</option>
-                            <?php foreach ($treeList as $key => $value) : ?>
-                                <?php if ($value['tree_parent'] == 0): ?>
-                                    <option value="<?= $value['tree_id']; ?>" <?= $treeList[$doc_tree_id]['tree_parent'] == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+                        <div class="am-form-group" style="width:40%">
+                            <input type="text" name="title" value="<?= $doc_title; ?>" class="am-form-field" placeholder="标题" style="width:100%;padding:0.5rem">
+                        </div>
 
-                    <div class="am-form-group">
-                        <select id="tree-child" name="tree_id" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
-                            <option value="">请选择</option>
-                            <?php foreach ($treeList as $key => $value) : ?>
-                                <?php if ($value['tree_parent'] == $treeList[$doc_tree_id]['tree_parent']): ?>
-                                    <option value="<?= $value['tree_id']; ?>" <?= $doc_tree_id == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+                        <div class="am-form-group">
+                            <select id="tree-parent" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
+                                <option value="">请选择</option>
+                                <?php foreach ($treeList as $key => $value) : ?>
+                                    <?php if ($value['tree_parent'] == 0): ?>
+                                        <option value="<?= $value['tree_id']; ?>" <?= $treeList[$doc_tree_id]['tree_parent'] == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
-                    <button type="submit" class="am-btn am-btn-default" style="padding:0.51rem">更新标题</button>
-                    <a href="<?= $label->url("Doc-Article-Action", ['id' => $doc_id, 'method' => 'DELETE']); ?>" class="am-btn am-btn-danger" onclick="return confirm('确定删除吗?文档将无法恢复的!')" style="padding:0.51rem">删除文档</a>
+                        <div class="am-form-group">
+                            <select id="tree-child" name="tree_id" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
+                                <option value="">请选择</option>
+                                <?php foreach ($treeList as $key => $value) : ?>
+                                    <?php if ($value['tree_parent'] == $treeList[$doc_tree_id]['tree_parent']): ?>
+                                        <option value="<?= $value['tree_id']; ?>" <?= $doc_tree_id == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="am-btn am-btn-default" style="padding:0.51rem">更新标题</button>
+                        <a href="<?= $label->url("Doc-Article-Action", ['id' => $doc_id, 'method' => 'DELETE']); ?>" class="am-btn am-btn-danger" onclick="return confirm('确定删除吗?文档将无法恢复的!')" style="padding:0.51rem">删除文档</a>
                     </form>
                 </div>
             <?php endif; ?>
@@ -186,7 +200,7 @@
              */
             $(".update-button").on("click", function () {
                 var id = $(this).attr("data");
-                $("#submit_"+id).submit();
+                $("#submit_" + id).submit();
                 return false;
             })
 
@@ -240,18 +254,3 @@
         </div>
     </div>
 <?php endif; ?>
-<script>
-    $(function(){
-        /**
-         * 匹配文章内容建立锚点
-         * @todo 1.此处需要添加一个读取动态设置描点匹配的正则。
-         * @todo 2.用户访问描点时，内容区域应该有一个红框高亮！
-         */
-        $(".am-article").each(function(){
-            var matchTitle = $(this).html().match(/<h2>(.*)<\/h2>/g);
-            if(matchTitle){
-                $(this).before('<a name="'+matchTitle[1]+'" class="am-padding-0 am-margin-0"></a>');
-            }
-        })
-    })
-</script>

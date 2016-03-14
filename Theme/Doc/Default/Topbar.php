@@ -1,6 +1,6 @@
 <header class="am-topbar am-margin-bottom-0 tm-background-color-white">
     <h1 class="am-topbar-brand">
-        <a href="<?= DOCUMENT_ROOT; ?>/"><?= $siteTitle; ?></a>
+        <a href="<?= DOCUMENT_ROOT; ?>/"><?= $system['sitetitle']; ?></a>
     </h1>
     <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
             data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
@@ -27,7 +27,8 @@
         <form class="am-topbar-form am-topbar-left am-form-inline" method="GET" action="<?= DOCUMENT_ROOT ?>/" role="search">
             <input type="hidden" name="m" value="Search">
             <input type="hidden" name="a" value="index">
-            <input type="hidden" name="tree" value="<?= (int) $_GET['tree']; ?>">
+            <input type="hidden" name="tree" value="<?= (int)$_GET['tree']; ?>">
+
             <div class="am-form-group am-input-group">
                 <input type="text" class="am-form-field" name="keyword" value="<?= htmlspecialchars($_GET['keyword']); ?>" placeholder="搜索">
                 <span class="am-input-group-btn">
@@ -37,16 +38,35 @@
         </form>
 
         <div class="am-topbar-right">
-            <?php if ($login === false): ?>
-                <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('Doc-Login-index'); ?>">管理</a>
-            <?php else: ?>
-                <a class="am-btn am-btn-success am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('Doc-Article-action'); ?>"><i
-                        class="am-icon-edit"></i> 新文档</a>
-                <a class="am-btn am-btn-warning am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('Doc-Article-manage'); ?>"><i
-                        class="am-icon-code-fork"></i> 管理文档</a>
-                <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm tm-text-color-white" href="<?= $label->url('Doc-Login-logout'); ?>"><i
-                        class="am-icon-power-off"></i> 注销</a>
-            <?php endif; ?>
+            <ul class="am-nav am-nav-pills am-topbar-nav">
+                <?php if ($login === false): ?>
+                    <li>
+                        <a href="<?= $label->url('Doc-Login-index'); ?>"><i class="am-icon-sign-in"></i> 管理</a>
+                    </li>
+                <?php else: ?>
+                    <li class="am-dropdown" data-am-dropdown>
+                        <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                            <i class="am-icon-plus"></i> 管理 <span class="am-icon-caret-down"></span>
+                        </a>
+                        <ul class="am-dropdown-content">
+                            <li><a href="<?= $label->url('Doc-Article-action'); ?>"><i class="am-icon-edit"></i> 新文档</a>
+                            </li>
+                            <li>
+                                <a href="<?= $label->url('Doc-Article-manage'); ?>"><i class="am-icon-code-fork"></i> 管理文档</a>
+                            </li>
+                            <li>
+                                <a href="<?= $label->url('Doc-User-index'); ?>"><i class="am-icon-user"></i> 用户管理</a>
+                            </li>
+                            <li>
+                                <a href="<?= $label->url('Doc-Route-index'); ?>"><i class="am-icon-map-o"></i> 路由规则</a>
+                            </li>
+                            <li>
+                                <a href="<?= $label->url('Doc-Login-logout', ['method' => 'GET']); ?>" class="ajax-click"><i class="am-icon-power-off"></i> 注销</a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php endif; ?>
+            </ul>
         </div>
     </div>
 </header>

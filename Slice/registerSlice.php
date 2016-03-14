@@ -30,11 +30,13 @@
 */
 use \Core\Slice\InitSlice as InitSlice;
 
+//注册自动更新路由规则
+InitSlice::get(['Doc-'], ['\Doc\UpdateRoute']);
+//读取系统选项
+InitSlice::any(['Doc-'], ['\Doc\Option']);
 //注册登录切片
 InitSlice::any(['Doc-'], ['\Doc\Login', '\Doc\Tree'], ['Doc-Login-']);
 //注册自动处理用户提交的用户密码表单
 InitSlice::any(['Doc-User-action'], ['\Doc\HandleForm\HandleUser']);
-//注册自动更新路由规则
-InitSlice::get(['Doc-'], ['\Doc\UpdateRoute']);
 //注册理路由规则 添加/编辑 提交的表单内容
 InitSlice::any(['Doc-Route-action'], ['\Doc\HandleForm\HandleRoute', '\Doc\UpdateRoute']);
