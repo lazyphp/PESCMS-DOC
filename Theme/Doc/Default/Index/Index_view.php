@@ -210,7 +210,7 @@
             $(".history-button").on("click", function () {
                 var id = $(this).attr("data");
                 $.ajaxsubmit({
-                    url: path + '/?g=Doc&m=History&a=getHistory&id=' + id,
+                    url: path + '?g=Doc&m=History&a=getHistory&method=GET&id=' + id,
                     'type': 'GET',
                     'dialog': false
                 }, function (data) {
@@ -224,9 +224,10 @@
                         $('#history-modal').modal();
                         var trStr = "";
                         for (var key in data.msg) {
-                            var use = data['msg'][key]['doc_content_current'] == '1' ? '<a class="am-btn am-btn-danger am-btn-xs" disabled="disabled">当前版本</a>' : '<a class="am-btn am-btn-default am-btn-xs" href="' + request + '/d/h/' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">预览</a><a class="am-btn am-btn-warning am-btn-xs" href="' + request + '/d/h/c/' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">对比</a><a class="am-btn am-btn-success am-btn-xs" href="' + request + '/d/h/u/' + data['msg'][key]['doc_content_history_id'] + '">使用此版本</a>';
+                            var use = data['msg'][key]['doc_content_current'] == '1' ? '<a class="am-btn am-btn-danger am-btn-xs" disabled="disabled">当前版本</a>' : '<a class="am-btn am-btn-default am-btn-xs" href="' + path + '?g=Doc&m=History&a=view&id=' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">预览</a><a class="am-btn am-btn-warning am-btn-xs" href="' + path + '?g=Doc&m=History&a=compare&id=' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">对比</a><a class="am-btn am-btn-success am-btn-xs ajax-click" href="' + path + '?g=Doc&m=History&a=useVersion&method=GET&id=' + data['msg'][key]['doc_content_history_id'] + '">使用此版本</a>';
                             trStr += '<tr><td>' + data['msg'][key]['doc_content_history_id'] + '</td><td>' + data['msg'][key]['user_name'] + '</td><td>' + data['msg'][key]['doc_content_createtime'] + '</td><td>' + use + '</td></tr>';
                         }
+                        console.dir(trStr)
                         $(".history-list").html(trStr)
 
                     }
