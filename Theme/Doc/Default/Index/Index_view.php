@@ -1,14 +1,14 @@
 <div class="tm-content am-margin">
 
     <ul class="am-list ">
-        <li class="am-padding tm-remove-border am-padding-top-0">
-            <h1 class="am-article-title am-margin-top-0 display-doc-title"><?= $doc_title; ?></h1>
+        <li class=" tm-remove-border am-padding-top-0">
+            <h1 class="am-article-title am-margin-top-0 display-doc-title am-padding-left"><?= $doc_title; ?></h1>
 
             <?php if (!empty($system['articlereview'])): ?>
-                <div class="am-text-sm article-review">
-                    <script>
-                        <?=$system['articlereview']?>
-                    </script>
+                <script>
+                    <?=htmlspecialchars_decode($system['articlereview'])?>
+                </script>
+                <div class="am-text-sm article-review am-hide">
                     <h2><span>目录</span></h2>
 
                     <div>

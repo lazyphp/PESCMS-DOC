@@ -64,7 +64,7 @@
                                             <div class="am-btn-group am-btn-group-xs">
                                                 <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $value['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
                                                 <a class="am-btn am-btn-primary show-child" data="#tree-child-<?= $value['tree_id']; ?>"><i class="am-icon-bars"></i> 查看子树</a>
-                                                <a class="am-btn am-btn-danger" href="<?= $label->url("Doc-Tree-action", ['id' => $value['tree_id'], 'method' => 'DELETE']); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+                                                <a class="am-btn am-btn-danger ajax-click ajax-delete" href="<?= $label->url("Doc-Tree-action", ['id' => $value['tree_id'], 'method' => 'DELETE']); ?>" ><span class="am-icon-trash-o"></span> 删除</a>
                                             </div>
                                         </div>
                                     </td>
@@ -104,7 +104,7 @@
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
                                                         <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $child['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
-                                                        <a class="am-btn am-btn-danger" href="<?= $label->url("Doc-Tree-action", ['id' => $child['tree_id'], 'method' => 'DELETE']); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+                                                        <a class="am-btn am-btn-danger ajax-click ajax-delete" href="<?= $label->url("Doc-Tree-action", ['id' => $child['tree_id'], 'method' => 'DELETE']); ?>" ><span class="am-icon-trash-o"></span> 删除</a>
                                                     </div>
                                                 </div>
                                             </td>

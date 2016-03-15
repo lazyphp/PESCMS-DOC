@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-03-15 15:31:42
+-- Generation Time: 2016-03-16 13:41:07
 -- 服务器版本： 5.5.16
 -- PHP Version: 5.4.39
 
@@ -141,7 +141,7 @@ INSERT INTO `d_field` (`field_id`, `field_model_id`, `field_name`, `field_displa
 (5, 2, 'title', '文档标题\r\n', 'text', '', '', '', 1, 1, 1, 0, 1),
 (6, 2, 'tree_id', '所属树\r\n', 'text', '', '', '', 1, 1, 1, 0, 1),
 (7, 1, 'parent', '树级别', 'text', '', '', '', 1, 1, 1, 0, 1),
-(8, 3, 'status', '状态', 'radio', '{"\\u7981\\u7528":"0","\\u542f\\u7528":"1"}', '', '1', 1, 100, 1, 0, 1),
+(8, 3, 'status', '状态', 'radio', '{"\\u7981\\u7528":"0","\\u542f\\u7528":"1"}', '', '1', 1, 100, 1, 1, 1),
 (9, 3, 'account', '会员帐号', 'text', '', '', '', 1, 2, 1, 1, 1),
 (10, 3, 'password', '会员密码', 'text', '', '', '', 0, 3, 0, 1, 1),
 (11, 3, 'mail', '邮箱地址', 'text', '', '', '', 1, 4, 1, 1, 1),
@@ -221,7 +221,7 @@ INSERT INTO `d_option` (`id`, `option_name`, `name`, `value`, `option_range`) VA
 (14, 'upload_img', '图片格式', '[".jpg",".jpge",".bmp",".gif",".png"]', 'upload'),
 (15, 'upload_file', '文件格式', '[".zip",".rar",".7z",".doc",".docx",".pdf",".xls",".xlsx",".ppt",".pptx",".txt"]', 'upload'),
 (22, 'login', '开启全站登录验证', '0', 'system'),
-(23, 'articlereview', '文章导读', '$(function(){\n                        $(".content_html").each(function(){\n                            var regular = new RegExp("<h2>(.*)<\\/h2>","i")\n                            var matchTitle = regular.exec($(this).html())\n                            if(matchTitle){\n                                $(this).before(''<a name="''+matchTitle[1]+''" class="am-padding-0 am-margin-0"></a>'');\n                                $(".article-review ol").append(''<li><a href="#''+matchTitle[1]+''">''+matchTitle[1]+''</a></li>'');\n                            }\n                        })\n                    })', 'system'),
+(23, 'articlereview', '文章导读', '                    $(function(){\r\n                        $(''.content_html h2'').each(function(){\r\n                            var matchTitle = $(this).text();\r\n                            if(matchTitle){\r\n                                $(''.article-review'').removeClass(''am-hide'')\r\n                                $(this).before(''<a name="''+matchTitle+''" class="am-padding-0 am-margin-0"></a>'');\r\n                                $(".article-review ol").append(''<li><a href="#''+matchTitle+''">''+matchTitle+''</a></li>'');\r\n                            }\r\n                        })\r\n                    })', 'system'),
 (24, 'verify', '开启验证码', '0', 'system');
 
 -- --------------------------------------------------------
