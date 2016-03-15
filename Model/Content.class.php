@@ -164,12 +164,14 @@ class Content extends \Core\Model\Model {
      * @return array 结果返回：处理好的 列表二维数组和 一个分类超链接 还有分页的对象
      */
     public static function quickListContent(array $sql = array('count' => '', 'normal' => '', 'param' => array())) {
+
         $sql = array_merge(['param' => array(), 'page' => '10', 'style' => [], 'LANG' => []], $sql);
         $page = new \Expand\Page();
         $page->style = $sql['style'];
         $page->LANG = $sql['LANG'];
         $page->listRows = $sql['page'];
-        $total = current(self::db()->fetch($sql['count'], $sql['param']));
+        $count = self::db()->fetch($sql['count'], $sql['param']);
+        $total = $count === false ? '0' : current($count);
         $page->total($total);
         $page->handle();
         $list = self::db()->getAll("{$sql['normal']} LIMIT {$page->firstRow}, {$page->listRows}", $sql['param']);
