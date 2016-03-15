@@ -25,7 +25,7 @@
         $(".action").prepend("<p class=\"wait-begin\">等待响应</p><p>执行安装程序...</p>");
         $.ajax({
             url: '<?=DOCUMENT_ROOT?>/?m=Index&a=import&method=GET',
-            data: {title: '<?= $sitetitle ?>', account: '<?= $account ?>', passwd: '<?= $passwd ?>', mail: '<?= $mail ?>', name: '<?= $name ?>'},
+            data: {sitetitle: '<?= $sitetitle ?>', account: '<?= $account ?>', passwd: '<?= $passwd ?>', mail: '<?= $mail ?>', name: '<?= $name ?>', verify: '<?= $verify ?>',},
             type: 'POST',
             dataType: 'json',
             beforeSend: function () {

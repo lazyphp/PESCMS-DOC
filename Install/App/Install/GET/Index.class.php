@@ -98,11 +98,12 @@ class Index extends \Core\Controller\Controller {
      * 执行安装
      */
     public function doinstall() {
-        $data['sitetitle'] = $this->isP('title', '请填写系统的标题');
+        $data['sitetitle'] = $this->isP('sitetitle', '请填写系统的标题');
         $data['account'] = $this->isP('account', '请填写管理员帐号');
         $data['passwd'] = $this->isP('passwd', '请填写管理员密码');
         $data['name'] = $this->isP('name', '请填写管理员名称');
         $data['mail'] = $this->isP('mail', '请填写管理员邮箱');
+        $data['verify'] = $this->isP('verify', '请选择是否开启验证码');
 
         //纯粹为了效果
         $table = array('创建文档表', '创建文档内容表', '创建文档历史表', '创建文档树表', '创建模型列表','创建字段列表', '创建用户列表', '创建用户组列表');
@@ -117,13 +118,14 @@ class Index extends \Core\Controller\Controller {
      * 导入数据库
      */
     public function import() {
-        $title = $this->isP('title', '请填写系统的标题');
-
+        $option['sitetitle'] = $this->isP('sitetitle', '请填写系统的标题');
 
         $data['user_account'] = $this->isP('account', '请填写管理员帐号');
         $data['user_password'] = \Core\Func\CoreFunc::generatePwd($data['user_account'] . $this->isP('passwd', '请填写管理员密码'), 'PRIVATE_KEY');
         $data['user_name'] = $this->isP('name', '请填写管理员名称');
         $data['user_mail'] = $this->isP('mail', '请填写管理员邮箱');
+
+        $option['verify'] = $this->isP('verify', '请选择是否开启验证码');
 
         //读取数据库文件
         $sqlFile = file_get_contents(PES_PATH . '/Install/InstallDb/install.sql');
@@ -153,6 +155,16 @@ class Index extends \Core\Controller\Controller {
 
         //写入管理员帐号
         $this->db('user')->insert($data);
+
+        //更新配置信息
+        foreach($option as $optionkey => $optionvalue){
+            $this->db('option')->where('option_name = :option_name')->update([
+                'value' => $optionvalue,
+                'noset' => [
+                    'option_name' => $optionkey
+                ]
+            ]);
+        }
 
         //更新运行的配置文件
         $config = require PES_PATH . '/Install/Config/config_tmp.php';
