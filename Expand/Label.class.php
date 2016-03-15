@@ -22,6 +22,7 @@ class Label {
 
     /**
      * 此是语法糖，将一些写法近似的方法整合一起，减少重复
+     * @todo 此方法以后可能会废弃。有点多余
      * @param type $name
      * @param type $arguments
      * @return type
@@ -84,108 +85,6 @@ class Label {
         return "<input type=\"hidden\" name=\"token\" value=\"{$token}\" />";
     }
 
-    /**
-     * 标准状态输出
-     * 0 禁用
-     * 1 启用
-     */
-    public function status($type) {
-        switch ($type) {
-            case '0':
-                return "<font color=\"red\">禁用</font>";
-            case '1':
-                return "<font color=\"green\">启用</font>";
-            default:
-                return '未知状态';
-        }
-    }
-
-    /**
-     * 是否搜索
-     */
-    public function isSearch($type) {
-        switch ($type) {
-            case '0':
-                return "<font color=\"red\">禁止</font>";
-            case '1':
-                return "<font color=\"green\">允许</font>";
-            default:
-                return '未知状态';
-        }
-    }
-
-    /**
-     * 是否必填
-     */
-    public function isQequired($type) {
-        switch ($type) {
-            case '0':
-                return "<font color=\"red\">不</font>";
-            case '1':
-                return "<font color=\"green\">是</font>";
-            default:
-                return '未知状态';
-        }
-    }
-
-    /**
-     * 模型属性
-     * @param type $attr 属性值
-     */
-    public function modelAttr($attr) {
-        switch ($attr) {
-            case '1':
-                return "<font color=\"green\">前台</font>";
-            case '2':
-                return "<font color=\"#E7790E\">后台</font>";
-            default:
-                return '未知状态';
-        }
-    }
-
-    /**
-     * 字段类型
-     * @param type $type
-     */
-    public function fieldType($type) {
-        switch ($type) {
-            case 'category':
-                return '分类列表';
-
-            case 'text':
-                return '单行输入框';
-
-            case 'select':
-                return '单选下拉框';
-
-            case 'checkbox':
-                return '复选框';
-
-            case 'radio':
-                return '单选按钮';
-
-            case 'textarea':
-                return '多行文本框';
-
-            case 'thumb':
-                return '缩略图';
-
-            case 'editor':
-                return '编辑器';
-
-            case 'img':
-                return '图组';
-
-            case 'file':
-                return '上传文件';
-
-            case 'date':
-                return '日期组件';
-
-            default:
-                return '未知类型';
-        }
-    }
 
     /**
      * 返回字段选项值的内容
@@ -298,6 +197,24 @@ class Label {
         } else {
             return $search;
         }
+    }
+
+    public function listtag($id){
+        $list = \Model\Content::listContent([
+            'table' => 'doc_content_tag',
+            'condition' => 'content_id = :id',
+            'param' => [
+                'id' => $id
+            ]
+        ]);
+        if(empty($list)){
+            return [];
+        }
+        $tag = [];
+        foreach($list as $value){
+            $tag[] = $value['content_tag_name'];
+        }
+        return $tag;
     }
 
 

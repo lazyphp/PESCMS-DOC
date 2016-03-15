@@ -43,7 +43,7 @@ class Login extends \Core\Slice\Slice{
         } else {
             $this->assign('login', false);
             //
-            if( MODULE != 'Index' || \Core\Func\CoreFunc::$param['system']['login'] == '1'){
+            if(  !in_array(MODULE, ['Index', 'Search']) || \Core\Func\CoreFunc::$param['system']['login'] == '1'){
                 $this->jump($this->url('Doc-Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]));
             }
         }

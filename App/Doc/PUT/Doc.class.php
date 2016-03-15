@@ -27,10 +27,6 @@ class Doc extends Content {
             $this->error('没有找到您要更新的内容');
         }
 
-        if($checkUser['doc_content'] == $content){
-            $this->error('内容并没有变化');
-        }
-
         $updateTime = time();
 
         $this->db()->transaction();
@@ -39,6 +35,8 @@ class Doc extends Content {
 
         //记录新版的历史
         \Model\Doc\Doc::recordHistory(array('doc_content_id' => $id, 'doc_content' => $content, 'doc_content_user_id' => $_SESSION['user']['user_id'], 'doc_content_createtime' => $updateTime));
+
+        \Model\Doc\Doc::createTag($id);
 
         if ($update === false) {
             $this->db()->rollBack();

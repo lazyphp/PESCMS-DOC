@@ -23,7 +23,7 @@ class Search extends \Core\Controller\Controller {
         $this->assign('page', $show);
         $this->assign('list', $list);
         $this->assign('title', "'{$keyword}'搜索结果");
-        $this->layout('', 'layout_sidebar');
+        $this->layout();
 
     }
 

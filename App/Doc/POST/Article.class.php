@@ -55,7 +55,9 @@ class Article extends \Core\Controller\Controller {
             $this->error('更新时间出错');
         }
 
-        \Model\Doc\Doc::addContent(array('doc_id' => $id, 'user_id' => $_SESSION['user']['user_id'], 'doc_content' => $content, 'doc_content_createtime' => $time));
+        $contentid = \Model\Doc\Doc::addContent(array('doc_id' => $id, 'user_id' => $_SESSION['user']['user_id'], 'doc_content' => $content, 'doc_content_createtime' => $time));
+
+        \Model\Doc\Doc::createTag($contentid);
 
         $this->db()->commit();
         $this->success('添加内容成功!', $this->url("Doc-Index-view", ['id' => $id, 'tree' => $checkTree['tree_parent']]));

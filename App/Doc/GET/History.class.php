@@ -14,7 +14,7 @@ class History extends \Core\Controller\Controller {
         $id = $this->isG('id', '请选择您要查看的历史版本');
         $content = \Model\Content::findContent('doc_content_history', $id, 'doc_content_history_id');
         $this->assign($content);
-        $this->display();
+        $this->layout();
     }
 
     /**
@@ -28,7 +28,7 @@ class History extends \Core\Controller\Controller {
         //获取当前版本的信息
         $now = \Model\Content::findContent('doc_content', $history['doc_content_id'], 'doc_content_id');
         $this->assign('now', $now['doc_content']);
-        $this->display();
+        $this->layout();
     }
 
     /**

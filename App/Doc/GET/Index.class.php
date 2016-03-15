@@ -71,7 +71,7 @@ class Index extends \Core\Controller\Controller {
         $param = array('doc_id' => $id);
 
         //内容层数
-        $content = $this->db('doc_content AS tc')->field('tc.*, u.user_id, u.user_name')->join("{$this->prefix}user AS u ON u.user_id =  tc.user_id")->where($condition)->order('tc.doc_content_createtime ASC')->select($param);
+        $content = $this->db('doc_content AS tc')->field('tc.*, u.user_id, u.user_name')->join("{$this->prefix}user AS u ON u.user_id =  tc.user_id")->where($condition)->order('tc.doc_content_listsort ASC, tc.doc_content_id ASC')->select($param);
         $this->assign('content', $content);
 
         $this->layout('Index_view', 'layout_sidebar');

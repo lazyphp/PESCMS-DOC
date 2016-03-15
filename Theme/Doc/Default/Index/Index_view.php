@@ -80,27 +80,48 @@
                         </p>
                     </div>
 
+                    <?php $tagArray = $label->listtag($value['doc_content_id']); ?>
+
                     <div class="am-article-bd tm-article" data="<?= $value['doc_content_id'] ?>">
                         <?php if ($_SESSION['user']['user_id']): ?>
                             <form id="submit_<?= $value['doc_content_id'] ?>" class="ajax-submit" action="<?= $label->url('Doc-Doc-updateContent', ['id' => $value['doc_content_id']]); ?>" method="POST">
                                 <input type="hidden" name="method" value="PUT">
                                 <script id="content_<?= $value['doc_content_id'] ?>" type="text/plain" style="height:250px;"><?= htmlspecialchars_decode($value['doc_content']); ?></script>
+                                <div class="am-margin-top-sm am-hide content_tag_<?= $value['doc_content_id'] ?>">
+                                    <input type="text" class="am-form-field" name="tag" value="<?= implode(',', $tagArray); ?>" placeholder="内容标签">
+
+                                    <div class="am-alert am-alert-secondary am-text-xs" data-am-alert>
+                                        填写标签，有利于用户检索内容，标签用英文逗号“,”作为分隔符。
+                                    </div>
+                                </div>
                             </form>
                         <?php endif; ?>
                         <div class="content_html">
                             <?= html_entity_decode($value['doc_content']); ?>
+
+                            <?php if (!empty($tagArray)): ?>
+                                <p class="am-article-meta">
+                                    Tag :
+                                    <?php foreach ($tagArray as $tag): ?>
+                                        <span class="am-badge"><?= $tag; ?></span>
+                                    <?php endforeach; ?>
+                                </p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </article>
             </li>
         <?php endforeach; ?>
         <?php if (!empty($_SESSION['user']['user_id'])): ?>
-            <form action="<?= $label->url("Doc-Article-addContent", ['id' => $doc_id]); ?>" method="POST">
+            <form action="<?= $label->url("Doc-Article-addContent", ['id' => $doc_id]); ?>" class="ajax-submit" method="POST">
                 <li class="am-padding-xs am-text-sm">
                     添加内容
                 </li>
-                <li class="">
+                <li>
                     <script id="editor" type="text/plain" style="height:250px;"></script>
+                </li>
+                <li class="am-margin-top-sm" style="list-style-type: none;">
+                    <input type="text" class="am-form-field" name="tag" placeholder="内容标签;填写标签，有利于用户检索内容，标签用英文逗号“,”作为分隔符。">
                 </li>
                 <li class="am-padding-xs am-text-center">
                     <button class="am-btn  am-btn-xs am-btn-primary">添加</button>
@@ -158,6 +179,8 @@
                 //移除所有隐藏得元素
                 $(".update-button, .history-button, .delete-content-button").addClass("am-hide");
                 $(".content_html").removeClass("am-hide");
+                //显示标签输入框
+                $(".content_tag_" + data).removeClass("am-hide");
                 //隐藏当前内容
                 $(this).children(".content_html").addClass("am-hide");
                 $("#update-button_" + data + ", #history-button_" + data + ", #delete-content-button_" + data).removeClass("am-hide");
@@ -187,6 +210,7 @@
                     for (var key in editor) {
                         $(".update-button, .history-button, .delete-content-button").addClass("am-hide");
                         editor[key].setHide();
+                        $(".content_tag_" + key).addClass("am-hide");
                     }
                     $(".update-title-form").addClass("am-hide");
                 }
