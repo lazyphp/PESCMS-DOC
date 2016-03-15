@@ -20,8 +20,9 @@
     -->
 
     <hr/>
-    <form action="<?= $label->url('Team-Setting-mtUpgrade') ?>" method="POST" enctype="multipart/form-data" >
+    <form action="<?= $label->url(GROUP . '-Setting-mtUpgrade') ?>" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="method" value="PUT">
+
         <div class="am-form-group am-form-file">
             <button type="button" class="am-btn am-btn-danger am-btn-sm">
                 <i class="am-icon-cloud-upload"></i> 导入zip升级包
