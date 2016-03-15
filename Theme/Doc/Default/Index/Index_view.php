@@ -75,7 +75,7 @@
                             <?php if ($_SESSION['user']['user_id']): ?>
                                 <a href="javascript:;" id="update-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary update-button">更新</a>
                                 <a href="javascript:;" id="history-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary history-button">版本历史</a>
-                                <a href="<?= $label->url("Doc-Article-deleteContent", ['id' => $value['doc_content_id'], 'method' => 'DELETE']); ?>" id="delete-content-button_<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-danger delete-content-button" onclick="return confirm('确定删除吗?文档内容将无法恢复的!')">删除文档</a>
+                                <a href="<?= $label->url("Doc-Article-deleteContent", ['id' => $value['doc_content_id'], 'method' => 'DELETE']); ?>" id="delete-content-button_<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-danger delete-content-button ajax-click ajax-delete">删除文档</a>
                             <?php endif; ?>
                         </p>
                     </div>
