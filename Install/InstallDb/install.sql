@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-03-15 15:28:30
+-- Generation Time: 2016-03-15 15:31:42
 -- 服务器版本： 5.5.16
 -- PHP Version: 5.4.39
 
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `d_option` (
 --
 
 INSERT INTO `d_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES
-(1, 'sitetitle', '网站名称', '开发文档', 'system'),
+(1, 'sitetitle', '网站名称', 'PESCMS文档系统', 'system'),
 (13, 'version', '系统版本', '1.2.7', ''),
 (14, 'upload_img', '图片格式', '[".jpg",".jpge",".bmp",".gif",".png"]', 'upload'),
 (15, 'upload_file', '文件格式', '[".zip",".rar",".7z",".doc",".docx",".pdf",".xls",".xlsx",".ppt",".pptx",".txt"]', 'upload'),

@@ -61,6 +61,9 @@
                                 <a href="<?= $label->url('Doc-Route-index'); ?>"><i class="am-icon-map-o"></i> 路由规则</a>
                             </li>
                             <li>
+                                <a href="<?= $label->url('Doc-Setting-action'); ?>"><i class="am-icon-wrench"></i> 系统设置</a>
+                            </li>
+                            <li>
                                 <a href="<?= $label->url('Doc-Login-logout', ['method' => 'GET']); ?>" class="ajax-click"><i class="am-icon-power-off"></i> 注销</a>
                             </li>
                         </ul>

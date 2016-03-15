@@ -19,14 +19,15 @@ class Setting extends \Core\Controller\Controller {
             $data[$value] = json_encode(explode(',', str_replace(["\r\n", "\r", " "], '', $_POST[$value])));
         }
 
-        $data['notice_way'] = $this->p('notice_way');
-        $data['mail'] = json_encode($this->p('mail'));
+        foreach (['sitetitle', 'login', 'articlereview', 'verify'] as $value) {
+            $data[$value] = $this->p($value);
+        }
 
         foreach ($data as $key => $value) {
             $this->db('option')->where('option_name = :option_name')->update(['value' => $value, 'noset' => ['option_name' => $key]]);
         }
 
-        $this->success('保存设置成功!', $this->url('Team-Setting-action'));
+        $this->success('保存设置成功!', $this->url(GROUP . '-Setting-action'));
     }
 
     /**
@@ -49,16 +50,15 @@ class Setting extends \Core\Controller\Controller {
         /**
          * 解压出错
          */
-        $info = (new \Expand\zip()) ->unzip($file['tmp_name']);
+        $info = (new \Expand\zip())->unzip($file['tmp_name']);
 
         $info = $this->actionsql();
 
-        if($info === true){
+        if ($info === true) {
             $info = ['升级完成'];
         }
 
         $this->assign('info', $info);
-        $this->assign('menu', \Model\Menu::menu($_SESSION['team']['user_group_id']));
         $this->layout('Setting_upgrade_info');
     }
 
@@ -66,20 +66,20 @@ class Setting extends \Core\Controller\Controller {
      * 执行数据库更新
      * @return bool|string
      */
-    private function actionsql(){
+    private function actionsql() {
         $version = \Model\Content::findContent('option', 'version', 'option_name')['value'];
 
-        $ini = PES_PATH.'Upgrade/actionsql.ini';
-        if(!file_exists($ini)){
+        $ini = PES_PATH . 'Upgrade/actionsql.ini';
+        if (!file_exists($ini)) {
             return ['升级配置数据库文件不存在'];
         }
 
         $ini_array = parse_ini_file($ini, true);
 
-        foreach($ini_array as $iniversion => $value){
-            if($iniversion > $version){
-                if(!empty($value['sql'])){
-                    foreach($value['sql'] as $sql){
+        foreach ($ini_array as $iniversion => $value) {
+            if ($iniversion > $version) {
+                if (!empty($value['sql'])) {
+                    foreach ($value['sql'] as $sql) {
                         $this->db()->query($sql);
                     }
                 }
