@@ -2,9 +2,7 @@
 
 namespace App\Doc\GET;
 
-use App\Doc\Common;
-
-class Search extends Common {
+class Search extends \Core\Controller\Controller {
 
     public function index(){
         $keyword = $this->g('keyword');
@@ -12,17 +10,24 @@ class Search extends Common {
             $this->jump(DOCUMENT_ROOT.'/');
         }
 
-        $param = array('doc_title' => "%{$keyword}%", 'doc_content' => "%{$keyword}%");
+        $param = array('doc_title' => "%{$keyword}%", 'doc_content' => "%{$keyword}%", 'tag' => "%{$keyword}%");
 
-        $pageNameSpace = "\\Expand\\" . GROUP . "\\Page";
-        $page = new $pageNameSpace();
-        $total = count($this->db('doc AS d')->join("{$this->prefix}doc_content AS dc ON dc.doc_id = d.doc_id")->join("{$this->prefix}tree AS t ON t.tree_id = d.doc_tree_id")->where('doc_title LIKE :doc_title OR doc_content LIKE :doc_content')->group('d.doc_id')->select($param));
-        $count = $page->total($total);
-        $page->handle();
-        $list = $this->db('doc AS d')->join("{$this->prefix}doc_content AS dc ON dc.doc_id = d.doc_id")->join("{$this->prefix}tree AS t ON t.tree_id = d.doc_tree_id")->where('doc_title LIKE :doc_title OR doc_content LIKE :doc_content')->group('d.doc_id')->limit("{$page->firstRow}, {$page->listRows}")->select($param);
-        $show = $page->show();
-        $this->assign('page', $show);
-        $this->assign('list', $list);
+        $sql = "SELECT %s
+                FROM {$this->prefix}doc AS d
+                LEFT JOIN {$this->prefix}doc_content AS dc ON dc.doc_id = d.doc_id
+                LEFT jOIN {$this->prefix}tree AS t ON t.tree_id = d.doc_tree_id
+                LEFT JOIN {$this->prefix}doc_content_tag AS dct ON dct.content_id = dc.doc_content_id
+                WHERE doc_title LIKE :doc_title OR doc_content LIKE :doc_content OR dct.content_tag_name LIKE :tag
+                GROUP BY d.doc_id
+                ";
+        $result = \Model\Content::quickListContent([
+            'count' => sprintf($sql, 'count(*)'),
+            'normal'=> sprintf($sql, '*'),
+            'param' => $param
+        ]);
+
+        $this->assign('page', $result['page']);
+        $this->assign('list', $result['list']);
         $this->assign('title', "'{$keyword}'搜索结果");
         $this->layout();
 

@@ -5,7 +5,8 @@ namespace App\Doc\POST;
 /**
  * 公用内容插入
  */
-class Content extends \App\Doc\CheckUser {
+class Content extends \Core\Controller\Controller {
+
 
     /**
      * 添加内容
@@ -21,9 +22,9 @@ class Content extends \App\Doc\CheckUser {
         }
 
         if (!empty($_POST['back_url'])) {
-            $url = $_POST['back_url'];
+            $url = base64_decode($_POST['back_url']);
         } else {
-            $url = $this->url('/d/manage', true);
+            $url = $this->url(GROUP . '-' . MODULE . '-index');
         }
 
         if ($commit === TRUE) {

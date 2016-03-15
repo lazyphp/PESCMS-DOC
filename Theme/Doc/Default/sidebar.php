@@ -6,7 +6,7 @@
         <li class="am-nav-header"><?= $tv['title']; ?></li>
         <?php foreach ($tv['child'] as $key => $value) : ?>
             <li class="am-margin-top-0 <?= $_GET['id'] == $key ? 'am-active' : '' ?>">
-                <a href="<?= $label->url("/d/v/{$_GET['tree']}/{$key}", true); ?>"><?= $value['title']; ?></a>
+                <a href="<?= $label->url("Doc-Index-view", ['id' => $key, 'tree' => $_GET['tree']]); ?>"><?= $value['title']; ?></a>
             </li>
         <?php endforeach; ?>
     <?php endforeach; ?>

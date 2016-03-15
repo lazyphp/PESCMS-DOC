@@ -68,23 +68,19 @@ class Route {
      * 初始化路由器规则
      */
     public function index() {
-        $requestUri = $this->filterHtmlSuffix($this->changeUrl());
+        $requestUri = $this->filterSuffix($this->splitIndex());
         /**
          * 防止浏览器因为寻找ico图标
          * 造成二次访问，产生多次访问。
          */
         if ($requestUri == 'favicon.ico') {
-            return FALSE;
+            header('HTTP/1.1 404');
+            exit;
         }
 
-        if ($this->custom($requestUri) === true) {
-            return true;
-        }
+        $this->custom($requestUri);
 
-        //拆分数据
-        $routeArray = explode('-', $requestUri);
-
-        if (count($routeArray) < 2 && (empty($_GET['m']) || empty($_GET['a']))) {
+        if (empty($_GET['m']) || empty($_GET['a'])) {
             defined('GROUP') or define('GROUP', CoreFunc::loadConfig('DEFAULT_GROUP'));
             defined('MODULE') or define('MODULE', 'Index');
             defined('ACTION') or define('ACTION', 'index');
@@ -95,7 +91,6 @@ class Route {
              */
             unset($_GET['s']);
             $this->normal();
-            $this->expand();
         }
     }
 
@@ -113,13 +108,15 @@ class Route {
         if(empty($routeArray)){
             return false;
         }
-        $request = $this->splitIndex($request);
 
-        $splitRequest = explode('-', $request);
+
+        $splitRequest = explode('/', $request);
         $splitRequesCount = count($splitRequest);
+
         $urlParam = false;
         foreach ($routeArray as $route => $controller) {
             $splitRoute = explode('/', $route);
+
             if (count($splitRoute) === $splitRequesCount) {
                 $urlParam = array();
                 array_walk($splitRequest, function($param, $key) use ($splitRequest, $splitRoute, &$urlParam) {
@@ -132,18 +129,26 @@ class Route {
                         $urlParam = false;
                     }
                 });
+
+
                 if ($urlParam !== false) {
-                    $suffix = empty($urlParam) ? '' : '-' . implode('-', $urlParam);
-                    $_SERVER['REQUEST_URI'] = '/' . $controller . $suffix;
-                    break;
+                    $controller = explode('-', $controller);
+                    if(count($controller) == 2){
+                        $_GET['m'] = $controller['0'];
+                        $_GET['a'] = $controller['1'];
+                    }else{
+                        $_GET['g'] = $controller['0'];
+                        $_GET['m'] = $controller['1'];
+                        $_GET['a'] = $controller['2'];
+                    }
+
+                    foreach($urlParam as $key => $value){
+                        if($key % 2 != 0){
+                            $_GET[$urlParam[$key - 1]] = $value;
+                        }
+                    }
                 }
             }
-        }
-        if ($urlParam !== false) {
-            $this->expand();
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -170,85 +175,21 @@ class Route {
         }
     }
 
-    /**
-     * 扩展模式
-     */
-    private function expand() {
-        $requestUri = $this->filterHtmlSuffix($this->changeUrl());
 
-        //拆分数据
-        $routeArray = explode('-', $requestUri);
-
-        $routeArray[0] = $this->splitIndex($routeArray[0]);
-
-        //拆分组
-        $groupList = explode(',', CoreFunc::loadConfig('APP_GROUP_LIST'));
-
-        //判断URL首个参数是否存在于用户组
-        if (in_array($routeArray[0], $groupList)) {
-            defined('GROUP') OR define('GROUP', $routeArray[0]);
-            defined('MODULE') OR define('MODULE', $routeArray[1]);
-            defined('ACTION') OR define('ACTION', $this->splitAction($routeArray[2]));
-            unset($routeArray[0], $routeArray[1], $routeArray[2]);
-        } else {
-            defined('GROUP') OR define('GROUP', CoreFunc::loadConfig('DEFAULT_GROUP'));
-            defined('MODULE') OR define('MODULE', $routeArray[0]);
-            defined('ACTION') OR define('ACTION', $this->splitAction($routeArray[1]));
-            unset($routeArray[0], $routeArray[1]);
-        }
-        //将剩余的非GMA转化为GET参数，以便调用
-        $paramArray = array_chunk($routeArray, 2);
-        foreach ($paramArray as $key => $value) {
-            $_REQUEST[$value[0]] = $_GET[$value[0]] = $value[1];
-        }
-    }
-
-    /**
-     * 调整URL的地址，以适应路由层的后续判断
-     * @return type 返回处理好的URL
-     */
-    private function changeUrl() {
-        $list = array('/', '-');
-
-        /* 先获取脚本的URL，然后执行一个清除index动作 */
-        $removeIndex = substr(str_replace("index.php", "", substr($_SERVER['SCRIPT_NAME'], 1)), 0, -1);
-        /* 首次进行匹配替换,将含有index.php的后尾符替换为/ */
-        $firstMatchUrl = str_ireplace("index.php-", "index.php/", str_replace($list, "-", substr($_SERVER['REQUEST_URI'], 1)));
-        /* 第二次匹配，拆分URL */
-        $secondMatchUrl = explode('/', $firstMatchUrl);
-
-        /**
-         * 接下来这部分，是根据第二次匹配后的结果进行判断的。
-         * 不论什么样的URL，第二次匹配的数组必然只有2个！
-         */
-        if (empty($secondMatchUrl[1]) && empty($removeIndex)) {
-            return $secondMatchUrl[0];
-        } elseif (empty($secondMatchUrl[1]) && !empty($removeIndex)) {
-            $replaceSymbol = str_ireplace("/", "-", $removeIndex);
-            return str_ireplace($replaceSymbol . "-", $removeIndex . "/", $secondMatchUrl[0]);
-        } elseif (!empty($secondMatchUrl[1]) && empty($removeIndex)) {
-            return "index.php/" . $secondMatchUrl[1];
-        } else {
-            return $removeIndex . "/index.php/" . $secondMatchUrl[1];
-        }
-    }
 
     /**
      * 当URL存在下级目录时，执行一个替换操作
      * @param type $splitParam 替换的参数
      * @return type 返回替换好的参数
      */
-    private function splitIndex($splitParam) {
-        //当URL隐藏了index
-        if ((substr($_SERVER['SCRIPT_NAME'], 1) != 'index.php') && !strstr($_SERVER['REQUEST_URI'], "index.php")) {
-            $splitIndex = substr(str_replace('index.php', "", $_SERVER['SCRIPT_NAME']), 1);
-            $result = str_replace($splitIndex, "", $splitParam);
-            //当URL没有隐藏index
-        } elseif (substr($_SERVER['SCRIPT_NAME'], 1) != 'index.php' || substr($_SERVER['SCRIPT_NAME'], 1) == 'index.php') {
-            $splitIndex = substr(str_replace('index.php', "", $_SERVER['SCRIPT_NAME']), 1);
-            $result = str_replace(substr($_SERVER['SCRIPT_NAME'], 1) . "/", "", $splitParam);
+    private function splitIndex() {
+        $REQUEST_URI = substr($_SERVER['REQUEST_URI'], 1);
+        $existIndex = strpos($REQUEST_URI, 'index.php');
+        if($existIndex !== false){
+            return str_replace('index.php/', '', substr($REQUEST_URI, $existIndex));
         }
-        return $result;
+        return $REQUEST_URI;
+
     }
 
     /**
@@ -263,13 +204,29 @@ class Route {
     }
 
     /**
-     * 过滤后缀HTML
+     * 过滤常规的后缀
      * @param type $url 待过滤的URL
      */
-    private function filterHtmlSuffix($url) {
+    private function filterSuffix($url) {
         if (substr($url, '-5') == '.html') {
-            return substr($url, '0', '-5');
+            $url = substr($url, '0', '-5');
         }
+
+        //(｀_´)ゞURL小妹妹过来，叔叔给你进行身体检查呀。
+        $findPage = strpos($url, '/page');
+        if ($findPage !== false) {
+            //(◎_◎;)，嘿嘿，小妹妹，快脱了衣服！叔叔要更进一步深入地给你身体检查哦！(○´3｀)ﾉ
+            $pageParam = (int)str_replace('/page/', '', substr($url, $findPage));
+            //(>_<｡)啊~叔叔，那白色的液体是什么啊？啊啊~粘糊糊的~好恶心啊。
+            if (!is_numeric($pageParam) || $pageParam <= 0 ) {
+                $_GET['page'] = 1;
+            } else {
+                $_GET['page'] = $pageParam;
+            }
+
+            $url = substr($url, 0, $findPage);
+        }
+
         return $url;
     }
 

@@ -1,10 +1,10 @@
-<?php $this->header(); ?>
+
     <!-- content start -->
     <div class=" am-padding-top">
 
         <div class="am-g">
             <div class="am-u-sm-12">
-                <form action="<?= $label->url('/d/tree/action', true); ?>" method="POST" class="am-form am-form-inline">
+                <form action="<?= $label->url('Doc-Tree-action'); ?>" method="POST" class="am-form am-form-inline ajax-submit">
                     <div class="am-form-group">
                         <input type="text" name="title" class="am-form-field" placeholder="树名称">
                     </div>
@@ -27,15 +27,13 @@
                     <button class="am-btn am-btn-default">
                         <i class="am-icon-sitemap"></i> 新建树
                     </button>
-
-                    <a href="<?= $label->url('User-index') ?>" class="am-btn am-btn-warning"><i class="am-icon-user"></i> 管理帐号</a>
                 </form>
             </div>
         </div>
 
         <div class="am-g">
             <div class="am-u-sm-12">
-                <form class="am-form" action="<?= $label->url('/d/tree/listsort', true); ?>" method="POST">
+                <form class="am-form ajax-submit" action="<?= $label->url('Doc-Tree-listsort'); ?>"  method="POST">
                     <input type="hidden" name="method" value="PUT"/>
                     <table class="am-table am-table-striped am-table-hover table-main">
                         <?php foreach ($treeList as $value) : ?>
@@ -66,7 +64,7 @@
                                             <div class="am-btn-group am-btn-group-xs">
                                                 <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $value['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
                                                 <a class="am-btn am-btn-primary show-child" data="#tree-child-<?= $value['tree_id']; ?>"><i class="am-icon-bars"></i> 查看子树</a>
-                                                <a class="am-btn am-btn-danger" href="<?= $label->url("/d/tree/action/{$value['tree_id']}/DELETE", true); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+                                                <a class="am-btn am-btn-danger" href="<?= $label->url("Doc-Tree-action", ['id' => $value['tree_id'], 'method' => 'DELETE']); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
                                             </div>
                                         </div>
                                     </td>
@@ -106,7 +104,7 @@
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
                                                         <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $child['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
-                                                        <a class="am-btn am-btn-danger" href="<?= $label->url("/d/tree/action/{$child['tree_id']}/DELETE", true); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+                                                        <a class="am-btn am-btn-danger" href="<?= $label->url("Doc-Tree-action", ['id' => $child['tree_id'], 'method' => 'DELETE']); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -177,8 +175,10 @@
                     return false;
                 }
 
-                ajax({
-                    url: request+'/d/tree/action', data: {title: title, id: id, parent: parent, listsort:listsort, method: 'PUT'}
+                var actionUrl = '<?=$label->url('Doc-Tree-action') ?>';
+
+                $.ajaxsubmit({
+                    url: actionUrl, data: {title: title, id: id, parent: parent, listsort:listsort, method: 'PUT'}
                 }, function (data) {
                     if (data.status == '200') {
                         setTimeout(function () {
@@ -192,4 +192,3 @@
         })
     </script>
     <!-- content end -->
-<?php $this->footer(); ?>

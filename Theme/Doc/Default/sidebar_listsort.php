@@ -1,8 +1,8 @@
 <?php if ($_SESSION['user']['user_id']): ?>
     <div id="doc-oc-demo3" class="am-offcanvas">
         <div class="am-offcanvas-bar am-offcanvas-bar-flip tm-background-color-white" style="width: auto;">
-            <form class="am-form" action="<?= $label->url('/d/tree/listsort', true); ?>" method="POST">
-                <input type="hidden" name="back_url" value="<?= $label->url("/d/v/{$_GET['tree']}/{$_GET['id']}", true); ?>">
+            <form class="am-form" action="<?= $label->url('Doc-Tree-listsort'); ?>" method="POST">
+                <input type="hidden" name="back_url" value="<?= $label->url("Doc-Index-view", ['id' => $_GET['id'], 'tree' => $_GET['tree']]); ?>">
                 <input type="hidden" name="method" value="PUT"/>
                 <button type="submit" class="am-btn am-btn-primary am-btn-xs tm-full-width">排序</button>
                 <table class="am-table am-table-striped am-table-hover table-main am-margin-0">

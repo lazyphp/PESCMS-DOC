@@ -1,6 +1,6 @@
-<?php $this->header(); ?>
+
     <div class="tm-content am-g-fixed am-container am-padding-top am-padding-bottom">
-        <form action="" method="POST" data-am-validator>
+        <form action="" method="POST" class="ajax-submit" data-am-validator>
             <ul class="am-list am-list-border">
                 <li class="am-padding-xs">
                     <ol class="am-breadcrumb am-margin-0 am-padding-0">
@@ -43,8 +43,7 @@
     </div>
     <script type="text/javascript">
         var ue = UE.getEditor('editor', {
-            textarea: 'content',
-            serverUrl: path + '/d/uedition/?method=POST'
+            textarea: 'content'
         });
         var treeList = eval('(' + '<?= json_encode($treeList) ?>' + ')');
         $("#tree-parent").on("change", function () {
@@ -59,4 +58,3 @@
         })
 
     </script>
-<?php $this->footer(); ?>

@@ -1,39 +1,57 @@
 <div class="tm-content am-margin">
 
     <ul class="am-list ">
-        <li class="am-padding tm-remove-border">
+        <li class="am-padding tm-remove-border am-padding-top-0">
             <h1 class="am-article-title am-margin-top-0 display-doc-title"><?= $doc_title; ?></h1>
 
+            <?php if (!empty($system['articlereview'])): ?>
+                <div class="am-text-sm article-review">
+                    <script>
+                        <?=$system['articlereview']?>
+                    </script>
+                    <h2><span>目录</span></h2>
+
+                    <div>
+                        <ol>
+                        </ol>
+                    </div>
+                </div>
+            <?php endif; ?>
             <?php if (!empty($_SESSION['user']['user_id'])): ?>
                 <div class="am-form-inline am-padding-bottom-sm update-title-form am-hide">
-                    <div class="am-form-group" style="width:40%">
-                        <input type="text" name="title" data="<?= $doc_id; ?>" value="<?= $doc_title; ?>" class="am-form-field" placeholder="标题" style="width:100%;padding:0.5rem">
-                    </div>
+                    <form action="<?= $label->url('Doc-Doc-action') ?>" class="ajax-submit" method="POST">
+                        <input type="hidden" name="method" value="PUT">
+                        <input type="hidden" name="id" value="<?= $doc_id; ?>">
 
-                    <div class="am-form-group">
-                        <select id="tree-parent" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
-                            <option value="">请选择</option>
-                            <?php foreach ($treeList as $key => $value) : ?>
-                                <?php if ($value['tree_parent'] == 0): ?>
-                                    <option value="<?= $value['tree_id']; ?>" <?= $treeList[$doc_tree_id]['tree_parent'] == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+                        <div class="am-form-group" style="width:40%">
+                            <input type="text" name="title" value="<?= $doc_title; ?>" class="am-form-field" placeholder="标题" style="width:100%;padding:0.5rem">
+                        </div>
 
-                    <div class="am-form-group">
-                        <select id="tree-child" name="tree" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
-                            <option value="">请选择</option>
-                            <?php foreach ($treeList as $key => $value) : ?>
-                                <?php if ($value['tree_parent'] == $treeList[$doc_tree_id]['tree_parent']): ?>
-                                    <option value="<?= $value['tree_id']; ?>" <?= $doc_tree_id == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+                        <div class="am-form-group">
+                            <select id="tree-parent" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
+                                <option value="">请选择</option>
+                                <?php foreach ($treeList as $key => $value) : ?>
+                                    <?php if ($value['tree_parent'] == 0): ?>
+                                        <option value="<?= $value['tree_id']; ?>" <?= $treeList[$doc_tree_id]['tree_parent'] == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
-                    <a class="am-btn am-btn-default update-title" style="padding:0.51rem">更新标题</a>
-                    <a href="<?= $label->url("/d/action/{$doc_id}/DELETE", true); ?>" class="am-btn am-btn-danger" onclick="return confirm('确定删除吗?文档将无法恢复的!')" style="padding:0.51rem">删除文档</a>
+                        <div class="am-form-group">
+                            <select id="tree-child" name="tree_id" data-am-selected="{maxHeight: 200, btnSize: 'sm'}">
+                                <option value="">请选择</option>
+                                <?php foreach ($treeList as $key => $value) : ?>
+                                    <?php if ($value['tree_parent'] == $treeList[$doc_tree_id]['tree_parent']): ?>
+                                        <option value="<?= $value['tree_id']; ?>" <?= $doc_tree_id == $value['tree_id'] ? 'selected="selected"' : '' ?> ><?= $value['tree_title']; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="am-btn am-btn-default" style="padding:0.51rem">更新标题</button>
+                        <a href="<?= $label->url("Doc-Article-Action", ['id' => $doc_id, 'method' => 'DELETE']); ?>" class="am-btn am-btn-danger" onclick="return confirm('确定删除吗?文档将无法恢复的!')" style="padding:0.51rem">删除文档</a>
+                    </form>
                 </div>
             <?php endif; ?>
             <?php if (time() - $doc_updatetime > 15768000): ?>
@@ -57,29 +75,53 @@
                             <?php if ($_SESSION['user']['user_id']): ?>
                                 <a href="javascript:;" id="update-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary update-button">更新</a>
                                 <a href="javascript:;" id="history-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary history-button">版本历史</a>
-                                <a href="<?= $label->url("/d/dc/{$value['doc_content_id']}/DELETE", true); ?>" id="delete-content-button_<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-danger delete-content-button" onclick="return confirm('确定删除吗?文档内容将无法恢复的!')">删除文档</a>
+                                <a href="<?= $label->url("Doc-Article-deleteContent", ['id' => $value['doc_content_id'], 'method' => 'DELETE']); ?>" id="delete-content-button_<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-danger delete-content-button ajax-click ajax-delete">删除文档</a>
                             <?php endif; ?>
                         </p>
                     </div>
 
+                    <?php $tagArray = $label->listtag($value['doc_content_id']); ?>
+
                     <div class="am-article-bd tm-article" data="<?= $value['doc_content_id'] ?>">
                         <?php if ($_SESSION['user']['user_id']): ?>
-                            <script id="content_<?= $value['doc_content_id'] ?>" type="text/plain" style="height:250px;"><?= htmlspecialchars_decode($value['doc_content']); ?></script>
+                            <form id="submit_<?= $value['doc_content_id'] ?>" class="ajax-submit" action="<?= $label->url('Doc-Doc-updateContent', ['id' => $value['doc_content_id']]); ?>" method="POST">
+                                <input type="hidden" name="method" value="PUT">
+                                <script id="content_<?= $value['doc_content_id'] ?>" type="text/plain" style="height:250px;"><?= htmlspecialchars_decode($value['doc_content']); ?></script>
+                                <div class="am-margin-top-sm am-hide content_tag_<?= $value['doc_content_id'] ?>">
+                                    <input type="text" class="am-form-field" name="tag" value="<?= implode(',', $tagArray); ?>" placeholder="内容标签">
+
+                                    <div class="am-alert am-alert-secondary am-text-xs" data-am-alert>
+                                        填写标签，有利于用户检索内容，标签用英文逗号“,”作为分隔符。
+                                    </div>
+                                </div>
+                            </form>
                         <?php endif; ?>
                         <div class="content_html">
                             <?= html_entity_decode($value['doc_content']); ?>
+
+                            <?php if (!empty($tagArray)): ?>
+                                <p class="am-article-meta">
+                                    Tag :
+                                    <?php foreach ($tagArray as $tag): ?>
+                                        <span class="am-badge"><?= $tag; ?></span>
+                                    <?php endforeach; ?>
+                                </p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </article>
             </li>
         <?php endforeach; ?>
         <?php if (!empty($_SESSION['user']['user_id'])): ?>
-            <form action="<?= $label->url("/d/addContent/{$doc_id}", true); ?>" method="POST">
+            <form action="<?= $label->url("Doc-Article-addContent", ['id' => $doc_id]); ?>" class="ajax-submit" method="POST">
                 <li class="am-padding-xs am-text-sm">
                     添加内容
                 </li>
-                <li class="">
+                <li>
                     <script id="editor" type="text/plain" style="height:250px;"></script>
+                </li>
+                <li class="am-margin-top-sm" style="list-style-type: none;">
+                    <input type="text" class="am-form-field" name="tag" placeholder="内容标签;填写标签，有利于用户检索内容，标签用英文逗号“,”作为分隔符。">
                 </li>
                 <li class="am-padding-xs am-text-center">
                     <button class="am-btn  am-btn-xs am-btn-primary">添加</button>
@@ -88,8 +130,7 @@
             </form>
             <script>
                 var ue = UE.getEditor('editor', {
-                    textarea: 'content',
-                    serverUrl: path + '/d/uedition/?method=POST'
+                    textarea: 'content'
                 });
             </script>
         <?php endif; ?>
@@ -130,7 +171,7 @@
                 var data = $(this).attr("data");
                 //记录启用过和初始化编辑器
                 if (!editor[data]) {
-                    editor[data] = UE.getEditor('content_' + data, {serverUrl: path + '/d/uedition/?method=POST'});
+                    editor[data] = UE.getEditor('content_' + data, {textarea: 'content'});
                 } else {
                     editor[data].setShow()
                 }
@@ -138,6 +179,8 @@
                 //移除所有隐藏得元素
                 $(".update-button, .history-button, .delete-content-button").addClass("am-hide");
                 $(".content_html").removeClass("am-hide");
+                //显示标签输入框
+                $(".content_tag_" + data).removeClass("am-hide");
                 //隐藏当前内容
                 $(this).children(".content_html").addClass("am-hide");
                 $("#update-button_" + data + ", #history-button_" + data + ", #delete-content-button_" + data).removeClass("am-hide");
@@ -167,6 +210,7 @@
                     for (var key in editor) {
                         $(".update-button, .history-button, .delete-content-button").addClass("am-hide");
                         editor[key].setHide();
+                        $(".content_tag_" + key).addClass("am-hide");
                     }
                     $(".update-title-form").addClass("am-hide");
                 }
@@ -180,46 +224,8 @@
              */
             $(".update-button").on("click", function () {
                 var id = $(this).attr("data");
-                if (editor[id].hasContents() != true) {
-                    $('#am-alert').modal('open');
-                    $(".alert-tips").html("请填写内容");
-                }
-
-                ajax({url: request + '/d/edit/' + id, data: {content: editor[id].getContent()}}, function (data) {
-                    if (data.status == '200') {
-                        setTimeout(function () {
-                            location.reload()
-                        }, '1000')
-                    }
-                })
+                $("#submit_" + id).submit();
                 return false;
-            })
-
-            /**
-             * 更新标题
-             */
-            $(".update-title").on("click", function () {
-                var title = $("input[name=title]").val()
-                var id = $("input[name=title]").attr("data")
-                var tree = $("select[name=tree]").val()
-                if (title == '') {
-                    alert("请填写标题");
-                    return false;
-                }
-                if (tree == "") {
-                    alert("请选择树");
-                    return false;
-                }
-                ajax({
-                    url: request + '/d/updateTitle',
-                    data: {id: id, title: title, tree_id: tree, method: 'PUT'}
-                }, function (data) {
-                    if (data.status == '200') {
-                        setTimeout(function () {
-                            location.reload()
-                        }, '1000')
-                    }
-                })
             })
 
             /**
@@ -227,7 +233,11 @@
              */
             $(".history-button").on("click", function () {
                 var id = $(this).attr("data");
-                ajax({url: request + '/d/gh/' + id, 'type': 'GET', 'dialog': false}, function (data) {
+                $.ajaxsubmit({
+                    url: path + '?g=Doc&m=History&a=getHistory&method=GET&id=' + id,
+                    'type': 'GET',
+                    'dialog': false
+                }, function (data) {
                     if (data.status == '0') {
                         $('#am-alert').modal();
                         $(".alert-tips").html(data.msg);
@@ -238,9 +248,10 @@
                         $('#history-modal').modal();
                         var trStr = "";
                         for (var key in data.msg) {
-                            var use = data['msg'][key]['doc_content_current'] == '1' ? '<a class="am-btn am-btn-danger am-btn-xs" disabled="disabled">当前版本</a>' : '<a class="am-btn am-btn-default am-btn-xs" href="' + request + '/d/h/' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">预览</a><a class="am-btn am-btn-warning am-btn-xs" href="' + request + '/d/h/c/' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">对比</a><a class="am-btn am-btn-success am-btn-xs" href="' + request + '/d/h/u/' + data['msg'][key]['doc_content_history_id'] + '">使用此版本</a>';
+                            var use = data['msg'][key]['doc_content_current'] == '1' ? '<a class="am-btn am-btn-danger am-btn-xs" disabled="disabled">当前版本</a>' : '<a class="am-btn am-btn-default am-btn-xs" href="' + path + '?g=Doc&m=History&a=view&id=' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">预览</a><a class="am-btn am-btn-warning am-btn-xs" href="' + path + '?g=Doc&m=History&a=compare&id=' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">对比</a><a class="am-btn am-btn-success am-btn-xs ajax-click" href="' + path + '?g=Doc&m=History&a=useVersion&method=GET&id=' + data['msg'][key]['doc_content_history_id'] + '">使用此版本</a>';
                             trStr += '<tr><td>' + data['msg'][key]['doc_content_history_id'] + '</td><td>' + data['msg'][key]['user_name'] + '</td><td>' + data['msg'][key]['doc_content_createtime'] + '</td><td>' + use + '</td></tr>';
                         }
+                        console.dir(trStr)
                         $(".history-list").html(trStr)
 
                     }

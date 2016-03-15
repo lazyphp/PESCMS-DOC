@@ -4,9 +4,9 @@
             <input type="hidden" name="method" value="GET" />
 
             <div class="am-form-group">
-                <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">程序标题:</label>
+                <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">程序名称:</label>
                 <div class="am-u-sm-10">
-                    <input type="text" name="title" placeholder="程序标题" required>
+                    <input type="text" name="sitetitle" placeholder="程序名称" required>
                 </div>
             </div>
 
@@ -37,31 +37,21 @@
                     <input type="text" name="name"  placeholder="管理员名字" required>
                 </div>
             </div>
-            <div class="am-form-group">
-                <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">URL模式:</label>
-                <div class="am-u-sm-2">
-                    <select name="urlModel" required>
-                        <option value="">请选择</option>
-                        <option value="1">默认模型</option>
-                        <option value="3">斜杠模式</option>
-                    </select>
-                </div>
-                <div class="am-u-sm-8 am-vertical-align-middle">
-                    *服务器支持rewrite的话，可以选择斜杠模式，否则请选择默认模式
-                </div>
-            </div>
 
             <div class="am-form-group">
-                <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">隐藏index.php:</label>
-                <div class="am-u-sm-2">
-                    <select name="index" required>
-                        <option value="">请选择</option>
-                        <option value="0">显示</option>
-                        <option value="1">隐藏</option>
-                    </select>
-                </div>
-                <div class="am-u-sm-8 am-vertical-align-middle">
-                    *服务器不支持Rewrite，勿选隐藏！ <a href="http://www.pescms.com/d/v/9/14.html" target="_blank">参考此处</a>
+                <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">开启验证码:</label>
+                <div class="am-u-sm-10">
+                    <div class="am-form-group">
+                        <label class="am-radio-inline">
+                            <input type="radio"  value="0" name="verify"> 关闭
+                        </label>
+                        <label class="am-radio-inline">
+                            <input type="radio" value="1" name="verify"> 开启
+                        </label>
+                    </div>
+                    <div class="am-alert am-alert-secondary" data-am-alert>
+                        若程序是对外的话，建议开启本功能，可以防止程序被暴力爆破。
+                    </div>
                 </div>
             </div>
 

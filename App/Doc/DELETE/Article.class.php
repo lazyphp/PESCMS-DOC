@@ -2,7 +2,7 @@
 
 namespace App\Doc\DELETE;
 
-class Article extends \App\Doc\CheckUser {
+class Article extends \Core\Controller\Controller {
 
     /**
      * 删除文档
@@ -20,7 +20,7 @@ class Article extends \App\Doc\CheckUser {
             $this->error('删除失败');
         }
 
-        $this->success('删除文档成功', $this->url('/d/manage', true));
+        $this->success('删除文档成功', $this->url('Doc-Article-manage'));
     }
 
     /**
