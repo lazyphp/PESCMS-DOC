@@ -33,6 +33,9 @@
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
     <!--加载百度编辑器-->
+    <!--让百度支持Markdown-->
+    <script type="text/javascript" charset="utf-8" src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/dialogs/markdown/editorshowdown.js"></script>
+    <!--让百度支持Markdown-->
 
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.js"></script>
 
