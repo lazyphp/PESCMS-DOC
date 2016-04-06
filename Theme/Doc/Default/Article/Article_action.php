@@ -35,6 +35,12 @@
                         <option value="">请选择</option>
                     </select>
                 </li>
+                <li>
+                    <input type="text" class="tm-remove-border tm-input-background-color am-form-field" name="tag" value="" placeholder="填写标签，有利于用户检索内容，标签用英文逗号“,”作为分隔符。">
+                    <div class="am-alert am-alert-secondary am-text-xs" data-am-alert>
+                        填写标签，有利于用户检索内容，标签用英文逗号“,”作为分隔符。
+                    </div>
+                </li>
                 <li class="am-padding-xs am-text-center">
                     <button class="am-btn  am-btn-xs am-btn-primary">提交</button>
                 </li>

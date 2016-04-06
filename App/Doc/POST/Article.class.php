@@ -28,7 +28,9 @@ class Article extends \Core\Controller\Controller {
             $this->error('创建文档出错');
         }
 
-        \Model\Doc\Doc::addContent(array('doc_id' => $baseInsert, 'user_id' => $data['user_id'], 'doc_content' => $content, 'doc_content_createtime' => $data['doc_createtime']));
+        $contentid = \Model\Doc\Doc::addContent(array('doc_id' => $baseInsert, 'user_id' => $data['user_id'], 'doc_content' => $content, 'doc_content_createtime' => $data['doc_createtime']));
+
+        \Model\Doc\Doc::createTag($contentid);
 
         $this->db()->commit();
 
