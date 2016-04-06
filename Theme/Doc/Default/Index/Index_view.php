@@ -234,7 +234,7 @@
             $(".history-button").on("click", function () {
                 var id = $(this).attr("data");
                 $.ajaxsubmit({
-                    url: path + '?g=Doc&m=History&a=getHistory&method=GET&id=' + id,
+                    url: path + '/?g=Doc&m=History&a=getHistory&method=GET&id=' + id,
                     'type': 'GET',
                     'dialog': false
                 }, function (data) {
