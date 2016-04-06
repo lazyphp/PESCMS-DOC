@@ -1,7 +1,7 @@
 <?php if ($_SESSION['user']['user_id']): ?>
     <div id="doc-oc-demo3" class="am-offcanvas">
         <div class="am-offcanvas-bar am-offcanvas-bar-flip tm-background-color-white" style="width: auto;">
-            <form class="am-form" action="<?= $label->url('Doc-Tree-listsort'); ?>" method="POST">
+            <form class="am-form ajax-submit" action="<?= $label->url('Doc-Tree-listsort'); ?>" method="POST">
                 <input type="hidden" name="back_url" value="<?= $label->url("Doc-Index-view", ['id' => $_GET['id'], 'tree' => $_GET['tree']]); ?>">
                 <input type="hidden" name="method" value="PUT"/>
                 <button type="submit" class="am-btn am-btn-primary am-btn-xs tm-full-width">排序</button>
