@@ -21,4 +21,22 @@ class Upload extends \Core\Controller\Controller {
         echo (new \Expand\UEupload\UEController())->action();
     }
 
+    /**
+     * 简单得上传控件
+     */
+    public function easyUpload(){
+        if(!empty($_FILES['upfile'])){
+            $_GET['action'] = 'uploadimage';
+            $result = (new \Expand\UEupload\UEController())->action();
+            $info = json_decode($result, true);
+            if ($info['state'] != 'SUCCESS') {
+                $this->assign('alert', $info['state']);
+            } else {
+                $this->assign('alert', 'SUCCESS');
+                $this->assign('img', $info);
+            }
+        }
+        $this->display();
+    }
+
 }

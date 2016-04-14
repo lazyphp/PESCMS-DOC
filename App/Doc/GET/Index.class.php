@@ -53,6 +53,13 @@ class Index extends \Core\Controller\Controller {
     }
 
     /**
+     * 文档目录
+     */
+    public function path(){
+        $this->display();
+    }
+
+    /**
      * 文档详情
      */
     public function view() {
