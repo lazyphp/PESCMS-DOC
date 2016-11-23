@@ -90,6 +90,7 @@ class Setting extends \Core\Controller\Controller {
                         'option_name' => 'version'
                     ]
                 ]);
+                $version = $iniversion;
             }
         }
         //移除升级的配置文件
