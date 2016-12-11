@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-03-16 13:41:07
+-- Generation Time: 2016-12-12 03:46:56
 -- 服务器版本： 5.5.16
--- PHP Version: 5.4.39
+-- PHP Version: 5.6.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `d_doc_content` (
   `doc_content_updatetime` int(11) NOT NULL DEFAULT '0' COMMENT '内容更新时间',
   `doc_content_version` tinyint(1) NOT NULL DEFAULT '0' COMMENT '用于作版本标记。切换则记录对应的版本ID，反之为0',
   `doc_content_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1为删除',
-  `doc_content_listsort` int(11) NOT NULL,
+  `doc_content_listsort` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`doc_content_id`),
   KEY `doc_id` (`doc_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='文档内容' AUTO_INCREMENT=4 ;
@@ -100,8 +100,8 @@ CREATE TABLE IF NOT EXISTS `d_doc_content_history` (
 
 CREATE TABLE IF NOT EXISTS `d_doc_content_tag` (
   `content_tag_id` int(11) NOT NULL AUTO_INCREMENT,
-  `content_tag_name` varchar(255) NOT NULL,
-  `content_id` int(11) NOT NULL,
+  `content_tag_name` varchar(255) NOT NULL DEFAULT '',
+  `content_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`content_tag_id`),
   KEY `content_id` (`content_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='内容标签' AUTO_INCREMENT=1 ;
@@ -114,18 +114,18 @@ CREATE TABLE IF NOT EXISTS `d_doc_content_tag` (
 
 CREATE TABLE IF NOT EXISTS `d_field` (
   `field_id` int(11) NOT NULL AUTO_INCREMENT,
-  `field_model_id` int(11) NOT NULL,
-  `field_name` varchar(128) NOT NULL,
-  `field_display_name` varchar(128) NOT NULL,
-  `field_type` varchar(128) NOT NULL,
+  `field_model_id` int(11) NOT NULL DEFAULT '0',
+  `field_name` varchar(128) NOT NULL DEFAULT '',
+  `field_display_name` varchar(128) NOT NULL DEFAULT '',
+  `field_type` varchar(128) NOT NULL DEFAULT '',
   `field_option` text NOT NULL,
-  `field_explain` varchar(128) NOT NULL,
-  `field_default` varchar(128) NOT NULL,
-  `field_required` tinyint(4) NOT NULL,
-  `field_listsort` int(11) NOT NULL,
-  `field_list` tinyint(1) NOT NULL,
-  `field_form` tinyint(1) NOT NULL,
-  `field_status` tinyint(4) NOT NULL,
+  `field_explain` varchar(128) NOT NULL DEFAULT '',
+  `field_default` varchar(128) NOT NULL DEFAULT '',
+  `field_required` tinyint(4) NOT NULL DEFAULT '0',
+  `field_listsort` int(11) NOT NULL DEFAULT '0',
+  `field_list` tinyint(1) NOT NULL DEFAULT '0',
+  `field_form` tinyint(1) NOT NULL DEFAULT '0',
+  `field_status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
@@ -250,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `d_route` (
 
 CREATE TABLE IF NOT EXISTS `d_tree` (
   `tree_id` int(11) NOT NULL AUTO_INCREMENT,
-  `tree_listsort` int(11) NOT NULL,
+  `tree_listsort` int(11) NOT NULL DEFAULT '0',
   `tree_status` tinyint(4) NOT NULL DEFAULT '0',
   `tree_lang` tinyint(4) NOT NULL DEFAULT '0',
   `tree_createtime` int(11) NOT NULL DEFAULT '0',

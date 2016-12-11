@@ -147,6 +147,15 @@ class Index extends \Core\Controller\Controller {
             $this->error($e->getMessage());
         }
 
+        //检查是否开启MYSQL严格模式
+        $sql = "SELECT @@sql_mode AS mode";
+        foreach ($db->query($sql) as $row) {
+            if (strpos(strtoupper($row['mode']), 'STRICT_TRANS_TABLES') !== false) {
+                $transTable = fopen(PES_PATH . '/STRICT_TRANS_TABLES.txt', 'w+');
+                fwrite($transTable, $row['mode']);
+                fclose($transTable);
+            }
+        }
 
         //安装数据库文件
         $db->exec($sqlFile);
