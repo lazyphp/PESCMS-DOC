@@ -66,7 +66,14 @@ class History extends \Core\Controller\Controller {
         }
 
         //更新内容
-        $updateContent = $this->db('doc_content')->where('doc_content_id = :doc_content_id')->update(array('doc_content' => $history['doc_content'], 'user_id' => $_SESSION['user']['user_id'], 'doc_content_updatetime' => time(), 'noset' => array('doc_content_id' => $history['doc_content_id'])));
+        $updateContent = $this->db('doc_content')->where('doc_content_id = :doc_content_id')->update(array(
+            'doc_content' => $history['doc_content'],
+            'user_id' => $this->session()->get('user')['user_id'],
+            'doc_content_updatetime' => time(),
+            'noset' => array(
+                'doc_content_id' => $history['doc_content_id']
+            )
+        ));
 
         if($updateContent == '0'){
             $this->db()->rollBack();

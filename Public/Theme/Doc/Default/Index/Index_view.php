@@ -17,7 +17,7 @@
                     </div>
                 </div>
             <?php endif; ?>
-            <?php if (!empty($_SESSION['user']['user_id'])): ?>
+            <?php if (!empty($this->session()->get('user')['user_id'])): ?>
                 <div class="am-form-inline am-padding-bottom-sm update-title-form am-hide">
                     <form action="<?= $label->url('Doc-Doc-action') ?>" class="ajax-submit" method="POST">
                         <input type="hidden" name="method" value="PUT">
@@ -72,7 +72,7 @@
                                 <time datetime="<?= date('Y-m-d H:i', $value['doc_content_updatetime']); ?>" title="<?= date('Y-m-d H:i', $doc_updatetime); ?>">
                                     最后更新 <?= $label->timing($value['doc_content_updatetime']); ?></time>
                             <?php endif; ?>
-                            <?php if ($_SESSION['user']['user_id']): ?>
+                            <?php if ($this->session()->get('user')['user_id']): ?>
                                 <a href="javascript:;" id="update-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary update-button">更新</a>
                                 <a href="javascript:;" id="history-button_<?= $value['doc_content_id'] ?>" data="<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-primary history-button">版本历史</a>
                                 <a href="<?= $label->url("Doc-Article-deleteContent", ['id' => $value['doc_content_id'], 'method' => 'DELETE']); ?>" id="delete-content-button_<?= $value['doc_content_id'] ?>" class="am-hide am-badge am-badge-danger delete-content-button ajax-click ajax-delete">删除文档</a>
@@ -83,7 +83,7 @@
                     <?php $tagArray = $label->listtag($value['doc_content_id']); ?>
 
                     <div class="am-article-bd tm-article" data="<?= $value['doc_content_id'] ?>">
-                        <?php if ($_SESSION['user']['user_id']): ?>
+                        <?php if ($this->session()->get('user')['user_id']): ?>
                             <form id="submit_<?= $value['doc_content_id'] ?>" class="ajax-submit" action="<?= $label->url('Doc-Doc-updateContent', ['id' => $value['doc_content_id']]); ?>" method="POST">
                                 <input type="hidden" name="method" value="PUT">
                                 <script id="content_<?= $value['doc_content_id'] ?>" type="text/plain" style="height:250px;"><?= htmlspecialchars_decode($value['doc_content']); ?></script>
@@ -112,7 +112,7 @@
                 </article>
             </li>
         <?php endforeach; ?>
-        <?php if (!empty($_SESSION['user']['user_id'])): ?>
+        <?php if (!empty($this->session()->get('user')['user_id'])): ?>
             <form action="<?= $label->url("Doc-Article-addContent", ['id' => $doc_id]); ?>" class="ajax-submit" method="POST">
                 <li class="am-padding-xs am-text-sm">
                     添加内容
@@ -138,7 +138,7 @@
 
 
 </div>
-<?php if ($_SESSION['user']['user_id']): ?>
+<?php if ($this->session()->get('user')['user_id']): ?>
     <script type="text/javascript">
         $(function () {
 

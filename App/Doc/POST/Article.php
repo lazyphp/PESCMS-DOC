@@ -14,7 +14,7 @@ class Article extends \Core\Controller\Controller {
         $data['doc_title'] = $this->isP('title', '请填写标题');
         $content = $this->isP('content', '请填写内容');
         $data['doc_tree_id'] = $this->isP('tree', '请选择类型');
-        $data['user_id'] = $_SESSION['user']['user_id'];
+        $data['user_id'] = $this->session()->get('user')['user_id'];
         $data['doc_updatetime'] = $data['doc_createtime'] = time();
         $data['doc_delete'] = '0';
 
@@ -57,7 +57,12 @@ class Article extends \Core\Controller\Controller {
             $this->error('更新时间出错');
         }
 
-        $contentid = \Model\Doc\Doc::addContent(array('doc_id' => $id, 'user_id' => $_SESSION['user']['user_id'], 'doc_content' => $content, 'doc_content_createtime' => $time));
+        $contentid = \Model\Doc\Doc::addContent(array(
+            'doc_id' => $id,
+            'user_id' => $this->session()->get('user')['user_id'],
+            'doc_content' => $content,
+            'doc_content_createtime' => $time
+        ));
 
         \Model\Doc\Doc::createTag($contentid);
 

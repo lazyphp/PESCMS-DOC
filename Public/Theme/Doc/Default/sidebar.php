@@ -1,4 +1,4 @@
-<?php if ($_SESSION['user']['user_id']): ?>
+<?php if ($this->session()->get('user')['user_id']): ?>
     <button class="am-btn am-btn-success tm-full-width" data-am-offcanvas="{target: '#doc-oc-demo3'}">排序</button>
 <?php endif; ?>
 <ul class="am-nav am-list-border am-text-sm am-link-muted">

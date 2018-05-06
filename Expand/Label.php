@@ -79,10 +79,7 @@ class Label {
      * 生成令牌
      */
     public function token() {
-        list($usec, $sec) = explode(" ", microtime());
-        $token = md5(substr($usec, 2) * rand(1, 100));
-        $_SESSION['token'] = $token;
-        return "<input type=\"hidden\" name=\"token\" value=\"{$token}\" />";
+        return '<input type="hidden" name="token" value="'.\Core\Func\CoreFunc::$token.'" >';
     }
 
 

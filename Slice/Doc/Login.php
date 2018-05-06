@@ -23,9 +23,9 @@ class Login extends \Core\Slice\Slice{
         if (!empty($_COOKIE['tm'])) {
             $cookieCondition = "lu.login_cookie = :login_cookie AND lu.login_agent = :login_agent";
             $cookieParam = array('login_cookie' => $_COOKIE['tm'], 'login_agent' => $_SERVER['HTTP_USER_AGENT']);
-            if (!empty($_SESSION['user']['user_id'])) {
+            if (!empty($this->session()->get('user')['user_id'])) {
                 $cookieCondition .= " AND lu.user_id = :user_id";
-                $cookieParam['user_id'] = $_SESSION['user']['user_id'];
+                $cookieParam['user_id'] = $this->session()->get('user')['user_id'];
             }
             $verifyCookie = $this->db('login_user AS lu')->join("{$this->prefix}user AS u ON u.user_id = lu.user_id")->where($cookieCondition)->find($cookieParam);
             if (!empty($verifyCookie)) {
@@ -37,7 +37,7 @@ class Login extends \Core\Slice\Slice{
             }
         }
 
-        if (!empty($_SESSION['user']['user_id'])) {
+        if (!empty($this->session()->get('user')['user_id'])) {
             $this->setLoginCookie();
             $this->assign('login', true);
         } else {
@@ -58,7 +58,7 @@ class Login extends \Core\Slice\Slice{
      * @param type $info 设置登录的信息
      */
     private function setLogin($info) {
-        $_SESSION['user'] = $info;
+        $this->session()->set('user', $info);
         $this->setLoginCookie();
     }
 
@@ -68,13 +68,13 @@ class Login extends \Core\Slice\Slice{
     private function setLoginCookie() {
         if (empty($_COOKIE['tm'])) {
             $sec = explode(' ', microtime());
-            $data['login_cookie'] = md5(round(time() * $sec['0'], 0) . $_SESSION['user']['user_mail']);
-            $data['user_id'] = $_SESSION['user']['user_id'];
+            $data['login_cookie'] = md5(round(time() * $sec['0'], 0) . $this->session()->get('user')['user_mail']);
+            $data['user_id'] = $this->session()->get('user')['user_id'];
             $data['login_agent'] = $_SERVER['HTTP_USER_AGENT'];
 
             $recordCookie = $this->db('login_user')->insert($data);
             if ($recordCookie === false) {
-                $data['login_cookie'] = md5(round(time() * $sec['0'], 0) . $_SESSION['user']['user_mail']);
+                $data['login_cookie'] = md5(round(time() * $sec['0'], 0) . $this->session()->get('user')['user_mail']);
                 $recordCookie = $this->db('login_user')->insert($data);
                 if ($recordCookie === false) {
                     $this->success('未能设置cookie登录，您可以去买彩票了!', $this->backUrl('/'));

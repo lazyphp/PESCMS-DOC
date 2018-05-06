@@ -1,4 +1,4 @@
-<?php if ($_SESSION['user']['user_id']): ?>
+<?php if ($this->session()->get('user')['user_id']): ?>
     <div id="doc-oc-demo3" class="am-offcanvas">
         <div class="am-offcanvas-bar am-offcanvas-bar-flip tm-background-color-white" style="width: auto;">
             <form class="am-form ajax-submit" action="<?= $label->url('Doc-Tree-listsort'); ?>" method="POST">
