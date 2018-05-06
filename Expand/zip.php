@@ -53,7 +53,7 @@ class zip {
             $i++;
             $filename = zip_entry_name($file);
 
-            $foldername = PES_PATH . $filename;
+            $foldername = PES_CORE . $filename;
 
             //目录或者文件不存在，则创建
             if (!file_exists($foldername)) {

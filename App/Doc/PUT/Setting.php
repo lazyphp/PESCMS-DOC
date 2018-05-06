@@ -69,7 +69,7 @@ class Setting extends \Core\Controller\Controller {
     private function actionsql() {
         $version = \Model\Content::findContent('option', 'version', 'option_name')['value'];
 
-        $ini = PES_PATH . 'Upgrade/actionsql.ini';
+        $ini = APP_PATH . 'Upgrade/actionsql.ini';
         if (!file_exists($ini)) {
             return ['升级配置数据库文件不存在'];
         }

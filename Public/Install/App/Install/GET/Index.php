@@ -151,7 +151,7 @@ class Index extends \Core\Controller\Controller {
         $sql = "SELECT @@sql_mode AS mode";
         foreach ($db->query($sql) as $row) {
             if (strpos(strtoupper($row['mode']), 'STRICT_TRANS_TABLES') !== false) {
-                $transTable = fopen(PES_PATH . '/STRICT_TRANS_TABLES.txt', 'w+');
+                $transTable = fopen(APP_PATH . '/STRICT_TRANS_TABLES.txt', 'w+');
                 fwrite($transTable, $row['mode']);
                 fclose($transTable);
             }
