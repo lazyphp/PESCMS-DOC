@@ -8,11 +8,12 @@ $(function () {
      */
     $('body').on('submit', '.ajax-submit', function () {
         var url = $(this).attr("action")
-        var dom = $(this);
+        var dom = $(this)
         $.ajaxsubmit({
             url: url,
             data: dom.serialize()
-        }, function(){});
+        }, function () {
+        });
 
         return false;
     })
@@ -26,13 +27,13 @@ $(function () {
         var url = $(this).attr("href");
         var stop = false;
         //设置了禁用则不允许触发事件
-        if($(this).hasClass('am-disabled')){
+        if ($(this).hasClass('am-disabled')) {
             return false;
         }
 
 
-        //弹出对话框 @todo 此处是否应该换成dialog?
-        if ($(this).hasClass('ajax-delete')) {
+        //弹出对话框
+        if ($(this).hasClass('ajax-dialog')) {
             var msg = $(this).attr("msg") ? $(this).attr("msg") : '确定删除吗？';
             if (!confirm(msg)) {
                 stop = true;
@@ -44,7 +45,8 @@ $(function () {
 
         $.ajaxsubmit({
             url: url
-        }, function(){});
+        }, function () {
+        });
         return false;
     })
 
@@ -66,27 +68,59 @@ $(function () {
         $.post(obj.url, obj.data, function (data) {
 
             if (obj.dialog == true) {
-                if (data.status == '200') {
+                if (data.status == 200) {
+
+                    if(data.waitSecond == -1){
+                        window.location.href = data.url
+                        return false;
+                    }
+
                     setTimeout(function () {
                         data.url ? window.location.href = data.url : location.reload();
                     }, 2000);
                 }
-                if (data.status) {
-                    d.content(data.msg).showModal();
-                } else {
-                    d.content('系统响应出问题，请再次提交').showModal();
-                }
+                d.content(data.msg).showModal();
+
             }
+            $.refreshToken(data.token);
             callback(data);
 
-        }, 'JSON').fail(function () {
-            d.content('系统请求出错！请再次提交!').showModal();
+        }, 'JSON').fail(function (jqXHR, textStatus, error) {
+            var msg = '系统请求出错！请再次提交!';
+            try{
+                $.refreshToken(jqXHR.responseJSON.token);
+                switch (jqXHR.responseJSON.status){
+                    case 500:
+                        msg = jqXHR.responseJSON.msg;
+                        break;
+                    case 404:
+                        msg = jqXHR.responseJSON.msg;
+                        break;
+                }
+
+            }catch (e){
+
+            }
+            d.content(msg).showModal();
+        }).complete(function(){
+            var src = $('.refresh-verify').attr('src')
+            $('.refresh-verify').attr('src', src + '&time=' + Math.random());
         });
         setTimeout(function () {
             d.close();
         }, 3000);
 
         progress.done();
+    }
+
+    /**
+     * 更新token
+     * @param token
+     */
+    $.refreshToken = function (token) {
+        $('input[name=token]').each(function () {
+            $(this).val(token);
+        })
     }
 
     /**
@@ -97,4 +131,11 @@ $(function () {
         $('.'+name).attr("class", $(this).val()+ ' '+ name);
     })
 
+    /**
+     * 刷新验证码
+     */
+    $(document).on('click', '.refresh-verify', function () {
+        var src = $(this).attr('src')
+        $(this).attr('src', src + '&time=' + Math.random());
+    });
 })
