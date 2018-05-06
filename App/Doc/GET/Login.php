@@ -21,7 +21,7 @@ class Login extends \Core\Controller\Controller{
 
     public function logout(){
         setcookie('tm', '', '-1000', '/');
-        session_destroy();
+        $this->session()->destroy();
         $this->success('您已安全退出', '/');
     }
 
