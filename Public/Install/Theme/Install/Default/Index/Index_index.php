@@ -1,13 +1,10 @@
-<div class="am-g">
-    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
-        <div class="agree am-padding" style="height: 300px; overflow-y: auto;border: 1px solid #DDDDDD">
-			<p>请等待协议加载完成</p>
-        </div>
-        <div class="am-margin-top am-fr">
-            <a href="<?=DOCUMENT_ROOT?>/?m=Index&a=config" class="am-btn am-btn-default am-disabled">程序协议加载中...</a>
-        </div>
-    </div>
+<div class="agree am-padding" style="height: 300px; overflow-y: auto;border: 1px solid #DDDDDD">
+    <p>请等待协议加载完成</p>
 </div>
+<div class="am-margin-top am-fr">
+    <a href="<?=DOCUMENT_ROOT?>/?m=Index&a=config" class="am-btn am-btn-default am-disabled">程序协议加载中...</a>
+</div>
+<div class="am-cf"></div>
 <script>
     $(function(){
         var progress = $.AMUI.progress;
