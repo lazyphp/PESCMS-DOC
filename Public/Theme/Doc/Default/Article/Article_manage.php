@@ -69,7 +69,7 @@
                                                 <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $value['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
                                                 <a class="am-btn am-btn-primary show-child" data="#tree-child-<?= $value['tree_id']; ?>"><i class="am-icon-bars"></i> 查看子树</a>
 
-                                                <a class="am-btn am-btn-warning"><i class="am-icon-book"></i> 版本管理</a>
+                                                <a href="<?= $label->url('Doc-Version-tree') ?>" class="am-btn am-btn-warning"><i class="am-icon-book"></i> 版本管理</a>
 
                                                 <a class="am-btn am-btn-danger ajax-click ajax-delete" href="<?= $label->url("Doc-Tree-action", ['id' => $value['tree_id'], 'method' => 'DELETE']); ?>" ><span class="am-icon-trash-o"></span> 删除</a>
                                             </div>
@@ -79,7 +79,7 @@
 
                                 <tbody id="tree-child-<?= $value['tree_id']; ?>" class="am-hide">
                                 <?php foreach ($treeList as $child): ?>
-                                    <?php if ($child['tree_parent'] == $value['tree_id']): ?>
+                                    <?php if ($child['tree_parent'] == $value['tree_id'] && $value['tree_version'] == $child['tree_version'] ): ?>
                                         <tr>
                                             <td class="table-sort am-text-middle">
                                                 <input class="am-input-sm" type="text" name="tree[<?= $child['tree_id']; ?>]"

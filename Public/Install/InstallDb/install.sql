@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-12-12 03:46:56
--- 服务器版本： 5.5.16
--- PHP Version: 5.6.14
+-- Generation Time: 2018-05-07 09:41:28
+-- 服务器版本： 5.6.25-log
+-- PHP Version: 5.6.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS `d_doc` (
   `doc_id` int(11) NOT NULL AUTO_INCREMENT,
   `doc_title` varchar(128) NOT NULL DEFAULT '' COMMENT '标题',
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
-  `doc_tree_id` int(11) NOT NULL DEFAULT '0' COMMENT '时间日志类型',
+  `doc_tree_id` int(11) NOT NULL DEFAULT '0' COMMENT '目录ID',
+  `tree_version` varchar(12) NOT NULL DEFAULT '' COMMENT '版本标记',
   `doc_createtime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `doc_updatetime` int(11) NOT NULL DEFAULT '0' COMMENT '最后更新时间',
   `doc_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否被删除',
@@ -43,8 +44,8 @@ CREATE TABLE IF NOT EXISTS `d_doc` (
 -- 转存表中的数据 `d_doc`
 --
 
-INSERT INTO `d_doc` (`doc_id`, `doc_title`, `user_id`, `doc_tree_id`, `doc_createtime`, `doc_updatetime`, `doc_delete`, `doc_listsort`) VALUES
-(1, '序言', 1, 2, 1441274302, 1445575327, 0, 1);
+INSERT INTO `d_doc` (`doc_id`, `doc_title`, `user_id`, `doc_tree_id`, `tree_version`, `doc_createtime`, `doc_updatetime`, `doc_delete`, `doc_listsort`) VALUES
+(1, '序言', 1, 2, '', 1441274302, 1445575327, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -59,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `d_doc_content` (
   `doc_content` text NOT NULL COMMENT '内容',
   `doc_content_createtime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `doc_content_updatetime` int(11) NOT NULL DEFAULT '0' COMMENT '内容更新时间',
-  `doc_content_version` tinyint(1) NOT NULL DEFAULT '0' COMMENT '用于作版本标记。切换则记录对应的版本ID，反之为0',
+  `tree_version` varchar(12) NOT NULL DEFAULT '' COMMENT '版本标记',
   `doc_content_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1为删除',
   `doc_content_listsort` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`doc_content_id`),
@@ -70,10 +71,10 @@ CREATE TABLE IF NOT EXISTS `d_doc_content` (
 -- 转存表中的数据 `d_doc_content`
 --
 
-INSERT INTO `d_doc_content` (`doc_content_id`, `doc_id`, `user_id`, `doc_content`, `doc_content_createtime`, `doc_content_updatetime`, `doc_content_version`, `doc_content_delete`, `doc_content_listsort`) VALUES
-(1, 1, 1, '&lt;p&gt;欢迎使用PESCMS 文档系统。&lt;/p&gt;&lt;h4&gt;专注编写和查阅&lt;/h4&gt;&lt;p&gt;PESCMS 文档系统让用户只需专注于文档的编写和查阅上。没有设计过多且复杂功能，一级文档树 + 文档文章的组合，让文档结构一目了然。结合优秀的Amazeui UI前端框架，使本系统适配所有平台。&lt;/p&gt;&lt;h4&gt;轻松的编辑方式&lt;/h4&gt;&lt;p&gt;登录文档系统后，您在任何文档内容中，只要轻轻双击内容任意区域，即可进入编辑模式。同时UE百度编辑器，让我们写文档变得更加轻松便捷。&lt;/p&gt;&lt;h4&gt;永存的版本历史&lt;/h4&gt;&lt;p&gt;PESCMS DOC自带便捷的版本历史功能，任何操作都记录在案，历史记录尽在瞬间。&lt;/p&gt;', 1441274302, 1442481201, 0, 0, 0),
-(2, 1, 1, '&lt;h2&gt;建议和反馈&lt;/h2&gt;&lt;p&gt;如果您有什么建议或者需要反馈的，可以通过如下方式联系我们：&lt;/p&gt;&lt;p&gt;官方群Q：451828934 &lt;a target=&quot;_blank&quot; href=&quot;http://shang.qq.com/wpa/qunwpa?idkey=cac31728dc4b0838c5e881747f44698bf87197cb3743354a6b02ff13489c57a3&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://pub.idqqimg.com/wpa/images/group.png&quot; alt=&quot;PESCMS TEAM官方群&quot; title=&quot;PESCMS TEAM官方群&quot;/&gt;&lt;/a&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;访问Timelog发表的您看法：&lt;a href=&quot;http://www.timelog.xyz/tm/type/4&quot; _src=&quot;http://www.timelog.xyz/tm/type/4&quot;&gt;http://www.timelog.xyz/tm/type/4&lt;/a&gt;&amp;nbsp;&lt;/p&gt;', 1442499505, 1442499631, 0, 0, 0),
-(3, 1, 1, '&lt;h2&gt;使用帮助&lt;/h2&gt;&lt;p&gt;所有文档管理都需要登录帐号后方可操作。大部分功能都是显式布局，此部分功能就不进行详细说明了，相信大家摸索1分钟即可上手了。下面简单介绍隐式功能：&lt;/p&gt;&lt;p&gt;&lt;strong&gt;编辑文档：&lt;/strong&gt;将鼠标移动至文档内容区域，&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;双击&lt;/span&gt;之。系统将会进入编辑模式。在编辑模式下，将会出现&lt;strong&gt;&lt;span style=&quot;color: rgb(0, 176, 240);&quot;&gt;更新&lt;/span&gt;&lt;/strong&gt;、&lt;span style=&quot;color: rgb(0, 176, 240);&quot;&gt;&lt;strong&gt;版本历史&lt;/strong&gt;&lt;/span&gt;、&lt;span style=&quot;color: rgb(0, 176, 240);&quot;&gt;&lt;strong&gt;删除&lt;/strong&gt;&lt;/span&gt;三种类别按钮（&lt;strong&gt;此操作不可恢复&lt;/strong&gt;）&lt;/p&gt;&lt;p&gt;&lt;strong&gt;更新文档标题：&lt;/strong&gt;双击文档标题，&lt;span style=&quot;text-decoration: underline;&quot;&gt;即可快速编辑文档标题，切换文档树位置。还可以删除文档&lt;/span&gt;（&lt;strong&gt;本操作不可恢复&lt;/strong&gt;）。&lt;/p&gt;', 1445575327, 0, 0, 0, 0);
+INSERT INTO `d_doc_content` (`doc_content_id`, `doc_id`, `user_id`, `doc_content`, `doc_content_createtime`, `doc_content_updatetime`, `tree_version`, `doc_content_delete`, `doc_content_listsort`) VALUES
+(1, 1, 1, '&lt;p&gt;欢迎使用PESCMS 文档系统。&lt;/p&gt;&lt;h4&gt;专注编写和查阅&lt;/h4&gt;&lt;p&gt;PESCMS 文档系统让用户只需专注于文档的编写和查阅上。没有设计过多且复杂功能，一级文档树 + 文档文章的组合，让文档结构一目了然。结合优秀的Amazeui UI前端框架，使本系统适配所有平台。&lt;/p&gt;&lt;h4&gt;轻松的编辑方式&lt;/h4&gt;&lt;p&gt;登录文档系统后，您在任何文档内容中，只要轻轻双击内容任意区域，即可进入编辑模式。同时UE百度编辑器，让我们写文档变得更加轻松便捷。&lt;/p&gt;&lt;h4&gt;永存的版本历史&lt;/h4&gt;&lt;p&gt;PESCMS DOC自带便捷的版本历史功能，任何操作都记录在案，历史记录尽在瞬间。&lt;/p&gt;', 1441274302, 1442481201, '0', 0, 0),
+(2, 1, 1, '&lt;h2&gt;建议和反馈&lt;/h2&gt;&lt;p&gt;如果您有什么建议或者需要反馈的，可以通过如下方式联系我们：&lt;/p&gt;&lt;p&gt;官方群Q：451828934 &lt;a target=&quot;_blank&quot; href=&quot;http://shang.qq.com/wpa/qunwpa?idkey=cac31728dc4b0838c5e881747f44698bf87197cb3743354a6b02ff13489c57a3&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://pub.idqqimg.com/wpa/images/group.png&quot; alt=&quot;PESCMS TEAM官方群&quot; title=&quot;PESCMS TEAM官方群&quot;/&gt;&lt;/a&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;访问Timelog发表的您看法：&lt;a href=&quot;http://www.timelog.xyz/tm/type/4&quot; _src=&quot;http://www.timelog.xyz/tm/type/4&quot;&gt;http://www.timelog.xyz/tm/type/4&lt;/a&gt;&amp;nbsp;&lt;/p&gt;', 1442499505, 1442499631, '0', 0, 0),
+(3, 1, 1, '&lt;h2&gt;使用帮助&lt;/h2&gt;&lt;p&gt;所有文档管理都需要登录帐号后方可操作。大部分功能都是显式布局，此部分功能就不进行详细说明了，相信大家摸索1分钟即可上手了。下面简单介绍隐式功能：&lt;/p&gt;&lt;p&gt;&lt;strong&gt;编辑文档：&lt;/strong&gt;将鼠标移动至文档内容区域，&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;双击&lt;/span&gt;之。系统将会进入编辑模式。在编辑模式下，将会出现&lt;strong&gt;&lt;span style=&quot;color: rgb(0, 176, 240);&quot;&gt;更新&lt;/span&gt;&lt;/strong&gt;、&lt;span style=&quot;color: rgb(0, 176, 240);&quot;&gt;&lt;strong&gt;版本历史&lt;/strong&gt;&lt;/span&gt;、&lt;span style=&quot;color: rgb(0, 176, 240);&quot;&gt;&lt;strong&gt;删除&lt;/strong&gt;&lt;/span&gt;三种类别按钮（&lt;strong&gt;此操作不可恢复&lt;/strong&gt;）&lt;/p&gt;&lt;p&gt;&lt;strong&gt;更新文档标题：&lt;/strong&gt;双击文档标题，&lt;span style=&quot;text-decoration: underline;&quot;&gt;即可快速编辑文档标题，切换文档树位置。还可以删除文档&lt;/span&gt;（&lt;strong&gt;本操作不可恢复&lt;/strong&gt;）。&lt;/p&gt;', 1445575327, 0, '0', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -128,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `d_field` (
   `field_status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- 转存表中的数据 `d_field`
@@ -152,7 +153,8 @@ INSERT INTO `d_field` (`field_id`, `field_model_id`, `field_name`, `field_displa
 (16, 4, 'param', '显式参数', 'text', '', '若URL存在GET参数，填写上该参数，以半角逗号隔开。如有三个参数a，b，c。那么填写为：a,b,c', '', 0, 3, 1, 1, 1),
 (17, 4, 'rule', '路由规则', 'text', '', '若链接中存在显式参数，那么用左右大括号包围着。如参数number，那么路由规则这样写：route/{number}。同时规则开头不要添加任何字符，且分隔符只能为''/''', '', 1, 4, 1, 1, 1),
 (18, 4, 'status', '启用状态', 'radio', '{&quot;\\u542f\\u7528&quot;:&quot;1&quot;,&quot;\\u7981\\u7528&quot;:&quot;0&quot;}', '', '', 1, 7, 1, 1, 1),
-(19, 4, 'title', '路由名称', 'text', '', '建议填写，以免路由规则过多时，自己也不清楚谁是他的爹。', '', 0, 1, 1, 1, 1);
+(19, 4, 'title', '路由名称', 'text', '', '建议填写，以免路由规则过多时，自己也不清楚谁是他的爹。', '', 0, 1, 1, 1, 1),
+(20, 1, 'version', '目录版本号', 'text', '', '', '', 0, 1, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -217,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `d_option` (
 
 INSERT INTO `d_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES
 (1, 'sitetitle', '网站名称', 'PESCMS文档系统', 'system'),
-(13, 'version', '系统版本', '1.3.8', ''),
+(13, 'version', '系统版本', '1.4.9', ''),
 (14, 'upload_img', '图片格式', '[".jpg",".jpge",".bmp",".gif",".png"]', 'upload'),
 (15, 'upload_file', '文件格式', '[".zip",".rar",".7z",".doc",".docx",".pdf",".xls",".xlsx",".ppt",".pptx",".txt"]', 'upload'),
 (22, 'login', '开启全站登录验证', '0', 'system'),
@@ -252,20 +254,34 @@ CREATE TABLE IF NOT EXISTS `d_tree` (
   `tree_id` int(11) NOT NULL AUTO_INCREMENT,
   `tree_listsort` int(11) NOT NULL DEFAULT '0',
   `tree_status` tinyint(4) NOT NULL DEFAULT '0',
-  `tree_lang` tinyint(4) NOT NULL DEFAULT '0',
   `tree_createtime` int(11) NOT NULL DEFAULT '0',
   `tree_title` varchar(255) NOT NULL DEFAULT '',
   `tree_parent` int(11) NOT NULL DEFAULT '0',
+  `tree_version` varchar(12) NOT NULL DEFAULT '' COMMENT '当前目录版本号',
   PRIMARY KEY (`tree_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='文档树' AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='文档目录' AUTO_INCREMENT=3 ;
 
 --
 -- 转存表中的数据 `d_tree`
 --
 
-INSERT INTO `d_tree` (`tree_id`, `tree_listsort`, `tree_status`, `tree_lang`, `tree_createtime`, `tree_title`, `tree_parent`) VALUES
-(1, 1, 0, 0, 0, 'PESCMS文档系统', 0),
-(2, 1, 0, 0, 0, '序言', 1);
+INSERT INTO `d_tree` (`tree_id`, `tree_listsort`, `tree_status`, `tree_createtime`, `tree_title`, `tree_parent`, `tree_version`) VALUES
+(1, 1, 0, 0, 'PESCMS文档系统', 0, ''),
+(2, 1, 0, 0, '序言', 1, '');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `d_tree_version`
+--
+
+CREATE TABLE IF NOT EXISTS `d_tree_version` (
+  `tree_version_id` int(11) NOT NULL AUTO_INCREMENT,
+  `tree_id` int(11) NOT NULL,
+  `tree_version` varchar(12) NOT NULL DEFAULT '' COMMENT '版本号',
+  PRIMARY KEY (`tree_version_id`),
+  KEY `tree_id` (`tree_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='目录版本记录' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
