@@ -233,49 +233,48 @@
              */
             $(".history-button").on("click", function () {
                 var id = $(this).attr("data");
+                var d = dialog({
+                    title : '版本历史操作提示',
+                    fixed : true
+                });
                 $.ajaxsubmit({
                     url: path + '/?g=Doc&m=History&a=getHistory&method=GET&id=' + id,
                     'type': 'GET',
                     'dialog': false
                 }, function (data) {
-                    if (data.status == '0') {
-                        $('#am-alert').modal();
-                        $(".alert-tips").html(data.msg);
+                    if (data.status == 0) {
+                        d.content(data.msg).showModal();
                         setTimeout(function () {
-                            $('#am-alert').modal('close');
+                            d.close().remove();
                         }, '1200');
-                    } else if (data.status == '200') {
+                    } else if (data.status == 200) {
                         $('#history-modal').modal();
                         var trStr = "";
-                        for (var key in data.msg) {
-                            var use = data['msg'][key]['doc_content_current'] == '1' ? '<a class="am-btn am-btn-danger am-btn-xs" disabled="disabled">当前版本</a>' : '<a class="am-btn am-btn-default am-btn-xs" href="' + path + '?g=Doc&m=History&a=view&id=' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">预览</a><a class="am-btn am-btn-warning am-btn-xs" href="' + path + '?g=Doc&m=History&a=compare&id=' + data['msg'][key]['doc_content_history_id'] + '" target="_blank">对比</a><a class="am-btn am-btn-success am-btn-xs ajax-click" href="' + path + '?g=Doc&m=History&a=useVersion&method=GET&id=' + data['msg'][key]['doc_content_history_id'] + '">使用此版本</a>';
-                            trStr += '<tr><td>' + data['msg'][key]['doc_content_history_id'] + '</td><td>' + data['msg'][key]['user_name'] + '</td><td>' + data['msg'][key]['doc_content_createtime'] + '</td><td>' + use + '</td></tr>';
+                        for (var key in data.data) {
+                            var use = data['data'][key]['doc_content_current'] == '1' ? '<a class="am-btn am-btn-danger am-btn-xs" disabled="disabled">当前版本</a>' : '<a class="am-btn am-btn-default am-btn-xs" href="' + path + '?g=Doc&m=History&a=view&id=' + data['data'][key]['doc_content_history_id'] + '" target="_blank">预览</a><a class="am-btn am-btn-warning am-btn-xs" href="' + path + '?g=Doc&m=History&a=compare&id=' + data['data'][key]['doc_content_history_id'] + '" target="_blank">对比</a><a class="am-btn am-btn-success am-btn-xs ajax-click" href="' + path + '?g=Doc&m=History&a=useVersion&method=GET&id=' + data['data'][key]['doc_content_history_id'] + '">使用此版本</a>';
+                            trStr += '<tr><td>' + data['data'][key]['doc_content_history_id'] + '</td><td>' + data['data'][key]['user_name'] + '</td><td>' + data['data'][key]['doc_content_createtime'] + '</td><td>' + use + '</td></tr>';
                         }
-                        console.dir(trStr)
                         $(".history-list").html(trStr)
-
+                        d.width('65rem').content($('#am-modal-bd')[0]).showModal();
                     }
 
                 })
             })
         })
     </script>
-    <div class="am-modal am-modal-no-btn" tabindex="-1" id="history-modal">
-        <div class="am-modal-dialog">
-            <div class="am-modal-bd" style="height: 250px;overflow-y: scroll">
-                <table class="am-table am-table-bordered am-table-radius am-table-striped">
-                    <thead>
-                    <tr>
-                        <th>版本序号</th>
-                        <th>操作者</th>
-                        <th>创建时间</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody class="history-list">
-                    </tbody>
-                </table>
-            </div>
-        </div>
+
+    <div id="am-modal-bd" style="height: 250px;overflow-y: scroll;display: none">
+        <table class="am-table am-table-bordered am-table-radius am-table-striped">
+            <thead>
+            <tr>
+                <th>版本序号</th>
+                <th>操作者</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody class="history-list">
+            </tbody>
+        </table>
     </div>
 <?php endif; ?>

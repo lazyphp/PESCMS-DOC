@@ -41,7 +41,10 @@ class History extends \Core\Controller\Controller {
         if(empty($list)){
             $this->error('当前没有可选择的版本');
         }else{
-            $this->success($list);
+            $this->success([
+                'msg' => '获取历史版本成功',
+                'data' => $list
+            ]);
         }
     }
 
