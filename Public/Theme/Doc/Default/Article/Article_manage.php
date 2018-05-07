@@ -6,12 +6,12 @@
             <div class="am-u-sm-12">
                 <form action="<?= $label->url('Doc-Tree-action'); ?>" method="POST" class="am-form am-form-inline ajax-submit">
                     <div class="am-form-group">
-                        <input type="text" name="title" class="am-form-field" placeholder="树名称">
+                        <input type="text" name="title" class="am-form-field" placeholder="目录名称">
                     </div>
 
                     <div class="am-form-group">
                         <select name="parent" data-am-selected>
-                            <option value="0">顶层文档树</option>
+                            <option value="0">顶层目录</option>
                             <?php foreach ($treeList as $value) : ?>
                                 <?php if ($value['tree_parent'] == '0'): ?>
                                     <option value="<?= $value['tree_id']; ?>"><?= $value['tree_title']; ?></option>
@@ -21,11 +21,15 @@
                     </div>
 
                     <div class="am-form-group">
+                        <input type="text" name="version" class="am-form-field" placeholder="版本号">
+                    </div>
+
+                    <div class="am-form-group">
                         <input type="text" name="listsort" class="am-form-field" placeholder="排序值">
                     </div>
 
                     <button class="am-btn am-btn-default">
-                        <i class="am-icon-sitemap"></i> 新建树
+                        <i class="am-icon-sitemap"></i> 新建目录
                     </button>
                 </form>
             </div>
@@ -35,35 +39,38 @@
             <div class="am-u-sm-12">
                 <form class="am-form ajax-submit" action="<?= $label->url('Doc-Tree-listsort'); ?>"  method="POST">
                     <input type="hidden" name="method" value="PUT"/>
-                    <table class="am-table am-table-striped am-table-hover table-main">
+                    <table class="am-table am-table-striped am-table-hover table-main am-padding-left-0">
                         <?php foreach ($treeList as $value) : ?>
                             <?php if ($value['tree_parent'] == 0): ?>
                                 <tr>
                                     <td class="table-sort am-text-middle">
-                                        <input type="text" name="tree[<?= $value['tree_id']; ?>]" value="<?= $value['tree_listsort']; ?>">
+                                        <input class="am-input-sm" type="text" name="tree[<?= $value['tree_id']; ?>]" value="<?= $value['tree_listsort']; ?>">
                                     </td>
                                     <td class="am-text-middle">
                                         <span class="display-tree-<?= $value['tree_id']; ?>"><?= $value['tree_title']; ?></span>
 
                                         <div class="am-form am-form-inline am-hide update-tree-<?= $value['tree_id']; ?>">
                                             <div class="am-form-group">
-                                                <input class="update-tree-input-<?= $value['tree_id']; ?>  am-form-field" type="text" name="title" value="<?= $value['tree_title']; ?>">
+                                                <input class="update-tree-input-<?= $value['tree_id']; ?>  am-form-field am-input-sm" type="text" name="title" value="<?= $value['tree_title']; ?>">
                                             </div>
                                             <div class="am-form-group">
-                                                <select name="parent" class="parent-<?= $value['tree_id']; ?>" data-am-selected>
+                                                <select name="parent" class="parent-<?= $value['tree_id']; ?> " data-am-selected="{btnSize: 'sm'}">
                                                 </select>
                                             </div>
                                             <div class="am-form-group">
-                                                <a class="am-btn am-btn-secondary submit-tree" data="<?= $value['tree_id']; ?>" href="javascript:;">提交</a>
+                                                <a class="am-btn am-btn-sm am-btn-secondary submit-tree" data="<?= $value['tree_id']; ?>" href="javascript:;">提交</a>
                                             </div>
                                         </div>
 
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="am-btn-toolbar">
-                                            <div class="am-btn-group am-btn-group-xs">
+                                            <div class="am-btn-group am-btn-group-sm">
                                                 <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $value['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
                                                 <a class="am-btn am-btn-primary show-child" data="#tree-child-<?= $value['tree_id']; ?>"><i class="am-icon-bars"></i> 查看子树</a>
+
+                                                <a class="am-btn am-btn-warning"><i class="am-icon-book"></i> 版本管理</a>
+
                                                 <a class="am-btn am-btn-danger ajax-click ajax-delete" href="<?= $label->url("Doc-Tree-action", ['id' => $value['tree_id'], 'method' => 'DELETE']); ?>" ><span class="am-icon-trash-o"></span> 删除</a>
                                             </div>
                                         </div>
@@ -75,7 +82,7 @@
                                     <?php if ($child['tree_parent'] == $value['tree_id']): ?>
                                         <tr>
                                             <td class="table-sort am-text-middle">
-                                                <input type="text" name="tree[<?= $child['tree_id']; ?>]"
+                                                <input class="am-input-sm" type="text" name="tree[<?= $child['tree_id']; ?>]"
                                                        value="<?= $child['tree_listsort']; ?>">
                                             </td>
                                             <td class="am-text-middle">
@@ -87,14 +94,14 @@
 
                                                     <div class="am-form-group am-hide update-tree-<?= $child['tree_id']; ?>">
                                                         <div class="am-form-group">
-                                                            <input class="update-tree-input-<?= $child['tree_id']; ?>  am-form-field" type="text" name="title" value="<?= $child['tree_title']; ?>">
+                                                            <input class="update-tree-input-<?= $child['tree_id']; ?>  am-form-field am-input-sm" type="text" name="title" value="<?= $child['tree_title']; ?>">
                                                         </div>
                                                         <div class="am-form-group">
-                                                            <select name="parent" data="<?= $child['tree_parent']; ?>" class="parent-<?= $child['tree_id']; ?>" data-am-selected>
+                                                            <select name="parent" data="<?= $child['tree_parent']; ?>" class="parent-<?= $child['tree_id']; ?>" data-am-selected="{btnSize: 'sm'}">
                                                             </select>
                                                         </div>
                                                         <div class="am-form-group">
-                                                            <a class="am-btn am-btn-secondary submit-tree" data="<?= $child['tree_id']; ?>" href="javascript:;">提交</a>
+                                                            <a class="am-btn am-btn-sm am-btn-secondary submit-tree" data="<?= $child['tree_id']; ?>" href="javascript:;">提交</a>
                                                         </div>
                                                     </div>
 
@@ -102,9 +109,9 @@
                                             </td>
                                             <td class="am-text-middle">
                                                 <div class="am-btn-toolbar">
-                                                    <div class="am-btn-group am-btn-group-xs">
+                                                    <div class="am-btn-group am-btn-group-sm">
                                                         <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;" data="<?= $child['tree_id']; ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
-                                                        <a class="am-btn am-btn-danger ajax-click ajax-delete" href="<?= $label->url("Doc-Tree-action", ['id' => $child['tree_id'], 'method' => 'DELETE']); ?>" ><span class="am-icon-trash-o"></span> 删除</a>
+                                                        <a class="am-btn am-btn-danger ajax-click ajax-dialog" href="<?= $label->url("Doc-Tree-action", ['id' => $child['tree_id'], 'method' => 'DELETE']); ?>" ><span class="am-icon-trash-o"></span> 删除</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -127,6 +134,15 @@
     </div>
     <script>
         $(function () {
+
+            //隐藏版本号输入框
+            $('body').on('change', 'select[name=parent]', function(){
+                if($(this).val() == 0){
+                    $('input[name=version]').show();
+                }else{
+                    $('input[name=version]').hide();
+                }
+            })
 
             //初始化树目录
             var treeList = eval('(' + '<?= json_encode($treeList) ?>' + ')');

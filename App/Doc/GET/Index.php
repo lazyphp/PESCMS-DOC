@@ -28,7 +28,13 @@ class Index extends \Core\Controller\Controller {
         $this->indexTreeID = !empty($_GET['tree']) ? $this->g('tree') : current(\Core\Func\CoreFunc::$param['treeList'])['tree_id'];
 
         //依据顶层树的ID获取对应的侧栏文档树结构
-        $list = $this->db('doc AS d')->field('d.doc_title, d.doc_id, d.doc_listsort, t.tree_id, t.tree_title, t.tree_listsort')->join("{$this->prefix}tree AS t ON t.tree_id = d.doc_tree_id")->where("d.doc_delete = '0' AND t.tree_parent = :tree_parent ")->order('t.tree_listsort ASC, t.tree_id DESC, d.doc_listsort ASC, d.doc_id DESC')->select(array('tree_parent' => $this->indexTreeID));
+        $list = $this->db('doc AS d')
+            ->field('d.doc_title, d.doc_id, d.doc_listsort, t.tree_id, t.tree_title, t.tree_listsort')->join("{$this->prefix}tree AS t ON t.tree_id = d.doc_tree_id")
+            ->where("d.doc_delete = '0' AND t.tree_parent = :tree_parent ")
+            ->order('t.tree_listsort ASC, t.tree_id DESC, d.doc_listsort ASC, d.doc_id DESC')
+            ->select([
+                'tree_parent' => $this->indexTreeID
+            ]);
 
         $this->indexPageID = !empty($_GET['id']) ? $this->g('id') : $list['0']['doc_id'];
         $tree = array();
