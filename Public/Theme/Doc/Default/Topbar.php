@@ -44,16 +44,17 @@
                         <a href="<?= $label->url('Doc-Login-index'); ?>"><i class="am-icon-sign-in"></i> 管理</a>
                     </li>
                 <?php else: ?>
+                    <li>
+                        <a href="<?= $label->url('Doc-Article-action'); ?>"><i class="am-icon-edit"></i> 新文档</a>
+                    </li>
+                    <li>
+                        <a href="<?= $label->url('Doc-Article-manage'); ?>"><i class="am-icon-code-fork"></i> 管理文档</a>
+                    </li>
                     <li class="am-dropdown" data-am-dropdown>
                         <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                             <i class="am-icon-plus"></i> 管理 <span class="am-icon-caret-down"></span>
                         </a>
                         <ul class="am-dropdown-content">
-                            <li><a href="<?= $label->url('Doc-Article-action'); ?>"><i class="am-icon-edit"></i> 新文档</a>
-                            </li>
-                            <li>
-                                <a href="<?= $label->url('Doc-Article-manage'); ?>"><i class="am-icon-code-fork"></i> 管理文档</a>
-                            </li>
                             <li>
                                 <a href="<?= $label->url('Doc-User-index'); ?>"><i class="am-icon-user"></i> 用户管理</a>
                             </li>
@@ -63,10 +64,11 @@
                             <li>
                                 <a href="<?= $label->url('Doc-Setting-action'); ?>"><i class="am-icon-wrench"></i> 系统设置</a>
                             </li>
-                            <li>
-                                <a href="<?= $label->url('Doc-Login-logout', ['method' => 'GET']); ?>" class="ajax-click"><i class="am-icon-power-off"></i> 注销</a>
-                            </li>
+
                         </ul>
+                    </li>
+                    <li>
+                        <a href="<?= $label->url('Doc-Login-logout', ['method' => 'GET']); ?>" class="ajax-click"><i class="am-icon-power-off"></i> 退出帐号</a>
                     </li>
                 <?php endif; ?>
             </ul>

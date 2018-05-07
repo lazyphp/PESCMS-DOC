@@ -113,7 +113,7 @@
             </li>
         <?php endforeach; ?>
         <?php if (!empty($this->session()->get('user')['user_id'])): ?>
-            <form action="<?= $label->url("Doc-Article-addContent", ['id' => $doc_id]); ?>" class="ajax-submit" method="POST">
+            <form action="<?= $label->url("Doc-Article-addContent", ['id' => $doc_id, 'version' => $_GET['version']]); ?>" class="ajax-submit" method="POST">
                 <li class="am-padding-xs am-text-sm">
                     添加内容
                 </li>
