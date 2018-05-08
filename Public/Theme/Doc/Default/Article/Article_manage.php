@@ -79,7 +79,7 @@
 
                                 <tbody id="tree-child-<?= $value['tree_id']; ?>" class="am-hide">
                                 <?php foreach ($treeList as $child): ?>
-                                    <?php if ($child['tree_parent'] == $value['tree_id'] && $value['tree_version'] == $child['tree_version'] ): ?>
+                                    <?php if ($child['tree_parent'] == $value['tree_id'] && in_array($value['tree_version'], $versionList[$child['tree_id']]) ): ?>
                                         <tr>
                                             <td class="table-sort am-text-middle">
                                                 <input class="am-input-sm" type="text" name="tree[<?= $child['tree_id']; ?>]"
