@@ -50,12 +50,57 @@ class Version extends \Core\Controller\Controller {
             $inTree[] = $value['tree_id'];
         }
 
+        $getDoc = \Model\Content::listContent([
+            'table' => 'doc',
+            'condition' => 'doc_tree_id in ('.implode(',', $inTree).') AND doc_delete = 0 AND tree_version = :tree_version ',
+            'param' => [
+                'tree_version' => $useVersion
+            ]
+        ]);
 
+        if(empty($getDoc)){
+            $this->db()->rollback();
+            $this->error('该目录不存在内容');
+        }
+
+        foreach($getDoc as $item){
+            $docID = $item['doc_id'];
+            unset($item['doc_id']);
+            $item['tree_version'] = $newVersion;
+            $item['doc_createtime'] = time();
+            $item['doc_updatetime'] = 0;
+            $newDocID = $this->db('doc')->insert($item);
+            if($newDocID === false){
+                $this->error('创建文档基础内容失败');
+            }
+
+            $getDocContent = \Model\Content::listContent([
+                'table' => 'doc_content',
+                'condition' => 'doc_id = :doc_id AND doc_content_delete = 0 AND tree_version = :tree_version ',
+                'param' => [
+                    'doc_id' => $docID,
+                    'tree_version' => $useVersion
+                ]
+            ]);
+            if(empty($getDocContent)){
+                continue;
+            }
+
+            foreach($getDocContent as $content){
+                unset($content['doc_content_id']);
+                $content['doc_id'] = $newDocID;
+                $content['doc_content_createtime'] = time();
+                $content['doc_content_updatetime'] = 0;
+                $content['tree_version'] = $newVersion;
+                $this->db('doc_content')->insert($content);
+            }
+        }
 
 
         $this->db()->commit();
 
 
+        $this->success('创建新版本成功');
     }
 
 }
