@@ -10,25 +10,26 @@
                         <th class="am-text-middle">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <?php if($item['tree_version'] != $item['current_version']): ?>
-                                        <a href="javascript:;" class="am-btn am-btn-success" data="<?= $item['tree_version'] ?>"><span class="am-icon-check-square-o"></span> 设为默认版本</a>
-                                    <?php endif; ?>
                                     <a href="javascript:;" class="am-btn am-btn-warning create-version" data="<?= $item['tree_version'] ?>"><span class="am-icon-clone"></span> 基于此版创建新版本</a>
 
-                                    <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;"><span class="am-icon-pencil-square-o"></span> 编辑</a>
-                                    <a class="am-btn am-btn-danger ajax-click ajax-dialog" href="" ><span class="am-icon-trash-o"></span> 删除</a>
+                                    <a class="am-btn am-btn-secondary update-tree-button" href="javascript:;"><span class="am-icon-pencil-square-o"></span> 编辑版本编号</a>
+
+                                    <?php if($item['tree_version'] != $item['current_version']): ?>
+                                        <a href="<?= $label->url('Doc-Version-setDefault', ['id' => $item['tree_id'], 'version' => $item['tree_version'], 'method' => 'PUT']) ?>" class="am-btn am-btn-success"><span class="am-icon-check-square-o"></span> 设为默认版本</a>
+                                        <a class="am-btn am-btn-danger ajax-click ajax-dialog" msg="确实要移除此版本吗?数据将被彻底删除!" href="<?= $label->url('Doc-Version-remove', ['id' => $item['tree_id'], 'version' => $item['tree_version'], 'method' => 'DELETE']) ?>" ><span class="am-icon-trash-o"></span> 移除此版本</a>
+                                    <?php endif; ?>
 
                                 </div>
                             </div>
                         </th>
                     </tr>
                     <tr>
-                        <td class="am-text-middle" colspan="2"><?= $item['tree_title'] ?></td>
+                        <td class="am-text-middle" colspan="2"><?= $item['tree_version_title'] ?></td>
                     </tr>
                         <?php foreach($treeVersion as $key => $value): ?>
                             <?php if($value['tree_version'] == $item['tree_version'] && $value['tree_parent'] == $item['tree_id']): ?>
                             <tr>
-                                <td class="am-text-middle"><span class="plus_icon plus_end_icon"></span><?= $value['tree_title'] ?></td>
+                                <td class="am-text-middle"><span class="plus_icon plus_end_icon"></span><?= $value['tree_version_title'] ?></td>
                                 <td class="am-text-middle">
                                     <div class="am-btn-toolbar">
                                         <div class="am-btn-group am-btn-group-xs">

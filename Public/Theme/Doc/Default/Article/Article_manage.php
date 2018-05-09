@@ -12,9 +12,12 @@
                     <div class="am-form-group">
                         <select name="parent" data-am-selected>
                             <option value="0">顶层目录</option>
-                            <?php foreach ($treeList as $value) : ?>
+                            <?php foreach ($treeList as $key => $value) : ?>
                                 <?php if ($value['tree_parent'] == '0'): ?>
-                                    <option value="<?= $value['tree_id']; ?>"><?= $value['tree_title']; ?></option>
+                                <?php
+                                    $treeList[$key]['tree_title'] = $versionList[$value['tree_id']]['title'][$value['tree_version']]
+                                ?>
+                                    <option value="<?= $value['tree_id']; ?>"><?= $versionList[$value['tree_id']]['title'][$value['tree_version']]; ?></option>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
@@ -47,11 +50,11 @@
                                         <input class="am-input-sm" type="text" name="tree[<?= $value['tree_id']; ?>]" value="<?= $value['tree_listsort']; ?>">
                                     </td>
                                     <td class="am-text-middle">
-                                        <span class="display-tree-<?= $value['tree_id']; ?>"><?= $value['tree_title']; ?></span>
+                                        <span class="display-tree-<?= $value['tree_id']; ?>"><?= $versionList[$value['tree_id']]['title'][$value['tree_version']]; ?></span>
 
                                         <div class="am-form am-form-inline am-hide update-tree-<?= $value['tree_id']; ?>">
                                             <div class="am-form-group">
-                                                <input class="update-tree-input-<?= $value['tree_id']; ?>  am-form-field am-input-sm" type="text" name="title" value="<?= $value['tree_title']; ?>">
+                                                <input class="update-tree-input-<?= $value['tree_id']; ?>  am-form-field am-input-sm" type="text" name="title" value="<?= $versionList[$value['tree_id']]['title'][$value['tree_version']]; ?>">
                                             </div>
                                             <div class="am-form-group">
                                                 <select name="parent" class="parent-<?= $value['tree_id']; ?> " data-am-selected="{btnSize: 'sm'}">
@@ -79,7 +82,7 @@
 
                                 <tbody id="tree-child-<?= $value['tree_id']; ?>" class="am-hide">
                                 <?php foreach ($treeList as $child): ?>
-                                    <?php if ($child['tree_parent'] == $value['tree_id'] && in_array($value['tree_version'], $versionList[$child['tree_id']]) ): ?>
+                                    <?php if ($child['tree_parent'] == $value['tree_id'] && in_array($value['tree_version'], $versionList[$child['tree_id']]['version']) ): ?>
                                         <tr>
                                             <td class="table-sort am-text-middle">
                                                 <input class="am-input-sm" type="text" name="tree[<?= $child['tree_id']; ?>]"
@@ -89,17 +92,21 @@
                                                 <div class="am-form am-form-inline">
                                                     <div class="am-form-group">
                                                         <span class="plus_icon plus_end_icon"></span>
-                                                        <span class="display-tree-<?= $child['tree_id']; ?>"><?= $child['tree_title']; ?></span>
+                                                        <span class="display-tree-<?= $child['tree_id']; ?>"><?= $versionList[$child['tree_id']]['title'][$value['tree_version']]; ?></span>
                                                     </div>
 
                                                     <div class="am-form-group am-hide update-tree-<?= $child['tree_id']; ?>">
                                                         <div class="am-form-group">
-                                                            <input class="update-tree-input-<?= $child['tree_id']; ?>  am-form-field am-input-sm" type="text" name="title" value="<?= $child['tree_title']; ?>">
+                                                            <input class="update-tree-input-<?= $child['tree_id']; ?>  am-form-field am-input-sm" type="text" name="title" value="<?= $versionList[$child['tree_id']]['title'][$value['tree_version']]; ?>">
                                                         </div>
                                                         <div class="am-form-group">
                                                             <select name="parent" data="<?= $child['tree_parent']; ?>" class="parent-<?= $child['tree_id']; ?>" data-am-selected="{btnSize: 'sm'}">
                                                             </select>
                                                         </div>
+                                                        <div class="am-form-group">
+                                                            <input type="text" name="version" class="am-form-field am-input-sm version-<?= $child['tree_id']; ?>" placeholder="版本号" style="display: none">
+                                                        </div>
+
                                                         <div class="am-form-group">
                                                             <a class="am-btn am-btn-sm am-btn-secondary submit-tree" data="<?= $child['tree_id']; ?>" href="javascript:;">提交</a>
                                                         </div>
@@ -137,10 +144,11 @@
 
             //隐藏版本号输入框
             $('body').on('change', 'select[name=parent]', function(){
+                var dom = $(this).parent().parent().find('input[name=version]')
                 if($(this).val() == 0){
-                    $('input[name=version]').show();
+                    dom.show();
                 }else{
-                    $('input[name=version]').hide();
+                    dom.hide();
                 }
             })
 
@@ -179,13 +187,14 @@
             })
 
             /**
-             * 输入框表单离开，表示更新树
+             * 点击提交按钮，更新目录内容
              */
             $(".submit-tree").on("click", function () {
                 var id = $(this).attr('data');
                 var title = $(".update-tree-input-" + id).val()
                 var parent = $(".parent-" + id).val();
                 var listsort = $('input[name="tree['+id+']"]').val()
+                var version = $(".version-" + id).val();
                 if (title == '') {
                     alert("请填写名称");
                     return false;
@@ -194,7 +203,7 @@
                 var actionUrl = '<?=$label->url('Doc-Tree-action') ?>';
 
                 $.ajaxsubmit({
-                    url: actionUrl, data: {title: title, id: id, parent: parent, listsort:listsort, method: 'PUT'}
+                    url: actionUrl, data: {title: title, id: id, parent: parent, version:version, listsort:listsort, method: 'PUT'}
                 }, function (data) {
                     if (data.status == '200') {
                         setTimeout(function () {

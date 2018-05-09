@@ -41,7 +41,9 @@ class Index extends \Core\Controller\Controller {
 
         //依据顶层树的ID获取对应的侧栏文档树结构
         $list = $this->db('doc AS d')
-            ->field('d.doc_title, d.doc_id, d.doc_listsort, d.tree_version, t.tree_id, t.tree_title, t.tree_listsort')->join("{$this->prefix}tree AS t ON t.tree_id = d.doc_tree_id")
+            ->field('d.doc_title, d.doc_id, d.doc_listsort, d.tree_version, t.tree_id, tv.tree_version_title AS tree_title, t.tree_listsort')
+            ->join("{$this->prefix}tree AS t ON t.tree_id = d.doc_tree_id")
+            ->join("{$this->prefix}tree_version AS tv ON tv.tree_id = t.tree_id")
             ->where("d.doc_delete = '0' AND t.tree_parent = :tree_parent AND d.tree_version = :tree_version ")
             ->order('t.tree_listsort ASC, t.tree_id DESC, d.doc_listsort ASC, d.doc_id DESC')
             ->select([

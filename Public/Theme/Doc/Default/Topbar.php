@@ -17,7 +17,7 @@
                     <?php foreach ($treeList as $key => $value): ?>
                         <?php if ($value['tree_parent'] == '0'): ?>
                             <li class="<?= ($key == 0 && empty($_GET['tree'])) || $_GET['tree'] == $value['tree_id'] ? 'am-active' : ''; ?>">
-                                <a href="<?= $label->url("Doc-Index-index", ['tree' => $value['tree_id']]); ?>"><?= $value['tree_title']; ?></a>
+                                <a href="<?= $label->url("Doc-Index-index", ['tree' => $value['tree_id']]); ?>"><?= $versionList[$value['tree_id']]['title'][$value['tree_version']]; ?></a>
                             </li>
                         <?php endif; ?>
                     <?php endforeach; ?>
