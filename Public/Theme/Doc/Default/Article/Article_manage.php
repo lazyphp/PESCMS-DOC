@@ -74,7 +74,7 @@
 
                                                 <a href="<?= $label->url('Doc-Version-tree', ['id' => $value['tree_id']]) ?>" class="am-btn am-btn-warning"><i class="am-icon-book"></i> 版本管理</a>
 
-                                                <a class="am-btn am-btn-danger ajax-click ajax-delete" href="<?= $label->url("Doc-Tree-action", ['id' => $value['tree_id'], 'method' => 'DELETE']); ?>" ><span class="am-icon-trash-o"></span> 删除</a>
+                                                <a class="am-btn am-btn-danger ajax-click ajax-dialog" href="<?= $label->url("Doc-Tree-action", ['id' => $value['tree_id'], 'method' => 'DELETE']); ?>" ><span class="am-icon-trash-o"></span> 删除</a>
                                             </div>
                                         </div>
                                     </td>

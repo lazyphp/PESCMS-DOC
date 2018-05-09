@@ -32,13 +32,36 @@ class Tree extends \Core\Slice\Slice{
         $this->assign('versionList', $versionList);
 
         //获取文档目录结构
-        $treeList = $this->db('tree')->order('tree_parent,tree_listsort ASC, tree_id DESC')->select();
+        $treeResult = $this->db('tree')->order('tree_parent,tree_listsort ASC, tree_id DESC')->select();
         $tmpArray = array();
-        foreach($treeList as $value){
+        foreach($treeResult as $value){
             $tmpArray[$value['tree_id']] = $value;
-            $tmpArray[$value['tree_id']]['tree_title'] = $versionList[$value['tree_id']]['title'][$value['tree_version']];
         }
-        $this->assign('treeList', $tmpArray);
+        unset($treeResult);
+
+        $treeList = [];
+        //@todo 待优化
+        foreach($tmpArray as $key => $value){
+            if(empty($_GET['version'])){
+                $version = $value['tree_parent'] == 0 ? $value['tree_version'] : $tmpArray[$value['tree_parent']]['tree_version'];
+                $treeTitle = $versionList[$value['tree_id']]['title'][$version];
+                if(!empty($treeTitle)){
+                    $treeList[$key] = $value;
+                    $treeList[$key]['tree_title'] = $treeTitle;
+                    $treeList[$key]['tree_version'] = $version;
+                }
+
+            }else{
+                $treeTitle = $versionList[$value['tree_id']]['title'][$this->g('version')];
+                if(!empty($treeTitle)){
+                    $treeList[$key] = $value;
+                    $treeList[$key]['tree_title'] = $treeTitle;
+                    $treeList[$key]['tree_version'] = $this->g('version');
+                }
+            }
+        }
+
+        $this->assign('treeList', $treeList);
     }
 
     public function after() {

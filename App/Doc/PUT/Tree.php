@@ -25,11 +25,12 @@ class Tree extends Content {
         if($_POST['parent'] == 0){
             //本身已是顶层目录，版本号沿用则可
             if(empty($_POST['version']) && $getTreeInfo['tree_parent'] == 0 ){
-                $version = $getTreeInfo['tree_version'];
+                $_POST['version'] = $version = $getTreeInfo['tree_version'];
             }else{
                 $version = $this->isP('version', '请填写版本号');
             }
         }else{
+            //迁移子层时，需要将作为父层时记录的版本号清除
             $_POST['version'] = '';
             $parentTree = \Model\Content::findContent('tree', $_POST['parent'], 'tree_id');
             if(empty($parentTree)){
