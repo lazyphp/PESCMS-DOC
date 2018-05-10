@@ -84,7 +84,7 @@ class Index extends \Core\Controller\Controller {
      * 首页
      */
     public function index(){
-        $this->display();
+        $this->layout();
     }
 
     public function home(){

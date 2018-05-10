@@ -22,12 +22,18 @@ class Search extends \Core\Controller\Controller {
                 ";
         $result = \Model\Content::quickListContent([
             'count' => sprintf($sql, 'count(*)'),
-            'normal'=> sprintf($sql, '*'),
+            'normal'=> sprintf($sql, 'dc.*, d.doc_title, t.tree_parent'),
             'param' => $param
         ]);
 
+        $list = [];
+        foreach($result['list'] as $item){
+            $list[$item['tree_version']][] = $item;
+        }
+        krsort($list);
+
         $this->assign('page', $result['page']);
-        $this->assign('list', $result['list']);
+        $this->assign('list', $list);
         $this->assign('title', "'{$keyword}'搜索结果");
         $this->layout();
 

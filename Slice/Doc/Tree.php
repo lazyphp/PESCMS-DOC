@@ -27,6 +27,7 @@ class Tree extends \Core\Slice\Slice{
         foreach ($list as $value){
             $versionList[$value['tree_id']]['version'][$value['tree_version']] = $value['tree_version'];
             $versionList[$value['tree_id']]['title'][$value['tree_version']] = $value['tree_version_title'];
+            $versionList[$value['tree_id']]['cover'][$value['tree_version']] = $value['tree_version_cover'];
         }
 
         $this->assign('versionList', $versionList);

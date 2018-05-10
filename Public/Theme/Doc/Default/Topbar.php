@@ -7,23 +7,6 @@
             class="am-icon-bars"></span></button>
 
     <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-
-        <ul class="am-nav am-nav-pills am-topbar-nav">
-            <li class="am-dropdown" data-am-dropdown>
-                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                    文档列表 <span class="am-icon-caret-down"></span>
-                </a>
-                <ul class="am-dropdown-content">
-                    <?php foreach ($treeList as $key => $value): ?>
-                        <?php if ($value['tree_parent'] == '0'): ?>
-                            <li class="<?= ($key == 0 && empty($_GET['tree'])) || $_GET['tree'] == $value['tree_id'] ? 'am-active' : ''; ?>">
-                                <a href="<?= $label->url("Doc-Index-index", ['tree' => $value['tree_id']]); ?>"><?= $versionList[$value['tree_id']]['title'][$value['tree_version']]; ?></a>
-                            </li>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </ul>
-            </li>
-        </ul>
         <form class="am-topbar-form am-topbar-left am-form-inline" method="GET" action="<?= DOCUMENT_ROOT ?>/" role="search">
             <input type="hidden" name="m" value="Search">
             <input type="hidden" name="a" value="index">
