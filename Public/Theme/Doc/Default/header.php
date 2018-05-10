@@ -27,15 +27,29 @@
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-min.js"></script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-plus-min.js"></script>
 
-    <!--加载百度编辑器-->
-    <script>var path = '<?= DOCUMENT_ROOT; ?>';</script>
-    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js"></script>
-    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
-    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
-    <!--加载百度编辑器-->
-    <!--让百度支持Markdown-->
-    <script type="text/javascript" charset="utf-8" src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/dialogs/markdown/editorshowdown.js"></script>
-    <!--让百度支持Markdown-->
+    <?php if(!empty($this->session()->get('user')['user_id'])): ?>
+        <!--加载百度编辑器-->
+        <script>var path = '<?= DOCUMENT_ROOT; ?>';</script>
+        <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js"></script>
+        <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
+        <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+        <!--加载百度编辑器-->
+        <!--让百度支持Markdown-->
+        <script type="text/javascript" charset="utf-8" src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/dialogs/markdown/editorshowdown.js"></script>
+        <!--让百度支持Markdown-->
+        <!--百度上传控件-->
+        <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/webuploader.css"/>
+        <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/webuploader.js"></script>
+        <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/AMUIwebuploader.js"></script>
+        <script>
+            $(function(){
+                $.webuploaderConfig({
+                    server:'<?=$label->url(GROUP.'-Upload-ueditor', ['method' => 'POST', 'action' => 'uploadimage'])?>'
+                });
+            })
+        </script>
+        <!--百度上传控件-->
+    <?php endif; ?>
 
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.js"></script>
 

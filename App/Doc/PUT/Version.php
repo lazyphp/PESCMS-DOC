@@ -35,4 +35,22 @@ class Version extends \Core\Controller\Controller {
         $this->success('设置默认版本成功');
     }
 
+    /**
+     * 设置封面
+     */
+    public function cover(){
+        $id = $this->isG('id','请提交要设置封面目录ID');
+        $version = $this->isG('version', '请提交要设置的封面版本号');
+        $cover = $this->isP('cover', '请上传您要设置的封面图片');
+        $this->db('tree_version')->where('tree_id = :tree_id AND tree_version = :tree_version')->update([
+            'noset' => [
+                'tree_id' => $id,
+                'tree_version' => $version
+            ],
+            'tree_version_cover' => $cover
+        ]);
+
+        $this->success('更新目录封面成功!');
+    }
+
 }

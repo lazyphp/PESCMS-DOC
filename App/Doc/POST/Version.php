@@ -47,7 +47,8 @@ class Version extends \Core\Controller\Controller {
             $this->db('tree_version')->insert([
                 'tree_id' => $value['tree_id'],
                 'tree_version' => $newVersion,
-                'tree_version_title' => $value['tree_version_title']
+                'tree_version_title' => $value['tree_version_title'],
+                'tree_version_cover' => $value['tree_version_cover'],
             ]);
             $inTree[] = $value['tree_id'];
         }

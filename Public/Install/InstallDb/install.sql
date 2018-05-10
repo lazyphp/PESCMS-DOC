@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2018-05-07 09:41:28
+-- Generation Time: 2018-05-10 08:19:20
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `d_doc` (
   `doc_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否被删除',
   `doc_listsort` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`doc_id`),
-  KEY `timelog_type` (`doc_tree_id`)
+  KEY `doc_tree_id` (`doc_tree_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='文档基础表' AUTO_INCREMENT=2 ;
 
 --
@@ -255,7 +255,6 @@ CREATE TABLE IF NOT EXISTS `d_tree` (
   `tree_listsort` int(11) NOT NULL DEFAULT '0',
   `tree_status` tinyint(4) NOT NULL DEFAULT '0',
   `tree_createtime` int(11) NOT NULL DEFAULT '0',
-  `tree_title` varchar(255) NOT NULL DEFAULT '',
   `tree_parent` int(11) NOT NULL DEFAULT '0',
   `tree_version` varchar(12) NOT NULL DEFAULT '' COMMENT '当前目录版本号',
   PRIMARY KEY (`tree_id`)
@@ -265,9 +264,9 @@ CREATE TABLE IF NOT EXISTS `d_tree` (
 -- 转存表中的数据 `d_tree`
 --
 
-INSERT INTO `d_tree` (`tree_id`, `tree_listsort`, `tree_status`, `tree_createtime`, `tree_title`, `tree_parent`, `tree_version`) VALUES
-(1, 1, 0, 0, 'PESCMS文档系统', 0, ''),
-(2, 1, 0, 0, '序言', 1, '');
+INSERT INTO `d_tree` (`tree_id`, `tree_listsort`, `tree_status`, `tree_createtime`, `tree_parent`, `tree_version`) VALUES
+(1, 1, 0, 0, 0, ''),
+(2, 1, 0, 0, 1, '');
 
 -- --------------------------------------------------------
 
@@ -279,6 +278,7 @@ CREATE TABLE IF NOT EXISTS `d_tree_version` (
   `tree_version_id` int(11) NOT NULL AUTO_INCREMENT,
   `tree_id` int(11) NOT NULL,
   `tree_version` varchar(12) NOT NULL DEFAULT '' COMMENT '版本号',
+  `tree_version_cover` varchar(255) NOT NULL COMMENT '目录的封面',
   PRIMARY KEY (`tree_version_id`),
   KEY `tree_id` (`tree_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='目录版本记录' AUTO_INCREMENT=1 ;

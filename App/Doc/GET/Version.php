@@ -35,4 +35,21 @@ class Version extends \Core\Controller\Controller {
         $this->layout();
     }
 
+    /**
+     * 设置封面
+     */
+    public function cover(){
+        $id = $this->isG('id','请提交要设置封面目录ID');
+        $version = $this->isG('version', '请提交要设置的封面版本号');
+        $getVersionInfo = $this->db('tree_version')->where('tree_id = :tree_id AND tree_version = :tree_version')->find([
+            'tree_id' => $id,
+            'tree_version' => $version
+        ]);
+        if(empty($getVersionInfo)){
+            $this->error('不存在的版本');
+        }
+        $this->assign('getVersionInfo', $getVersionInfo);
+        $this->layout();
+    }
+
 }
