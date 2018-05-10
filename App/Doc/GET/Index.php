@@ -84,6 +84,10 @@ class Index extends \Core\Controller\Controller {
      * 首页
      */
     public function index(){
+        $this->display();
+    }
+
+    public function home(){
         $_GET['tree'] = (string) $this->indexTreeID;
         $_GET['id'] = (string) $this->indexPageID;
         $_GET['version'] = (string) $this->treeVersion;
