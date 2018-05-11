@@ -27,7 +27,7 @@ class Tree extends \Core\Slice\Slice{
         foreach ($list as $value){
             $versionList[$value['tree_id']]['version'][$value['tree_version']] = $value['tree_version'];
             $versionList[$value['tree_id']]['title'][$value['tree_version']] = $value['tree_version_title'];
-            $versionList[$value['tree_id']]['cover'][$value['tree_version']] = is_file($value['tree_version_cover']) ? $value['tree_version_cover'] : DOCUMENT_ROOT.'/Theme/assets/i/startup-640x1096.png';
+            $versionList[$value['tree_id']]['cover'][$value['tree_version']] = is_file(APP_PATH.'Public'.str_replace(DOCUMENT_ROOT, '', $value['tree_version_cover'])) ? $value['tree_version_cover'] : DOCUMENT_ROOT.'/Theme/assets/i/startup-640x1096.png';
         }
 
         $this->assign('versionList', $versionList);
