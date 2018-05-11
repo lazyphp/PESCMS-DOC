@@ -22,7 +22,8 @@ class Content extends \Core\Controller\Controller {
         //验证模型是否存在
         $this->model = \Model\ModelManage::findModel($this->table, 'model_name');
         if (empty($this->model)) {
-            $this->error('不存在的模型');
+            $this->display('404');
+            exit;
         }
 
         $this->modelThemePrefixPath = THEME_PATH.'/'.MODULE.'/'.MODULE;
