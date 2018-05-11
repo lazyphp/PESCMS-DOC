@@ -35,7 +35,13 @@ class Tree extends \Core\Slice\Slice{
         //获取文档目录结构
         $treeResult = $this->db('tree')->order('tree_parent,tree_listsort ASC, tree_id DESC')->select();
         $tmpArray = array();
+        //导航菜单用
+        $topBar = [];
         foreach($treeResult as $value){
+            if($value['tree_parent'] == 0){
+                $topBar[$value['tree_id']] = $value;
+                $topBar[$value['tree_id']]['tree_title'] = $versionList[$value['tree_id']]['title'][$value['tree_version']];
+            }
             $tmpArray[$value['tree_id']] = $value;
         }
         unset($treeResult);
@@ -63,6 +69,7 @@ class Tree extends \Core\Slice\Slice{
         }
 
         $this->assign('treeList', $treeList);
+        $this->assign('topBar', $topBar);
     }
 
     public function after() {
