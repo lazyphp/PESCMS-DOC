@@ -98,8 +98,12 @@ class Index extends \Core\Controller\Controller {
      * 文档详情
      */
     public function view() {
-        $id = $this->isG('id', '请提交内容值');
-        $treeID = $this->isG('tree', '请提交目录ID');
+        $id = $this->g('id');
+        $treeID = $this->g('tree');
+        if(empty($id) || empty($treeID)){
+            $this->layout('404');
+            exit;
+        }
 
         //查找文档的基础表是否有内容存在
         $base = $this->db('doc AS d')
@@ -112,7 +116,7 @@ class Index extends \Core\Controller\Controller {
             ));
 
         if (empty($base)) {
-            $this->display('404');
+            $this->layout('404');
             exit;
         }
         $this->assign($base);

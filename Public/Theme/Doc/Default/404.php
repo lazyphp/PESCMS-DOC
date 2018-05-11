@@ -30,4 +30,3 @@
         </div>
     </div>
 </div>
-<?php include THEME_PATH.'/footer.php'; ?>
