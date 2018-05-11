@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2018-05-11 02:16:36
+-- Generation Time: 2018-05-11 06:57:18
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -138,7 +138,6 @@ CREATE TABLE IF NOT EXISTS `d_field` (
 INSERT INTO `d_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`) VALUES
 (2, 1, 'listsort', '排序', 'text', '', '', '', 0, 0, 1, 0, 1),
 (3, 1, 'createtime', '创建时间', 'date', '', '', '', 0, 99, 1, 0, 1),
-(4, 1, 'title', '树名称', 'text', '', '', '', 1, 1, 1, 0, 1),
 (5, 2, 'title', '文档标题\r\n', 'text', '', '', '', 1, 1, 1, 0, 1),
 (6, 2, 'tree_id', '所属树\r\n', 'text', '', '', '', 1, 1, 1, 0, 1),
 (7, 1, 'parent', '树级别', 'text', '', '', '', 1, 1, 1, 0, 1),
