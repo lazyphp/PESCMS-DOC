@@ -95,7 +95,7 @@ class Controller {
             return $data;
         }
         if ((bool)$htmlentities) {
-            $name = (new \voku\helper\AntiXSS()) -> xss_clean($data);
+            $name = htmlspecialchars((new \voku\helper\AntiXSS()) -> xss_clean($data));
         } else {
             $name = trim($data);
         }

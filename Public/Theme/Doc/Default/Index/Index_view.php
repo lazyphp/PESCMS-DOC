@@ -97,7 +97,7 @@
                             </form>
                         <?php endif; ?>
                         <div class="content_html">
-                            <?= html_entity_decode($value['doc_content']); ?>
+                            <?= htmlspecialchars_decode($value['doc_content']); ?>
 
                             <?php if (!empty($tagArray)): ?>
                                 <p class="am-article-meta">
