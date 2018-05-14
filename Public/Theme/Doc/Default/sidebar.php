@@ -1,23 +1,17 @@
-<?php if ($this->session()->get('user')['user_id']): ?>
-    <button class="am-btn am-btn-success tm-full-width" data-am-offcanvas="{target: '#doc-oc-demo3'}">排序</button>
+<?php if ($this->session()->get('admin')['user_id']): ?>
+    <button class="am-btn am-btn-success tm-full-width am-margin-bottom-xs" data-am-offcanvas="{target: '#doc-oc-demo3'}">排序</button>
 <?php endif; ?>
-<div class="am-padding-top">
-    <form id="version" method="get">
-        <input type="hidden" name="g" value="<?= GROUP ?>">
-        <input type="hidden" name="m" value="<?= MODULE ?>">
-        <input type="hidden" name="a" value="index">
-        <input type="hidden" name="tree" value="<?= $_GET['tree'] ?>">
-        <select name="version" class="version" data-am-selected="{btnWidth: '100%'}">
-            <option value="">选择版本</option>
-            <?php foreach($version as  $v ): ?>
-                <option value="<?= $v['tree_version'] ?>" <?= $_GET['version'] == $v['tree_version'] ? 'selected="selected"' : '' ?>>
-                    <?= $v['tree_version'] ?>
-                    <?= $currentTree['tree_version'] == $v['tree_version'] ? '(当前)' : '' ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </form>
-
+<div class="am-article-lead am-text-center am-margin-bottom-xs"><?= $treeList[$_GET['tree']]['tree_title'] ?></div>
+<div class="">
+    <select name="version" class="version" data-am-selected="{btnWidth: '100%'}">
+        <option value="">选择版本</option>
+        <?php foreach($version as  $v ): ?>
+            <option value="<?= $label->url(GROUP.'-'.MODULE.'-home', ['tree' => $_GET['tree'], 'version' => $v['tree_version'] ]) ?>" <?= $_GET['version'] == $v['tree_version'] ? 'selected="selected"' : '' ?>>
+                <?= $v['tree_version'] ?>
+                <?= $currentTree['tree_version'] == $v['tree_version'] ? '(当前)' : '' ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
 </div>
 <ul class="am-nav am-list-border am-text-sm am-link-muted">
     <?php foreach ($tree as $tk => $tv) : ?>
@@ -32,7 +26,11 @@
 <script>
     $(function(){
         $('body').on('change', '.version', function(){
-            $('#version').submit();
+            var url = $(this).val();
+            if(url == ''){
+                return false;
+            }
+            window.location.href = url;
         })
     })
 </script>
