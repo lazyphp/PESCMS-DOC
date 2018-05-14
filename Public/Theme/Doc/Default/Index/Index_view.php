@@ -50,7 +50,7 @@
                         </div>
 
                         <button type="submit" class="am-btn am-btn-default" style="padding:0.51rem">更新标题</button>
-                        <a href="<?= $label->url("Doc-Article-Action", ['id' => $doc_id, 'method' => 'DELETE']); ?>" class="am-btn am-btn-danger" onclick="return confirm('确定删除吗?文档将无法恢复的!')" style="padding:0.51rem">删除文档</a>
+                        <a href="<?= $label->url("Doc-Article-Action", ['id' => $doc_id, 'method' => 'DELETE']); ?>" class="am-btn am-btn-danger ajax-click ajax-dialog" onclick="return confirm('确定删除吗?文档将无法恢复的!')" style="padding:0.51rem">删除文档</a>
                     </form>
                 </div>
             <?php endif; ?>

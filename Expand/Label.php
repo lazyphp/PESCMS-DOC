@@ -21,6 +21,12 @@ namespace Expand;
 class Label {
 
     /**
+     * 保存记录字段选项值
+     * @var array
+     */
+    private $fieldOption = [];
+
+    /**
      * 此是语法糖，将一些写法近似的方法整合一起，减少重复
      * @todo 此方法以后可能会废弃。有点多余
      * @param type $name
@@ -186,8 +192,11 @@ class Label {
      * @param type $value 进行匹配的值
      */
     public function getFieldOptionToMatch($fieldId, $value) {
-        $fieldContent = \Model\Content::findContent('field', $fieldId, 'field_id');
-        $option = json_decode(htmlspecialchars_decode($fieldContent['field_option']), true);
+        if(empty($this->fieldOption[$fieldId])){
+            $this->fieldOption[$fieldId] = \Model\Content::findContent('field', $fieldId, 'field_id');
+        }
+
+        $option = json_decode(htmlspecialchars_decode($this->fieldOption[$fieldId]['field_option']), true);
         $search = array_search($value, $option);
         if (empty($search)) {
             return '未知值';
