@@ -2,32 +2,41 @@
     <p>请等待协议加载完成</p>
 </div>
 <div class="am-margin-top am-fr">
-    <a href="<?=DOCUMENT_ROOT?>/?m=Index&a=config" class="am-btn am-btn-default am-disabled">程序协议加载中...</a>
+    <a href="<?= DOCUMENT_ROOT ?>/?m=Index&a=config" class="am-btn am-btn-default am-disabled">程序协议加载中...</a>
 </div>
 <div class="am-cf"></div>
 <script>
-    $(function(){
+    $(function () {
         var progress = $.AMUI.progress;
 
 
         $.ajax({
-            url:'http://app.pescms.com/?m=Bulletin&a=index&id=1&type=1',
-            dataType:'JSONP',
-            jsonpCallback:'receive',
-            beforeSend:function(){
+            url: 'http://app.pescms.com/?m=Bulletin&a=index&id=1&type=1',
+            dataType: 'JSONP',
+            jsonpCallback: 'receive',
+            beforeSend: function () {
                 progress.start();
             },
-            success:function(data){
+            success: function (data) {
                 $(".agree").html(data.replace(/\{program\}/g, "PESCMS DOC"));
                 progress.done();
             },
-            complete:function(){
+            complete: function () {
                 $(".am-btn").removeClass('am-disabled').html('下一步');
             },
-            error:function(){
+            error: function () {
                 alert('出错了,刷新试下');
                 progress.done();
             }
         })
+
+        var data = {
+            id: 2,
+            type: 1,
+            version : '1.4.9',
+            sessionid : '<?= $this->session()->getId() ?>'
+        };
+        $.post('https://www.pescms.com/?g=Api&m=Statistics&a=action', data, function (data) {
+        }, 'JSON')
     })
 </script>

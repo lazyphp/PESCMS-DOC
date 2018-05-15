@@ -372,8 +372,8 @@ class Controller {
      * 调用session
      * @return \duncan3dc\Sessions\SessionInstance
      */
-    public final static function session(){
-        return \Core\Func\CoreFunc::session();
+    public final static function session($id = ''){
+        return \Core\Func\CoreFunc::session($id);
     }
 
 }
