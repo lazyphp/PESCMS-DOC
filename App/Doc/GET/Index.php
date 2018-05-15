@@ -32,53 +32,21 @@ class Index extends \Core\Controller\Controller {
      * 输出侧栏的文档树结构
      */
     public function tree() {
-        $this->indexTreeID = !empty($_GET['tree']) ? $this->g('tree') : current(\Core\Func\CoreFunc::$param['treeList'])['tree_id'];
+        $this->indexTreeID = !empty($_GET['tree']) ?
+            $this->g('tree') : current(\Core\Func\CoreFunc::$param['treeList'])['tree_id'];
 
         //获取当前目录信息
         $this->currentTree = \Model\Content::findContent('tree', $this->indexTreeID, 'tree_id');
         //没有指定版本，则使用默认目录的当前版本号
         $this->treeVersion = !empty($_GET['version']) ? $this->g('version') : $this->currentTree['tree_version'];
 
-        //依据顶层树的ID获取对应的侧栏文档树结构
-        $list = $this->db('doc AS d')
-            ->field('d.doc_title, d.doc_id, d.doc_listsort, d.tree_version, t.tree_id, tv.tree_version_title AS tree_title, t.tree_listsort')
-            ->join("{$this->prefix}tree AS t ON t.tree_id = d.doc_tree_id")
-            ->join("{$this->prefix}tree_version AS tv ON tv.tree_id = t.tree_id")
-            ->where("d.doc_delete = '0' AND t.tree_parent = :tree_parent AND d.tree_version = :tree_version ")
-            ->order('t.tree_listsort ASC, t.tree_id DESC, d.doc_listsort ASC, d.doc_id DESC')
-            ->select([
-                'tree_parent' => $this->indexTreeID,
-                'tree_version' => $this->treeVersion
-            ]);
+        $tree = \Model\Doc\Tree::catalog($this->indexTreeID, $this->treeVersion);
+        $this->indexPageID = !empty($_GET['id']) ? $this->g('id') : $tree['id'];
 
-        $this->indexPageID = !empty($_GET['id']) ? $this->g('id') : $list['0']['doc_id'];
-        $tree = array();
-        foreach ($list as $key => $value) {
-            $tree[$value['tree_id']]['title'] = $value['tree_title'];
-            $tree[$value['tree_id']]['listsort'] = $value['tree_listsort'];
-            $tree[$value['tree_id']]['child'][$value['doc_id']]['title'] = $value['doc_title'];
-            $tree[$value['tree_id']]['child'][$value['doc_id']]['listsort'] = $value['doc_listsort'];
-        }
-
-        $this->getTreeVersions();
+        $this->assign('version', \Model\Doc\Tree::getTreeVersions($this->indexTreeID));
         $this->assign('currentTree', $this->currentTree);
-        $this->assign('tree', $tree);
+        $this->assign('tree', $tree['tree']);
     }
-
-    /**
-     * 获取当前目录的版本
-     */
-    private function getTreeVersions(){
-        $version = $this->db('tree_version')
-            ->where('tree_id = :tree_id')
-            ->order('tree_version DESC')
-            ->select([
-                'tree_id' => $this->indexTreeID,
-            ]);
-
-        $this->assign('version', $version);
-    }
-
 
     /**
      * 首页

@@ -1,7 +1,7 @@
-<?php if ($this->session()->get('admin')['user_id']): ?>
+<div class="am-article-lead am-text-center am-margin-bottom-xs"><?= $treeList[$_GET['tree']]['tree_title'] ?></div>
+<?php if ($this->session()->get('user')['user_id']): ?>
     <button class="am-btn am-btn-success tm-full-width am-margin-bottom-xs" data-am-offcanvas="{target: '#doc-oc-demo3'}">排序</button>
 <?php endif; ?>
-<div class="am-article-lead am-text-center am-margin-bottom-xs"><?= $treeList[$_GET['tree']]['tree_title'] ?></div>
 <div class="">
     <select name="version" class="version" data-am-selected="{btnWidth: '100%'}">
         <option value="">选择版本</option>
