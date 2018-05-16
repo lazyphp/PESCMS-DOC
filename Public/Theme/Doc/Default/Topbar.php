@@ -38,7 +38,7 @@
 
         <div class="am-topbar-right">
             <ul class="am-nav am-nav-pills am-topbar-nav">
-                <?php if ($login === false): ?>
+                <?php if ($login == false): ?>
                     <li>
                         <a href="<?= $label->url('Doc-Login-index'); ?>"><i class="am-icon-sign-in"></i> 管理</a>
                     </li>

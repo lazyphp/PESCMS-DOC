@@ -16,7 +16,7 @@ class Login extends \Core\Controller\Controller{
 
     public function index(){
         $this->assign('title', '登录系统');
-        $this->display('Login_form');
+        $this->layout('Login_form');
     }
 
     public function logout(){

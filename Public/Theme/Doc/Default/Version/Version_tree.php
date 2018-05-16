@@ -25,7 +25,7 @@
                                     <a href="<?= $label->url('Doc-Version-cover', ['id' => $item['tree_id'], 'version' => $item['tree_version'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" class="am-btn am-btn-secondary"><span class="am-icon-book"></span> 设置封面</a>
                                     
                                     <?php if($item['tree_version'] != $item['current_version']): ?>
-                                        <a href="<?= $label->url('Doc-Version-setDefault', ['id' => $item['tree_id'], 'version' => $item['tree_version'], 'method' => 'PUT']) ?>" class="am-btn am-btn-success"><span class="am-icon-check-square-o"></span> 设为默认版本</a>
+                                        <a href="<?= $label->url('Doc-Version-setDefault', ['id' => $item['tree_id'], 'version' => $item['tree_version'], 'method' => 'PUT']) ?>" class="am-btn am-btn-success ajax-click ajax-dialog" msg="确认要设置此版本为默认版本吗?"><span class="am-icon-check-square-o"></span> 设为默认版本</a>
                                         <a class="am-btn am-btn-danger ajax-click ajax-dialog" msg="确实要移除此版本吗?数据将被彻底删除!" href="<?= $label->url('Doc-Version-remove', ['id' => $item['tree_id'], 'version' => $item['tree_version'], 'method' => 'DELETE']) ?>" ><span class="am-icon-trash-o"></span> 移除此版本</a>
                                     <?php endif; ?>
 
