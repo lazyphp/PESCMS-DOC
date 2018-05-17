@@ -1,5 +1,4 @@
-<?php include THEME_PATH . '/header.php' ?>
-<div class="am-u-md-8 am-u-sm-centered" style="padding-top: 150px">
+<div class="am-u-md-8 am-u-sm-centered" style="padding-top: 8rem;min-height: 35rem">
     <form action="" method="POST" class="ajax-submit" data-am-validator>
         <input type="hidden" name="back_url" value="<?= empty($_GET['back_url']) ? '' : $_GET['back_url']; ?>">
         <ul class="am-list am-list-border">
@@ -24,7 +23,7 @@
                     <span class="am-text-xs">(不分大小写)</span><img src="<?= $label->url('Doc-Login-verify', ['time' => rand(0, 999)]); ?>" class="am-margin-left verify" height="20"/>
                 </li>
                 <li>
-                    <input name="verify" class="tm-remove-border tm-input-background-color am-form-field" type="text" placeholder="验证码" required>
+                    <input name="verify" class="tm-remove-border tm-input-background-color am-form-field refresh-verify" type="text" placeholder="验证码" required>
                 </li>
             <?php endif; ?>
             <li class="am-padding-xs am-text-center">
@@ -33,14 +32,3 @@
         </ul>
     </form>
 </div>
-<script>
-    $(function () {
-        /**
-         * 刷新验证码
-         */
-        $(".verify").on("click", function () {
-            $(this).attr("src", path + "/?g=Doc&m=Login&a=verify&time=" + Date.parse(new Date()) + Math.random())
-        })
-    })
-</script>
-<?php include THEME_PATH . '/footer.php' ?>
