@@ -12,16 +12,16 @@ Mysql：5.5及以上
 > * 没有配置虚拟主机，则访问Public目录。反之，请将虚拟主机目录配置到Public  
 > * 根据安装程序填写对应数据，完成软件安装。  
 
-## 软件截图
-###### 文档首页：
+## 软件截图  
+###### 文档首页：  
 <a href="http://ww2.sinaimg.cn/large/d2d33fbfgw1ew6efha745j213i0sljx4.jpg" target="_blank"><img src="http://ww2.sinaimg.cn/large/d2d33fbfgw1ew6efha745j213i0sljx4.jpg" width="500" /></a>  
-##### 管理文档树：
+##### 管理文档树：  
 <a href="http://ww4.sinaimg.cn/large/d2d33fbfgw1ew6efgzv6lj20pm08idh1.jpg" target="_blank"><img src="http://ww4.sinaimg.cn/mw690/d2d33fbfgw1ew6efgzv6lj20pm08idh1.jpg" width="500" /></a>  
-##### 新增文档：
+##### 新增文档：  
 <a href="http://ww4.sinaimg.cn/large/d2d33fbfgw1ew6efjprdkj20sn0hbwg4.jpg" target="_blank"><img src="http://ww4.sinaimg.cn/large/d2d33fbfgw1ew6efjprdkj20sn0hbwg4.jpg" width="500" /></a>  
-##### 编辑文档：
+##### 编辑文档：  
 <a href="http://ww2.sinaimg.cn/large/d2d33fbfgw1ew6efk33ncj20i00elmy7.jpg" target="_blank"><img src="http://ww2.sinaimg.cn/large/d2d33fbfgw1ew6efk33ncj20i00elmy7.jpg" width="500" /></a>  
-##### 文档历史版本:
+##### 文档历史版本:  
 <a href="http://ww2.sinaimg.cn/mw690/d2d33fbfgw1ew6efgm3jlj20fe07774m.jpg" target="_blank"><img src="http://ww2.sinaimg.cn/mw690/d2d33fbfgw1ew6efgm3jlj20fe07774m.jpg" width="500" /></a>  
-##### 历史版本对比:
+##### 历史版本对比:  
 <a href="http://ww1.sinaimg.cn/mw690/d2d33fbfgw1ew6efgcvlnj212n0773z6.jpg" target="_blank"><img src="http://ww1.sinaimg.cn/mw690/d2d33fbfgw1ew6efgcvlnj212n0773z6.jpg" width="500" /></a>  

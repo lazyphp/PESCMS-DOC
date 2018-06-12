@@ -63,6 +63,9 @@
                             <li>
                                 <a href="<?= $label->url('Doc-Setting-action'); ?>"><i class="am-icon-wrench"></i> 系统设置</a>
                             </li>
+                            <li>
+                                <a href="https://forum.pescms.com/list/21.html" target="_blank"><i class="am-icon-question"></i> 反馈问题</a>
+                            </li>
 
                         </ul>
                     </li>
