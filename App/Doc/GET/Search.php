@@ -9,7 +9,6 @@ class Search extends \Core\Controller\Controller {
         if(empty($keyword)){
             $this->jump(DOCUMENT_ROOT.'/');
         }
-
         $param = array('doc_title' => "%{$keyword}%", 'doc_content' => "%{$keyword}%", 'tag' => "%{$keyword}%");
 
         $sql = "SELECT %s
@@ -21,17 +20,28 @@ class Search extends \Core\Controller\Controller {
                 GROUP BY d.doc_id
                 ";
         $result = \Model\Content::quickListContent([
-            'count' => sprintf($sql, 'count(*)'),
+            'count' => sprintf($sql, 'dc.doc_content_id'),
+            'total' => 'array',
             'normal'=> sprintf($sql, 'dc.*, d.doc_title, t.tree_parent'),
             'param' => $param
         ]);
 
         $list = [];
+
+        $tree = \Core\Func\CoreFunc::$param['treeList'];
+        $system = \Core\Func\CoreFunc::$param['system'];
+
+
         foreach($result['list'] as $item){
+
+            if($system['change_version'] == 0 && $tree[$item['tree_parent']]['tree_version']  != $item['tree_version']  ){
+                continue;
+            }
             $list[$item['tree_version']][] = $item;
         }
-        krsort($list);
 
+
+        krsort($list);
         $this->assign('page', $result['page']);
         $this->assign('list', $list);
         $this->assign('title', "'{$keyword}'搜索结果");

@@ -115,6 +115,30 @@
 
             <li>
                 <div class="am-g">
+                    <label for="" class="am-u-sm-2 am-form-label">显示版本切换功能</label>
+
+                    <div class="am-u-sm-9">
+                        <label class="am-radio-inline">
+                            <input type="radio" value="0" name="change_version"
+                                   required="" <?= $change_version['value'] == '0' ? 'checked="checked"' : '' ?>> 关闭
+                        </label>
+                        <label class="am-radio-inline">
+                            <input type="radio" value="1" name="change_version"
+                                   required="" <?= $change_version['value'] == '1' ? 'checked="checked"' : '' ?>> 开启
+                        </label>
+
+                        <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                            默认开启。关闭后，在文档页访客将无法切换版本
+                        </div>
+                    </div>
+                    <div class="am-u-sm-1">
+
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="am-g">
                     <label for="" class="am-u-sm-2 am-form-label">登录开启验证码</label>
 
                     <div class="am-u-sm-9">

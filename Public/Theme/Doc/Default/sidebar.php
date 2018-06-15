@@ -2,6 +2,7 @@
 <?php if ($this->session()->get('user')['user_id']): ?>
     <button class="am-btn am-btn-success tm-full-width am-margin-bottom-xs" data-am-offcanvas="{target: '#doc-oc-demo3'}">排序</button>
 <?php endif; ?>
+<?php if($system['change_version'] == 1): ?>
 <div class="">
     <select name="version" class="version" data-am-selected="{btnWidth: '100%'}">
         <option value="">选择版本</option>
@@ -13,6 +14,7 @@
         <?php endforeach; ?>
     </select>
 </div>
+<?php endif; ?>
 <ul class="am-nav am-list-border am-text-sm am-link-muted">
     <?php foreach ($tree as $tk => $tv) : ?>
         <li class="am-nav-header"><?= $tv['title']; ?></li>

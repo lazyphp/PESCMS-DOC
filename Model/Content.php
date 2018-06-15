@@ -170,13 +170,20 @@ class Content extends \Core\Model\Model {
      */
     public static function quickListContent(array $sql = array('count' => '', 'normal' => '', 'param' => array())) {
 
-        $sql = array_merge(['param' => array(), 'page' => '10', 'style' => [], 'LANG' => []], $sql);
+        $sql = array_merge(['param' => array(), 'total' => 'count', 'page' => '10', 'style' => [], 'LANG' => []], $sql);
         $page = new \Expand\Page();
         $page->style = $sql['style'];
         $page->LANG = $sql['LANG'];
         $page->listRows = $sql['page'];
-        $count = self::db()->fetch($sql['count'], $sql['param']);
-        $total = $count === false ? '0' : current($count);
+
+        if($sql['total'] == 'count'){
+            $count = self::db()->fetch($sql['count'], $sql['param']);
+            $total = $count === false ? '0' : current($count);
+        }else{
+            $count = self::db()->getAll($sql['count'], $sql['param']);
+            $total = empty($count) ? '0' : count($count);
+        }
+
         $page->total($total);
         $page->handle();
         $list = self::db()->getAll("{$sql['normal']} LIMIT {$page->firstRow}, {$page->listRows}", $sql['param']);

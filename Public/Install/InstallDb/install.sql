@@ -223,7 +223,8 @@ INSERT INTO `d_option` (`id`, `option_name`, `name`, `value`, `option_range`) VA
 (15, 'upload_file', '文件格式', '[".zip",".rar",".7z",".doc",".docx",".pdf",".xls",".xlsx",".ppt",".pptx",".txt"]', 'upload'),
 (22, 'login', '开启全站登录验证', '0', 'system'),
 (23, 'articlereview', '文章导读', '                    $(function(){\r\n                        $(''.content_html h2'').each(function(){\r\n                            var matchTitle = $(this).text();\r\n                            if(matchTitle){\r\n                                $(''.article-review'').removeClass(''am-hide'')\r\n                                $(this).before(''<a name="''+matchTitle+''" class="am-padding-0 am-margin-0"></a>'');\r\n                                $(".article-review ol").append(''<li><a href="#''+matchTitle+''">''+matchTitle+''</a></li>'');\r\n                            }\r\n                        })\r\n                    })', 'system'),
-(24, 'verify', '开启验证码', '0', 'system');
+(24, 'verify', '开启验证码', '0', 'system'),
+(25, 'change_version', '切换版本', '1', 'system');
 
 -- --------------------------------------------------------
 

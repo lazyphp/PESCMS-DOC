@@ -19,7 +19,7 @@ class Setting extends \Core\Controller\Controller {
             $data[$value] = json_encode(explode(',', str_replace(["\r\n", "\r", " "], '', $_POST[$value])));
         }
 
-        foreach (['sitetitle', 'login', 'articlereview', 'verify'] as $value) {
+        foreach (['sitetitle', 'login', 'articlereview', 'verify', 'change_version'] as $value) {
             $data[$value] = $this->p($value);
         }
 
