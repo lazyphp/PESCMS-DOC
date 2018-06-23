@@ -20,10 +20,10 @@
             <?php if ($system['verify'] == '1'): ?>
                 <li class="am-padding-xs am-text-sm">
                     验证码
-                    <span class="am-text-xs">(不分大小写)</span><img src="<?= $label->url('Doc-Login-verify', ['time' => rand(0, 999)]); ?>" class="am-margin-left verify" height="20"/>
+                    <span class="am-text-xs">(不分大小写)</span><img src="<?= $label->url('Doc-Login-verify', ['time' => rand(0, 999)]); ?>" class="am-margin-left refresh-verify" height="20"/>
                 </li>
                 <li>
-                    <input name="verify" class="tm-remove-border tm-input-background-color am-form-field refresh-verify" type="text" placeholder="验证码" required>
+                    <input name="verify" class="tm-remove-border tm-input-background-color am-form-field" type="text" placeholder="验证码" required>
                 </li>
             <?php endif; ?>
             <li class="am-padding-xs am-text-center">
