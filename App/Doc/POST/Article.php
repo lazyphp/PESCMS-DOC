@@ -52,7 +52,6 @@ class Article extends \Core\Controller\Controller {
      */
     public function addContent() {
         $id = $this->isG('id', '丢失日志');
-        $version = $this->isG('version', '请提交版本号');
         $content = $this->isP('content', '请填写内容');
 
 
@@ -73,14 +72,14 @@ class Article extends \Core\Controller\Controller {
             'doc_id' => $id,
             'user_id' => $this->session()->get('user')['user_id'],
             'doc_content' => $content,
-            'tree_version' => $version,
+            'tree_version' => $checkDoc['tree_version'],
             'doc_content_createtime' => $time
         ));
 
         \Model\Doc\Doc::createTag($contentid);
 
         $this->db()->commit();
-        $this->success('添加内容成功!', $this->url("Doc-Index-view", ['id' => $id, 'tree' => $checkTree['tree_parent'], 'version' => $version]));
+        $this->success('添加内容成功!', $this->url("Doc-Index-view", ['id' => $id, 'tree' => $checkTree['tree_parent'], 'version' => $checkDoc['tree_version']]));
     }
 
 
