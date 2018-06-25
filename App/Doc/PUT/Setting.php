@@ -77,7 +77,7 @@ class Setting extends \Core\Controller\Controller {
         $ini_array = parse_ini_file($ini, true);
 
         foreach ($ini_array as $iniversion => $value) {
-            if ($iniversion > $version) {
+            if (str_replace('.', '', $iniversion) > str_replace('.', '', $version) ) {
                 if (!empty($value['sql'])) {
                     foreach ($value['sql'] as $sql) {
                         $this->db()->query($sql);

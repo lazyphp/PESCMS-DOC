@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `d_doc` (
 --
 
 INSERT INTO `d_doc` (`doc_id`, `doc_title`, `user_id`, `doc_tree_id`, `tree_version`, `doc_createtime`, `doc_updatetime`, `doc_delete`, `doc_listsort`) VALUES
-(1, '序言', 1, 2, '1.4.9', 1441274302, 1445575327, 0, 1);
+(1, '序言', 1, 2, '1.4.11', 1441274302, 1445575327, 0, 1);
 
 -- --------------------------------------------------------
 
