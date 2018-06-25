@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `d_doc` (
 --
 
 INSERT INTO `d_doc` (`doc_id`, `doc_title`, `user_id`, `doc_tree_id`, `tree_version`, `doc_createtime`, `doc_updatetime`, `doc_delete`, `doc_listsort`) VALUES
-(1, '序言', 1, 2, '1.4.11', 1441274302, 1445575327, 0, 1);
+(1, '序言', 1, 2, '1.4.9', 1441274302, 1445575327, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -218,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `d_option` (
 
 INSERT INTO `d_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES
 (1, 'sitetitle', '网站名称', 'PESCMS文档系统', 'system'),
-(13, 'version', '系统版本', '1.4.9', ''),
+(13, 'version', '系统版本', '1.4.11', ''),
 (14, 'upload_img', '图片格式', '[".jpg",".jpge",".bmp",".gif",".png"]', 'upload'),
 (15, 'upload_file', '文件格式', '[".zip",".rar",".7z",".doc",".docx",".pdf",".xls",".xlsx",".ppt",".pptx",".txt"]', 'upload'),
 (22, 'login', '开启全站登录验证', '0', 'system'),
