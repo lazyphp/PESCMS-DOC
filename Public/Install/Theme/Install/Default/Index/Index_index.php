@@ -11,20 +11,19 @@
 
 
         $.ajax({
-            url: 'http://app.pescms.com/?m=Bulletin&a=index&id=1&type=1',
-            dataType: 'JSONP',
-            jsonpCallback: 'receive',
-            beforeSend: function () {
+            url:'https://www.pescms.com/UserProtocol',
+            dataType:'JSON',
+            beforeSend:function(){
                 progress.start();
             },
-            success: function (data) {
-                $(".agree").html(data.replace(/\{program\}/g, "PESCMS DOC"));
+            success:function(data){
+                $(".agree").html(data.data.replace(/\{program\}/g, "PESCMS Ticket"));
                 progress.done();
             },
-            complete: function () {
+            complete:function(){
                 $(".am-btn").removeClass('am-disabled').html('下一步');
             },
-            error: function () {
+            error:function(){
                 alert('出错了,刷新试下');
                 progress.done();
             }
