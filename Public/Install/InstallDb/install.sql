@@ -289,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `d_tree_version` (
 --
 
 INSERT INTO `d_tree_version` (`tree_version_id`, `tree_id`, `tree_version`, `tree_version_title`, `tree_version_cover`) VALUES
-(1, 1, '1.4.9', 'PESCMS文档系统', '/Theme/assets/i/startup-640x1096.png'),
+(1, 1, '1.4.9', 'PESCMS文档系统', '/Theme/assets/i/cover.png'),
 (2, 2, '1.4.9', '序言', '');
 
 -- --------------------------------------------------------

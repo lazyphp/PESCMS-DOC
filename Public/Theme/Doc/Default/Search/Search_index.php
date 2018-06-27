@@ -17,9 +17,9 @@
 		            <div class="am-margin-bottom-xl">
 			            <div class="am-margin-bottom">
 				            <strong>
-					            <?= $versionList[current($item)['tree_parent']]['title'][$version] ?>
+					            <?= $versionList[current($item)['tree_parent']]['title'][explode('|', $version)[0]] ?>
 				            </strong>
-				            <small>(<?= $version ?>)</small>
+                            <small>(<?= explode('|', $version)[0] ?>)</small>
 			            </div>
 			            <ul class="am-list am-list-static">
 				            <?php foreach($item as $value ): ?>

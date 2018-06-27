@@ -58,9 +58,9 @@
         $('body').on('click', '.create-version', function(){
             var use_version = $(this).attr('data');
             var d = dialog({
-                width: '20rem',
+                width: '25rem',
                 title: '请输入新的版本号',
-                content: '<p>当前基于'+use_version+'版本号创建新版</p><p><input class="am-form-field" type="text" name="new_version_dialog" maxlength="12" /></p>',
+                content: '<p>当前基于'+use_version+'版本号创建新版</p><p><input class="am-form-field" type="text" name="new_version_dialog" maxlength="12" /></p><p class="am-text-warning am-text-xs">注：版本号中，请勿填写符号“|”，否则将影响部分功能<p>',
                 okValue: '确定',
                 ok: function () {
                     var new_version = $('input[name=new_version_dialog]').val();

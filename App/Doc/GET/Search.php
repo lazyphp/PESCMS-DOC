@@ -37,9 +37,9 @@ class Search extends \Core\Controller\Controller {
             if($system['change_version'] == 0 && $tree[$item['tree_parent']]['tree_version']  != $item['tree_version']  ){
                 continue;
             }
-            $list[$item['tree_version']][] = $item;
-        }
 
+            $list["{$item['tree_version']}|{$item['tree_parent']}"][] = $item;
+        }
 
         krsort($list);
         $this->assign('page', $result['page']);
