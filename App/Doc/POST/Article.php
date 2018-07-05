@@ -12,7 +12,7 @@ class Article extends \Core\Controller\Controller {
      */
     public function action() {
         $data['doc_title'] = $this->isP('title', '请填写标题');
-        $content = htmlspecialchars($this->isP('content', '请填写内容', false));
+        $content = $this->isP('content', '请填写内容');
 
         $data['doc_tree_id'] = $this->isP('tree', '请选择类型');
         $checkTree = \Model\Content::findContent('tree', $data['doc_tree_id'], 'tree_id');
@@ -52,7 +52,7 @@ class Article extends \Core\Controller\Controller {
      */
     public function addContent() {
         $id = $this->isG('id', '丢失日志');
-        $content = htmlspecialchars($this->isP('content', '请填写内容', false));
+        $content = $this->isP('content', '请填写内容');
 
 
         $checkDoc = $this->db('doc')->where("doc_id = :doc_id AND doc_delete = '0'")->find(array('doc_id' => $id));
