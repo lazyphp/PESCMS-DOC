@@ -16,7 +16,7 @@
                     <label for="" class="am-u-sm-2 am-form-label">当前版本</label>
 
                     <div class="am-u-sm-9">
-                        <a class="am-btn am-btn-sm am-btn-warning" href="<?= $label->url(GROUP . '-Setting-upgrade') ?>"><i class="am-icon-refresh"></i> <?= $version['value'] ?>
+                        <a class="am-btn am-btn-sm am-btn-warning" href="<?= $label->url(GROUP . '-Setting-upgrade',['back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><i class="am-icon-refresh"></i> <?= $version['value'] ?>
                         </a>
                     </div>
                     <div class="am-u-sm-1">
