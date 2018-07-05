@@ -17,7 +17,7 @@
                 progress.start();
             },
             success:function(data){
-                $(".agree").html(data.data.replace(/\{program\}/g, "PESCMS Ticket"));
+                $(".agree").html(data.data.replace(/\{program\}/g, "PESCMS DOC"));
                 progress.done();
             },
             complete:function(){
@@ -32,7 +32,7 @@
         var data = {
             id: 2,
             type: 1,
-            version : '1.4.9',
+            version : '<?= $version ?>',
             sessionid : '<?= $this->session()->getId() ?>'
         };
         $.post('https://www.pescms.com/?g=Api&m=Statistics&a=action', data, function (data) {

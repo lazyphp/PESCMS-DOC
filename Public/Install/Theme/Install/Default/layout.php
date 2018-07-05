@@ -59,7 +59,7 @@
                 </script>
 
                 <div class="header">
-                    <h1 class="am-margin-top-0"><?= $title ?></h1>
+                    <h1 class="am-margin-top-0"><?= $title ?> <small class="am-text-xs">v<?= $version ?></small></h1>
                     <?php if (ACTION == 'index'): ?>
                         <p>一款非常棒的文档管理系统<br/>The open source document management system</p>
                     <?php elseif (ACTION == 'config'): ?>

@@ -13,10 +13,21 @@ namespace App\Install\GET;
 
 class Index extends \Core\Controller\Controller {
 
+    private $version;
+
     public function __init() {
         if (is_file(APP_PATH . 'install.txt')) {
             $this->error('不能再次执行安装程序！');
         }
+
+        if(is_file(APP_PATH.'version')){
+            $this->version = file(APP_PATH.'version')[0];
+        }else{
+            $this->version = 'Unknown Version';
+        }
+
+        $this->assign('version', $this->version);
+
     }
 
     /**
@@ -126,6 +137,8 @@ class Index extends \Core\Controller\Controller {
         $data['user_mail'] = $this->isP('mail', '请填写管理员邮箱');
 
         $option['verify'] = $this->isP('verify', '请选择是否开启验证码');
+
+        $option['version'] = $this->version;//设置系统版本
 
         //读取数据库文件
         $sqlFile = file_get_contents(APP_PATH . 'InstallDb/install.sql');
