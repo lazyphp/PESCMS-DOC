@@ -40,3 +40,6 @@ InitSlice::any(['Doc-'], ['\Doc\Login'], ['Doc-Login-']);
 InitSlice::any(['Doc-User-action'], ['\Doc\HandleForm\HandleUser']);
 //注册理路由规则 添加/编辑 提交的表单内容
 InitSlice::any(['Doc-Route-action'], ['\Doc\HandleForm\HandleRoute', '\Doc\UpdateRoute']);
+
+//更新UE模板
+InitSlice::get(['Doc-Uetemplate-index'], ['\Doc\Uetemplate']);

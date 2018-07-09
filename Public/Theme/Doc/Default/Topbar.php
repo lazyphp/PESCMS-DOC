@@ -61,12 +61,17 @@
                                 <a href="<?= $label->url('Doc-Route-index'); ?>"><i class="am-icon-map-o"></i> 路由规则</a>
                             </li>
                             <li>
+                                <a href="<?= $label->url('Doc-Uetemplate-index'); ?>"><i class="am-icon-television"></i> UE格式模板</a>
+                            </li>
+                            <li>
                                 <a href="<?= $label->url('Doc-Setting-action'); ?>"><i class="am-icon-wrench"></i> 系统设置</a>
                             </li>
                             <li>
                                 <a href="https://forum.pescms.com/list/21.html" target="_blank"><i class="am-icon-question"></i> 反馈问题</a>
                             </li>
-
+                            <li>
+                                <a href="https://www.pescms.com/Page/Authorization.html" target="_blank"><i class="am-icon-paste"></i> 软件协议</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
