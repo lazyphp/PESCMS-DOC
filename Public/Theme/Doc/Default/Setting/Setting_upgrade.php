@@ -1,4 +1,6 @@
-<div class="admin-content am-padding am-padding-top-0">
+<div class="am-padding-xs am-padding-top">
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-bd">
 
     <div class="am-cf">
         <div class="am-fl am-cf">
@@ -16,32 +18,34 @@
     </div>
     <article class="am-article am-hide"></article>
 
-    <hr/>
-    <form action="<?= $label->url(GROUP . '-Setting-mtUpgrade') ?>" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="method" value="PUT">
+            <hr/>
+            <form action="<?= $label->url(GROUP . '-Setting-mtUpgrade') ?>" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="method" value="PUT">
 
-        <div class="am-form-group am-form-file">
-            <button type="button" class="am-btn am-btn-danger am-btn-sm">
-                <i class="am-icon-cloud-upload"></i> 导入zip升级包
-            </button>
-            <input id="doc-form-file" type="file" name="zip" multiple>
-        </div>
-        <div id="file-list"></div>
-        <script>
-            $(function () {
-                $('#doc-form-file').on('change', function () {
-                    var fileNames = '';
-                    $.each(this.files, function () {
-                        fileNames += '<span class="am-badge">' + this.name + '</span> ';
+                <div class="am-form-group am-form-file">
+                    <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                        <i class="am-icon-cloud-upload"></i> 导入zip升级包
+                    </button>
+                    <input id="doc-form-file" type="file" name="zip" multiple>
+                </div>
+                <div id="file-list"></div>
+                <script>
+                    $(function () {
+                        $('#doc-form-file').on('change', function () {
+                            var fileNames = '';
+                            $.each(this.files, function () {
+                                fileNames += '<span class="am-badge">' + this.name + '</span> ';
+                            });
+                            $('#file-list').html(fileNames);
+                        });
                     });
-                    $('#file-list').html(fileNames);
-                });
-            });
-        </script>
-        <button type="submit" id="btn-submit" class="am-btn am-btn-default am-btn-xs">
-            安装更新
-        </button>
-    </form>
+                </script>
+                <button type="submit" id="btn-submit" class="am-btn am-btn-default am-btn-xs">
+                    安装更新
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
 <script>
     $(function(){
