@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `d_field` (
   `field_status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
 -- 转存表中的数据 `d_field`
@@ -153,7 +153,13 @@ INSERT INTO `d_field` (`field_id`, `field_model_id`, `field_name`, `field_displa
 (17, 4, 'rule', '路由规则', 'text', '', '若链接中存在显式参数，那么用左右大括号包围着。如参数number，那么路由规则这样写：route/{number}。同时规则开头不要添加任何字符，且分隔符只能为''/''', '', 1, 4, 1, 1, 1),
 (18, 4, 'status', '启用状态', 'radio', '{&quot;\\u542f\\u7528&quot;:&quot;1&quot;,&quot;\\u7981\\u7528&quot;:&quot;0&quot;}', '', '', 1, 7, 1, 1, 1),
 (19, 4, 'title', '路由名称', 'text', '', '建议填写，以免路由规则过多时，自己也不清楚谁是他的爹。', '', 0, 1, 1, 1, 1),
-(20, 1, 'version', '目录版本号', 'text', '', '', '', 0, 1, 1, 0, 1);
+(20, 1, 'version', '目录版本号', 'text', '', '', '', 0, 1, 1, 0, 1),
+(21, 5, 'status', '状态', 'radio', '{"\\u7981\\u7528":"0","\\u542f\\u7528":"1"}', '', '1', 1, 100, 1, 1, 1),
+(22, 5, 'listsort', '排序', 'text', '', '', '', 0, 98, 1, 1, 1),
+(23, 5, 'createtime', '创建时间', 'date', '', '', '', 0, 99, 1, 1, 1),
+(24, 5, 'name', '模板名称', 'text', '', '', '', 1, 1, 1, 1, 1),
+(25, 5, 'img', '模版缩略图', 'thumb', '', '', '', 1, 2, 0, 1, 1),
+(26, 5, 'format', '格式示例', 'editor', '', '', '', 1, 3, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -195,7 +201,8 @@ INSERT INTO `d_model` (`model_id`, `model_name`, `model_title`, `model_status`, 
 (1, 'Tree', '文档树', 1, 1, 1),
 (2, 'Doc', '文档系统', 1, 1, 1),
 (3, 'user', '用户模型', 1, 1, 1),
-(4, 'route', '路由规则', 1, 1, 1);
+(4, 'route', '路由规则', 1, 1, 1),
+(5, 'uetemplate', 'UE格式模版', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -210,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `d_option` (
   `value` text NOT NULL,
   `option_range` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='系统选项' AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='系统选项' AUTO_INCREMENT=26 ;
 
 --
 -- 转存表中的数据 `d_option`
@@ -291,6 +298,23 @@ CREATE TABLE IF NOT EXISTS `d_tree_version` (
 INSERT INTO `d_tree_version` (`tree_version_id`, `tree_id`, `tree_version`, `tree_version_title`, `tree_version_cover`) VALUES
 (1, 1, '1.4.9', 'PESCMS文档系统', '/Theme/assets/i/cover.png'),
 (2, 2, '1.4.9', '序言', '');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `d_uetemplate`
+--
+
+CREATE TABLE IF NOT EXISTS `d_uetemplate` (
+  `uetemplate_id` int(11) NOT NULL AUTO_INCREMENT,
+  `uetemplate_listsort` int(11) NOT NULL DEFAULT '0',
+  `uetemplate_status` tinyint(4) NOT NULL DEFAULT '0',
+  `uetemplate_createtime` int(11) NOT NULL DEFAULT '0',
+  `uetemplate_name` varchar(255) NOT NULL DEFAULT '',
+  `uetemplate_img` varchar(255) NOT NULL DEFAULT '',
+  `uetemplate_format` text NOT NULL,
+  PRIMARY KEY (`uetemplate_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
