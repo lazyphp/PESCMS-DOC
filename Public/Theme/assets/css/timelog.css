@@ -180,6 +180,26 @@
 }
 
 /*---------------页脚---------------*/
+.amz-toolbar {
+    position: fixed;
+    right: 20px;
+    bottom: 88px;
+    z-index: 999;
+}
+.amz-toolbar .am-icon-faq {
+    display: block;
+    opacity: 1;
+    background-color: #dd514c;
+    color: #fff;
+    margin-top: 10px;
+    -webkit-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+}
+.amz-toolbar .am-icon-faq:hover {
+    -webkit-transform: rotate(720deg);
+    -ms-transform: rotate(720deg);
+    transform: rotate(720deg);
+}
 .my-footer {
     background: #fff;
     border-top: 1px solid #eeeeee;

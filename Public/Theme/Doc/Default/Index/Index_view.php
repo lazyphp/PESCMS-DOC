@@ -10,7 +10,6 @@
                 </script>
                 <div class="am-text-sm article-review am-hide">
                     <h2><span>目录</span></h2>
-
                     <div>
                         <ol>
                         </ol>
@@ -54,7 +53,7 @@
                     </form>
                 </div>
             <?php endif; ?>
-            <?php if (time() - $doc_updatetime > 15768000): ?>
+            <?php if (time() - $doc_updatetime > 15768000 && $system['expire_tips'] == 1 ): ?>
                 <div class="am-alert am-alert-secondary am-text-xs am-margin-bottom-0">
                     <p><i class="am-icon-exclamation-triangle"></i> 该文档已超过半年没有更新，可能不再具备参考价值</p>
                 </div>
