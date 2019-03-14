@@ -105,9 +105,10 @@ class Content extends \Core\Model\Model {
 
             /**
              * 时间转换为时间戳
+             * @todo 此地方可能存在一个问题，值为空时，需要填写的为0还是最新的时间？
              */
             if ($value['field_type'] == 'date') {
-                $_POST[$value['field_name']] = (string)strtotime($_POST[$value['field_name']]);
+                $_POST[$value['field_name']] = empty($_POST[$value['field_name']]) ? 0 : (string)strtotime($_POST[$value['field_name']]);
             }
 
             if ($value['field_required'] == '1') {
