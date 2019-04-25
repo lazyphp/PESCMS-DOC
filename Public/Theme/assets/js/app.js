@@ -140,4 +140,17 @@ $(function () {
         var src = $(this).attr('src')
         $(this).attr('src', src + '&time=' + Math.random());
     });
+
+    /**
+     * 搜索弹出下拉选择
+     */
+    $('.search-article').on('click', function(){
+        if($('.pes-search input[name="tree"]').val() == 0){
+            $('.article-tree').dropdown('open');
+            return false;
+        }
+
+
+    })
+
 })

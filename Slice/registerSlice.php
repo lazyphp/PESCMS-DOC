@@ -30,16 +30,49 @@
 */
 use \Core\Slice\InitSlice as InitSlice;
 
-//注册自动更新路由规则
-InitSlice::get(['Doc-:m-:a'], ['\Doc\UpdateRoute']);
-//读取系统选项
-InitSlice::any(['Doc-:m-:a'], ['\Doc\Option', '\Doc\Tree']);
-//注册登录切片
-InitSlice::any(['Doc-:m-:a'], ['\Doc\Login'], ['Doc-Login-']);
-//注册自动处理用户提交的用户密码表单
-InitSlice::any(['Doc-User-action'], ['\Doc\HandleForm\HandleUser']);
-//注册理路由规则 添加/编辑 提交的表单内容
-InitSlice::any(['Doc-Route-action'], ['\Doc\HandleForm\HandleRoute', '\Doc\UpdateRoute']);
+$SLICE_ARRYR = [
 
-//更新UE模板
-InitSlice::get(['Doc-Uetemplate-index'], ['\Doc\Uetemplate']);
+    //全局切片
+    'GLOBAL-SLICE' => [
+        'any',
+        ['Doc-:m-:a'],
+        ['\Doc\Option', '\Doc\Tree']
+    ],
+
+    //登录切片
+    'LOGIN-SLICE' => [
+        'any',
+        ['Doc-:m-:a'],
+        ['\Doc\Login'],
+        ['Doc-Login-:a']
+    ],
+
+    //注册自动更新路由规则
+    'DOC-ROUTE-ACTION' => [
+        'get',
+        ['Doc-Route-action'],
+        ['\Doc\HandleForm\HandleRoute', '\Doc\UpdateRoute']
+    ],
+
+    //注册自动处理用户提交的用户密码表单
+    'DOC-USER-ACTION' => [
+        'any',
+        ['Doc-User-action'],
+        ['\Doc\HandleForm\HandleUser']
+    ],
+
+    //更新UE模板
+    'DOC-UETEMPLATE-INDEX' => [
+        'get',
+        ['Doc-Uetemplate-index'],
+        ['\Doc\Uetemplate']
+    ],
+    
+];
+
+//执行切片注册
+foreach ($SLICE_ARRYR as $item){
+    $method = $item['0'];
+    $exclude = empty($item['3']) ? [] : $item['3'];
+    InitSlice::$method($item[1], $item[2], $exclude);
+}
