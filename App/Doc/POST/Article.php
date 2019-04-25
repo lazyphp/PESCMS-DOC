@@ -21,6 +21,8 @@ class Article extends \Core\Controller\Controller {
         $data['doc_updatetime'] = $data['doc_createtime'] = time();
         $data['doc_delete'] = '0';
 
+        $data['doc_listsort'] = intval($this->p('listsort'));
+
         $getVersion = \Model\Content::findContent('tree', $checkTree['tree_parent'], 'tree_id');
         $data['tree_version'] = $getVersion['tree_version'];
 

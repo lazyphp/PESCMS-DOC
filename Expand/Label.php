@@ -233,5 +233,18 @@ class Label {
         require THEME_PATH.'/Content/Content_value_theme.php';
     }
 
+    /**
+     * xss过滤
+     * @param $str
+     * @return mixed
+     */
+    public function xss($str){
+        if(empty($this->xss)){
+            $this->xss = new \voku\helper\AntiXSS();
+        }
+
+        return $this->xss->xss_clean($str);
+    }
+
 
 }

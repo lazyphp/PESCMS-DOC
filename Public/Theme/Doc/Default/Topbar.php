@@ -8,7 +8,7 @@
 
     <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav">
-            <li class="am-dropdown" data-am-dropdown>
+            <li class="am-dropdown article-tree" data-am-dropdown>
                 <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                     文档列表 <span class="am-icon-caret-down"></span>
                 </a>
@@ -23,18 +23,20 @@
                 </ul>
             </li>
         </ul>
-        <form class="am-topbar-form am-topbar-left am-form-inline" method="GET" action="<?= DOCUMENT_ROOT ?>/" role="search">
+        <?php if(!empty($_GET['tree'])): ?>
+        <form class="am-topbar-form am-topbar-left am-form-inline pes-search" method="GET" action="<?= DOCUMENT_ROOT ?>/" role="search">
             <input type="hidden" name="m" value="Search">
             <input type="hidden" name="a" value="index">
             <input type="hidden" name="tree" value="<?= (int)$_GET['tree']; ?>">
 
             <div class="am-form-group am-input-group">
-                <input type="text" class="am-form-field" name="keyword" value="<?= htmlspecialchars($_GET['keyword']); ?>" placeholder="搜索">
+                <input type="text" class="am-form-field" name="keyword" value="<?= $label->xss($_GET['keyword']); ?>" placeholder="搜索">
                 <span class="am-input-group-btn">
-                    <button class="am-btn am-btn-default" type="submit"><span class="am-icon-search"></span></button>
+                    <button class="am-btn am-btn-default search-article" type="submit"><span class="am-icon-search"></span></button>
                 </span>
             </div>
         </form>
+        <?php endif; ?>
 
         <div class="am-topbar-right">
             <ul class="am-nav am-nav-pills am-topbar-nav">
