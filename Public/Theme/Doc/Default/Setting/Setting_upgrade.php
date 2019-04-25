@@ -2,28 +2,32 @@
     <div class="am-panel am-panel-default">
         <div class="am-panel-bd">
 
-    <div class="am-cf">
-        <div class="am-fl am-cf">
-            <?php if (!empty($_GET['back_url'])): ?>
-                <a href="<?= base64_decode($_GET['back_url']) ?>" class="am-margin-right-xs am-text-danger"><i
-                            class="am-icon-reply"></i>返回</a>
-            <?php endif; ?>
-            <strong class="am-text-primary am-text-lg"><?= $title; ?></strong>
-        </div>
-    </div>
-    <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
+            <div class="am-cf">
+                <div class="am-fl am-cf">
+                    <?php if (!empty($_GET['back_url'])): ?>
+                        <a href="<?= base64_decode($_GET['back_url']) ?>" class="am-margin-right-xs am-text-danger"><i class="am-icon-reply"></i>返回</a>
+                    <?php endif; ?>
+                    <strong class="am-text-primary am-text-lg"><?= $title; ?></strong>
+                </div>
+            </div>
+            <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
 
-    <div class="am-alert am-alert-secondary" id="patch" data-am-alert>
-        正在与PESCMS官网进行通讯，获取更新中……
-    </div>
-    <article class="am-article am-hide"></article>
+            <div class="am-alert am-alert-secondary" id="patch" data-am-alert>
+                正在与PESCMS官网进行通讯，获取更新中……
+            </div>
+            <article class="am-article am-hide"></article>
 
             <hr/>
+            <a href="<?= $label->url(GROUP . '-Setting-atUpgrade', ['method' => 'PUT']) ?>" class="am-btn am-radius am-btn-success am-btn-xs">执行自动更新</a>
+            <hr/>
+            <div class="am-alert am-alert-secondary"  data-am-alert>
+                当自动更新多次失败时，您可以尝试将补丁下载到本地，执行手动升级。
+            </div>
             <form action="<?= $label->url(GROUP . '-Setting-mtUpgrade') ?>" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="method" value="PUT">
 
                 <div class="am-form-group am-form-file">
-                    <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                    <button type="button" class="am-btn am-radius am-btn-danger am-btn-xs">
                         <i class="am-icon-cloud-upload"></i> 导入zip升级包
                     </button>
                     <input id="doc-form-file" type="file" name="zip" multiple>
@@ -40,8 +44,8 @@
                         });
                     });
                 </script>
-                <button type="submit" id="btn-submit" class="am-btn am-btn-default am-btn-xs">
-                    安装更新
+                <button type="submit" id="btn-submit" class="am-btn am-radius am-btn-default am-btn-xs">
+                    手动安装更新
                 </button>
             </form>
         </div>
