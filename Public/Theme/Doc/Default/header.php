@@ -27,7 +27,7 @@
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-min.js?=<?= $system['version'] ?>"></script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-plus-min.js?=<?= $system['version'] ?>"></script>
 
-    <?php if(!empty($this->session()->get('user')['user_id'])): ?>
+    <?php if(!empty(\Core\Func\CoreFunc::session()->get('user')['user_id'])): ?>
         <!--加载百度编辑器-->
         <script>var path = '<?= DOCUMENT_ROOT; ?>';</script>
         <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js?=<?= $system['version'] ?>"></script>
