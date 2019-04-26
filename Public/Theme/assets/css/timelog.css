@@ -179,6 +179,15 @@
     padding: 10px 10px 10px 20px;
 }
 
+/*搜索工具*/
+@media only screen and (max-width: 641px) {
+    .search-tool{
+        margin-bottom: 1rem;
+        display: block;
+    }
+}
+
+
 /*---------------页脚---------------*/
 .my-footer {
     background: #fff;

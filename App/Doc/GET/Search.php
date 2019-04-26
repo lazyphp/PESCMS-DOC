@@ -9,12 +9,22 @@ class Search extends \Core\Controller\Controller {
 
         $tree = \Model\Content::findContent('tree', $this->g('tree'), 'tree_id');
 
-        $version = empty($_GET['version']) ? $tree['tree_version'] : $this->g('version');
-
         //空关键词 或者 空目录 跳回首页
         if(empty($keyword) || empty($tree) ){
             $this->jump(DOCUMENT_ROOT.'/');
         }
+
+        if(empty($_GET['version'])){
+            $version = $tree['tree_version'];
+        }else{
+            $version = $this->g('version');
+            //验证版本号是否存在
+            if(!in_array($version, \Core\Func\CoreFunc::$param['versionList'][$tree['tree_id']]['version'])){
+            $version = $tree['tree_version'];
+            }
+
+        }
+
         $param = [
             'doc_title' => "%{$keyword}%",
             'doc_content' => "%{$keyword}%",
