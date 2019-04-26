@@ -1,4 +1,4 @@
-<div class="am-padding-xs am-padding-top-0">
+<div class="am-padding-xs am-padding-top">
     <div class="am-panel am-panel-default">
         <div class="am-panel-bd">
 

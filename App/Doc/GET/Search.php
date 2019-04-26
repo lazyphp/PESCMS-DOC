@@ -47,22 +47,26 @@ class Search extends \Core\Controller\Controller {
             }
         }
 
-        
-        $sql = "SELECT %s
+        if(!empty($treeList)){
+            $sql = "SELECT %s
                 FROM {$this->prefix}doc AS d
                 LEFT JOIN {$this->prefix}doc_content AS dc ON dc.doc_id = d.doc_id
                 LEFT JOIN {$this->prefix}doc_content_tag AS dct ON dct.content_id = dc.doc_content_id
-                WHERE d.doc_tree_id IN (".implode(',', $treeList).") AND d.tree_version = :tree_version AND (d.doc_title LIKE :doc_title OR dc.doc_content LIKE :doc_content OR dct.content_tag_name LIKE :tag)
+                WHERE d.doc_tree_id IN (".implode(',', $treeList).") AND d.doc_delete = 0 AND dc.doc_content_delete = 0  AND d.tree_version = :tree_version AND (d.doc_title LIKE :doc_title OR dc.doc_content LIKE :doc_content OR dct.content_tag_name LIKE :tag)
                 GROUP BY d.doc_id
                 ORDER BY d.doc_listsort ASC
                 ";
-        $result = \Model\Content::quickListContent([
-            'count' => sprintf($sql, 'dc.doc_content_id'),
-            'total' => 'array',
-            'normal'=> sprintf($sql, 'dc.*, d.doc_title, d.doc_listsort'),
-            'page' => '15',
-            'param' => $param
-        ]);
+            $result = \Model\Content::quickListContent([
+                'count' => sprintf($sql, 'dc.doc_content_id'),
+                'total' => 'array',
+                'normal'=> sprintf($sql, 'dc.*, d.doc_title, d.doc_listsort'),
+                'page' => '15',
+                'param' => $param
+            ]);
+        }
+
+        
+
 
 
         $this->assign('page', $result['page']);
