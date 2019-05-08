@@ -1,0 +1,1 @@
+ALTER TABLE `d_login_user` CHANGE `login_agent` `login_agent` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '登录的浏览器信息';

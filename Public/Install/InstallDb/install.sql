@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2018-05-11 06:57:18
+-- Generation Time: 2019-05-08 03:13:31
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `d_login_user` (
   `login_id` int(11) NOT NULL AUTO_INCREMENT,
   `login_cookie` varchar(64) NOT NULL DEFAULT '' COMMENT 'cookie值',
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
-  `login_agent` varchar(128) NOT NULL DEFAULT '' COMMENT '登录的浏览器信息',
+  `login_agent` text NOT NULL COMMENT '登录的浏览器信息',
   PRIMARY KEY (`login_id`),
   UNIQUE KEY `login_cookie` (`login_cookie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录cookie' AUTO_INCREMENT=1 ;
@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `d_model` (
   `model_attr` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模型属性 1:前台(含前台) 2:后台',
   PRIMARY KEY (`model_id`),
   UNIQUE KEY `model_name` (`model_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='模型列表' AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='模型列表' AUTO_INCREMENT=6 ;
 
 --
 -- 转存表中的数据 `d_model`
