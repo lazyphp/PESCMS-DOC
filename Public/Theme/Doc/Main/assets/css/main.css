@@ -3,11 +3,17 @@ html, body{
 }
 
 .am-topbar-right {
-    margin: 0px 60px 0 0;
-    position: absolute;
+    margin: 0;
+    position: fixed;
     right: 0;
     text-align: right;
     z-index: 2;
+    background-color: #fff;
+}
+.am-topbar-scroll{
+    border-width: 0 0px 1px 1px;
+    border-color: #CCCCCC;
+    border-style: solid;
 }
 
 .am-topbar-right a{
@@ -26,9 +32,13 @@ html, body{
 
 .am-topbar-right .am-dropdown:hover>.am-dropdown-content{
     display: block;
+    border-radius: 4px;
 }
 .am-topbar-right .am-dropdown-content{
-    top: 82%;
+    top: 83%;
+}
+.am-topbar-right .am-dropdown:hover>ul .am-active>a:hover{
+    background-color: #0e90d2;
 }
 .am-topbar-right .am-dropdown:hover>ul li a:hover{
     color: #fff;
@@ -67,6 +77,12 @@ html, body{
 .sidebar:hover::-webkit-scrollbar-track {
     background: hsla(0, 0%, 53%, .1)
 }
+
+.sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: #56817A #eee;
+}
+
 
 .sidebar .search input, .sidebar .search .search-article, .sidebar .search input:focus{
     border-width: 0 0 1px 0;

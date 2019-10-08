@@ -5,7 +5,7 @@
             <a href="/d/index.html"><i class="am-icon-home"></i> 文档首页</a>
         </li>
 
-        <li class="am-dropdown article-tree" data-am-dropdown>
+        <li class="am-dropdown am-dropdown-flip article-tree" data-am-dropdown>
             <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                 <i class="am-icon-list"></i> 文档列表 <span class="am-icon-caret-down"></span>
             </a>
@@ -31,7 +31,7 @@
             <li>
                 <a href="<?= $label->url('Doc-Article-manage'); ?>"><i class="am-icon-code-fork"></i> 管理文档</a>
             </li>
-            <li class="am-dropdown" data-am-dropdown>
+            <li class="am-dropdown am-dropdown-flip" data-am-dropdown>
                 <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                     <i class="am-icon-plus"></i> 管理 <span class="am-icon-caret-down"></span>
                 </a>
@@ -62,3 +62,20 @@
         <?php endif; ?>
     </ul>
 </div>
+<script>
+    $(function(){
+        $(document).scroll(function() {
+
+            var scrollbar = $(this).scrollTop();  //滚动高度
+            console.dir(scrollbar)
+            if(scrollbar > 0){
+                $('.am-topbar-right').addClass('am-topbar-scroll');
+            }else{
+                $('.am-topbar-right').removeClass('am-topbar-scroll');
+            }
+
+
+        })
+
+    })
+</script>

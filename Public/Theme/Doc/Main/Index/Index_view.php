@@ -52,7 +52,6 @@
 <script>
     $(function(){
         $('table').each(function(){
-            console.dir('ddd')
             $(this).attr('class', 'am-table am-table-bordered am-table-radius am-table-striped')
         })
     })
