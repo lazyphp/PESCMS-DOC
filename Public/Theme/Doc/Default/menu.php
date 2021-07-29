@@ -8,7 +8,7 @@
         <li class="<?= $result[0]['menu_pid'] == 0 ? 'am-dropdown' : '' ?>" >
             <a class="am-dropdown-toggle" href="<?= empty($item['menu_link']) ? 'javascript:;' : ($item['menu_type'] == 0 ? $label->url($item['menu_link']) : $item['menu_link']) ?>"><?= $item['menu_name'] ?></a>
 
-            <?php if($item['menu_type'] == 2): ?>
+            <?php if($item['menu_type'] == 2 && !empty(\Model\Doc::getDocList())): ?>
                 <div class="am-dropdown-layer">
                     <ul class="am-dropdown-content">
                         <?php foreach(\Model\Doc::getDocList() as $doc): ?>

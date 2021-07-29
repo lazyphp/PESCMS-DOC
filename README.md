@@ -28,11 +28,15 @@ PESCMS官方QQ 2群：496804032 <a target="_blank" href="https://jq.qq.com/?_wv=
 
 ## 鸣谢
 排名不分先后  
-* vditor [https://b3log.org/vditor/] 一款非常优秀的MD编辑器  
-* ueditor [https://fex.baidu.com/ueditor/] 百度编辑器。  
-* amazeui [https://github.com/amazeui/amazeui] 本文档系统的前端框架。 尽管她已经逝去，但是开源让她保持着活力。  
-* 看云 [https://www.kancloud.cn/] 本次重构参考平台之一  
-* 语雀 [https://www.yuque.com/] 本次重构参考平台之一  
-* Gitbook [https://www.gitbook.com/] 本次重构参考平台之一  
-* jQuery [https://jquery.com/] 重构之处，尝过用流行的前端框架VUE，经过一周的磨合，我最爱的还是jQuery。  
+* [vditor](https://b3log.org/vditor/) 一款非常优秀的MD编辑器  
+* [ueditor](https://fex.baidu.com/ueditor/) 百度编辑器。  
+* [amazeui](https://github.com/amazeui/amazeui) 本文档系统的前端框架。 尽管她已经逝去，但是开源让她保持着活力。  
+* [看云](https://www.kancloud.cn/) 本次重构参考平台之一  
+* [语雀](https://www.yuque.com/) 本次重构参考平台之一  
+* [Gitbook](https://www.gitbook.com/) 本次重构参考平台之一  
+* [jQuery](https://jquery.com/) 重构之处，尝过用流行的前端框架VUE，经过一周的磨合，我最爱的还是jQuery。  
 * [@Devil](https://gitee.com/zongzhige/) 本次重构过程，帮助测试以及修复了上传粘贴失效的问题。
+* 还有其他引用到的开源库，这里不一一列举了。
+## 协议
+尽管本软件以GPLv2协议发布，但在使用前请先阅读PESCMS官方的[用户协议](https://www.pescms.com/article/view/-1.html)。  
+我们可能会在软件后续更新中，引入部分收费功能，原则上增加的收费功能以不影响系统整体正常运作为主，希望您能理解开源作者的不易。

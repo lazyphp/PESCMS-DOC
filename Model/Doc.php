@@ -76,27 +76,30 @@ class Doc extends \Core\Model\Model {
      * @return array
      */
     public static function getDocList(){
-        $condition = '1 = 1 ';
-        $param = [];
+        static $doc = [];
 
-        if (empty(self::session()->get('doc')['member_id'])) {
-            $condition .= ' AND doc_open = 0';
-        }
-        $list = \Model\Content::listContent([
-            'table' => 'doc',
-            'condition' => $condition,
-            'order' => 'doc_listsort ASC, doc_id DESC',
-            'param' => $param,
-        ]);
-        $doc = [];
-        if(!empty($list)){
-            foreach ($list as $item){
-                if(\Model\Doc::checkReadAuth($item) === false ){
-                    continue;
+        if(empty($doc)){
+            $condition = '1 = 1 ';
+            $param = [];
+            if (empty(self::session()->get('doc')['member_id'])) {
+                $condition .= ' AND doc_open = 0';
+            }
+            $list = \Model\Content::listContent([
+                'table' => 'doc',
+                'condition' => $condition,
+                'order' => 'doc_listsort ASC, doc_id DESC',
+                'param' => $param,
+            ]);
+            if(!empty($list)){
+                foreach ($list as $item){
+                    if(\Model\Doc::checkReadAuth($item) === false ){
+                        continue;
+                    }
+                    $doc[$item['doc_id']] = $item;
                 }
-                $doc[$item['doc_id']] = $item;
             }
         }
+
         return $doc;
     }
 
