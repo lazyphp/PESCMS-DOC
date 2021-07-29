@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.11",
     "Names": {
         "aa": "afar",
         "ab": "abxaz",
@@ -63,6 +62,7 @@
         "cad": "keddo",
         "car": "karib",
         "cch": "atsam",
+        "ccp": "Çakma",
         "ce": "çeçen",
         "ceb": "sebuan",
         "cgg": "çiqa",
@@ -130,6 +130,7 @@
         "eu": "bask",
         "ewo": "evondo",
         "fa": "fars",
+        "fa_AF": "dari",
         "fan": "fang",
         "fat": "fanti",
         "ff": "fula",
@@ -334,7 +335,6 @@
         "no": "norveç",
         "nog": "noqay",
         "non": "qədim nors",
-        "nqo": "nqo",
         "nr": "cənubi ndebele",
         "nso": "şimal soto",
         "nus": "nuer",

@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.20",
     "Names": {
         "ADP": [
             "ADP",
@@ -639,7 +638,7 @@
         ],
         "MWK": [
             "MWK",
-            "kwacha malauí"
+            "kuacha malauí"
         ],
         "MXN": [
             "MXN",
@@ -961,6 +960,10 @@
             "UYU",
             "peso uruguayo"
         ],
+        "UYW": [
+            "UYW",
+            "unidad previsional uruguayo"
+        ],
         "UZS": [
             "UZS",
             "sum"
@@ -971,6 +974,10 @@
         ],
         "VEF": [
             "VEF",
+            "bolívar venezolano (2008–2018)"
+        ],
+        "VES": [
+            "VES",
             "bolívar venezolano"
         ],
         "VND": [
@@ -1051,7 +1058,7 @@
         ],
         "ZMW": [
             "ZMW",
-            "kwacha zambiano"
+            "kuacha zambiano"
         ],
         "ZRN": [
             "ZRN",

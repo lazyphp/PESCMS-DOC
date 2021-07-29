@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.20",
     "Names": {
         "ADP": [
             "ADP",
@@ -1033,17 +1032,25 @@
             "UYU",
             "Uruguayn peso"
         ],
+        "UYW": [
+            "UYW",
+            "Uruguayn nimellinen palkkaindeksiyksikkö"
+        ],
         "UZS": [
             "UZS",
             "Uzbekistanin som"
         ],
         "VEB": [
             "VEB",
-            "Venezuelan bolivar (1871–2008)"
+            "Venezuelan bolívar (1871–2008)"
         ],
         "VEF": [
             "VEF",
-            "Venezuelan bolivar"
+            "Venezuelan bolívar (2008–2018)"
+        ],
+        "VES": [
+            "VES",
+            "Venezuelan suvereeni bolívar"
         ],
         "VND": [
             "VND",

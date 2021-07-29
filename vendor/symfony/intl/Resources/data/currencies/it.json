@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.40",
     "Names": {
         "ADP": [
             "ADP",
@@ -219,7 +218,7 @@
         ],
         "CNH": [
             "CNH",
-            "CNH"
+            "renmimbi cinese offshore"
         ],
         "CNY": [
             "CN¥",
@@ -832,7 +831,7 @@
         ],
         "STN": [
             "STN",
-            "dobra di Sao Tomé e Principe"
+            "dobra di Sao Tomé e Príncipe"
         ],
         "SUR": [
             "SUR",
@@ -952,6 +951,10 @@
         ],
         "VEF": [
             "VEF",
+            "bolívar venezuelano (2008–2018)"
+        ],
+        "VES": [
+            "VES",
             "bolívar venezuelano"
         ],
         "VND": [

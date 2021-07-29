@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.11",
     "Names": {
         "aa": "Afar",
         "ab": "Abkhazian",
@@ -48,6 +47,7 @@
         "bug": "Buginese",
         "byn": "Blin",
         "ca": "Catalan",
+        "ccp": "Chakma",
         "ce": "Chechen",
         "ceb": "Cebuano",
         "cgg": "Chiga",
@@ -98,6 +98,7 @@
         "eu": "Basque",
         "ewo": "Ewondo",
         "fa": "Persian",
+        "fa_AF": "Dari",
         "ff": "Fulah",
         "fi": "Finnish",
         "fil": "Filipino",

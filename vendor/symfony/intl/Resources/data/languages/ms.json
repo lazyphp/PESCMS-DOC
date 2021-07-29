@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.20",
     "Names": {
         "aa": "Afar",
         "ab": "Abkhazia",
@@ -67,6 +66,7 @@
         "byv": "Medumba",
         "ca": "Catalonia",
         "cay": "Cayuga",
+        "ccp": "Chakma",
         "ce": "Chechen",
         "ceb": "Cebuano",
         "cgg": "Chiga",
@@ -120,6 +120,7 @@
         "eu": "Basque",
         "ewo": "Ewondo",
         "fa": "Parsi",
+        "fa_AF": "Dari",
         "ff": "Fulah",
         "fi": "Finland",
         "fil": "Filipina",

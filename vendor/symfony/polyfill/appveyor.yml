@@ -16,8 +16,8 @@ install:
     - cinst wget
     - IF EXIST c:\php (SET PHP=0) ELSE (mkdir c:\php)
     - cd c:\php
-    - IF %PHP%==1 appveyor DownloadFile https://github.com/symfony/binary-utils/releases/download/v0.1/php-5.3.3-nts-Win32-VC9-x86.zip
-    - IF %PHP%==1 7z x php-5.3.3-nts-Win32-VC9-x86.zip -y >nul
+    - IF %PHP%==1 appveyor DownloadFile https://github.com/symfony/binary-utils/releases/download/v0.1/php-5.3.9-nts-Win32-VC9-x86.zip
+    - IF %PHP%==1 7z x php-5.3.9-nts-Win32-VC9-x86.zip -y >nul
     - IF %PHP%==1 appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/ICU-51.2-dlls.zip
     - IF %PHP%==1 7z x ICU-51.2-dlls.zip -y >nul
     - IF %PHP%==1 del /Q *.zip
@@ -32,6 +32,7 @@ install:
     - IF %PHP%==1 copy /Y php.ini-development php.ini
     - IF %PHP%==1 echo max_execution_time=1200 >> php.ini
     - IF %PHP%==1 echo date.timezone="UTC" >> php.ini
+    - IF %PHP%==1 echo memory_limit=-1 >> php.ini
     - IF %PHP%==1 echo extension_dir=ext >> php.ini
     - IF %PHP%==1 echo extension=php_openssl.dll >> php.ini
     - IF %PHP%==1 echo extension=php_apcu.dll >> php.ini
@@ -39,9 +40,10 @@ install:
     - IF %PHP%==1 echo extension=php_intl.dll >> php.ini
     - IF %PHP%==1 echo extension=php_mbstring.dll >> php.ini
     - IF %PHP%==1 echo extension=php_ldap.dll >> php.ini
-    - appveyor DownloadFile https://getcomposer.org/composer.phar
+    - appveyor DownloadFile https://github.com/composer/composer/releases/download/1.9.0/composer.phar
     - cd c:\projects\polyfill
-    - IF %APPVEYOR_REPO_BRANCH%==master (SET COMPOSER_ROOT_VERSION=dev-master) ELSE (SET COMPOSER_ROOT_VERSION=%APPVEYOR_REPO_BRANCH%.x-dev)
+    - mkdir %APPDATA%\Composer && copy /Y .github\composer-config.json %APPDATA%\Composer\config.json
+    - SET COMPOSER_ROOT_VERSION=dev-main
     - composer update --prefer-source --no-progress --ansi
 
 test_script:

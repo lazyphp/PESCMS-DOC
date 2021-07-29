@@ -8,7 +8,8 @@ class ComposerStaticInit777c7af0956f9a947068ec95c3599f29
 {
     public static $files = array (
         'e40631d46120a9c38ea139981f8dab26' => __DIR__ . '/..' . '/ircmaxell/password-compat/lib/password.php',
-        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        'b46ad4fe52f4d1899a2951c7e6ea56b0' => __DIR__ . '/..' . '/voku/portable-utf8/bootstrap.php',
+        '0333f8b5cd538ebe8681405ac533a9e1' => __DIR__ . '/..' . '/symfony/polyfill/src/bootstrap.php',
         '848a06382c1c883893a9c9833ae2b551' => __DIR__ . '/..' . '/symfony/polyfill/src/Apcu/bootstrap.php',
         'acf59695ef9115a36483a1d0a770cb98' => __DIR__ . '/..' . '/symfony/polyfill/src/Ctype/bootstrap.php',
         'd075ca29fdd460a76e9d730a9724dc20' => __DIR__ . '/..' . '/symfony/polyfill/src/Php54/bootstrap.php',
@@ -18,12 +19,15 @@ class ComposerStaticInit777c7af0956f9a947068ec95c3599f29
         '1f8375f522f51b04a337c2d88ac6167e' => __DIR__ . '/..' . '/symfony/polyfill/src/Php71/bootstrap.php',
         '80ec413cbe3b4f464cf1ff314e3ce344' => __DIR__ . '/..' . '/symfony/polyfill/src/Php72/bootstrap.php',
         '02b93fc2148d536a6af99057e6a0b082' => __DIR__ . '/..' . '/symfony/polyfill/src/Php73/bootstrap.php',
+        '1417ae8dbc161e0ed3eff7df4a1f9a9e' => __DIR__ . '/..' . '/symfony/polyfill/src/Php74/bootstrap.php',
+        '5bea57cdb4ad2ea22b305ab861fa7a70' => __DIR__ . '/..' . '/symfony/polyfill/src/Uuid/bootstrap.php',
         '0782f09865a7e9f4ebd12e5f68b3135f' => __DIR__ . '/..' . '/symfony/polyfill/src/Iconv/bootstrap.php',
         'f38c346c3a1bb49bd02ba8e9177d7e56' => __DIR__ . '/..' . '/symfony/polyfill/src/Intl/Grapheme/bootstrap.php',
+        '957101f585e4a9a2c29a37969ab22028' => __DIR__ . '/..' . '/symfony/polyfill/src/Intl/Idn/bootstrap.php',
         '946db64f9a5c0688514fdcdafcabe7d2' => __DIR__ . '/..' . '/symfony/polyfill/src/Intl/Icu/bootstrap.php',
+        'a4e34e0535907b5c234b9abc547237ca' => __DIR__ . '/..' . '/symfony/polyfill/src/Intl/MessageFormatter/bootstrap.php',
         '299b3c040b39cb03c6eceb9bb272ad1d' => __DIR__ . '/..' . '/symfony/polyfill/src/Intl/Normalizer/bootstrap.php',
         'e59f725579f9974327c76777296d6dcc' => __DIR__ . '/..' . '/symfony/polyfill/src/Mbstring/bootstrap.php',
-        'b46ad4fe52f4d1899a2951c7e6ea56b0' => __DIR__ . '/..' . '/voku/portable-utf8/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -41,6 +45,10 @@ class ComposerStaticInit777c7af0956f9a947068ec95c3599f29
             'Symfony\\Polyfill\\' => 17,
             'Symfony\\Component\\Intl\\' => 23,
         ),
+        'G' => 
+        array (
+            'Godruoyi\\Snowflake\\' => 19,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -50,7 +58,8 @@ class ComposerStaticInit777c7af0956f9a947068ec95c3599f29
         ),
         'voku\\' => 
         array (
-            0 => __DIR__ . '/..' . '/voku/portable-utf8/src/voku',
+            0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
+            1 => __DIR__ . '/..' . '/voku/portable-utf8/src/voku',
         ),
         'duncan3dc\\Sessions\\' => 
         array (
@@ -64,24 +73,35 @@ class ComposerStaticInit777c7af0956f9a947068ec95c3599f29
         array (
             0 => __DIR__ . '/..' . '/symfony/intl',
         ),
+        'Godruoyi\\Snowflake\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/godruoyi/php-snowflake/src',
+        ),
     );
 
     public static $classMap = array (
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill/src/Php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill/src/Php70/Resources/stubs/AssertionError.php',
+        'Attribute' => __DIR__ . '/..' . '/symfony/polyfill/src/Php80/Resources/stubs/Attribute.php',
         'CallbackFilterIterator' => __DIR__ . '/..' . '/symfony/polyfill/src/Php54/Resources/stubs/CallbackFilterIterator.php',
         'Collator' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/Collator.php',
         'DivisionByZeroError' => __DIR__ . '/..' . '/symfony/polyfill/src/Php70/Resources/stubs/DivisionByZeroError.php',
         'Error' => __DIR__ . '/..' . '/symfony/polyfill/src/Php70/Resources/stubs/Error.php',
         'IntlDateFormatter' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/IntlDateFormatter.php',
+        'IntlException' => __DIR__ . '/..' . '/symfony/polyfill/src/Intl/MessageFormatter/Resources/stubs/IntlException.php',
+        'JsonException' => __DIR__ . '/..' . '/symfony/polyfill/src/Php73/Resources/stubs/JsonException.php',
         'Locale' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/Locale.php',
+        'MessageFormatter' => __DIR__ . '/..' . '/symfony/polyfill/src/Intl/MessageFormatter/Resources/stubs/MessageFormatter.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill/src/Intl/Normalizer/Resources/stubs/Normalizer.php',
         'NumberFormatter' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/NumberFormatter.php',
         'ParseError' => __DIR__ . '/..' . '/symfony/polyfill/src/Php70/Resources/stubs/ParseError.php',
         'RecursiveCallbackFilterIterator' => __DIR__ . '/..' . '/symfony/polyfill/src/Php54/Resources/stubs/RecursiveCallbackFilterIterator.php',
         'SessionHandlerInterface' => __DIR__ . '/..' . '/symfony/polyfill/src/Php54/Resources/stubs/SessionHandlerInterface.php',
         'SessionUpdateTimestampHandlerInterface' => __DIR__ . '/..' . '/symfony/polyfill/src/Php70/Resources/stubs/SessionUpdateTimestampHandlerInterface.php',
+        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill/src/Php80/Resources/stubs/Stringable.php',
         'TypeError' => __DIR__ . '/..' . '/symfony/polyfill/src/Php70/Resources/stubs/TypeError.php',
+        'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill/src/Php80/Resources/stubs/UnhandledMatchError.php',
+        'ValueError' => __DIR__ . '/..' . '/symfony/polyfill/src/Php80/Resources/stubs/ValueError.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

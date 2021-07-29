@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.20",
     "Names": {
         "aa": "Tiếng Afar",
         "ab": "Tiếng Abkhazia",
@@ -85,6 +84,7 @@
         "car": "Tiếng Carib",
         "cay": "Tiếng Cayuga",
         "cch": "Tiếng Atsam",
+        "ccp": "Tiếng Chakma",
         "ce": "Tiếng Chechen",
         "ceb": "Tiếng Cebuano",
         "cgg": "Tiếng Chiga",
@@ -153,6 +153,7 @@
         "ewo": "Tiếng Ewondo",
         "ext": "Tiếng Extremadura",
         "fa": "Tiếng Ba Tư",
+        "fa_AF": "Tiếng Dari",
         "fan": "Tiếng Fang",
         "fat": "Tiếng Fanti",
         "ff": "Tiếng Fulah",
@@ -514,7 +515,7 @@
         "udm": "Tiếng Udmurt",
         "ug": "Tiếng Uyghur",
         "uga": "Tiếng Ugaritic",
-        "uk": "Tiếng Ucraina",
+        "uk": "Tiếng Ukraina",
         "umb": "Tiếng Umbundu",
         "und": "Ngôn ngữ không xác định",
         "ur": "Tiếng Urdu",

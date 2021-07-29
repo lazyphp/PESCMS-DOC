@@ -18,6 +18,13 @@ use PHPUnit\Framework\TestCase;
  */
 class ApcuTest extends TestCase
 {
+    public static function setUpBeforeClass()
+    {
+        if (!filter_var(ini_get('apc.enabled'), \FILTER_VALIDATE_BOOLEAN) || !filter_var(ini_get('apc.enable_cli'), \FILTER_VALIDATE_BOOLEAN)) {
+            self::markTestSkipped('apc.enable_cli=1 is required.');
+        }
+    }
+
     public function testApcu()
     {
         $key = __CLASS__;
@@ -41,7 +48,7 @@ class ApcuTest extends TestCase
 
     public function testArrayCompatibility()
     {
-        $data = array (
+        $data = array(
             'key1' => 'value1',
             'key2' => 'value2',
         );
@@ -52,7 +59,7 @@ class ApcuTest extends TestCase
             $this->assertEquals($value, apcu_fetch($key));
         }
 
-        $data = array (
+        $data = array(
             'key1' => 'value2',
             'key2' => 'value3',
         );
@@ -63,15 +70,14 @@ class ApcuTest extends TestCase
 
         apcu_delete(array_keys($data));
         $this->assertSame(array(), apcu_exists(array_keys($data)));
-
     }
 
-    public function testAPCUIterator()
+    public function testAPCuIterator()
     {
         $key = __CLASS__;
         $this->assertTrue(apcu_store($key, 456));
 
-        $entries = iterator_to_array(new \APCUIterator('/^'.preg_quote($key, '/').'$/', APC_ITER_KEY | APC_ITER_VALUE));
+        $entries = iterator_to_array(new \APCuIterator('/^'.preg_quote($key, '/').'$/', APC_ITER_KEY | APC_ITER_VALUE));
 
         $this->assertSame(array($key), array_keys($entries));
         $this->assertSame($key, $entries[$key]['key']);

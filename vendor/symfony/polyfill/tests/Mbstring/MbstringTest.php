@@ -17,14 +17,14 @@ use Symfony\Polyfill\Mbstring\Mbstring as p;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *
- * @covers Symfony\Polyfill\Mbstring\Mbstring::<!public>
+ * @covers \Symfony\Polyfill\Mbstring\Mbstring::<!public>
  */
 class MbstringTest extends TestCase
 {
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_internal_encoding
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_list_encodings
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_substitute_character
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_internal_encoding
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_list_encodings
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_substitute_character
      */
     public function testStubs()
     {
@@ -40,7 +40,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_convert_encoding
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_convert_encoding
      */
     public function testConvertEncoding()
     {
@@ -54,7 +54,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_decode_numericentity
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_decode_numericentity
      */
     public function testDecodeNumericEntity()
     {
@@ -97,7 +97,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_decode_numericentity
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_decode_numericentity
      */
     public function testDecodeNumericEntityWarnsOnInvalidInputType()
     {
@@ -106,7 +106,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_decode_numericentity
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_decode_numericentity
      */
     public function testDecodeNumericEntityWarnsOnInvalidEncodingType()
     {
@@ -115,7 +115,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_encode_numericentity
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_encode_numericentity
      */
     public function testEncodeNumericEntity()
     {
@@ -153,7 +153,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_decode_numericentity
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_decode_numericentity
      */
     public function testEncodeNumericEntityWarnsOnInvalidInputType()
     {
@@ -162,7 +162,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_decode_numericentity
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_decode_numericentity
      */
     public function testEncodeNumericEntityWarnsOnInvalidEncodingType()
     {
@@ -172,7 +172,7 @@ class MbstringTest extends TestCase
 
     /**
      * @requires PHP 5.4
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_decode_numericentity
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_decode_numericentity
      */
     public function testEncodeNumericEntityWarnsOnInvalidIsHexType()
     {
@@ -181,9 +181,9 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_strtolower
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_strtoupper
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_convert_case
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_strtolower
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_strtoupper
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_convert_case
      */
     public function testStrCase()
     {
@@ -193,14 +193,41 @@ class MbstringTest extends TestCase
         if (PCRE_VERSION >= '8.10') {
             $this->assertSame('Déjà Σσσ Iı Ii İi', p::mb_convert_case('DÉJÀ ΣΣΣ ıı iI İİ', MB_CASE_TITLE));
         }
-        if (PHP_VERSION_ID >= 70000) {
+        if (\PHP_VERSION_ID >= 70000) {
             // Native iconv() is buggy before PHP 7
             $this->assertSame('ab', str_replace('?', '', mb_strtolower(urldecode('a%A1%C0b'))));
         }
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_strlen
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_convert_case
+     */
+    public function testTitleCase()
+    {
+        for ($i = 1; $i < 127; ++$i) {
+            switch (\chr($i)) {
+                case '!':
+                case '"':
+                case '#':
+                case '%':
+                case '&':
+                case '*':
+                case ',':
+                case '/':
+                case ';':
+                case '?':
+                case '@':
+                case '\\':
+                    if (\PHP_VERSION_ID < 70300) {
+                        continue 2;
+                    }
+            }
+            $this->assertSame(mb_convert_case('a'.\chr($i).'b', MB_CASE_TITLE, 'UTF-8'), p::mb_convert_case('a'.\chr($i).'b', MB_CASE_TITLE, 'UTF-8'), 'Title case for char 0x'.dechex($i));
+        }
+    }
+
+    /**
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_strlen
      */
     public function testStrlen()
     {
@@ -211,35 +238,39 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_substr
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_substr
      */
     public function testSubstr()
     {
         $c = 'déjà';
 
-        $this->assertSame('jà', mb_substr($c,  2));
+        $this->assertSame('jà', mb_substr($c, 2));
         $this->assertSame('jà', mb_substr($c, -2));
         $this->assertSame('jà', mb_substr($c, -2, 3));
-        $this->assertSame('',   mb_substr($c, -1,  0));
-        $this->assertSame('',   mb_substr($c,  1, -4));
-        $this->assertSame('j',  mb_substr($c, -2, -1));
-        $this->assertSame('',   mb_substr($c, -2, -2));
-        $this->assertSame('',   mb_substr($c,  5,  0));
-        $this->assertSame('',   mb_substr($c, -5,  0));
+        $this->assertSame('', mb_substr($c, -1, 0));
+        $this->assertSame('', mb_substr($c, 1, -4));
+        $this->assertSame('j', mb_substr($c, -2, -1));
+        $this->assertSame('', mb_substr($c, -2, -2));
+        $this->assertSame('', mb_substr($c, 5, 0));
+        $this->assertSame('', mb_substr($c, -5, 0));
 
-        $this->assertSame("\xFF",     mb_substr("\x00\xFF", -1, 1, 'ASCII'));
-        $this->assertSame("\x00",     mb_substr("\x00\xFF", 0, 1, 'ASCII'));
+        $this->assertSame("\xFF", mb_substr("\x00\xFF", -1, 1, 'ASCII'));
+        $this->assertSame("\x00", mb_substr("\x00\xFF", 0, 1, 'ASCII'));
         $this->assertSame("\x00\xFF", mb_substr("\x00\xFF", 0, 2, 'ASCII'));
-        $this->assertSame("\xFF",     mb_substr("\x00\xFF", -1, 1, 'CP850'));
-        $this->assertSame("\x00",     mb_substr("\x00\xFF", 0, 1, 'CP850'));
+        $this->assertSame('', mb_substr("\x00\xFF", 2, 1, 'ASCII'));
+        $this->assertSame('', mb_substr("\x00\xFF", 3, 1, 'ASCII'));
+        $this->assertSame("\xFF", mb_substr("\x00\xFF", -1, 1, 'CP850'));
+        $this->assertSame("\x00", mb_substr("\x00\xFF", 0, 1, 'CP850'));
         $this->assertSame("\x00\xFF", mb_substr("\x00\xFF", 0, 2, 'CP850'));
+        $this->assertSame('', mb_substr("\x00\xFF", 2, 1, 'CP850'));
+        $this->assertSame('', mb_substr("\x00\xFF", 3, 1, 'CP850'));
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_strpos
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_stripos
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_strrpos
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_strripos
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_strpos
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_stripos
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_strrpos
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_strripos
      */
     public function testStrpos()
     {
@@ -255,10 +286,11 @@ class MbstringTest extends TestCase
         $this->assertSame(1, mb_stripos('aςσb', 'ΣΣ'));
         $this->assertSame(1, mb_strripos('aςσb', 'ΣΣ'));
         $this->assertSame(3, mb_strrpos('ababab', 'b', -2));
+        $this->assertSame(3, mb_strrpos('ababab', 'b', -3));
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_strpos
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_strpos
      */
     public function testStrposEmptyDelimiter()
     {
@@ -268,12 +300,12 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_strpos
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_strpos
      */
     public function testStrposNegativeOffset()
     {
         mb_strpos('abc', 'a');
-        if (PHP_VERSION_ID >= 70100) {
+        if (\PHP_VERSION_ID >= 70100) {
             $this->assertFalse(mb_strpos('abc', 'a', -1));
         } else {
             $this->setExpectedException('PHPUnit\Framework\Error\Warning', 'Offset not contained in string');
@@ -282,10 +314,31 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_strstr
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_stristr
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_strrchr
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_strrichr
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_str_split
+     */
+    public function testStrSplit()
+    {
+        $this->assertSame(array('H', "\r", "\n", 'W'), mb_str_split("H\r\nW", 1));
+        $this->assertSame(array('Hell', "o\nWo", 'rld!'), mb_str_split("Hello\nWorld!", 4));
+        $this->assertSame(array('한', '국', '어'), mb_str_split('한국어'));
+        $this->assertSame(array('по', 'бе', 'да'), mb_str_split('победа', 2));
+        $this->assertSame(array('źre', 'bię'), mb_str_split('źrebię', 3));
+        $this->assertSame(array('źr', 'ebi', 'ę'), mb_str_split('źrebię', 3, 'ASCII'));
+        $this->assertSame(array('alpha', 'bet'), mb_str_split('alphabet', 5));
+        $this->assertSame(array('e', '́', '💩', '𐍈'), mb_str_split('é💩𐍈', 1, 'UTF-8'));
+        $this->assertSame(array(), mb_str_split('', 1, 'UTF-8'));
+        $this->assertFalse(@mb_str_split('победа', 0));
+        $this->assertNull(@mb_str_split(array(), 0));
+
+        $this->setExpectedException('PHPUnit\Framework\Error\Warning', 'The length of each segment must be greater than zero');
+        mb_str_split('победа', 0);
+    }
+
+    /**
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_strstr
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_stristr
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_strrchr
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_strrichr
      */
     public function testStrstr()
     {
@@ -296,18 +349,22 @@ class MbstringTest extends TestCase
         $this->assertSame('ÉJÀDÉJÀ', mb_stristr('DÉJÀDÉJÀ', 'é'));
         $this->assertSame('ςσb', mb_stristr('aςσb', 'ΣΣ'));
         $this->assertSame('éjà', mb_strrchr('déjàdéjà', 'é'));
+        $this->assertSame('éjà', mb_strrchr('déjàdéjà', 'é', false, 'ASCII'));
+        $this->assertFalse(mb_strrchr('déjàdéjà', 'X', false, 'ASCII'));
         $this->assertSame('ÉJÀ', mb_strrichr('DÉJÀDÉJÀ', 'é'));
 
         $this->assertSame('d', mb_strstr('déjàdéjà', 'é', true));
         $this->assertSame('D', mb_stristr('DÉJÀDÉJÀ', 'é', true));
         $this->assertSame('a', mb_stristr('aςσb', 'ΣΣ', true));
         $this->assertSame('déjàd', mb_strrchr('déjàdéjà', 'é', true));
+        $this->assertSame('déjàd', mb_strrchr('déjàdéjà', 'é', true, 'ASCII'));
+        $this->assertFalse(mb_strrchr('déjàdéjà', 'X', true, 'ASCII'));
         $this->assertSame('DÉJÀD', mb_strrichr('DÉJÀDÉJÀ', 'é', true));
         $this->assertSame('Paris', mb_stristr('der Straße nach Paris', 'Paris'));
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_check_encoding
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_check_encoding
      */
     public function testCheckEncoding()
     {
@@ -318,7 +375,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_detect_encoding
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_detect_encoding
      */
     public function testDetectEncoding()
     {
@@ -330,7 +387,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_detect_order
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_detect_order
      */
     public function testDetectOrder()
     {
@@ -340,7 +397,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_language
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_language
      */
     public function testLanguage()
     {
@@ -351,7 +408,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_encoding_aliases
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_encoding_aliases
      */
     public function testEncodingAliases()
     {
@@ -360,7 +417,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_strwidth
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_strwidth
      */
     public function testStrwidth()
     {
@@ -370,7 +427,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_chr
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_chr
      */
     public function testChr()
     {
@@ -379,7 +436,7 @@ class MbstringTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Mbstring\Mbstring::mb_ord
+     * @covers \Symfony\Polyfill\Mbstring\Mbstring::mb_ord
      */
     public function testOrd()
     {

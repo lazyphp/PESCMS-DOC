@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.20",
     "Names": {
         "aa": "afar",
         "ab": "abház",
@@ -71,6 +70,7 @@
         "car": "karib",
         "cay": "kajuga",
         "cch": "atszam",
+        "ccp": "csakma",
         "ce": "csecsen",
         "ceb": "szebuano",
         "cgg": "kiga",
@@ -138,6 +138,7 @@
         "eu": "baszk",
         "ewo": "evondo",
         "fa": "perzsa",
+        "fa_AF": "dari",
         "fan": "fang",
         "fat": "fanti",
         "ff": "fulani",
@@ -499,7 +500,7 @@
         "uz": "üzbég",
         "vai": "vai",
         "ve": "venda",
-        "vi": "vietnami",
+        "vi": "vietnámi",
         "vo": "volapük",
         "vot": "votják",
         "vun": "vunjo",

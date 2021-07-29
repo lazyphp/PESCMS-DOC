@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Intl\Collator;
 
-use Symfony\Component\Intl\Exception\MethodNotImplementedException;
 use Symfony\Component\Intl\Exception\MethodArgumentValueNotImplementedException;
+use Symfony\Component\Intl\Exception\MethodNotImplementedException;
 use Symfony\Component\Intl\Globals\IntlGlobals;
 use Symfony\Component\Intl\Locale\Locale;
 
@@ -70,11 +70,11 @@ class Collator
     const SORT_STRING = 1;
 
     /**
-     * @param string $locale The locale code. The only currently supported locale is "en" (or null using the default locale, i.e. "en")
+     * @param string|null $locale The locale code. The only currently supported locale is "en" (or null using the default locale, i.e. "en")
      *
      * @throws MethodArgumentValueNotImplementedException When $locale different than "en" or null is passed
      */
-    public function __construct(?string $locale)
+    public function __construct($locale)
     {
         if ('en' !== $locale && null !== $locale) {
             throw new MethodArgumentValueNotImplementedException(__METHOD__, 'locale', $locale, 'Only the locale "en" is supported');
@@ -84,7 +84,7 @@ class Collator
     /**
      * Static constructor.
      *
-     * @param string $locale The locale code. The only currently supported locale is "en" (or null using the default locale, i.e. "en")
+     * @param string|null $locale The locale code. The only currently supported locale is "en" (or null using the default locale, i.e. "en")
      *
      * @return self
      *
@@ -108,11 +108,11 @@ class Collator
      */
     public function asort(&$array, $sortFlag = self::SORT_REGULAR)
     {
-        $intlToPlainFlagMap = array(
+        $intlToPlainFlagMap = [
             self::SORT_REGULAR => \SORT_REGULAR,
             self::SORT_NUMERIC => \SORT_NUMERIC,
             self::SORT_STRING => \SORT_STRING,
-        );
+        ];
 
         $plainSortFlag = isset($intlToPlainFlagMap[$sortFlag]) ? $intlToPlainFlagMap[$sortFlag] : self::SORT_REGULAR;
 
@@ -130,7 +130,7 @@ class Collator
      *                  0 if $str1 is equal than $str2
      *                  -1 if $str1 is less than $str2
      *
-     * @see http://www.php.net/manual/en/collator.compare.php
+     * @see https://php.net/collator.compare
      *
      * @throws MethodNotImplementedException
      */
@@ -146,7 +146,7 @@ class Collator
      *
      * @return bool|int The attribute value on success or false on error
      *
-     * @see http://www.php.net/manual/en/collator.getattribute.php
+     * @see https://php.net/collator.getattribute
      *
      * @throws MethodNotImplementedException
      */
@@ -195,7 +195,7 @@ class Collator
      *
      * @return string The collation key for $string
      *
-     * @see http://www.php.net/manual/en/collator.getsortkey.php
+     * @see https://php.net/collator.getsortkey
      *
      * @throws MethodNotImplementedException
      */
@@ -209,7 +209,7 @@ class Collator
      *
      * @return bool|int The current collator's strength or false on failure
      *
-     * @see http://www.php.net/manual/en/collator.getstrength.php
+     * @see https://php.net/collator.getstrength
      *
      * @throws MethodNotImplementedException
      */
@@ -226,7 +226,7 @@ class Collator
      *
      * @return bool True on success or false on failure
      *
-     * @see http://www.php.net/manual/en/collator.setattribute.php
+     * @see https://php.net/collator.setattribute
      *
      * @throws MethodNotImplementedException
      */
@@ -248,7 +248,7 @@ class Collator
      *
      * @return bool True on success or false on failure
      *
-     * @see http://www.php.net/manual/en/collator.setstrength.php
+     * @see https://php.net/collator.setstrength
      *
      * @throws MethodNotImplementedException
      */
@@ -264,7 +264,7 @@ class Collator
      *
      * @return bool True on success or false on failure
      *
-     * @see http://www.php.net/manual/en/collator.sortwithsortkeys.php
+     * @see https://php.net/collator.sortwithsortkeys
      *
      * @throws MethodNotImplementedException
      */
@@ -284,7 +284,7 @@ class Collator
      *
      * @return bool True on success or false on failure
      *
-     * @see http://www.php.net/manual/en/collator.sort.php
+     * @see https://php.net/collator.sort
      *
      * @throws MethodNotImplementedException
      */

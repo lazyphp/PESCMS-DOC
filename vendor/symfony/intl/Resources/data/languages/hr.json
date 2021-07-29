@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.11",
     "Names": {
         "aa": "afarski",
         "ab": "abhaski",
@@ -72,6 +71,7 @@
         "car": "karipski",
         "cay": "cayuga",
         "cch": "atsam",
+        "ccp": "chakma",
         "ce": "čečenski",
         "ceb": "cebuano",
         "cgg": "chiga",
@@ -139,6 +139,7 @@
         "eu": "baskijski",
         "ewo": "ewondo",
         "fa": "perzijski",
+        "fa_AF": "dari",
         "fan": "fang",
         "fat": "fanti",
         "ff": "fula",

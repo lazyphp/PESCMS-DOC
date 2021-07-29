@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.11",
     "Names": {
         "AED": [
             "AED",
@@ -151,7 +150,7 @@
         ],
         "CZK": [
             "CZK",
-            "CZK"
+            "koruna ya Jamhuri ya Czech"
         ],
         "DJF": [
             "DJF",
@@ -167,7 +166,7 @@
         ],
         "DZD": [
             "DZD",
-            "Dinar ya Algeria"
+            "Dinar ya Aljeria"
         ],
         "EGP": [
             "EGP",
@@ -619,6 +618,10 @@
         ],
         "VEF": [
             "VEF",
+            "Bolivar ya Venezuela (2008–2018)"
+        ],
+        "VES": [
+            "VES",
             "Bolivar ya Venezuela"
         ],
         "VND": [

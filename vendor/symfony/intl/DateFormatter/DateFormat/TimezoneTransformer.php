@@ -27,11 +27,11 @@ class TimezoneTransformer extends Transformer
      *
      * @throws NotImplementedException When time zone is different than UTC or GMT (Etc/GMT)
      */
-    public function format(\DateTime $dateTime, int $length): string
+    public function format(\DateTime $dateTime, $length)
     {
         $timeZone = substr($dateTime->getTimezone()->getName(), 0, 3);
 
-        if (!in_array($timeZone, array('Etc', 'UTC', 'GMT'))) {
+        if (!\in_array($timeZone, ['Etc', 'UTC', 'GMT'])) {
             throw new NotImplementedException('Time zone different than GMT or UTC is not supported as a formatting output.');
         }
 
@@ -41,7 +41,7 @@ class TimezoneTransformer extends Transformer
         }
 
         // From ICU >= 59.1 GMT and UTC are no longer unified
-        if (in_array($timeZone, array('UTC', 'UCT', 'Universal', 'Zulu'))) {
+        if (\in_array($timeZone, ['UTC', 'UCT', 'Universal', 'Zulu'])) {
             // offset is not supported with UTC
             return $length > 3 ? 'Coordinated Universal Time' : 'UTC';
         }
@@ -63,7 +63,7 @@ class TimezoneTransformer extends Transformer
     /**
      * {@inheritdoc}
      */
-    public function getReverseMatchingRegExp(int $length): string
+    public function getReverseMatchingRegExp($length)
     {
         return 'GMT[+-]\d{2}:?\d{2}';
     }
@@ -71,11 +71,11 @@ class TimezoneTransformer extends Transformer
     /**
      * {@inheritdoc}
      */
-    public function extractDateOptions(string $matched, int $length): array
+    public function extractDateOptions($matched, $length)
     {
-        return array(
+        return [
             'timezone' => self::getEtcTimeZoneId($matched),
-        );
+        ];
     }
 
     /**
@@ -92,8 +92,7 @@ class TimezoneTransformer extends Transformer
      *
      * @return string A timezone identifier
      *
-     * @see    http://php.net/manual/en/timezones.others.php
-     * @see    http://www.twinsun.com/tz/tz-link.htm
+     * @see https://php.net/timezones.others
      *
      * @throws NotImplementedException   When the GMT time zone have minutes offset different than zero
      * @throws \InvalidArgumentException When the value can not be matched with pattern
@@ -103,13 +102,10 @@ class TimezoneTransformer extends Transformer
         if (preg_match('/GMT(?P<signal>[+-])(?P<hours>\d{2}):?(?P<minutes>\d{2})/', $formattedTimeZone, $matches)) {
             $hours = (int) $matches['hours'];
             $minutes = (int) $matches['minutes'];
-            $signal = '-' == $matches['signal'] ? '+' : '-';
+            $signal = '-' === $matches['signal'] ? '+' : '-';
 
             if (0 < $minutes) {
-                throw new NotImplementedException(sprintf(
-                    'It is not possible to use a GMT time zone with minutes offset different than zero (0). GMT time zone tried: %s.',
-                    $formattedTimeZone
-                ));
+                throw new NotImplementedException(sprintf('It is not possible to use a GMT time zone with minutes offset different than zero (0). GMT time zone tried: "%s".', $formattedTimeZone));
             }
 
             return 'Etc/GMT'.(0 !== $hours ? $signal.$hours : '');

@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.11",
     "Names": {
         "aa": "afar",
         "ab": "abkhazeg",
@@ -73,6 +72,7 @@
         "cad": "caddo",
         "car": "karibeg",
         "cch": "atsam",
+        "ccp": "chakmaeg",
         "ce": "tchetcheneg",
         "ceb": "cebuano",
         "cgg": "chigaeg",

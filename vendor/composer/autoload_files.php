@@ -7,7 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'e40631d46120a9c38ea139981f8dab26' => $vendorDir . '/ircmaxell/password-compat/lib/password.php',
-    '5255c38a0faeba867671b61dfda6d864' => $vendorDir . '/paragonie/random_compat/lib/random.php',
+    'b46ad4fe52f4d1899a2951c7e6ea56b0' => $vendorDir . '/voku/portable-utf8/bootstrap.php',
+    '0333f8b5cd538ebe8681405ac533a9e1' => $vendorDir . '/symfony/polyfill/src/bootstrap.php',
     '848a06382c1c883893a9c9833ae2b551' => $vendorDir . '/symfony/polyfill/src/Apcu/bootstrap.php',
     'acf59695ef9115a36483a1d0a770cb98' => $vendorDir . '/symfony/polyfill/src/Ctype/bootstrap.php',
     'd075ca29fdd460a76e9d730a9724dc20' => $vendorDir . '/symfony/polyfill/src/Php54/bootstrap.php',
@@ -17,10 +18,13 @@ return array(
     '1f8375f522f51b04a337c2d88ac6167e' => $vendorDir . '/symfony/polyfill/src/Php71/bootstrap.php',
     '80ec413cbe3b4f464cf1ff314e3ce344' => $vendorDir . '/symfony/polyfill/src/Php72/bootstrap.php',
     '02b93fc2148d536a6af99057e6a0b082' => $vendorDir . '/symfony/polyfill/src/Php73/bootstrap.php',
+    '1417ae8dbc161e0ed3eff7df4a1f9a9e' => $vendorDir . '/symfony/polyfill/src/Php74/bootstrap.php',
+    '5bea57cdb4ad2ea22b305ab861fa7a70' => $vendorDir . '/symfony/polyfill/src/Uuid/bootstrap.php',
     '0782f09865a7e9f4ebd12e5f68b3135f' => $vendorDir . '/symfony/polyfill/src/Iconv/bootstrap.php',
     'f38c346c3a1bb49bd02ba8e9177d7e56' => $vendorDir . '/symfony/polyfill/src/Intl/Grapheme/bootstrap.php',
+    '957101f585e4a9a2c29a37969ab22028' => $vendorDir . '/symfony/polyfill/src/Intl/Idn/bootstrap.php',
     '946db64f9a5c0688514fdcdafcabe7d2' => $vendorDir . '/symfony/polyfill/src/Intl/Icu/bootstrap.php',
+    'a4e34e0535907b5c234b9abc547237ca' => $vendorDir . '/symfony/polyfill/src/Intl/MessageFormatter/bootstrap.php',
     '299b3c040b39cb03c6eceb9bb272ad1d' => $vendorDir . '/symfony/polyfill/src/Intl/Normalizer/bootstrap.php',
     'e59f725579f9974327c76777296d6dcc' => $vendorDir . '/symfony/polyfill/src/Mbstring/bootstrap.php',
-    'b46ad4fe52f4d1899a2951c7e6ea56b0' => $vendorDir . '/voku/portable-utf8/bootstrap.php',
 );

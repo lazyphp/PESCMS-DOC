@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.20",
     "Names": {
         "ADP": [
             "ADP",
@@ -403,7 +402,7 @@
         ],
         "HKD": [
             "HK$",
-            "Hongkong dollar"
+            "hongkongsk dollar"
         ],
         "HNL": [
             "HNL",
@@ -699,7 +698,7 @@
         ],
         "PEN": [
             "PEN",
-            "peruviansk sol"
+            "peruansk sol"
         ],
         "PES": [
             "PES",
@@ -918,7 +917,7 @@
             "ugandisk shilling"
         ],
         "USD": [
-            "$",
+            "US$",
             "amerikansk dollar"
         ],
         "USN": [
@@ -947,6 +946,10 @@
         ],
         "VEF": [
             "VEF",
+            "venezuelansk bolivar (2008–2018)"
+        ],
+        "VES": [
+            "VES",
             "venezuelansk bolivar"
         ],
         "VND": [

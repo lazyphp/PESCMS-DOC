@@ -29,7 +29,12 @@ class LanguageBundle extends LanguageDataProvider implements LanguageBundleInter
     private $localeProvider;
     private $scriptProvider;
 
-    public function __construct(string $path, BundleEntryReaderInterface $reader, LocaleDataProvider $localeProvider, ScriptDataProvider $scriptProvider)
+    /**
+     * Creates a new language bundle.
+     *
+     * @param string $path
+     */
+    public function __construct($path, BundleEntryReaderInterface $reader, LocaleDataProvider $localeProvider, ScriptDataProvider $scriptProvider)
     {
         parent::__construct($path, $reader);
 
@@ -54,7 +59,7 @@ class LanguageBundle extends LanguageDataProvider implements LanguageBundleInter
         try {
             return $this->getName($language, $displayLocale);
         } catch (MissingResourceException $e) {
-            return;
+            return null;
         }
     }
 
@@ -66,7 +71,7 @@ class LanguageBundle extends LanguageDataProvider implements LanguageBundleInter
         try {
             return $this->getNames($displayLocale);
         } catch (MissingResourceException $e) {
-            return array();
+            return [];
         }
     }
 
@@ -78,7 +83,7 @@ class LanguageBundle extends LanguageDataProvider implements LanguageBundleInter
         try {
             return $this->scriptProvider->getName($script, $displayLocale);
         } catch (MissingResourceException $e) {
-            return;
+            return null;
         }
     }
 
@@ -90,7 +95,7 @@ class LanguageBundle extends LanguageDataProvider implements LanguageBundleInter
         try {
             return $this->scriptProvider->getNames($displayLocale);
         } catch (MissingResourceException $e) {
-            return array();
+            return [];
         }
     }
 
@@ -102,7 +107,7 @@ class LanguageBundle extends LanguageDataProvider implements LanguageBundleInter
         try {
             return $this->localeProvider->getLocales();
         } catch (MissingResourceException $e) {
-            return array();
+            return [];
         }
     }
 }

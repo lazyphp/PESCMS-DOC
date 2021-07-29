@@ -11,7 +11,7 @@
 
 namespace Symfony\Polyfill\Intl\Grapheme;
 
-define('SYMFONY_GRAPHEME_CLUSTER_RX', PCRE_VERSION >= '8.32' ? '\X' : Grapheme::GRAPHEME_CLUSTER_RX);
+\define('SYMFONY_GRAPHEME_CLUSTER_RX', PCRE_VERSION >= '8.32' ? '\X' : Grapheme::GRAPHEME_CLUSTER_RX);
 
 /**
  * Partial intl implementation in pure PHP.
@@ -39,9 +39,13 @@ final class Grapheme
 
     public static function grapheme_extract($s, $size, $type = GRAPHEME_EXTR_COUNT, $start = 0, &$next = 0)
     {
+        if (\PHP_VERSION_ID >= 70100 && 0 > $start) {
+            $start = \strlen($s) + $start;
+        }
+
         if (!\is_scalar($s)) {
             $hasError = false;
-            set_error_handler(function () use (&$hasError) {$hasError = true;});
+            set_error_handler(function () use (&$hasError) { $hasError = true; });
             $next = substr($s, $start);
             restore_error_handler();
             if ($hasError) {
@@ -101,8 +105,12 @@ final class Grapheme
         return 0 === $len && '' !== $s ? null : $len;
     }
 
-    public static function grapheme_substr($s, $start, $len = 2147483647)
+    public static function grapheme_substr($s, $start, $len = null)
     {
+        if (null === $len) {
+            $len = 2147483647;
+        }
+
         preg_match_all('/'.SYMFONY_GRAPHEME_CLUSTER_RX.'/u', $s, $s);
 
         $slen = \count($s[0]);
@@ -112,10 +120,14 @@ final class Grapheme
             $start += $slen;
         }
         if (0 > $start) {
-            return false;
+            if (\PHP_VERSION_ID < 80000) {
+                return false;
+            }
+
+            $start = 0;
         }
         if ($start >= $slen) {
-            return false;
+            return \PHP_VERSION_ID >= 80000 ? '' : false;
         }
 
         $rem = $slen - $start;
@@ -127,13 +139,13 @@ final class Grapheme
             return '';
         }
         if (0 > $len) {
-            return false;
+            return \PHP_VERSION_ID >= 80000 ? '' : false;
         }
         if ($len > $rem) {
             $len = $rem;
         }
 
-        return implode('', array_slice($s[0], $start, $len));
+        return implode('', \array_slice($s[0], $start, $len));
     }
 
     public static function grapheme_strpos($s, $needle, $offset = 0)
@@ -179,10 +191,19 @@ final class Grapheme
         if ($offset > 0) {
             $s = self::grapheme_substr($s, $offset);
         } elseif ($offset < 0) {
-            if (PHP_VERSION_ID < 50535 || (50600 <= PHP_VERSION_ID && PHP_VERSION_ID < 50621) || (70000 <= PHP_VERSION_ID && PHP_VERSION_ID < 70006)) {
+            if (\PHP_VERSION_ID < 50535 || (50600 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 50621) || (70000 <= \PHP_VERSION_ID && \PHP_VERSION_ID < 70006)) {
+                $offset = 0;
+            } elseif (2 > $mode) {
+                $offset += self::grapheme_strlen($s);
+                $s = self::grapheme_substr($s, $offset);
+                if (0 > $offset) {
+                    $offset = 0;
+                }
+            } elseif (0 > $offset += self::grapheme_strlen($needle)) {
+                $s = self::grapheme_substr($s, 0, $offset);
                 $offset = 0;
             } else {
-                return false;
+                $offset = 0;
             }
         }
 
@@ -193,6 +214,6 @@ final class Grapheme
             default: $needle = mb_strripos($s, $needle, 0, 'UTF-8'); break;
         }
 
-        return $needle ? self::grapheme_strlen(iconv_substr($s, 0, $needle, 'UTF-8')) + $offset : $needle;
+        return false !== $needle ? self::grapheme_strlen(iconv_substr($s, 0, $needle, 'UTF-8')) + $offset : false;
     }
 }

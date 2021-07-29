@@ -23,7 +23,7 @@ class Hour1201Transformer extends HourTransformer
     /**
      * {@inheritdoc}
      */
-    public function format(\DateTime $dateTime, int $length): string
+    public function format(\DateTime $dateTime, $length)
     {
         return $this->padLeft($dateTime->format('g'), $length);
     }
@@ -31,7 +31,7 @@ class Hour1201Transformer extends HourTransformer
     /**
      * {@inheritdoc}
      */
-    public function normalizeHour(int $hour, string $marker = null): int
+    public function normalizeHour($hour, $marker = null)
     {
         if ('PM' !== $marker && 12 === $hour) {
             $hour = 0;
@@ -46,7 +46,7 @@ class Hour1201Transformer extends HourTransformer
     /**
      * {@inheritdoc}
      */
-    public function getReverseMatchingRegExp(int $length): string
+    public function getReverseMatchingRegExp($length)
     {
         return '\d{1,2}';
     }
@@ -54,11 +54,11 @@ class Hour1201Transformer extends HourTransformer
     /**
      * {@inheritdoc}
      */
-    public function extractDateOptions(string $matched, int $length): array
+    public function extractDateOptions($matched, $length)
     {
-        return array(
+        return [
             'hour' => (int) $matched,
             'hourInstance' => $this,
-        );
+        ];
     }
 }

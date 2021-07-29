@@ -18,7 +18,7 @@ use Symfony\Polyfill\Intl\Normalizer\Normalizer as pn;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *
- * @covers Symfony\Polyfill\Intl\Normalizer\Normalizer::<!public>
+ * @covers \Symfony\Polyfill\Intl\Normalizer\Normalizer::<!public>
  * @requires extension intl
  */
 class NormalizerTest extends TestCase
@@ -31,6 +31,8 @@ class NormalizerTest extends TestCase
         $rpn = $rpn->getConstants();
         $rin = $rin->getConstants();
 
+        unset($rin['NONE'], $rin['FORM_KC_CF'], $rin['NFKC_CF']);
+
         ksort($rpn);
         ksort($rin);
 
@@ -38,7 +40,7 @@ class NormalizerTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Intl\Normalizer\Normalizer::isNormalized
+     * @covers \Symfony\Polyfill\Intl\Normalizer\Normalizer::isNormalized
      */
     public function testIsNormalized()
     {
@@ -53,19 +55,20 @@ class NormalizerTest extends TestCase
         $this->assertFalse(normalizer_is_normalized($d, pn::NFC));
         $this->assertFalse(normalizer_is_normalized("\xFF"));
 
-        $this->assertFalse(pn::isNormalized($d, pn::NFD)); // The current implementation defensively says false
+        $this->assertTrue(pn::isNormalized($d, pn::NFD));
 
-        $this->assertFalse(pn::isNormalized('', pn::NONE));
-        $this->assertFalse(pn::isNormalized('', 6));
+        $this->assertFalse(pn::isNormalized('', 42));
     }
 
     /**
-     * @covers Symfony\Polyfill\Intl\Normalizer\Normalizer::normalize
+     * @covers \Symfony\Polyfill\Intl\Normalizer\Normalizer::normalize
      */
     public function testNormalize()
     {
         $c = in::normalize('déjà', pn::NFC).in::normalize('훈쇼™', pn::NFD);
-        $this->assertSame($c, normalizer_normalize($c, pn::NONE));
+        if (\PHP_VERSION_ID < 70300) {
+            $this->assertSame($c, normalizer_normalize($c, \Normalizer::NONE));
+        }
 
         $c = 'déjà 훈쇼™';
         $d = in::normalize($c, pn::NFD);
@@ -87,7 +90,7 @@ class NormalizerTest extends TestCase
     }
 
     /**
-     * @covers Symfony\Polyfill\Intl\Normalizer\Normalizer::normalize
+     * @covers \Symfony\Polyfill\Intl\Normalizer\Normalizer::normalize
      */
     public function testNormalizeConformance()
     {
@@ -98,7 +101,7 @@ class NormalizerTest extends TestCase
             $t = explode('#', $s);
             $t = explode(';', $t[0]);
 
-            if (6 === count($t)) {
+            if (6 === \count($t)) {
                 foreach ($t as $k => $s) {
                     $t = explode(' ', $s);
                     $t = array_map('hexdec', $t);
@@ -136,15 +139,15 @@ class NormalizerTest extends TestCase
     private static function chr($c)
     {
         if (0x80 > $c %= 0x200000) {
-            return chr($c);
+            return \chr($c);
         }
         if (0x800 > $c) {
-            return chr(0xC0 | $c >> 6).chr(0x80 | $c & 0x3F);
+            return \chr(0xC0 | $c >> 6).\chr(0x80 | $c & 0x3F);
         }
         if (0x10000 > $c) {
-            return chr(0xE0 | $c >> 12).chr(0x80 | $c >> 6 & 0x3F).chr(0x80 | $c & 0x3F);
+            return \chr(0xE0 | $c >> 12).\chr(0x80 | $c >> 6 & 0x3F).\chr(0x80 | $c & 0x3F);
         }
 
-        return chr(0xF0 | $c >> 18).chr(0x80 | $c >> 12 & 0x3F).chr(0x80 | $c >> 6 & 0x3F).chr(0x80 | $c & 0x3F);
+        return \chr(0xF0 | $c >> 18).\chr(0x80 | $c >> 12 & 0x3F).\chr(0x80 | $c >> 6 & 0x3F).\chr(0x80 | $c & 0x3F);
     }
 }

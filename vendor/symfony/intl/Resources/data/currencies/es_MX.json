@@ -1,21 +1,40 @@
 {
-    "Version": "2.1.38.73",
     "Names": {
-        "CNH": [
-            "CNH",
-            "CNH"
+        "BDT": [
+            "BDT",
+            "taka bangladesí"
         ],
-        "ERN": [
-            "ERN",
-            "nakfa"
+        "BTN": [
+            "BTN",
+            "ngultrum butanés"
+        ],
+        "KGS": [
+            "KGS",
+            "som kirguís"
+        ],
+        "KHR": [
+            "KHR",
+            "riel camboyano"
+        ],
+        "LAK": [
+            "LAK",
+            "kip laosiano"
+        ],
+        "MRO": [
+            "MRU",
+            "uguiya (1973–2017)"
+        ],
+        "MRU": [
+            "UM",
+            "uguiya"
+        ],
+        "MVR": [
+            "MVR",
+            "rupia de Maldivas"
         ],
         "MXN": [
             "$",
             "peso mexicano"
-        ],
-        "MYR": [
-            "MYR",
-            "ringit"
         ],
         "STN": [
             "STN",
@@ -25,9 +44,9 @@
             "THB",
             "baht tailandés"
         ],
-        "UZS": [
-            "UZS",
-            "sum"
+        "VND": [
+            "VND",
+            "dong vietnamita"
         ],
         "ZMW": [
             "ZMW",

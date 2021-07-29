@@ -7,8 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'voku\\helper\\' => array($vendorDir . '/voku/anti-xss/src/voku/helper'),
-    'voku\\' => array($vendorDir . '/voku/portable-utf8/src/voku'),
+    'voku\\' => array($vendorDir . '/voku/portable-ascii/src/voku', $vendorDir . '/voku/portable-utf8/src/voku'),
     'duncan3dc\\Sessions\\' => array($vendorDir . '/duncan3dc/sessions/src'),
     'Symfony\\Polyfill\\' => array($vendorDir . '/symfony/polyfill/src'),
     'Symfony\\Component\\Intl\\' => array($vendorDir . '/symfony/intl'),
+    'Godruoyi\\Snowflake\\' => array($vendorDir . '/godruoyi/php-snowflake/src'),
 );

@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.11",
     "Names": {
         "AED": [
             "AED",
@@ -759,7 +758,7 @@
         ],
         "PHP": [
             "PHP",
-            "Peso’r Philipinau"
+            "Peso Philipinas"
         ],
         "PKR": [
             "PKR",
@@ -979,6 +978,10 @@
         ],
         "VEF": [
             "VEF",
+            "Bolívar Venezuela (2008–2018)"
+        ],
+        "VES": [
+            "VES",
             "Bolívar Venezuela"
         ],
         "VND": [

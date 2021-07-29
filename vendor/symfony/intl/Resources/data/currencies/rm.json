@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.11",
     "Names": {
         "ADP": [
             "ADP",
@@ -1023,6 +1022,10 @@
         ],
         "VEF": [
             "VEF",
+            "bolivar venezuelan (2008–2018)"
+        ],
+        "VES": [
+            "VES",
             "bolivar venezuelan"
         ],
         "VND": [

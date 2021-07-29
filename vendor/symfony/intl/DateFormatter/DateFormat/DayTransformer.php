@@ -23,7 +23,7 @@ class DayTransformer extends Transformer
     /**
      * {@inheritdoc}
      */
-    public function format(\DateTime $dateTime, int $length): string
+    public function format(\DateTime $dateTime, $length)
     {
         return $this->padLeft($dateTime->format('j'), $length);
     }
@@ -31,18 +31,18 @@ class DayTransformer extends Transformer
     /**
      * {@inheritdoc}
      */
-    public function getReverseMatchingRegExp(int $length): string
+    public function getReverseMatchingRegExp($length)
     {
-        return 1 === $length ? '\d{1,2}' : '\d{'.$length.'}';
+        return 1 === $length ? '\d{1,2}' : '\d{1,'.$length.'}';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function extractDateOptions(string $matched, int $length): array
+    public function extractDateOptions($matched, $length)
     {
-        return array(
+        return [
             'day' => (int) $matched,
-        );
+        ];
     }
 }

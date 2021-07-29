@@ -174,8 +174,8 @@ final class Iconv
             }
         } while ($loop);
 
-        if (isset(self::$alias[ $inCharset])) {
-            $inCharset = self::$alias[ $inCharset];
+        if (isset(self::$alias[$inCharset])) {
+            $inCharset = self::$alias[$inCharset];
         }
         if (isset(self::$alias[$outCharset])) {
             $outCharset = self::$alias[$outCharset];
@@ -292,7 +292,7 @@ final class Iconv
             if ((ICONV_MIME_DECODE_CONTINUE_ON_ERROR & $mode)
               && 'utf-8' !== $c
               && !isset(self::$alias[$c])
-              && !self::loadMap('from.', $c,  $d)) {
+              && !self::loadMap('from.', $c, $d)) {
                 $d = false;
             } elseif ('B' === strtoupper($str[$i + 1])) {
                 $d = base64_decode($str[$i + 2]);
@@ -433,7 +433,7 @@ final class Iconv
     {
         static $hasXml = null;
         if (null === $hasXml) {
-            $hasXml = extension_loaded('xml');
+            $hasXml = \extension_loaded('xml');
         }
 
         if ($hasXml) {
@@ -541,10 +541,14 @@ final class Iconv
             $start += $slen;
         }
         if (0 > $start) {
-            return false;
+            if (\PHP_VERSION_ID < 80000) {
+                return false;
+            }
+
+            $start = 0;
         }
         if ($start >= $slen) {
-            return false;
+            return \PHP_VERSION_ID >= 80000 ? '' : false;
         }
 
         $rx = $slen - $start;
@@ -556,7 +560,7 @@ final class Iconv
             return '';
         }
         if (0 > $length) {
-            return false;
+            return \PHP_VERSION_ID >= 80000 ? '' : false;
         }
 
         if ($length > $rx) {
@@ -695,6 +699,10 @@ final class Iconv
                     } else {
                         return false;
                     }
+                } elseif ($ignore) {
+                    continue;
+                } else {
+                    return false;
                 }
 
                 $str = $uchr.substr($str, $i);

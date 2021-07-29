@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.20",
     "Names": {
         "ADP": [
             "ADP",
@@ -266,7 +265,7 @@
             "iuan xinès extracontinental"
         ],
         "CNY": [
-            "¥",
+            "CNY",
             "iuan xinès"
         ],
         "COP": [
@@ -279,7 +278,7 @@
         ],
         "CRC": [
             "CRC",
-            "colón costa-riqueny"
+            "colon costa-riqueny"
         ],
         "CSD": [
             "CSD",
@@ -527,7 +526,7 @@
             "dinar jordà"
         ],
         "JPY": [
-            "JP¥",
+            "¥",
             "ien japonès"
         ],
         "KES": [
@@ -748,7 +747,7 @@
         ],
         "NIO": [
             "NIO",
-            "córdoba oro nicaragüenca"
+            "córdoba nicaragüenc"
         ],
         "NLG": [
             "NLG",
@@ -924,11 +923,11 @@
         ],
         "SVC": [
             "SVC",
-            "colón salvadorenc"
+            "colon salvadorenc"
         ],
         "SYP": [
             "SYP",
-            "lliura síria"
+            "lliura siriana"
         ],
         "SZL": [
             "SZL",
@@ -1036,6 +1035,10 @@
         ],
         "VEF": [
             "VEF",
+            "bolívar veneçolà (2008–2018)"
+        ],
+        "VES": [
+            "VES",
             "bolívar veneçolà"
         ],
         "VND": [

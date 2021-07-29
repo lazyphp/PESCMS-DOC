@@ -23,10 +23,10 @@ class Hour2401Transformer extends HourTransformer
     /**
      * {@inheritdoc}
      */
-    public function format(\DateTime $dateTime, int $length): string
+    public function format(\DateTime $dateTime, $length)
     {
         $hourOfDay = $dateTime->format('G');
-        $hourOfDay = ('0' == $hourOfDay) ? '24' : $hourOfDay;
+        $hourOfDay = '0' === $hourOfDay ? '24' : $hourOfDay;
 
         return $this->padLeft($hourOfDay, $length);
     }
@@ -34,9 +34,9 @@ class Hour2401Transformer extends HourTransformer
     /**
      * {@inheritdoc}
      */
-    public function normalizeHour(int $hour, string $marker = null): int
+    public function normalizeHour($hour, $marker = null)
     {
-        if ((null === $marker && 24 === $hour) || 'AM' == $marker) {
+        if ((null === $marker && 24 == $hour) || 'AM' == $marker) {
             $hour = 0;
         } elseif ('PM' == $marker) {
             $hour = 12;
@@ -48,7 +48,7 @@ class Hour2401Transformer extends HourTransformer
     /**
      * {@inheritdoc}
      */
-    public function getReverseMatchingRegExp(int $length): string
+    public function getReverseMatchingRegExp($length)
     {
         return '\d{1,2}';
     }
@@ -56,11 +56,11 @@ class Hour2401Transformer extends HourTransformer
     /**
      * {@inheritdoc}
      */
-    public function extractDateOptions(string $matched, int $length): array
+    public function extractDateOptions($matched, $length)
     {
-        return array(
+        return [
             'hour' => (int) $matched,
             'hourInstance' => $this,
-        );
+        ];
     }
 }

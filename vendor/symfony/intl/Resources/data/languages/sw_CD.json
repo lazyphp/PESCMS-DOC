@@ -1,11 +1,9 @@
 {
-    "Version": "2.1.39.11",
     "Names": {
         "ak": "Kiakan",
         "ar_001": "Kiarabu cha Dunia Kilichosanifishwa",
         "arq": "Kiarabu cha Aljeria",
         "az": "Kiazabajani",
-        "bug": "Kibugini",
         "gv": "Kimanksi",
         "gwi": "Kigwichiin",
         "hup": "Kihupa",
@@ -19,7 +17,6 @@
         "ky": "Kikirigizi",
         "lam": "Kilamba",
         "li": "Kilimburgi",
-        "mak": "mak",
         "mdf": "Kimoksha",
         "mic": "Kimikmaki",
         "mk": "Kimasedonia",
@@ -29,13 +26,11 @@
         "nqo": "Kiinko",
         "pcm": "Pijini ya Nijeria",
         "quc": "Kikiiche",
-        "root": "Kiroot",
         "shu": "Kiarabu cha Chadi",
         "srn": "Kitongo cha Sranan",
         "swb": "Kikomoro",
         "syr": "Kisiria",
         "udm": "Kiudumurti",
-        "wae": "Kiwalser",
         "yi": "Kiyidi"
     }
 }

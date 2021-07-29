@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.11",
     "Names": {
         "aa": "afar",
         "ab": "abkhasiskt",
@@ -48,6 +47,7 @@
         "bug": "buginesiskt",
         "byn": "blin",
         "ca": "katalani",
+        "ccp": "khakma",
         "ce": "tjetjenskt",
         "ceb": "cebuano",
         "cgg": "chiga",
@@ -290,7 +290,6 @@
         "ro": "rumenskt",
         "ro_MD": "moldaviskt",
         "rof": "rombo",
-        "root": "root",
         "ru": "russiskt",
         "rup": "aromenskt",
         "rw": "kinyarwanda",

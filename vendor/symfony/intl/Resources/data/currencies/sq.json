@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.11",
     "Names": {
         "AED": [
             "AED",
@@ -78,7 +77,7 @@
             "Boliviani i Bolivisë"
         ],
         "BRL": [
-            "R$",
+            "BRL",
             "Reali brazilian"
         ],
         "BSD": [
@@ -599,7 +598,11 @@
         ],
         "VEF": [
             "VEF",
-            "Bolivari venezuelian"
+            "Bolivari venezuelian (2008–2018)"
+        ],
+        "VES": [
+            "VES",
+            "Bolivari venezuelas"
         ],
         "VND": [
             "₫",

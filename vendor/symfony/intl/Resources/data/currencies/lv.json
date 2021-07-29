@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.11",
     "Names": {
         "AED": [
             "AED",
@@ -579,7 +578,7 @@
         ],
         "SAR": [
             "SAR",
-            "Saūda riāls"
+            "Saūda Arābijas riāls"
         ],
         "SBD": [
             "SBD",
@@ -723,6 +722,10 @@
         ],
         "VEF": [
             "VEF",
+            "Venecuēlas bolivārs (2008–2018)"
+        ],
+        "VES": [
+            "VES",
             "Venecuēlas bolivārs"
         ],
         "VND": [

@@ -23,15 +23,14 @@ namespace Symfony\Polyfill\Intl\Normalizer;
  */
 class Normalizer
 {
-    const NONE = 1;
-    const FORM_D = 2;
-    const FORM_KD = 3;
-    const FORM_C = 4;
-    const FORM_KC = 5;
-    const NFD = 2;
-    const NFKD = 3;
-    const NFC = 4;
-    const NFKC = 5;
+    const FORM_D = \Normalizer::FORM_D;
+    const FORM_KD = \Normalizer::FORM_KD;
+    const FORM_C = \Normalizer::FORM_C;
+    const FORM_KC = \Normalizer::FORM_KC;
+    const NFD = \Normalizer::NFD;
+    const NFKD = \Normalizer::NFKD;
+    const NFC = \Normalizer::NFC;
+    const NFKC = \Normalizer::NFKC;
 
     private static $C;
     private static $D;
@@ -42,18 +41,18 @@ class Normalizer
 
     public static function isNormalized($s, $form = self::NFC)
     {
-        if ($form <= self::NONE || self::NFKC < $form) {
+        if (!\in_array($form, array(self::NFD, self::NFKD, self::NFC, self::NFKC))) {
             return false;
         }
         $s = (string) $s;
         if (!isset($s[strspn($s, self::$ASCII)])) {
             return true;
         }
-        if (self::NFC === $form && preg_match('//u', $s) && !preg_match('/[^\x00-\x{2FF}]/u', $s)) {
+        if (self::NFC == $form && preg_match('//u', $s) && !preg_match('/[^\x00-\x{2FF}]/u', $s)) {
             return true;
         }
 
-        return false; // Pretend false as quick checks implementented in PHP won't be so quick
+        return self::normalize($s, $form) === $s;
     }
 
     public static function normalize($s, $form = self::NFC)
@@ -64,12 +63,16 @@ class Normalizer
         }
 
         switch ($form) {
-            case self::NONE: return $s;
             case self::NFC: $C = true; $K = false; break;
             case self::NFD: $C = false; $K = false; break;
             case self::NFKC: $C = true; $K = true; break;
             case self::NFKD: $C = false; $K = true; break;
-            default: return false;
+            default:
+                if (\defined('Normalizer::NONE') && \Normalizer::NONE == $form) {
+                    return $s;
+                }
+
+                return false;
         }
 
         if ('' === $s) {
@@ -145,7 +148,7 @@ class Normalizer
             $uchr = substr($s, $i, $ulen);
 
             if ($lastUchr < "\xE1\x84\x80" || "\xE1\x84\x92" < $lastUchr
-                ||   $uchr < "\xE1\x85\xA1" || "\xE1\x85\xB5" < $uchr
+                || $uchr < "\xE1\x85\xA1" || "\xE1\x85\xB5" < $uchr
                 || $lastUcls) {
                 // Table lookup and combining chars composition
 

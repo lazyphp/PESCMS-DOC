@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.20",
     "Names": {
         "ADP": [
             "ADP",
@@ -639,7 +638,7 @@
         ],
         "MCF": [
             "MCF",
-            "MCF"
+            "monegaskiske franc"
         ],
         "MDC": [
             "MDC",
@@ -1043,6 +1042,10 @@
         ],
         "VEF": [
             "VEF",
+            "venezuelanske bolivar (2008–2018)"
+        ],
+        "VES": [
+            "VES",
             "venezuelanske bolivar"
         ],
         "VND": [

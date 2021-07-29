@@ -1,5 +1,4 @@
 {
-    "Version": "2.1.39.27",
     "Names": {
         "aa": "Afar",
         "ab": "Abkhazian",
@@ -102,6 +101,7 @@
         "chp": "Chipewyan",
         "chr": "Cherokee",
         "chy": "Cheyenne",
+        "cic": "Chickasaw",
         "ckb": "Central Kurdish",
         "co": "Corsican",
         "cop": "Coptic",
@@ -370,7 +370,7 @@
         "mt": "Maltese",
         "mua": "Mundang",
         "mul": "Multiple languages",
-        "mus": "Creek",
+        "mus": "Muscogee",
         "mwl": "Mirandese",
         "mwr": "Marwari",
         "mwv": "Mentawai",

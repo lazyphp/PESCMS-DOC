@@ -13,7 +13,6 @@ namespace Symfony\Component\Intl\Tests\Data\Provider;
 
 use Symfony\Component\Intl\Data\Provider\ScriptDataProvider;
 use Symfony\Component\Intl\Intl;
-use Symfony\Component\Intl\Locale;
 
 /**
  * @author Bernhard Schussek <bschussek@gmail.com>
@@ -23,12 +22,13 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
 {
     // The below arrays document the state of the ICU data bundled with this package.
 
-    protected static $scripts = array(
+    protected static $scripts = [
         'Adlm',
         'Afak',
         'Aghb',
         'Ahom',
         'Arab',
+        'Aran',
         'Armi',
         'Armn',
         'Avst',
@@ -49,22 +49,27 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
         'Cari',
         'Cham',
         'Cher',
+        'Chrs',
         'Cirt',
         'Copt',
         'Cprt',
         'Cyrl',
         'Cyrs',
         'Deva',
+        'Diak',
+        'Dogr',
         'Dsrt',
         'Dupl',
         'Egyd',
         'Egyh',
         'Egyp',
         'Elba',
+        'Elym',
         'Ethi',
         'Geok',
         'Geor',
         'Glag',
+        'Gong',
         'Gonm',
         'Goth',
         'Gran',
@@ -82,6 +87,7 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
         'Hira',
         'Hluw',
         'Hmng',
+        'Hmnp',
         'Hrkt',
         'Hung',
         'Inds',
@@ -95,6 +101,7 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
         'Khar',
         'Khmr',
         'Khoj',
+        'Kits',
         'Knda',
         'Kore',
         'Kpel',
@@ -113,10 +120,12 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
         'Lyci',
         'Lydi',
         'Mahj',
+        'Maka',
         'Mand',
         'Mani',
         'Marc',
         'Maya',
+        'Medf',
         'Mend',
         'Merc',
         'Mero',
@@ -128,6 +137,7 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
         'Mtei',
         'Mult',
         'Mymr',
+        'Nand',
         'Narb',
         'Nbat',
         'Newa',
@@ -150,55 +160,9 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
         'Phnx',
         'Plrd',
         'Prti',
-        'Qaaa',
-        'Qaab',
-        'Qaac',
-        'Qaad',
-        'Qaae',
-        'Qaaf',
         'Qaag',
-        'Qaah',
-        'Qaak',
-        'Qaal',
-        'Qaam',
-        'Qaan',
-        'Qaao',
-        'Qaap',
-        'Qaaq',
-        'Qaar',
-        'Qaas',
-        'Qaat',
-        'Qaau',
-        'Qaav',
-        'Qaaw',
-        'Qaax',
-        'Qaay',
-        'Qaaz',
-        'Qaba',
-        'Qabb',
-        'Qabc',
-        'Qabd',
-        'Qabe',
-        'Qabf',
-        'Qabg',
-        'Qabh',
-        'Qabi',
-        'Qabj',
-        'Qabk',
-        'Qabl',
-        'Qabm',
-        'Qabn',
-        'Qabo',
-        'Qabp',
-        'Qabq',
-        'Qabr',
-        'Qabs',
-        'Qabt',
-        'Qabu',
-        'Qabv',
-        'Qabw',
-        'Qabx',
         'Rjng',
+        'Rohg',
         'Roro',
         'Runr',
         'Samr',
@@ -211,6 +175,8 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
         'Sidd',
         'Sind',
         'Sinh',
+        'Sogd',
+        'Sogo',
         'Sora',
         'Soyo',
         'Sund',
@@ -238,9 +204,11 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
         'Vaii',
         'Visp',
         'Wara',
+        'Wcho',
         'Wole',
         'Xpeo',
         'Xsux',
+        'Yezi',
         'Yiii',
         'Zanb',
         'Zinh',
@@ -250,12 +218,13 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
         'Zxxx',
         'Zyyy',
         'Zzzz',
-    );
+    ];
 
     /**
      * @var ScriptDataProvider
      */
     protected $dataProvider;
+    private $defaultLocale;
 
     protected function setUp()
     {
@@ -265,6 +234,15 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
             $this->getDataDirectory().'/'.Intl::SCRIPT_DIR,
             $this->createEntryReader()
         );
+
+        $this->defaultLocale = \Locale::getDefault();
+    }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        \Locale::setDefault($this->defaultLocale);
     }
 
     abstract protected function getDataDirectory();
@@ -291,7 +269,7 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
 
     public function testGetNamesDefaultLocale()
     {
-        Locale::setDefault('de_AT');
+        \Locale::setDefault('de_AT');
 
         $this->assertSame(
             $this->dataProvider->getNames('de_AT'),
@@ -327,7 +305,7 @@ abstract class AbstractScriptDataProviderTest extends AbstractDataProviderTest
 
     public function testGetNameDefaultLocale()
     {
-        Locale::setDefault('de_AT');
+        \Locale::setDefault('de_AT');
 
         $names = $this->dataProvider->getNames('de_AT');
 

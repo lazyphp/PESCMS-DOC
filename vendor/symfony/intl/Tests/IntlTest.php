@@ -11,11 +11,27 @@
 
 namespace Symfony\Component\Intl\Tests;
 
-use Symfony\Component\Intl\Intl;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Intl\Intl;
 
 class IntlTest extends TestCase
 {
+    private $defaultLocale;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->defaultLocale = \Locale::getDefault();
+    }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        \Locale::setDefault($this->defaultLocale);
+    }
+
     /**
      * @requires extension intl
      */
@@ -41,7 +57,7 @@ class IntlTest extends TestCase
 
     public function testGetRegionBundleCreatesTheRegionBundle()
     {
-        $this->assertInstanceOf('Symfony\Component\Intl\ResourceBundle\LocaleBundleInterface', Intl::getLocaleBundle());
+        $this->assertInstanceOf('Symfony\Component\Intl\ResourceBundle\RegionBundleInterface', Intl::getRegionBundle());
     }
 
     public function testGetIcuVersionReadsTheVersionOfInstalledIcuLibrary()
@@ -61,7 +77,7 @@ class IntlTest extends TestCase
 
     public function testGetDataDirectoryReturnsThePathToIcuData()
     {
-        $this->assertTrue(is_dir(Intl::getDataDirectory()));
+        $this->assertDirectoryExists(Intl::getDataDirectory());
     }
 
     /**
