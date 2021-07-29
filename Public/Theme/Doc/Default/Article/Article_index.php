@@ -10,9 +10,8 @@
                     <i class="am-icon-calendar"></i> 创建于 <?= date('Y-m-d', $article_time ?: $doc['doc_createtime']) ?>
                     <?php if ($article_update_time > 0): ?>
                         / <i class="am-icon-edit"></i> 最近更新于 <?= date('Y-m-d', $article_update_time) ?>
-                    
-                    / <i class="am-icon-desktop"></i> <?= isset($article_view) ? $article_view : $doc['doc_view'] ?>
                     <?php endif; ?>
+                    / <i class="am-icon-desktop"></i> <?= isset($article_view) ? $article_view : $doc['doc_view'] ?>
                 </small>
             </div>
 
