@@ -11,5 +11,6 @@ return array(
     'duncan3dc\\Sessions\\' => array($vendorDir . '/duncan3dc/sessions/src'),
     'Symfony\\Polyfill\\' => array($vendorDir . '/symfony/polyfill/src'),
     'Symfony\\Component\\Intl\\' => array($vendorDir . '/symfony/intl'),
+    'Grafika\\' => array($vendorDir . '/kosinix/grafika/src/Grafika'),
     'Godruoyi\\Snowflake\\' => array($vendorDir . '/godruoyi/php-snowflake/src'),
 );

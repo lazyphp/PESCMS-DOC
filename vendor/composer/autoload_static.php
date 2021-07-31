@@ -47,6 +47,7 @@ class ComposerStaticInit777c7af0956f9a947068ec95c3599f29
         ),
         'G' => 
         array (
+            'Grafika\\' => 8,
             'Godruoyi\\Snowflake\\' => 19,
         ),
     );
@@ -72,6 +73,10 @@ class ComposerStaticInit777c7af0956f9a947068ec95c3599f29
         'Symfony\\Component\\Intl\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/intl',
+        ),
+        'Grafika\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kosinix/grafika/src/Grafika',
         ),
         'Godruoyi\\Snowflake\\' => 
         array (
