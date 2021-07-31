@@ -122,13 +122,8 @@ class Uploader {
 
         //图片则利用GD库进行处理，过滤掉图片木马。同时生成对应的三种图片
         if (!empty($this->imgsuffix) && in_array($this->getFileExt(), json_decode($this->imgsuffix, true))) {
-            $image = new \Expand\PHPImage($file["tmp_name"]);
-            $image->batchResize("{$this->filePath}_%dx%d.".pathinfo($file['name'])['extension'], array(
-                array(50, 50, true, true),
-                array(150, 150, true, true),
-                array(300, 300, true, true),
-            ));
-            $image->save($this->filePath);
+            //对已经上传成功的文件进行安全处理
+            $this->grafikaImg($file["tmp_name"], $this->filePath);
             $this->stateInfo = $this->stateMap[0];
         } else {
             //移动文件
@@ -178,13 +173,8 @@ class Uploader {
             $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
         } else { //移动成功
             //对已经上传成功的文件进行安全处理
-            $image = new \Expand\PHPImage($this->filePath);
-            $image->batchResize("{$this->filePath}_%dx%d.".pathinfo($this->filePath)['extension'], array(
-                array(50, 50, true, true),
-                array(150, 150, true, true),
-                array(300, 300, true, true),
-            ));
-            $image->save($this->filePath);
+            $this->grafikaImg($this->filePath, $this->filePath);
+
             $this->stateInfo = $this->stateMap[0];
         }
 
@@ -247,6 +237,8 @@ class Uploader {
         if (!(file_put_contents($this->filePath, $img) && file_exists($this->filePath))) { //移动失败
             $this->stateInfo = $this->getStateInfo("ERROR_WRITE_CONTENT");
         } else { //移动成功
+            //对已经上传成功的文件进行安全处理
+            $this->grafikaImg($this->filePath, $this->filePath);
             $this->stateInfo = $this->stateMap[0];
         }
 
@@ -412,6 +404,29 @@ class Uploader {
             "type" => $this->fileType,
             "size" => $this->fileSize
         );
+    }
+
+    /**
+     * 图片压缩
+     * @param $img 要压缩的图片
+     * @param $outName 图片保存的完整路径
+     */
+    private function grafikaImg($img, $outName){
+
+        $editor = \Grafika\Grafika::createEditor();
+        $editor->open( $image, $img);
+        $width  = $image->getWidth();
+        $height = $image->getHeight();
+        $ratio  = $width / $height;
+
+        $resizeWidth  = 150 * $ratio;
+        $resizeHeight = 150;
+        $editor->save( $image, $outName );
+
+        $editor->resizeFit( $image, $resizeWidth, $resizeHeight );
+
+        $editor->save( $image, "{$outName}_150.".pathinfo($outName)['extension'] );
+
     }
 
 }
