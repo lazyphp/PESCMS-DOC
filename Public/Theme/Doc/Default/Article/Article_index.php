@@ -50,7 +50,7 @@
     </section>
     <!--内容区-->
 
-    <nav class="title-nav">
+    <nav class="title-nav am-show-lg-only">
         <div class="title-nav-hide" title="收起标题导航" data="0"><i class="am-icon-angle-double-left"></i></div>
         <div class="title-nav-content">
             <ul>

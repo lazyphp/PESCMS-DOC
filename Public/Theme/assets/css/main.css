@@ -5,6 +5,14 @@ html {
   box-shadow: 0 2px 4px 0 rgba(116, 129, 141, 0.1);
   background: #fff;
 }
+.pes-article-topbar h1 {
+  display: none !important;
+}
+@media only screen and (max-width: 640px) {
+  .pes-article-topbar h1 {
+    display: block !important;
+  }
+}
 #wrapper {
   min-height: 88vh;
 }
@@ -152,6 +160,47 @@ html {
 .sidebar .sidebar-hide {
   display: none;
 }
+@media only screen and (max-width: 640px) {
+  .sidebar {
+    display: none;
+    background: #fdfdfd;
+    animation: bounceInLeft 0.6s infinite cubic-bezier(0.6, 0.9, 0.1, 1);
+    animation-iteration-count: 1;
+    top: 0;
+    z-index: 1002;
+  }
+  @keyframes bounceInLeft {
+    0% {
+      opacity: 0;
+      transform: translate3d(-3000px, 0, 0);
+    }
+    60% {
+      opacity: 1;
+      transform: translate3d(25px, 0, 0);
+    }
+    75% {
+      transform: translate3d(-10px, 0, 0);
+    }
+    90% {
+      transform: translate3d(5px, 0, 0);
+    }
+    100% {
+      transform: none;
+    }
+  }
+}
+@media only screen and (max-width: 640px) {
+  .mask-layer {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(3, 14, 27, 0.7);
+    transition: opacity 1s ease-in-out;
+    z-index: 1001;
+    display: none;
+  }
+}
 /*
 ===================
 文章内容区
@@ -191,6 +240,13 @@ html {
 }
 .content .pes-like {
   cursor: pointer;
+}
+@media only screen and (max-width: 640px) {
+  .content {
+    width: auto;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
 }
 /*
 ===================
@@ -249,56 +305,6 @@ html {
 .title-nav a:hover,
 .title-nav a :focus {
   color: #E6A23C;
-}
-@media only screen and (max-width: 640px) {
-  .am-topbar-nav {
-    margin-top: 5px;
-  }
-  .am-topbar-nav > li {
-    float: left;
-  }
-  .am-topbar-nav > li + li {
-    margin-left: 5px;
-    margin-top: 0;
-  }
-  .sidebar {
-    display: none;
-    background: #fdfdfd;
-    animation: bounceInLeft 0.6s infinite cubic-bezier(0.6, 0.9, 0.1, 1);
-    animation-iteration-count: 1;
-  }
-  .mask-layer {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(3, 14, 27, 0.7);
-    transition: opacity 1s ease-in-out;
-    z-index: 2;
-    display: none;
-  }
-  @keyframes bounceInLeft {
-    0% {
-      opacity: 0;
-      transform: translate3d(-3000px, 0, 0);
-    }
-    60% {
-      opacity: 1;
-      transform: translate3d(25px, 0, 0);
-    }
-    75% {
-      transform: translate3d(-10px, 0, 0);
-    }
-    90% {
-      transform: translate3d(5px, 0, 0);
-    }
-    100% {
-      transform: none;
-    }
-  }
-  .content {
-    width: auto;
-    margin: 0 auto;
-  }
 }
 /*
 ===================

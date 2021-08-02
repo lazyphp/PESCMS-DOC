@@ -1,4 +1,4 @@
-/*! Amaze UI for PESCMS magic reform v3.0.0 | by Amaze UI Team and PESCMS | (c) 2021 AllMobilize, Inc, PESCMS. | Licensed under MIT | 2021-07-12T20:45:06+0800 */
+/*! Amaze UI for PESCMS magic reform v3.0.0 | by Amaze UI Team and PESCMS | (c) 2021 AllMobilize, Inc, PESCMS. | Licensed under MIT | 2021-08-01T19:21:04-0700 */
 /* ==========================================================================
    Component: Base
  ============================================================================ */
@@ -585,14 +585,11 @@ blockquote {
   background: #ecf8ff;
   border-left: 5px solid #50bfff;
   font-family: Georgia, "Times New Roman", Times, Kai, "Kaiti SC", KaiTi, BiauKai, "FontAwesome", serif;
-  /* Small print for identifying the source */
   /* Smaller margin if `small` follows */
 }
-blockquote small {
-  display: block;
-  color: #C0C4CC;
-  font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;
-  text-align: right;
+blockquote ul,
+blockquote ol {
+  margin-bottom: 0 !important;
 }
 blockquote p:last-of-type {
   margin-bottom: 0;
@@ -4042,7 +4039,7 @@ fieldset[disabled] .am-checkbox-inline {
   font-family: Georgia, "Times New Roman", Times, Kai, "Kaiti SC", KaiTi, BiauKai, "FontAwesome", serif;
 }
 .am-article-bd img {
-  display: block;
+  display: unset;
   max-width: 100%;
 }
 /* ==========================================================================
@@ -4609,8 +4606,8 @@ a.am-close:hover {
 ============================================================================= */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('/Theme/assets/fontawesome-webfont.eot?v=4.6.3');
-  src: url('/Theme/assets/fontawesome-webfont.eot?#iefix&v=4.6.3') format('embedded-opentype'), url('/Theme/assets/fonts/fontawesome-webfont.woff2?v=4.6.3') format('woff2'), url('/Theme/assets/fonts/fontawesome-webfont.woff?v=4.6.3') format('woff'), url('/Theme/assets/fonts/fontawesome-webfont.ttf?v=4.6.3') format('truetype');
+  src: url('../fonts/fontawesome-webfont.eot?v=4.6.3');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.6.3') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.6.3') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.6.3') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.6.3') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

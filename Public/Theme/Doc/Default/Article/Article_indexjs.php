@@ -82,13 +82,17 @@
                 $('.title-nav').hide();
                 return;
             }else{
+                //手机版默认不展开
+                if($('.title-nav').css('display') == 'none'){
+                    return;
+                }
+
                 $('.content').css({'margin-right': '350px'});
 
                 $('.title-nav').animate({width: '300px'}, 500, function (){
                     $(this).find('i').attr('class', 'am-icon-angle-double-right');
                 })
             }
-
 
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
@@ -154,7 +158,6 @@
 
         })
 
-
         //目录栏展开方法
         $('.sidebar-nav ul li').on('click', function () {
             var sidebarNavIDom = $(this).children('span').children('i')
@@ -208,6 +211,16 @@
                         }, 1800)
                     }
                 }
+            })
+        })
+
+        $('#pes-show-article-path').on('click', function () {
+            $('.sidebar, .mask-layer').show()
+        })
+        $('.mask-layer').on('click', function () {
+            $('.mask-layer').hide()
+            $('.sidebar').animate({opacity: 0, width: '0px'}, 500, function () {
+                $('.sidebar').removeAttr('style')
             })
         })
 

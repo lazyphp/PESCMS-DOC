@@ -65,8 +65,8 @@
         <div class="am-form-group">
             <label class="am-block">文档内容</label>
             <div id="editor-tab-list">
-                <a href="javascript:;" class="use-ue am-link-muted <?= ($article_content_editor == '0' && !empty($article_content) ) || ( self::session()->get('doc')['member_id'] == 0 && empty($article_content) && empty($article_content_md) ) ? 'am-active' :'' ?>">HTML编辑器</a>
-                <a href="javascript:;" class="use-md am-link-muted <?= ( $article_content_editor == '1' && !empty($article_content) && !empty($article_content_md) ) || ( self::session()->get('doc')['member_id'] == 1 && empty($article_content) && empty($article_content_md) ) ? 'am-active' :'' ?>">Markdown编辑器</a>
+                <a href="javascript:;" class="use-ue am-link-muted <?= ($article_content_editor == '0' && !empty($article_content) ) || ( self::session()->get('doc')['member_editor'] == 0 && empty($article_content) && empty($article_content_md) ) ? 'am-active' :'' ?>">HTML编辑器</a>
+                <a href="javascript:;" class="use-md am-link-muted <?= ( $article_content_editor == '1' && !empty($article_content) && !empty($article_content_md) ) || ( self::session()->get('doc')['member_editor'] == 1 && empty($article_content) && empty($article_content_md) ) ? 'am-active' :'' ?>">Markdown编辑器</a>
             </div>
             <div id="content" type="text/plain"></div>
             <div id="content_md" type="text/plain"></div>

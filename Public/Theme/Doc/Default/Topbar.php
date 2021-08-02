@@ -4,7 +4,7 @@
             <a href="/"><?= $system['siteTitle'] ?></a>
         </h1>
 
-        <div class="am-collapse am-topbar-collapse am-topbar-hover " id="doc-topbar-collapse">
+        <div class="am-collapse am-topbar-collapse am-topbar-hover ">
 
             <?php \Model\Menu::recursion('0', __DIR__ . '/menu.php') ?>
 
