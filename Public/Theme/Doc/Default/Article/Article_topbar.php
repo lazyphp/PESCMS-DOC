@@ -2,6 +2,7 @@
     <h1 class="am-topbar-brand">
         <a href="javascript:;"><?= $doc['doc_title'] ?></a>
     </h1>
+    <a href="/" class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-default am-show-sm-only"> <i class="am-icon-home"></i></a>
     <button id="pes-show-article-path" class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"> <i class="am-icon-bars"></i> 文档目录</button>
 
     <div class="am-collapse am-topbar-collapse am-topbar-hover">
