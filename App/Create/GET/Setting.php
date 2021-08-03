@@ -59,4 +59,12 @@ class Setting extends \Core\Controller\Controller {
         $this->layout();
     }
 
+    /**
+     * 检查更新模板
+     */
+    public function upgrade(){
+        $this->assign('title', '检查更新');
+        $this->layout();
+    }
+
 }
