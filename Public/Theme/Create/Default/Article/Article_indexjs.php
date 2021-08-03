@@ -83,6 +83,9 @@
             $('input[name="editor"]').val('1')
         }
 
+        /**
+         * 获取历史记录
+         */
         var getHistory = function (aid) {
 
             $.ajaxSubmit({
@@ -101,6 +104,20 @@
                 }
             });
 
+        }
+
+        /**
+         * 刷新目录
+         */
+        var refreshPath = function () {
+            var id = '<?= $doc['doc_id'] ?>';
+            $.ajaxSubmit({
+                url: '/?g=Create&m=Article&a=refreshPath&id=' + id,
+                skipAutoTips: true,
+                success: function (res) {
+                    $('.pes-doc-path-container').html(res.data);
+                }
+            })
         }
 
         if ($('.use-ue').hasClass('am-active')) {
@@ -152,7 +169,7 @@
         /**
          * 点击目录，获取文档内容
          */
-        $('.pes-doc-path a, .pes-add-article').on('click', function () {
+        $(document).on('click', '.pes-doc-path a, .pes-add-article', function () {
 
             var id = '<?= $doc['doc_id'] ?>';
             var aid = $(this).data('id');
@@ -162,7 +179,7 @@
             }
             $('.pes-doc-article-tool').show();
             $('.pes-article-delete').removeClass('am-hide').attr('data', '/?g=Create&m=Article&a=delete&method=DELETE&aid=' + aid);
-            $('.pes-doc-index-tool').hide();
+            $('.pes-doc-index-tool, .pes-article-preview').hide();
 
 
             $.ajaxSubmit({
@@ -229,10 +246,10 @@
                     }
 
                     let refresh = res?.responseJSON?.data?.refresh || false;
+                    var url = res?.responseJSON?.data?.url || 'javascript:;'
+                    $('.pes-article-preview').show().find('a').attr('href', url);
 
-                    if (refresh) {
-                        window.location.reload();
-                    }
+                    refreshPath();
                 }
             })
             return false;
@@ -351,7 +368,7 @@
         /**
          * 快速复制文档地址
          */
-        $('.pes-article-copy-link').on('click', function () {
+        $(document).on('click', '.pes-article-copy-link', function () {
             var dom = $(this)
             var link = $(this).attr('link')
             const input = document.createElement('input');

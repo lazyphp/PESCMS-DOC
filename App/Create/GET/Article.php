@@ -94,5 +94,14 @@ class Article extends \Core\Controller\Controller {
         ]);
     }
 
+    /**
+     * 刷新目录
+     */
+    public function refreshPath(){
+        $doc = \Model\Doc::findDocWithID();
+        $path = \Model\Article::obArticle($doc['doc_id'], $doc['doc_version']);
+        $this->success(['msg' => '获取新目录成功', 'data' => $path]);
+    }
+
 
 }

@@ -12,7 +12,7 @@ namespace App\Create\POST;
 class Article extends \Core\Controller\Controller {
 
     /**
-     * 文档目录
+     * 新增文档
      */
     public function index() {
         $data = \Model\Article::baseForm();
@@ -28,6 +28,12 @@ class Article extends \Core\Controller\Controller {
 
         $this->db()->commit();
 
-        $this->success(['msg' => '新增文档完成', 'data' => ['refresh' => 1]]);
+        $this->success([
+            'msg' => '新增文档完成',
+            'data' => [
+                'refresh' => 1,
+                'url' => $this->url('Doc-Article-index', ['id' => $data['article_doc_id'], 'aid' => $data['article_mark']])
+            ]
+        ]);
     }
 }

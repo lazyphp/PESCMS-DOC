@@ -1,6 +1,9 @@
 <div class="pes-article-right-sidebar-move"></div>
 <a href="javascript:;" class="pes-article-save am-btn am-btn-default"><i class="am-icon-save"></i> 保存 <small class="am-text-secondary">[Ctrl + 回车]</small></a>
 <a href="javascript:;" class="pes-article-delete am-btn am-btn-danger am-hide ajax-click ajax-dialog " msg="确认要删除本文档吗？数据将无法恢复!"><i class="am-icon-remove"></i> 删除</a>
+<div class="am-margin-top-xs pes-article-preview" style="display: none">
+    <a href="javascript:;" class="am-btn am-btn-success" target="_blank"><i class="am-icon-newspaper-o"></i> 预览</a>
+</div>
 
 <div class="pes-sidebar-tool pes-doc-index-tool">
 

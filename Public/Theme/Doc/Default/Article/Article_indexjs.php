@@ -25,7 +25,7 @@
             var i = 0;
             var parent = `.nav-${i}-H1`;
             var hasTitleNagContent = false;
-            var firstHTagTitle = '';
+            var firstHTagTitle = null;
 
             $('.am-article-bd').children().each(function (key) {
 
@@ -33,7 +33,7 @@
                     return;
                 }
 
-                if(firstHTagTitle == ''){
+                if(firstHTagTitle == null){
                     firstHTagTitle = key;
                 }
                 var name = $(this).text();

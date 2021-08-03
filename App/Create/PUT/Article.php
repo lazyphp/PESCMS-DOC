@@ -48,7 +48,8 @@ class Article extends \Core\Controller\Controller {
         $this->success([
             'msg' => '文档更新完成',
             'data' => [
-                'aid' => $aid
+                'aid' => $aid,
+                'url' => $this->url('Doc-Article-index', ['id' => $article['article_doc_id'], 'aid' => $article['article_mark']])
             ]
         ]);
 
@@ -75,7 +76,12 @@ class Article extends \Core\Controller\Controller {
 
         $this->db('doc')->where('doc_id = :doc_id')->update($data);
 
-        $this->success('文档首页内容更新完成');
+        $this->success([
+            'msg' => '文档首页内容更新完成',
+            'data' => [
+                'url' => $this->url('Doc-Article-index', ['id' => $doc['doc_id']])
+            ]
+        ]);
 
     }
 
