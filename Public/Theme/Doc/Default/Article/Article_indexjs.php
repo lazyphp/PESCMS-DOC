@@ -38,10 +38,10 @@
                 }
                 var name = $(this).text();
 
-                var ulStr = '<li class="nav-' + i + '-' + $(this)[0].nodeName + '"><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>';
+                var ulStr = '<li class="nav-' + i + '-' + $(this)[0].nodeName + ' nav-index-'+$(this)[0].nodeName+'"><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>';
 
                 if ($(this)[0].nodeName == 'H1' || key == firstHTagTitle) {
-                    $('.title-nav-content>ul').append('<li class="nav-' + i + '-' + $(this)[0].nodeName + '"><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>')
+                    $('.title-nav-content>ul').append('<li class="nav-' + i + '-' + $(this)[0].nodeName + ' nav-index-'+$(this)[0].nodeName+'"><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>')
 
                     parent = `.nav-${i}-` + $(this)[0].nodeName;
                     $(this).attr('id', `nav-${i}-` + $(this)[0].nodeName)
@@ -55,15 +55,20 @@
                     //同级父类不变化
                     if (`.nav-${i}-` + nodeName == parent || parent.substr(-2) == nodeName ) {
                         i++;
-                        $(parent).parent().append('<li class="nav-' + i + '-' + $(this)[0].nodeName + '"><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>')
+                        $(parent).parent().append('<li class="nav-' + i + '-' + $(this)[0].nodeName + ' nav-index-'+$(this)[0].nodeName+' "><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>')
                         parent = `.nav-${i}-` + $(this)[0].nodeName;
 
                     } else if (nodeName.substr(1) < parent.substr(-1)) {
 
                         i++;
-                        var element = $(parent).parent().parent('li')
+                        if($('.nav-index-'+$(this)[0].nodeName).last()){
+                            var element = $('.nav-index-'+$(this)[0].nodeName).last();
+                        }else{
+                            var element = $(parent).parent().parent('li')
+                        }
 
-                        element.after('<li class="nav-' + i + '-' + $(this)[0].nodeName + '"><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>')
+
+                        element.after('<li class="nav-' + i + '-' + $(this)[0].nodeName + ' nav-index-'+$(this)[0].nodeName+'"><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>')
 
                         parent = `.nav-${i}-` + $(this)[0].nodeName;
 
