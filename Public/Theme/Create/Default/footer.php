@@ -14,7 +14,7 @@
                     <?= $system['siteFooter'] ?>
                 <?php endif; ?>
                 <span class="footer-line"></span>
-                <a href="https://www.pescms.com/download/3.html" target="_blank" class="am-link-success" >由PESCMS DOC文档管理系统强力驱动
+                <a href="https://www.pescms.com/download/3.html" target="_blank" class="am-link-success" >Power By PESCMS DOC
             </div>
         </div>
     </div>

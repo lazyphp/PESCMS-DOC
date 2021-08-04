@@ -63,7 +63,7 @@ body {
 }
 .pes-article-left-sidebar .pes-doc-path-container .pes-doc-path li .pes-article-copy-link {
   position: absolute;
-  left: -8px;
+  left: -3px;
   cursor: copy;
   z-index: 2;
 }
