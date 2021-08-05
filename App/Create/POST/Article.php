@@ -32,6 +32,7 @@ class Article extends \Core\Controller\Controller {
             'msg' => '新增文档完成',
             'data' => [
                 'refresh' => 1,
+                'aid' => $aid,
                 'url' => $this->url('Doc-Article-index', ['id' => $data['article_doc_id'], 'aid' => $data['article_mark']])
             ]
         ]);

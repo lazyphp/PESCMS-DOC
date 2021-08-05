@@ -9,7 +9,8 @@
     </div>
 
 </div>
-<div class="pes-article-paper">
+<div class="pes-article-paper" >
+    <div class="pes-article-tips am-alert am-margin-bottom-0 am-hide"></div>
     <h1><i class="am-icon-edit"></i> <?= $doc['doc_title'] ?> - 文档首页</h1>
     <form action="<?= empty($_GET['aid']) ? $label->url('Create-Article-doc') : '' ?>" id="pes-article-submit" class="am-form" method="post" data-am-validator>
         <?= $label->token() ?>

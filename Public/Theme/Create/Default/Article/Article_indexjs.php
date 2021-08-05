@@ -180,7 +180,8 @@
             $('.pes-doc-article-tool').show();
             $('.pes-article-delete').removeClass('am-hide').attr('data', '/?g=Create&m=Article&a=delete&method=DELETE&aid=' + aid);
             $('.pes-doc-index-tool, .pes-article-preview').hide();
-
+            $('.pes-article-tips').addClass('am-hide')
+            $('.pes-article-tips').removeClass('am-alert-success').removeClass('am-alert-warning');
 
             $.ajaxSubmit({
                 url: '/?g=Create&m=Article&a=write&id=' + id + '&aid=' + aid,
@@ -238,16 +239,34 @@
                 method: 'POST',
                 data: $(this).serializeArray(),
                 stopJump: true,
+                skipAutoTips: true,
                 complete: function (res) {
-
                     let aid = res?.responseJSON?.data?.aid || false;
                     if (aid) {
                         getHistory(aid);
                     }
 
                     let refresh = res?.responseJSON?.data?.refresh || false;
-                    var url = res?.responseJSON?.data?.url || 'javascript:;'
-                    $('.pes-article-preview').show().find('a').attr('href', url);
+                    if(refresh == 1){
+                        var newAid = res?.responseJSON?.data?.aid || -1;
+                        $('input[name="aid"]').val(newAid);
+                        $('input[name="method"]').val('PUT');
+
+                    }
+
+                    var status = res?.responseJSON?.status || 0;
+                    //只有提交成功才显示预览按钮
+                    if(status == 200){
+                        var url = res?.responseJSON?.data?.url || 'javascript:;'
+                        $('.pes-article-preview').show().find('a').attr('href', url);
+                    }
+
+                    var msg = res?.responseJSON?.msg || '未知错误';
+                    var dateObj = new Date();
+                    var month = dateObj.getMonth() + 1;
+                    var FullDate = ` [${dateObj.getFullYear()}-${month}-${dateObj.getDate()} ${dateObj.getHours()}:${dateObj.getMinutes()}:${dateObj.getSeconds()}]`;
+                    $('.pes-article-tips').removeClass('am-alert-success').removeClass('am-alert-warning').removeClass('am-hide');
+                    $('.pes-article-tips').addClass(status == 200 ? 'am-alert-success' : 'am-alert-warning').show().html(msg + FullDate);
 
                     refreshPath();
                 }

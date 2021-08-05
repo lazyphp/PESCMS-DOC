@@ -211,6 +211,24 @@ body {
   background-position: 0 -100px;
   cursor: default;
 }
+.pes-jump {
+  padding-top: 5%;
+}
+@media only screen and (max-width: 640px) {
+  .pes-jump {
+    padding-top: 40%;
+  }
+}
+.pes-jump h1,
+.pes-jump h2 {
+  font-weight: normal;
+}
+.pes-jump h1 {
+  font-size: 3em;
+}
+.pes-jump h2 {
+  font-size: 14px;
+}
 /*
 ===================
 页脚
