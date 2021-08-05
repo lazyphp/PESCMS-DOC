@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2021-08-03 16:26:14
+-- 生成日期： 2021-08-05 23:05:13
 -- 服务器版本： 5.6.44-log
 -- PHP 版本： 5.6.40
 
@@ -601,10 +601,11 @@ INSERT INTO `pes_option` (`option_id`, `option_name`, `name`, `value`, `option_n
 (8, 'open_register', '开启注册', '0', '账号设置', 'system', 'string', 'radio', '{\"关闭\":\"0\",\"开启\":\"1\"}', 1, '若您需要用户系统，请开启此选项。再根据自身业务，选择对应的账号设置', 0),
 (9, 'register_group', '注册默认分组', '3', '账号设置', 'system', 'string', 'select', '{\"\\u7cfb\\u7edf\\u7ba1\\u7406\\u7ec4\":1,\"\\u6587\\u6863\\u7ef4\\u62a4\\u7ec4\":2,\"\\u8bbf\\u5ba2\":3}', 1, '', 0),
 (10, 'register_review', '账号注册审核', '0', '账号设置', 'system', 'string', 'radio', '{\"审核\":\"0\",\"不审核\":\"1\"}', 1, '不审核的话，将账号可以直接登录系统。', 0),
-(12, 'verifyLength', '验证码长度', '4', '网站信息', 'system', 'string', 'text', '', 0, '', 7),
-(13, 'authorize', '授权码', '', '网站信息', '', 'string', 'text', '', 0, '', 99),
+(12, 'verifyLength', '验证码长度', '4', '网站信息', 'system', 'string', 'text', '', 0, '', 8),
+(13, 'authorize', '软件授权码', '', '网站信息', '', 'string', 'text', '', 0, '', 99),
 (14, 'keyword', '网站关键词', '', '网站信息', 'system', 'string', 'text', '', 0, '', 3),
-(15, 'description', '网站描述', '', '网站信息', 'system', 'string', 'textarea', '', 0, 'SEO相关设置', 4);
+(15, 'description', '网站描述', '', '网站信息', 'system', 'string', 'textarea', '', 0, 'SEO相关设置', 4),
+(16, 'siteStyle', '网站样式', '', '网站信息', 'system', 'string', 'textarea', '', 0, '若您希望网站UI不一样，可以在这里填写您的CSS。', 7);
 
 -- --------------------------------------------------------
 
@@ -840,7 +841,7 @@ ALTER TABLE `pes_node_group`
 -- 使用表AUTO_INCREMENT `pes_option`
 --
 ALTER TABLE `pes_option`
-  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- 使用表AUTO_INCREMENT `pes_route`
