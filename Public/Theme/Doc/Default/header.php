@@ -29,6 +29,8 @@
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/Vditor.min.js?v=<?=$resources?>"></script>
 
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.min.js?v=<?= $resources ?>"></script>
-
+    <?php if(!empty($system['siteStyle'])): ?>
+        <style><?= $system['siteStyle'] ?></style>
+    <?php endif; ?>
 </head>
 <body>

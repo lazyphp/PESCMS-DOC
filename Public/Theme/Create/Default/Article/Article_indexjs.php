@@ -249,8 +249,10 @@
                     let refresh = res?.responseJSON?.data?.refresh || false;
                     if(refresh == 1){
                         var newAid = res?.responseJSON?.data?.aid || -1;
+                        var markID = res?.responseJSON?.data?.mark || '';
                         $('input[name="aid"]').val(newAid);
                         $('input[name="method"]').val('PUT');
+                        $('input[name="article_mark"]').val(markID);
 
                     }
 
