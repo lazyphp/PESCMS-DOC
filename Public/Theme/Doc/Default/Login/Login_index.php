@@ -25,6 +25,8 @@
 </form>
 <div class="am-text-center am-margin-top pes-login-split">
     <a href="<?= $label->url('Doc-Login-findpw') ?>">找回密码</a>
-    <i class="am-margin-horizontal-xs">|</i>
-    <a href="<?= $label->url('Doc-Login-signup') ?>">账号注册</a>
+    <?php if($system['open_register'] == 1): ?>
+        <i class="am-margin-horizontal-xs">|</i>
+        <a href="<?= $label->url('Doc-Login-signup') ?>">账号注册</a>
+    <?php endif; ?>
 </div>
