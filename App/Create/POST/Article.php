@@ -33,7 +33,7 @@ class Article extends \Core\Controller\Controller {
             'data' => [
                 'refresh' => 1,
                 'aid' => $aid,
-                'mark' => $data['article_markq'],
+                'mark' => $data['article_mark'],
                 'url' => $this->url('Doc-Article-index', ['id' => $data['article_doc_id'], 'aid' => $data['article_mark']])
             ]
         ]);
