@@ -239,7 +239,7 @@ class Label {
      * @return bool|\Model\type
      */
     public function checkAuth($auth){
-        return \Model\Auth::check($auth);
+        return \Model\Node::check($auth);
     }
 
     /**

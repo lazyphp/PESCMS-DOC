@@ -46,7 +46,7 @@
 
                                         <?php if ($label->checkAuth('Create-DELETE-Doc-action') === true): ?>
                                         <li>
-                                            <a href="" ><i class="am-icon-remove"></i> 删除文档</a>
+                                            <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="javascript:;" data="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $label->xss($value["doc_id"]), 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))) ?>" ><i class="am-icon-remove"></i> 删除文档</a>
                                         </li>
                                         <?php endif; ?>
                                     </ul>
