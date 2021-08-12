@@ -357,7 +357,7 @@
             var id = '<?= $doc['doc_id'] ?>';
 
             $.ajaxSubmit({
-                url: 'http://www.doc.com/?g=Create&m=Doc&a=version',
+                url: '/?g=Create&m=Doc&a=version',
                 method: 'POST',
                 data: {id: id, number: number, empty: empty}
             });

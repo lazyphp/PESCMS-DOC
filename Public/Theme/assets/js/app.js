@@ -38,7 +38,7 @@ $(function () {
 
         $.ajax({
             url: obj.url,
-            method: obj.method,
+            type: obj.method,
             data: obj.data,
             dataType: obj.dataType,
             timeout: obj.timeout,
@@ -86,13 +86,21 @@ $(function () {
                             msg = res.responseJSON.msg;
                             break;
                         case 302:
-                            dialogOption.content = '<i class="am-icon-refresh am-icon-spin"></i>  系统将为您重定向新页面...';
-                            dialogOption.skin = 'submit-success';
-                            setTimeout(function () {
-                                window.location.href = res.responseJSON.url;
-                            }, 2000);
+                            var redirectDialog = dialog({
+                                title: '重定向提示',
+                                content: '<i class="am-icon-refresh am-icon-spin"></i> '+res.responseJSON.msg,
+                                skin:'submit-success',
+                                id:'redirectDialog',
+                                fixed: true,
+                                okValue: '新窗口打开',
+                                ok: function () {
+                                    window.open(res.responseJSON.url)
+                                    return false;
+                                },
+                            });
+                            redirectDialog.showModal();
                             obj.error(res, dialogOption)
-                            return false;
+
                     }
 
                 } catch (e) {

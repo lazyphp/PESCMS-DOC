@@ -308,13 +308,15 @@ class Controller {
 
     /**
      * 以302方式跳转页面
+     * @param $url 跳转的地址
+     * @param string $msg 提示信息 | 默认 系统将为您重定向新页面...
      */
-    protected static function jump($url) {
+    protected static function jump($url, $msg = '系统将为您重定向新页面...') {
         if(\Core\Func\CoreFunc::X_REQUESTED_WITH() === false){
             header("Location:{$url}");
         }else{
             header("HTTP/1.1 302 Page redirect");
-            \Core\Func\CoreFunc::isAjax(['msg' => 'Page redirect',], '302', $url);
+            \Core\Func\CoreFunc::isAjax(['msg' => $msg], '302', $url);
         }
         exit;
     }
