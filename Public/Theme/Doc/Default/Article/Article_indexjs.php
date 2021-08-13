@@ -61,7 +61,7 @@
                     } else if (nodeName.substr(1) < parent.substr(-1)) {
 
                         i++;
-                        if($('.nav-index-'+$(this)[0].nodeName).last()){
+                        if($('.nav-index-'+$(this)[0].nodeName).last().length > 0){
                             var element = $('.nav-index-'+$(this)[0].nodeName).last();
                         }else{
                             var element = $(parent).parent().parent('li')
