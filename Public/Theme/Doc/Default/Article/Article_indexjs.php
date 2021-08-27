@@ -92,10 +92,23 @@
                     return;
                 }
 
-                $('.content').css({'margin-right': '350px'});
+                var openWidth = $('.title-nav').attr('data') == '0' ? 0 : 300;
 
-                $('.title-nav').animate({width: '300px'}, 500, function (){
-                    $(this).find('i').attr('class', 'am-icon-angle-double-right');
+                $('.content').css({'margin-right': (openWidth + 50) +'px'});
+
+                $('.title-nav').animate({width: openWidth + 'px'}, 500, function (){
+                    if(openWidth > 0){
+                        $(this).find('i').attr('class', 'am-icon-angle-double-right');
+                    }
+
+
+                    //标题导航刷新后，进行锚点跳转。假定URL锚点参数。
+                    if(window.location.hash.length > 0){
+                        var anchorPoint = window.location.href;
+                        window.location.href = anchorPoint;
+                    }
+
+
                 })
             }
 

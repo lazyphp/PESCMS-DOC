@@ -50,8 +50,8 @@
     </section>
     <!--内容区-->
 
-    <nav class="title-nav am-show-lg-only">
-        <div class="title-nav-hide" title="收起标题导航" data="0"><i class="am-icon-angle-double-left"></i></div>
+    <nav class="title-nav am-show-lg-only" data="<?= $doc['doc_open_nav'] ?>">
+        <div class="title-nav-hide" title="<?= $doc['doc_open_nav'] == '0' ? '展开标题导航' : '收起标题导航' ?>" data="<?= $doc['doc_open_nav'] == '0' ? '1' : '0' ?>"><i class="am-icon-angle-double-left"></i></div>
         <div class="title-nav-content">
             <ul>
 
