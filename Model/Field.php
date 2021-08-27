@@ -126,6 +126,7 @@ class Field extends \Core\Model\Model {
                 return ['TYPE' => ' VARCHAR( 32 ) ', 'DEFAULT' => " DEFAULT '' "];
             case 'textarea':
             case 'editor':
+            case 'markdown':
             case 'img':
             case 'file':
                 return ['TYPE' => ' TEXT ', 'DEFAULT' => ""];

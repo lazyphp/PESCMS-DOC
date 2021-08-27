@@ -22,7 +22,7 @@ class ModelManage extends \Core\Model\Model {
      * @return mixed
      */
     public static function findModel($value, $condition = 'model_id') {
-        return self::db('model')->where("{$condition} = :$condition")->find(array($condition => $value));
+        return self::db('model')->where("{$condition} = :$condition")->find([$condition => $value]);
     }
 
     /**
@@ -33,7 +33,7 @@ class ModelManage extends \Core\Model\Model {
      */
     public static function deleteFromModelId($model, $id) {
         $model = strtolower($model);
-        return self::db($model)->where("{$model}_id = :{$model}_id")->delete(array("{$model}_id" => $id));
+        return self::db($model)->where("{$model}_id = :{$model}_id")->delete(["{$model}_id" => $id]);
     }
 
     /**
@@ -45,24 +45,59 @@ class ModelManage extends \Core\Model\Model {
      */
     public static function updateSortFromModel($model, $id, $sortValue) {
         $model = strtolower($model);
-        return self::db($model)->where("{$model}_id = :{$model}_id")->update(array("{$model}_listsort" => $sortValue, 'noset' => array("{$model}_id" => $id)));
+        return self::db($model)->where("{$model}_id = :{$model}_id")->update(["{$model}_listsort" => $sortValue, 'noset' => ["{$model}_id" => $id]]);
     }
 
     /**
      * 设置预设的模型字段
      */
     public static function setInitField($modelId) {
-        $setStatus = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'status', 'field_display_name' => '状态', 'field_type' => 'radio', 'field_option' => '{"\u7981\u7528":"0","\u542f\u7528":"1"}', 'field_default' => '1', 'field_required' => '1', 'field_listsort' => '100', 'field_list' => 1, 'field_form' => 1, 'field_status' => '1'));
+        $setStatus = self::db('field')->insert([
+            'field_model_id'     => $modelId,
+            'field_name'         => 'status',
+            'field_display_name' => '状态',
+            'field_type'         => 'radio',
+            'field_option'       => '{"\u7981\u7528":"0","\u542f\u7528":"1"}',
+            'field_default'      => '1',
+            'field_required'     => '1',
+            'field_listsort'     => '100',
+            'field_list'         => 1,
+            'field_form'         => 1,
+            'field_status'       => '1',
+            'field_action'       => 'POST,PUT',
+        ]);
         if ($setStatus === false) {
             self::error('设置预设字段失败');
         }
 
-        $setListsort = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'listsort', 'field_display_name' => '排序', 'field_type' => 'text', 'field_option' => '', 'field_listsort' => '98', 'field_list' => 1, 'field_form' => 1, 'field_status' => '1'));
+        $setListsort = self::db('field')->insert([
+            'field_model_id'     => $modelId,
+            'field_name'         => 'listsort',
+            'field_display_name' => '排序',
+            'field_type'         => 'text',
+            'field_option'       => '',
+            'field_listsort'     => '98',
+            'field_list'         => 1,
+            'field_form'         => 1,
+            'field_status'       => '1',
+            'field_action'       => 'POST,PUT',
+        ]);
         if ($setListsort === false) {
             self::error('设置预设字段失败');
         }
 
-        $setCreatetime = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'createtime', 'field_display_name' => '创建时间', 'field_type' => 'date', 'field_option' => '', 'field_listsort' => '99', 'field_list' => 1, 'field_form' => 1, 'field_status' => '1'));
+        $setCreatetime = self::db('field')->insert([
+            'field_model_id'     => $modelId,
+            'field_name'         => 'createtime',
+            'field_display_name' => '创建时间',
+            'field_type'         => 'date',
+            'field_option'       => '',
+            'field_listsort'     => '99',
+            'field_list'         => 1,
+            'field_form'         => 1,
+            'field_status'       => '1',
+            'field_action'       => 'POST,PUT',
+        ]);
         if ($setCreatetime === false) {
             self::error('设置预设字段失败');
         }
@@ -92,47 +127,48 @@ class ModelManage extends \Core\Model\Model {
      * 创建模型的基础权限节点
      * @param $modelId
      */
-    public static function createNode($modelId, $model){
+    public static function createNode($modelId, $model) {
         //后台模型才创建权限节点
-        if($_POST['attr'] != 2){
+        if ($_POST['attr'] != 2) {
             return true;
         }
 
         $title = self::p('title');
 
-        $nodeID = self::db('node')->insert([
-            'node_name' => $title,
-            'node_parent' => '0',
-            'node_msg' => '',
-            'node_method_type' => 'GET',
-            'node_value' => ucfirst($model),
-            'node_listsort' => $modelId * 100,
-        ]);
 
         //列表页节点
-        self::db('node')->insert([
-            'node_name' => $title.'列表',
-            'node_parent' => $nodeID,
-            'node_msg' => '',
-            'node_method_type' => 'GET',
-            'node_value' => 'index',
-            'node_check_value' => GROUP.'GET'.ucfirst($model).'action',
-            'node_controller' => $nodeID,
+        $nodeID = self::db('node')->insert([
+            'node_name'      => $title . '列表',
+            'node_parent'    => 4,
+            'node_verify'    => 1,
+            'node_value'     => GROUP . '-GET-' . ucfirst($model) . '-index',
+            'node_listsort'  => '9999',
+            'node_is_menu'   => '1',
+            'node_link_type' => '0',
+            'node_link'      => GROUP . '-' . ucfirst($model) . '-index',
+            'node_menu_icon' => 'am-icon-file',
         ]);
 
         //CURD节点
         $i = 1;
-        foreach (['GET' => '新增/编辑', 'POST' =>'请求新增', 'PUT' => '请求更新', 'DELETE' => '请求删除'] as $method => $name){
+        foreach (['GET' => '新增/编辑', 'POST' => '创建', 'PUT' => '更新', 'DELETE' => '删除'] as $method => $name) {
             self::db('node')->insert([
-                'node_name' => $name.$title,
-                'node_parent' => $nodeID,
-                'node_method_type' => $method,
-                'node_value' => 'action',
-                'node_check_value' => GROUP.$method.ucfirst($model).'action',
-                'node_controller' => $nodeID,
+                'node_name'     => $name . $title,
+                'node_parent'   => $nodeID,
+                'node_verify'   => 1,
+                'node_value'    => GROUP . "-{$method}-" . ucfirst($model) . '-action',
                 'node_listsort' => $i++,
             ]);
         }
+
+        //排序节点
+        self::db('node')->insert([
+            'node_name'     => '排序' . $title,
+            'node_parent'   => $nodeID,
+            'node_verify'   => 1,
+            'node_value'    => GROUP . "-{$method}-" . ucfirst($model) . '-listsort',
+            'node_listsort' => $i++,
+        ]);
 
     }
 
@@ -140,7 +176,7 @@ class ModelManage extends \Core\Model\Model {
      * 删除模型
      */
     public static function deleteModel($modelId) {
-        return self::db('model')->where('model_id = :model_id')->delete(array('model_id' => $modelId));
+        return self::db('model')->where('model_id = :model_id')->delete(['model_id' => $modelId]);
     }
 
     /**

@@ -25,15 +25,6 @@ class Model extends Content {
         $modelName = $this->p('name');
 
         /**
-         * 插入模型菜单
-         */
-        $addMenuResult = \Model\Menu::insertMenu(['menu_name' => $this->p('title'), 'menu_pid' => '9', 'menu_link' => GROUP . "-".ucfirst($modelName)."-index"]);
-        if ($addMenuResult === false) {
-            $this->db()->rollBack();
-            $this->error('插入菜单失败');
-        }
-
-        /**
          * 插入初始化的字段
          */
         \Model\ModelManage::setInitField($modelId);

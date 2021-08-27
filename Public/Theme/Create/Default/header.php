@@ -27,6 +27,10 @@
     <script>
         var PESCMS_URL = '<?= PESCMS_URL ?>';
         var PESCMS_PATH = '<?= DOCUMENT_ROOT; ?>';
+        //MD编辑器渲染作用
+        var pesMD = {};
+        //MD编辑器上传路径
+        var pesMDUploadURL = '<?= $label->url('Create-Upload-mdUpload', ['method' => 'POST']) ?>';
     </script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.min.js?v=<?= $resources ?>"></script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.min.js?v=<?= $resources ?>"></script>

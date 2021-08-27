@@ -347,15 +347,21 @@ class Controller {
      * 验证令牌
      */
     protected static function checkToken() {
-        if (empty($_REQUEST['token'])) {
-            self::error('令牌不存在，无法校验数据一致性。');
+        $token = self::handleData($_REQUEST['token']);
+        if (empty($token)) {
+            self::error('令牌丢失，请再次提交或刷新当前页面');
         }
 
-        if ($_REQUEST['token'] != self::session()->get('token')) {
-            self::error('提交数据超时，请再次提交。');
-        }
+        $tokenArray = \Core\Func\CoreFunc::session()->get('token');
 
-        self::session()->delete('token');
+
+        if (!in_array($token, $tokenArray)) {
+            self::error('您提交了一个过时或者不存在的令牌，请再次提交或刷新当前页面。');
+        }elseif(\Core\Func\CoreFunc::checkTokenExpired($tokenArray[$token]) == true){
+            self::error('您提交的令牌已过时，请再次提交数据。');
+        }
+        unset($tokenArray[$token]);
+        \Core\Func\CoreFunc::session()->set('token', $tokenArray);
     }
 
     /**

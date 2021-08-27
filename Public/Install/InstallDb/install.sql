@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2021-08-10 10:18:28
+-- 生成日期： 2021-09-06 10:38:55
 -- 服务器版本： 5.6.44-log
 -- PHP 版本： 5.6.40
 
@@ -76,8 +76,28 @@ CREATE TABLE `pes_article_content_history` (
   `article_content_md` mediumtext NOT NULL COMMENT 'MD文档保留的格式',
   `article_content_editor` tinyint(1) NOT NULL COMMENT '使用的编辑器 0: HTML 1: MD	',
   `article_content_time` int(11) NOT NULL COMMENT '创建时间',
-  `history_time` int(11) NOT NULL COMMENT '历史记录时间'
+  `history_time` int(11) NOT NULL COMMENT '历史记录时间',
+  `article_keyword` varchar(255) NOT NULL,
+  `article_description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `pes_article_template`
+--
+
+CREATE TABLE `pes_article_template` (
+  `article_template_id` int(11) NOT NULL,
+  `article_template_listsort` int(11) NOT NULL DEFAULT '0',
+  `article_template_md_render` int(11) NOT NULL DEFAULT '0',
+  `article_template_status` tinyint(4) NOT NULL DEFAULT '0',
+  `article_template_createtime` int(11) NOT NULL DEFAULT '0',
+  `article_template_name` varchar(255) NOT NULL DEFAULT '',
+  `article_template_code` varchar(255) NOT NULL DEFAULT '',
+  `article_template_uetemplate` text NOT NULL,
+  `article_template_mdtemplate` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -119,7 +139,8 @@ CREATE TABLE `pes_doc` (
   `doc_open` int(11) NOT NULL DEFAULT '0',
   `doc_read_organize` varchar(255) NOT NULL DEFAULT '',
   `doc_view` int(11) NOT NULL COMMENT '文档阅读次数',
-  `doc_like` int(11) NOT NULL COMMENT '点赞次数'
+  `doc_like` int(11) NOT NULL COMMENT '点赞次数',
+  `doc_open_nav` int(11) NOT NULL COMMENT '是否展开标题导读'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -173,7 +194,7 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (5, 1, 'status', '模型状态', 'radio', '{\"\\u542f\\u7528\":\"1\",\"\\u7981\\u7528\":\"0\"}', '', '', 1, 5, 1, 1, 1, 0, 0, 'POST,PUT'),
 (6, 1, 'page', '分页数', 'text', '', '', '10', 1, 5, 1, 1, 1, 0, 0, 'POST,PUT'),
 (7, 2, 'model_id', '模型ID', 'text', '', '', '', 1, 0, 0, 0, 1, 0, 0, 'POST,PUT'),
-(8, 2, 'type', '字段类型', 'select', '{&quot;\\u5206\\u7c7b&quot;:&quot;category&quot;,&quot;\\u5355\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;text&quot;,&quot;\\u591a\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;textarea&quot;,&quot;\\u5355\\u9009\\u6309\\u94ae&quot;:&quot;radio&quot;,&quot;\\u590d\\u9009\\u6846&quot;:&quot;checkbox&quot;,&quot;\\u5355\\u9009\\u4e0b\\u62c9\\u6846&quot;:&quot;select&quot;,&quot;\\u591a\\u9009\\u4e0b\\u62c9\\u6846&quot;:&quot;multiple&quot;,&quot;\\u7f16\\u8f91\\u5668&quot;:&quot;editor&quot;,&quot;\\u7f29\\u7565\\u56fe&quot;:&quot;thumb&quot;,&quot;\\u4e0a\\u4f20\\u56fe\\u7ec4&quot;:&quot;img&quot;,&quot;\\u4e0a\\u4f20\\u6587\\u4ef6&quot;:&quot;file&quot;,&quot;\\u65e5\\u671f&quot;:&quot;date&quot;,&quot;\\u9009\\u9879\\u503c&quot;:&quot;option&quot;}', '', '', 1, 1, 1, 1, 1, 0, 0, 'POST,PUT'),
+(8, 2, 'type', '字段类型', 'select', '{&quot;\\u5206\\u7c7b&quot;:&quot;category&quot;,&quot;\\u5355\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;text&quot;,&quot;\\u591a\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;textarea&quot;,&quot;\\u5355\\u9009\\u6309\\u94ae&quot;:&quot;radio&quot;,&quot;\\u590d\\u9009\\u6846&quot;:&quot;checkbox&quot;,&quot;\\u5355\\u9009\\u4e0b\\u62c9\\u6846&quot;:&quot;select&quot;,&quot;\\u591a\\u9009\\u4e0b\\u62c9\\u6846&quot;:&quot;multiple&quot;,&quot;\\u5bcc\\u6587\\u672c\\u7f16\\u8f91\\u5668&quot;:&quot;editor&quot;,&quot;MD\\u7f16\\u8f91\\u5668&quot;:&quot;markdown&quot;,&quot;\\u7f29\\u7565\\u56fe&quot;:&quot;thumb&quot;,&quot;\\u4e0a\\u4f20\\u56fe\\u7ec4&quot;:&quot;img&quot;,&quot;\\u4e0a\\u4f20\\u6587\\u4ef6&quot;:&quot;file&quot;,&quot;\\u65e5\\u671f&quot;:&quot;date&quot;,&quot;\\u9009\\u9879\\u503c&quot;:&quot;option&quot;}', '', '', 1, 1, 1, 1, 1, 0, 0, 'POST,PUT'),
 (9, 2, 'name', '字段名称', 'text', '', '', '', 1, 2, 1, 1, 1, 0, 0, 'POST,PUT'),
 (10, 2, 'display_name', '显示名称', 'text', '', '', '', 1, 3, 1, 1, 1, 0, 0, 'POST,PUT'),
 (11, 2, 'option', '选项值', 'textarea', '', '选填， 选填， 此处若没有特殊说明，必须 名称|值 填写、且一行一个选项值，否则将导致数据异常!  注意:目前选项适用于单选，复选，下拉菜单。其余功能填写也不会产生任何实际效果。', '', 0, 4, 0, 1, 1, 0, 0, 'POST,PUT'),
@@ -233,7 +254,16 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (80, 13, 'menu_icon', '菜单图标', 'text', '', '', 'am-icon-file', 1, 5, 0, 1, 1, 0, 0, 'POST,PUT'),
 (81, 5, 'open', '开放阅读', 'radio', '{&quot;\\u5f00\\u653e\\u9605\\u8bfb&quot;:&quot;0&quot;,&quot;\\u767b\\u5f55\\u9605\\u8bfb&quot;:&quot;1&quot;}', '', '', 1, 4, 1, 1, 1, 0, 0, 'POST,PUT'),
 (82, 5, 'read_organize', '可阅读用户分组', 'checkbox', '{\"\\u7cfb\\u7edf\\u7ba1\\u7406\\u7ec4\":1,\"\\u6587\\u6863\\u7ef4\\u62a4\\u7ec4\":2,\"\\u8bbf\\u5ba2\":3}', '', '', 0, 5, 1, 1, 1, 0, 0, 'POST,PUT'),
-(83, 20, 'editor', '首选编辑器', 'radio', '{&quot;\\u5bcc\\u6587\\u672c\\u7f16\\u8f91\\u5668&quot;:&quot;0&quot;,&quot;MD\\u7f16\\u8f91\\u5668&quot;:&quot;1&quot;}', '', '', 1, 10, 0, 1, 1, 0, 0, 'POST,PUT');
+(83, 20, 'editor', '首选编辑器', 'radio', '{&quot;\\u5bcc\\u6587\\u672c\\u7f16\\u8f91\\u5668&quot;:&quot;0&quot;,&quot;MD\\u7f16\\u8f91\\u5668&quot;:&quot;1&quot;}', '', '', 1, 10, 0, 1, 1, 0, 0, 'POST,PUT'),
+(84, 5, 'open_nav', '是否展开标题导读', 'radio', '{&quot;\\u6536\\u8d77&quot;:&quot;0&quot;,&quot;\\u5c55\\u5f00&quot;:&quot;1&quot;}', '若当前使用的模板支持标题导读生成，则本功能属于控制是否默认展开。', '', 1, 10, 1, 1, 1, 0, 0, 'POST,PUT'),
+(85, 27, 'status', '状态', 'radio', '{&quot;\\u7981\\u7528&quot;:&quot;0&quot;,&quot;\\u542f\\u7528&quot;:&quot;1&quot;}', '', '1', 1, 100, 1, 1, 1, 0, 0, 'POST,PUT'),
+(86, 27, 'listsort', '排序', 'text', '', '', '', 0, 98, 1, 1, 1, 0, 0, 'POST,PUT'),
+(87, 27, 'createtime', '创建时间', 'date', '', '', '', 0, 99, 1, 1, 1, 0, 0, 'POST,PUT'),
+(88, 27, 'name', '模板名称', 'text', '', '', '', 1, 1, 1, 1, 1, 0, 0, 'POST,PUT'),
+(89, 27, 'code', '模板代码', 'text', '', '模板代码需要是唯一值，您在文档调用时，请用大括号括着您的模板代码。如模板代码：node ，那么在文档内容中调用则是：{node}', '', 1, 2, 1, 1, 1, 0, 1, 'POST,PUT'),
+(90, 27, 'uetemplate', '富文本编辑器内容', 'editor', '', '', '', 0, 4, 0, 1, 1, 0, 0, 'POST,PUT'),
+(91, 27, 'mdtemplate', 'MD编辑器内容', 'markdown', '', '', '', 0, 5, 0, 1, 1, 0, 0, 'POST,PUT'),
+(92, 27, 'md_render', 'MD格式渲染', 'radio', '{&quot;\\u9ed8\\u8ba4-\\u5bcc\\u6587\\u672c\\u548cMD\\u5404\\u81ea\\u586b\\u5199&quot;:&quot;0&quot;,&quot;\\u5bcc\\u6587\\u672c\\u5185\\u5bb9\\u4ee5MD\\u7f16\\u8f91\\u5668\\u586b\\u5145&quot;:&quot;1&quot;}', '若您编写的文档以富文本编辑器编写，请选择默认的选项即可。若您编写的文档以MD编辑器发布，请选择‘富文本内容以MD编辑器填充’选项。由于篇幅限制具体原因请查看官方文档说明。', '', 1, 6, 1, 1, 1, 0, 0, 'POST,PUT');
 
 -- --------------------------------------------------------
 
@@ -342,7 +372,8 @@ INSERT INTO `pes_model` (`model_id`, `model_name`, `model_title`, `model_status`
 (13, 'Node', '权限节点管理', 1, 1, 2, 10),
 (20, 'Member', '用户管理', 1, 1, 1, 10),
 (24, 'attachment', '附件管理', 1, 0, 2, 30),
-(26, 'member_organize', '用户分组', 1, 0, 2, 10);
+(26, 'member_organize', '用户分组', 1, 0, 2, 10),
+(27, 'Article_template', '文档通用模板', 1, 0, 2, 10);
 
 -- --------------------------------------------------------
 
@@ -447,7 +478,13 @@ INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `n
 (79, '安装应用', 77, 1, NULL, 'Create-GET-Application-install', 1, 0, 0, '', 'am-icon-file'),
 (80, '升级应用', 78, 1, NULL, 'Create-GET-Application-upgrade', 1, 0, 0, '', 'am-icon-file'),
 (81, '查看用户分组权限', 27, 1, '', 'Create-GET-Member_organize-setAuth', 1, 0, 0, '', 'am-icon-file'),
-(82, '设置用户分组权限', 27, 1, '', 'Create-PUT-Member_organize-setAuth', 1, 0, 0, '', 'am-icon-file');
+(82, '设置用户分组权限', 27, 1, '', 'Create-PUT-Member_organize-setAuth', 1, 0, 0, '', 'am-icon-file'),
+(83, '文档通用模板列表', 4, 1, NULL, 'Create-GET-Article_template-index', 10, 1, 0, 'Create-Article_template-index', 'am-icon-bookmark'),
+(84, '新增/编辑文档通用模板', 83, 1, NULL, 'Create-GET-Article_template-action', 1, 0, 0, '', ''),
+(85, '创建文档通用模板', 83, 1, NULL, 'Create-POST-Article_template-action', 2, 0, 0, '', ''),
+(86, '更新文档通用模板', 83, 1, NULL, 'Create-PUT-Article_template-action', 3, 0, 0, '', ''),
+(87, '删除文档通用模板', 83, 1, NULL, 'Create-DELETE-Article_template-action', 4, 0, 0, '', ''),
+(88, '排序文档通用模板', 83, 1, NULL, 'Create-DELETE-Article_template-listsort', 5, 0, 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -487,85 +524,91 @@ INSERT INTO `pes_node_group` (`node_group_id`, `member_organize_id`, `node_id`) 
 (86, 2, 14),
 (87, 2, 20),
 (88, 2, 18),
-(166, 1, 2),
-(167, 1, 7),
-(168, 1, 8),
-(169, 1, 9),
-(170, 1, 10),
-(171, 1, 63),
-(172, 1, 28),
-(173, 1, 11),
-(174, 1, 29),
-(175, 1, 19),
-(176, 1, 21),
-(177, 1, 22),
-(178, 1, 23),
-(179, 1, 15),
-(180, 1, 12),
-(181, 1, 16),
-(182, 1, 17),
-(183, 1, 13),
-(184, 1, 14),
-(185, 1, 20),
-(186, 1, 18),
-(187, 1, 3),
-(188, 1, 26),
-(189, 1, 30),
-(190, 1, 31),
-(191, 1, 32),
-(192, 1, 33),
-(193, 1, 27),
-(194, 1, 82),
-(195, 1, 81),
-(196, 1, 34),
-(197, 1, 35),
-(198, 1, 36),
-(199, 1, 37),
-(200, 1, 4),
-(201, 1, 5),
-(202, 1, 76),
-(203, 1, 24),
-(204, 1, 40),
-(205, 1, 41),
-(206, 1, 42),
-(207, 1, 43),
-(208, 1, 62),
-(209, 1, 25),
-(210, 1, 44),
-(211, 1, 45),
-(212, 1, 46),
-(213, 1, 47),
-(214, 1, 61),
-(215, 1, 64),
-(216, 1, 65),
-(217, 1, 66),
-(218, 1, 67),
-(219, 1, 68),
-(220, 1, 69),
-(221, 1, 73),
-(222, 1, 75),
-(223, 1, 74),
-(224, 1, 77),
-(225, 1, 79),
-(226, 1, 78),
-(227, 1, 80),
-(228, 1, 70),
-(229, 1, 72),
-(230, 1, 38),
-(231, 1, 39),
-(232, 1, 48),
-(233, 1, 49),
-(234, 1, 50),
-(235, 1, 51),
-(236, 1, 57),
-(237, 1, 58),
-(238, 1, 59),
-(239, 1, 52),
-(240, 1, 53),
-(241, 1, 54),
-(242, 1, 55),
-(243, 1, 56),
-(244, 1, 60);
+(245, 1, 2),
+(246, 1, 7),
+(247, 1, 8),
+(248, 1, 9),
+(249, 1, 10),
+(250, 1, 63),
+(251, 1, 28),
+(252, 1, 11),
+(253, 1, 29),
+(254, 1, 19),
+(255, 1, 21),
+(256, 1, 22),
+(257, 1, 23),
+(258, 1, 15),
+(259, 1, 12),
+(260, 1, 16),
+(261, 1, 17),
+(262, 1, 13),
+(263, 1, 14),
+(264, 1, 20),
+(265, 1, 18),
+(266, 1, 3),
+(267, 1, 26),
+(268, 1, 30),
+(269, 1, 31),
+(270, 1, 32),
+(271, 1, 33),
+(272, 1, 27),
+(273, 1, 82),
+(274, 1, 81),
+(275, 1, 34),
+(276, 1, 35),
+(277, 1, 36),
+(278, 1, 37),
+(279, 1, 4),
+(280, 1, 5),
+(281, 1, 76),
+(282, 1, 24),
+(283, 1, 40),
+(284, 1, 41),
+(285, 1, 42),
+(286, 1, 43),
+(287, 1, 62),
+(288, 1, 25),
+(289, 1, 44),
+(290, 1, 45),
+(291, 1, 46),
+(292, 1, 47),
+(293, 1, 61),
+(294, 1, 64),
+(295, 1, 65),
+(296, 1, 66),
+(297, 1, 67),
+(298, 1, 68),
+(299, 1, 69),
+(300, 1, 73),
+(301, 1, 75),
+(302, 1, 74),
+(303, 1, 77),
+(304, 1, 79),
+(305, 1, 78),
+(306, 1, 80),
+(307, 1, 83),
+(308, 1, 84),
+(309, 1, 85),
+(310, 1, 86),
+(311, 1, 87),
+(312, 1, 88),
+(313, 1, 70),
+(314, 1, 72),
+(315, 1, 38),
+(316, 1, 39),
+(317, 1, 48),
+(318, 1, 49),
+(319, 1, 50),
+(320, 1, 51),
+(321, 1, 57),
+(322, 1, 58),
+(323, 1, 59),
+(324, 1, 52),
+(325, 1, 53),
+(326, 1, 54),
+(327, 1, 55),
+(328, 1, 56),
+(329, 1, 60);
 
 -- --------------------------------------------------------
 
@@ -665,6 +708,12 @@ ALTER TABLE `pes_article_content`
 ALTER TABLE `pes_article_content_history`
   ADD PRIMARY KEY (`history_id`),
   ADD KEY `article_id` (`article_id`);
+
+--
+-- 表的索引 `pes_article_template`
+--
+ALTER TABLE `pes_article_template`
+  ADD PRIMARY KEY (`article_template_id`);
 
 --
 -- 表的索引 `pes_attachment`
@@ -776,6 +825,12 @@ ALTER TABLE `pes_article_content_history`
   MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- 使用表AUTO_INCREMENT `pes_article_template`
+--
+ALTER TABLE `pes_article_template`
+  MODIFY `article_template_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- 使用表AUTO_INCREMENT `pes_attachment`
 --
 ALTER TABLE `pes_attachment`
@@ -797,7 +852,7 @@ ALTER TABLE `pes_doc_version`
 -- 使用表AUTO_INCREMENT `pes_field`
 --
 ALTER TABLE `pes_field`
-  MODIFY `field_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `field_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- 使用表AUTO_INCREMENT `pes_findpassword`
@@ -827,19 +882,19 @@ ALTER TABLE `pes_menu`
 -- 使用表AUTO_INCREMENT `pes_model`
 --
 ALTER TABLE `pes_model`
-  MODIFY `model_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `model_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- 使用表AUTO_INCREMENT `pes_node`
 --
 ALTER TABLE `pes_node`
-  MODIFY `node_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `node_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- 使用表AUTO_INCREMENT `pes_node_group`
 --
 ALTER TABLE `pes_node_group`
-  MODIFY `node_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=245;
+  MODIFY `node_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=330;
 
 --
 -- 使用表AUTO_INCREMENT `pes_option`

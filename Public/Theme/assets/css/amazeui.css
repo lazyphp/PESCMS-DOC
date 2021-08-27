@@ -1,4 +1,4 @@
-/*! Amaze UI for PESCMS magic reform v3.0.0 | by Amaze UI Team and PESCMS | (c) 2021 AllMobilize, Inc, PESCMS. | Licensed under MIT | 2021-08-01T19:21:04-0700 */
+/*! Amaze UI for PESCMS magic reform v3.0.0 | by Amaze UI Team and PESCMS | (c) 2021 AllMobilize, Inc, PESCMS. | Licensed under MIT | 2021-09-05T20:29:39-0700 */
 /* ==========================================================================
    Component: Base
  ============================================================================ */
@@ -510,19 +510,19 @@ h1 {
   font-size: 2em;
 }
 h2 {
-  font-size: 1.5em;
+  font-size: 1.6em;
 }
 h3 {
-  font-size: 1.25em;
+  font-size: 1.3em;
 }
 h4 {
-  font-size: 1em;
+  font-size: 1.12em;
 }
 h5 {
-  font-size: 0.91em;
+  font-size: 0.96em;
 }
 h6 {
-  font-size: 0.85em;
+  font-size: 0.89em;
 }
 * + h1,
 * + h2,
@@ -584,7 +584,6 @@ blockquote {
   padding: 1.666em;
   background: #ecf8ff;
   border-left: 5px solid #50bfff;
-  font-family: Georgia, "Times New Roman", Times, Kai, "Kaiti SC", KaiTi, BiauKai, "FontAwesome", serif;
   /* Smaller margin if `small` follows */
 }
 blockquote ul,
@@ -4035,9 +4034,6 @@ fieldset[disabled] .am-checkbox-inline {
   margin-top: 2.4rem;
 }
 /* Sub-object `.@{ns}article-bd` */
-.am-article-bd blockquote {
-  font-family: Georgia, "Times New Roman", Times, Kai, "Kaiti SC", KaiTi, BiauKai, "FontAwesome", serif;
-}
 .am-article-bd img {
   display: unset;
   max-width: 100%;

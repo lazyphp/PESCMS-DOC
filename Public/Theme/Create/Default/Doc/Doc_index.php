@@ -25,7 +25,7 @@
                         <hr/>
                         <div class="am-g am-g-collapse">
                             <div class="am-u-sm-6">
-                                <time class="time"><?= date('Y-m-d', $value['doc_createtime']) ?></time>
+                                <time class="time am-text-middle"><?= date('Y-m-d', $value['doc_createtime']) ?></time>
                             </div>
                             <div class="am-u-sm-6 am-text-right">
                                 <div class="am-dropdown" data-am-dropdown>
@@ -40,11 +40,16 @@
 
                                         <?php if ($label->checkAuth('Create-GET-Article-index') === true): ?>
                                         <li>
-                                            <a href="<?= $label->url('Create-Article-index', ['id' => $value['doc_id']]) ?>" ><i class="am-icon-pencil"></i> 编写文档</a>
+                                            <a href="<?= $label->url('Create-Article-index', ['id' => $value['doc_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" ><i class="am-icon-pencil"></i> 编写文档</a>
                                         </li>
                                         <?php endif; ?>
 
+                                        <li>
+                                            <a href="<?= $label->url('Doc-Article-index', ['id' => $value['doc_id']]) ?>" target="_blank" ><i class="am-icon-external-link"></i> 预览文档</a>
+                                        </li>
+
                                         <?php if ($label->checkAuth('Create-DELETE-Doc-action') === true): ?>
+                                        <li class="am-divider"></li>
                                         <li>
                                             <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="javascript:;" data="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $label->xss($value["doc_id"]), 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))) ?>" ><i class="am-icon-remove"></i> 删除文档</a>
                                         </li>

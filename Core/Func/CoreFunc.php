@@ -233,8 +233,7 @@ class CoreFunc {
         $status['waitSecond'] = $waitSecond;
 
         if(empty($_REQUEST['keepToken'])){
-            $token = md5(\Model\Extra::getOnlyNumber());
-            self::session()->set('token', $token);
+            $token = self::token();
             $status['token'] = $token;
         }
 
@@ -281,13 +280,56 @@ class CoreFunc {
      * @return string
      */
     public static function token(){
-        self::$token = \Core\Func\CoreFunc::session()->get('token');
+        $tokenArray = \Core\Func\CoreFunc::session()->get('token');
+        if(empty($tokenArray)){
+            $tokenArray = [];
+        }
+
+        //系统默认只保存30个token
+        if(count($tokenArray) > 30){
+            array_shift($tokenArray);
+            //当最后一个token都已过时，则全部清空。
+            if(self::checkTokenExpired(end($tokenArray)) == true){
+                \Core\Func\CoreFunc::session()->delete('token');
+                self::$token = NULL;
+                $tokenArray = [];
+            }
+        }
+
         if(empty(self::$token)){
             list($usec, $sec) = explode(" ", microtime());
-            self::$token = md5(substr($usec, 2) * rand(1, 100));
-            \Core\Func\CoreFunc::session()->set('token', self::$token);
+            $shelfLife = time() * self::tokenTimeSalt();
+            self::$token = md5(substr($usec, 2) * rand(1, 100))."_{$shelfLife}";
+            \Core\Func\CoreFunc::session()->set('token', array_merge($tokenArray, [self::$token => self::$token]));
         }
+
+
+
         return self::$token;
+    }
+
+    /**
+     * 令牌的时效加盐值
+     * @return float|int
+     */
+    public static function tokenTimeSalt(){
+        $publicKey = self::loadConfig('USER_KEY');
+        $salt = ord($publicKey[0]) + ord($publicKey[1]) * ord($publicKey[2]);
+        return $salt;
+    }
+
+    /**
+     * 验证令牌是否过期
+     * @param $token
+     * @return bool
+     */
+    public static function checkTokenExpired($token){
+        $checkExpired = explode('_', $token)[1] / self::tokenTimeSalt();
+        if($checkExpired + 600 < time()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

@@ -11,6 +11,11 @@ namespace App\Create\PUT;
 
 class Article extends \Core\Controller\Controller {
 
+    public function __init() {
+        parent::__init();
+        $this->checkToken();
+    }
+
     public function index(){
 
         $aid = $this->isP('aid', '请提交要修改的文档ID');
@@ -40,6 +45,8 @@ class Article extends \Core\Controller\Controller {
             'article_content_md' => $articleContent['article_content_md'],
             'article_content_editor' => $articleContent['article_content_editor'],
             'article_content_time' => $articleContent['article_content_time'],
+            'article_keyword' => $articleContent['article_keyword'],
+            'article_description' => $articleContent['article_description'],
             'history_time' => time()
         ]);
 
@@ -59,6 +66,7 @@ class Article extends \Core\Controller\Controller {
      * 更新文档首页内容
      */
     public function doc(){
+
         $doc = \Model\Doc::findDocWithID('isP');
 
         $data['noset']['doc_id'] = $doc['doc_id'];
@@ -117,12 +125,15 @@ class Article extends \Core\Controller\Controller {
 
         //生成历史记录
         $article_json = $result['current'];
+        //移除非基础表的内容
         foreach ([
             'article_content',
             'article_content_md',
             'article_content_editor',
             'article_content_time',
             'content_id',
+            'article_keyword',
+            'article_description',
                  ] as $item){
             unset($article_json[$item]);
         }
@@ -133,6 +144,8 @@ class Article extends \Core\Controller\Controller {
             'article_content_md' => $result['current']['article_content_md'],
             'article_content_editor' => $result['current']['article_content_editor'],
             'article_content_time' => $result['current']['article_content_time'],
+            'article_keyword' => $result['current']['article_keyword'],
+            'article_description' => $result['current']['article_description'],
             'history_time' => time()
         ]);
 
