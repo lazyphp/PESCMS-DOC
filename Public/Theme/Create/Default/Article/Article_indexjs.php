@@ -56,7 +56,7 @@
                     accept: 'image/*,.mp3, .wav, .rar, .zip',
                     token: 'test',
                     multiple: false,
-                    url: '/?g=Create&m=Upload&a=mdUpload&method=POST',
+                    url: pesMDUploadURL,
                     fieldName: 'upfile',
                     success(editor, msg) {
                         var res = JSON.parse(msg);
