@@ -91,6 +91,12 @@ $SLICE_ARRYR = [
         ['\Doc\Article']
     ],
 
+    'DOC-ARTICLETEMPLATE' => [
+        'get',
+        ['Doc-Article-index'],
+        ['\Doc\ArticleTemplate']
+    ],
+
 ];
 
 //执行切片注册

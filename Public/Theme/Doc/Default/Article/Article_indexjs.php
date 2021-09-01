@@ -130,7 +130,9 @@
 
         if ($('.use-md').val() == 1) {
             try{
-                Vditor.preview(document.getElementsByClassName('am-article-bd')[0], `<?= str_replace('`', '\`', isset($article_content_md) ? $article_content_md : $doc['doc_content_md']) ?>`, {
+                Vditor.preview(document.getElementsByClassName('am-article-bd')[0], `<?= str_replace('`', '\`',
+                    htmlspecialchars_decode(str_replace($articleTemplate['replace'], $articleTemplate['md'], isset($article_content_md) ? $article_content_md : $doc['doc_content_md']))
+                ) ?>`, {
                     after() {
                         titleNavigation();
                     },

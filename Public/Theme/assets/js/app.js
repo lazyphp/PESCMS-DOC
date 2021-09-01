@@ -147,11 +147,16 @@ $(function () {
         var url = $(this).attr("action")
         var dom = $(this);
 
-        if(Object.keys(pesMD).length > 0){
-            for (var k in pesMD){
-                $('textarea[name="'+k+'"]').val(pesMD[k].getValue());
+        try{
+            if(Object.keys(pesMD).length > 0){
+                for (var k in pesMD){
+                    $('textarea[name="'+k+'"]').val(pesMD[k].getValue());
+                }
             }
+        }catch (e) {
+
         }
+
 
         $.ajaxSubmit({
             url: url,
