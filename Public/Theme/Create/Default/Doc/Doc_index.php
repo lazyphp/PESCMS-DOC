@@ -40,7 +40,7 @@
 
                                         <?php if ($label->checkAuth('Create-GET-Article-index') === true): ?>
                                         <li>
-                                            <a href="<?= $label->url('Create-Article-index', ['id' => $value['doc_id']]) ?>" ><i class="am-icon-pencil"></i> 编写文档</a>
+                                            <a href="<?= $label->url('Create-Article-index', ['id' => $value['doc_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" ><i class="am-icon-pencil"></i> 编写文档</a>
                                         </li>
                                         <?php endif; ?>
 

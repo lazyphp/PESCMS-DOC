@@ -11,6 +11,11 @@ namespace App\Create\POST;
 
 class Doc extends Content {
 
+    public function __init() {
+        parent::__init();
+        $this->checkToken();
+    }
+
     public function action($jump = false, $commit = false) {
         parent::action($jump, $commit);
         $id = $this->db()->getLastInsert;

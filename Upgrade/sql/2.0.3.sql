@@ -36,3 +36,5 @@ INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `n
 (86, '更新文档通用模板', 83, 1, NULL, 'Create-PUT-Article_template-action', 3, 0, 0, '', ''),
 (87, '删除文档通用模板', 83, 1, NULL, 'Create-DELETE-Article_template-action', 4, 0, 0, '', ''),
 (88, '排序文档通用模板', 83, 1, NULL, 'Create-DELETE-Article_template-listsort', 5, 0, 0, '', '');
+
+ALTER TABLE `pes_article_content_history` ADD `article_keyword` VARCHAR(255) NOT NULL AFTER `history_time`, ADD `article_description` VARCHAR(500) NOT NULL AFTER `article_keyword`;

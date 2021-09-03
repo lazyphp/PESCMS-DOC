@@ -355,11 +355,12 @@
             var empty = $('.empty-version').prop('checked');
             var number = $('.version-number').val();
             var id = '<?= $doc['doc_id'] ?>';
+            var token = $('input[name="token"]').val();
 
             $.ajaxSubmit({
                 url: '/?g=Create&m=Doc&a=version',
                 method: 'POST',
-                data: {id: id, number: number, empty: empty}
+                data: {id: id, number: number, empty: empty, token:token}
             });
 
         })

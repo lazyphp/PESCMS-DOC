@@ -11,6 +11,11 @@ namespace App\Create\PUT;
 
 class Doc extends Content {
 
+    public function __init() {
+        parent::__init();
+        $this->checkToken();
+    }
+
     /**
      * 切换版本
      */

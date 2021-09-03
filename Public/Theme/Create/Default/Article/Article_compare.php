@@ -7,6 +7,10 @@
                 当前文档
             </div>
             <article class="am-article">
+                <article class="am-article-lead am-margin-bottom">
+                    <p class="am-margin-vertical-xs">文档SEO关键词：<?= $article['article_keyword'] ?></p>
+                    <p class="am-margin-vertical-xs">文档SEO描述：<?= $article['article_description'] ?></p>
+                </article>
                 <article class="am-article-hd">
                     <h1 class="am-article-title"><?= $article['article_title'] ?></h1>
                 </article>
@@ -21,6 +25,10 @@
                 历史文档 >> <a href="<?= $label->url('Create-Article-history', ['hid'=> $history['content']['history_id']]) ?>" class="change-history"><i class="am-icon-toggle-on"></i> 切换</a>
             </div>
             <article class="am-article">
+                <article class="am-article-lead am-margin-bottom">
+                    <p class="am-margin-vertical-xs">文档SEO关键词：<?= $history['content']['article_keyword'] ?></p>
+                    <p class="am-margin-vertical-xs">文档SEO描述：<?= $history['content']['article_description'] ?></p>
+                </article>
                 <article class="am-article-hd">
                     <h1 class="am-article-title"><?= $history['article_base']['article_title'] ?></h1>
                 </article>
@@ -76,5 +84,5 @@
         })
     })
 </script>
-
+<hr/>
 <?php include THEME_PATH.'/footer.php' ?>

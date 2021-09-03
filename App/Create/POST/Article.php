@@ -11,6 +11,11 @@ namespace App\Create\POST;
 
 class Article extends \Core\Controller\Controller {
 
+    public function __init() {
+        parent::__init();
+        $this->checkToken();
+    }
+
     /**
      * 新增文档
      */

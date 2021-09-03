@@ -11,6 +11,11 @@ namespace App\Create\DELETE;
 
 class Article extends \Core\Controller\Controller {
 
+    public function __init() {
+        parent::__init();
+        $this->checkToken();
+    }
+
     /**
      * 删除文档
      */
@@ -28,9 +33,14 @@ class Article extends \Core\Controller\Controller {
         $this->success('文档删除完成');
     }
 
+    /**
+     * 删除文档历史版本
+     */
     public function history(){
-        $this->checkToken();
-
+        $id = $this->isG('id', '请提交要删除的ID');
+        $this->db('article_content_history')->where('history_id = :history_id')->delete([
+            'history_id' => $id
+        ]);
         $this->success('文档历史删除成功');
     }
 

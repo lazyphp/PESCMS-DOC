@@ -11,6 +11,11 @@ namespace App\Create\DELETE;
 
 class Doc extends Content {
 
+    public function __init() {
+        parent::__init();
+        $this->checkToken();
+    }
+
     public function version(){
         $version = \Model\Doc::checkVersionExist();
         $doc = \Model\Doc::findDocWithID();

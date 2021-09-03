@@ -27,7 +27,7 @@ class Article extends \Core\Controller\Controller {
 
         $this->assign('docVersion', \Model\Doc::getDocVersionList($doc));
         $this->assign('title', "编写《{$doc['doc_title']}》文档");
-        $this->layout();
+        $this->layout('Article_index', 'Article_index_layout');
     }
 
     /**
