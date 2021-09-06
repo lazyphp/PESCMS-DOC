@@ -30,11 +30,13 @@ CREATE TABLE IF NOT EXISTS `pes_article_template` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_value`, `node_listsort`, `node_is_menu`, `node_link_type`, `node_link`, `node_menu_icon`) VALUES
-(83, '文档通用模板列表', 4, 1, NULL, 'Create-GET-Article_template-index', 10, 1, 0, 'Create-Article_template-index', 'am-icon-bookmark'),
-(84, '新增/编辑文档通用模板', 83, 1, NULL, 'Create-GET-Article_template-action', 1, 0, 0, '', ''),
-(85, '创建文档通用模板', 83, 1, NULL, 'Create-POST-Article_template-action', 2, 0, 0, '', ''),
-(86, '更新文档通用模板', 83, 1, NULL, 'Create-PUT-Article_template-action', 3, 0, 0, '', ''),
-(87, '删除文档通用模板', 83, 1, NULL, 'Create-DELETE-Article_template-action', 4, 0, 0, '', ''),
-(88, '排序文档通用模板', 83, 1, NULL, 'Create-DELETE-Article_template-listsort', 5, 0, 0, '', '');
+(NULL, '文档通用模板列表', 4, 1, NULL, 'Create-GET-Article_template-index', 10, 1, 0, 'Create-Article_template-index', 'am-icon-bookmark');
+
+INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_value`, `node_listsort`, `node_is_menu`, `node_link_type`, `node_link`, `node_menu_icon`) VALUES
+(NULL, '新增/编辑文档通用模板', LAST_INSERT_ID(), 1, NULL, 'Create-GET-Article_template-action', 1, 0, 0, '', ''),
+(NULL, '创建文档通用模板', LAST_INSERT_ID(), 1, NULL, 'Create-POST-Article_template-action', 2, 0, 0, '', ''),
+(NULL, '更新文档通用模板', LAST_INSERT_ID(), 1, NULL, 'Create-PUT-Article_template-action', 3, 0, 0, '', ''),
+(NULL, '删除文档通用模板', LAST_INSERT_ID(), 1, NULL, 'Create-DELETE-Article_template-action', 4, 0, 0, '', ''),
+(NULL, '排序文档通用模板', LAST_INSERT_ID(), 1, NULL, 'Create-DELETE-Article_template-listsort', 5, 0, 0, '', '');
 
 ALTER TABLE `pes_article_content_history` ADD `article_keyword` VARCHAR(255) NOT NULL AFTER `history_time`, ADD `article_description` VARCHAR(500) NOT NULL AFTER `article_keyword`;

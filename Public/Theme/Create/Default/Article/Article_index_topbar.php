@@ -9,9 +9,15 @@
     <div class="am-collapse am-topbar-collapse am-topbar-hover " id="doc-topbar-collapse">
 
         <ul class="am-nav am-nav-pills am-topbar-nav">
+            <li>
+                <a class="am-dropdown-toggle" href="<?= base64_decode($_GET['back_url']) ?>">
+                    <i class="am-icon-reply"></i> 返回文档管理
+                </a>
+            </li>
+
             <li class="am-dropdown">
                 <a class="am-dropdown-toggle" href="<?= base64_decode($_GET['back_url']) ?>">
-                    <i class="am-icon-reply"></i> 返回文档列表 <span class="am-icon-caret-down"></span>
+                    <span class="am-icon-list"></span> 文档列表 <span class="am-icon-caret-down"></span>
                 </a>
                 <div class="am-dropdown-layer">
                     <ul class="am-dropdown-content">
@@ -22,6 +28,12 @@
                         <?php endforeach; ?>
                     </ul>
                 </div>
+            </li>
+
+            <li>
+                <a class="am-dropdown-toggle" href="<?= $label->url('Create-Article_template-index') ?>" target="_blank">
+                    <i class="am-icon-bookmark"></i> 文档通用模板
+                </a>
             </li>
 
         </ul>
