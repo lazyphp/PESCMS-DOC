@@ -261,5 +261,32 @@ $(function () {
 
     })
 
+    $(document).on('click', '.pes-copy-command', function () {
+        var dom = $(this)
+        var copyData = $(this).attr('data')
+        const input = document.createElement('input');
+        input.setAttribute('value', copyData);
+        document.body.appendChild(input);
+        input.select();
+        if (document.execCommand('copy')) {
+            dom.addClass('am-text-secondary');
+            document.execCommand('copy');
+            var d = dialog({
+                id: 'copy-tips',
+                fixed: true,
+                skin: 'submit-warning',
+                zIndex: '777',
+                content: '<i class="am-icon-check-circle"></i> 复制成功'
+            }).show();
+            setTimeout(function () {
+                dom.removeClass('am-text-secondary');
+                d.close();
+            }, 2000)
+
+        }
+        document.body.removeChild(input);
+        return false;
+    })
+
 
 })

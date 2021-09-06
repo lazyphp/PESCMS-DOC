@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2021-09-06 09:42:36
+-- 生成日期： 2021-09-06 10:38:55
 -- 服务器版本： 5.6.44-log
 -- PHP 版本： 5.6.40
 
@@ -90,6 +90,7 @@ CREATE TABLE `pes_article_content_history` (
 CREATE TABLE `pes_article_template` (
   `article_template_id` int(11) NOT NULL,
   `article_template_listsort` int(11) NOT NULL DEFAULT '0',
+  `article_template_md_render` int(11) NOT NULL DEFAULT '0',
   `article_template_status` tinyint(4) NOT NULL DEFAULT '0',
   `article_template_createtime` int(11) NOT NULL DEFAULT '0',
   `article_template_name` varchar(255) NOT NULL DEFAULT '',
@@ -261,7 +262,8 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (88, 27, 'name', '模板名称', 'text', '', '', '', 1, 1, 1, 1, 1, 0, 0, 'POST,PUT'),
 (89, 27, 'code', '模板代码', 'text', '', '模板代码需要是唯一值，您在文档调用时，请用大括号括着您的模板代码。如模板代码：node ，那么在文档内容中调用则是：{node}', '', 1, 2, 1, 1, 1, 0, 1, 'POST,PUT'),
 (90, 27, 'uetemplate', '富文本编辑器内容', 'editor', '', '', '', 0, 4, 0, 1, 1, 0, 0, 'POST,PUT'),
-(91, 27, 'mdtemplate', 'MD编辑器内容', 'markdown', '', '', '', 0, 5, 0, 1, 1, 0, 0, 'POST,PUT');
+(91, 27, 'mdtemplate', 'MD编辑器内容', 'markdown', '', '', '', 0, 5, 0, 1, 1, 0, 0, 'POST,PUT'),
+(92, 27, 'md_render', 'MD格式渲染', 'radio', '{&quot;\\u9ed8\\u8ba4-\\u5bcc\\u6587\\u672c\\u548cMD\\u5404\\u81ea\\u586b\\u5199&quot;:&quot;0&quot;,&quot;\\u5bcc\\u6587\\u672c\\u5185\\u5bb9\\u4ee5MD\\u7f16\\u8f91\\u5668\\u586b\\u5145&quot;:&quot;1&quot;}', '若您编写的文档以富文本编辑器编写，请选择默认的选项即可。若您编写的文档以MD编辑器发布，请选择‘富文本内容以MD编辑器填充’选项。由于篇幅限制具体原因请查看官方文档说明。', '', 1, 6, 1, 1, 1, 0, 0, 'POST,PUT');
 
 -- --------------------------------------------------------
 
@@ -850,7 +852,7 @@ ALTER TABLE `pes_doc_version`
 -- 使用表AUTO_INCREMENT `pes_field`
 --
 ALTER TABLE `pes_field`
-  MODIFY `field_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `field_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- 使用表AUTO_INCREMENT `pes_findpassword`

@@ -13,7 +13,10 @@ class Doc extends Content {
 
     public function __init() {
         parent::__init();
-        $this->checkToken();
+        if(ACTION != 'action'){
+            $this->checkToken();
+        }
+
     }
 
     /**
