@@ -10,7 +10,7 @@
 
         <ul class="am-nav am-nav-pills am-topbar-nav">
             <li>
-                <a class="am-dropdown-toggle" href="<?= base64_decode($_GET['back_url']) ?>">
+                <a class="am-dropdown-toggle" href="<?= empty($_GET['back_url']) ? $label->url('Create-Doc-index') : base64_decode($_GET['back_url']) ?>">
                     <i class="am-icon-reply"></i> 返回文档管理
                 </a>
             </li>

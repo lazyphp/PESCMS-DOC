@@ -13,10 +13,10 @@ class Doc extends Content {
 
     public function __init() {
         parent::__init();
-        $this->checkToken();
     }
 
     public function version(){
+        $this->checkToken();
         $version = \Model\Doc::checkVersionExist();
         $doc = \Model\Doc::findDocWithID();
         if($version['version_number'] == $doc['doc_version']){

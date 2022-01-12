@@ -42,6 +42,10 @@ class Model extends Content {
      * 导入模型
      */
     public function import(){
+
+        $this->error('本功能暂时下架，若需要使用请自行修改代码解除限制。');
+        exit;
+
         $model = json_decode($this->isP('model', '请提交您要导入的模型代码', false), true);
         if(empty($model)){
             $this->error('解析提交的模型代码失败，请检查JSON格式是否异常');

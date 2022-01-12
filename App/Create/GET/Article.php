@@ -42,7 +42,7 @@ class Article extends \Core\Controller\Controller {
             $this->assign('method', 'PUT');
             \Model\Article::$selectedID = $articel['article_parent'];
         }
-
+        
         $pathOption = \Model\Article::obArticle($doc['doc_id'], $doc['doc_version'], 0, THEME_PATH . '/Article/Article_pathOption.php');
 
         $this->assign('pathOption', $pathOption);
@@ -55,6 +55,7 @@ class Article extends \Core\Controller\Controller {
             'msg'  => '读取数据成功',
             'data' => [
                 'html' => $content,
+                'url' => !empty($aid) && $aid != 'new' && $articel['article_node'] == 0 ? $this->url('Doc-Article-index', ['id' => $articel['article_doc_id'], 'aid' => $articel['article_mark']]) : ''
             ],
         ]);
     }

@@ -201,6 +201,13 @@
 
                         articleNode();
 
+                        //显示预览按钮
+                        var url = res?.data?.url || ''
+                        if(url != ''){
+                            $('.pes-article-preview').show().find('a').attr('href', url);
+                        }
+
+
                     } else {
                         $('.pes-doc-path a').removeClass('am-active')
                         var d = dialog(dialogOption).showModal();
