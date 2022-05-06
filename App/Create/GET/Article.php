@@ -77,8 +77,9 @@ class Article extends \Core\Controller\Controller {
      */
     public function history() {
         $aid = $this->isG('aid', '请提交要查询历史的文档ID ');
-        $history = \Model\Article::getHistory($aid, 'history_id, FROM_UNIXTIME(history_time, "%Y-%m-%d") AS history_date, FROM_UNIXTIME(history_time, "%H:%i:%s") AS history_time, article_id');
+        $history = \Model\Article::getHistory($aid, 'history_id, FROM_UNIXTIME(history_time, "%Y-%m-%d") AS history_date, FROM_UNIXTIME(history_time, "%H:%i:%s") AS history_time, article_id, history_version');
 
+        $this->assign('version', \Model\Article::getHistoryVersion($aid));
         $this->assign('history', $history);
 
         ob_start();

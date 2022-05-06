@@ -244,5 +244,15 @@
             })
         })
 
+        /**
+         * 页内版本切换
+         */
+        $(document).on('change', '.switch-article-version', function (){
+            var version = $(this).val();
+            var aid = $(this).data('aid');
+            var id = $(this).data('id');
+            window.location.href = `/?g=Doc&m=Article&a=index&id=${id}&aid=${aid}&version=${version}`;
+        })
+
     })
 </script>

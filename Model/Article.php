@@ -106,6 +106,11 @@ class Article extends \Core\Model\Model {
         ]);
     }
 
+    /**
+     * 历史对比
+     * @param $hid 历史ID
+     * @return array
+     */
     public static function historyCompare($hid) {
         $history = \Model\Content::findContent('article_content_history', $hid, 'history_id');
         $articleHistory = json_decode($history['article_json'], true);
@@ -122,6 +127,16 @@ class Article extends \Core\Model\Model {
 
     }
 
+    public static function getHistoryVersion($aid){
+        return self::db('article_content_history')->field('history_id, history_version, history_version_listsort')->where('article_id = :article_id AND history_version != "" ')->order('history_version_listsort ASC, article_content_time DESC')->select([
+            'article_id' => $aid
+        ]);
+    }
+
+    /**
+     * 基础信息
+     * @return array
+     */
     public static function baseForm() {
         $doc = \Model\Doc::findDocWithID('isP', ['请提交文档ID', '提交的文档不存在']);
         $data['article_doc_id'] = $doc['doc_id'];
@@ -144,6 +159,12 @@ class Article extends \Core\Model\Model {
         return $data;
     }
 
+    /**
+     * 基础信息内容
+     * @param $aid 文档ID
+     * @param $data 数据内容
+     * @return array
+     */
     public static function baseContentForm($aid, $data) {
         $content['article_id'] = $aid;
         $content['article_content_time'] = time();

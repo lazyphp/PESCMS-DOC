@@ -79,6 +79,14 @@ body {
   z-index: 3;
   background: #fff;
   padding: 30px 10px 0 10px;
+  overflow: auto;
+}
+.pes-article-right-sidebar::-webkit-scrollbar {
+  width: 4px;
+  height: 10px;
+}
+.pes-article-right-sidebar:hover::-webkit-scrollbar-thumb {
+  background: #82c0ff;
 }
 .pes-article-right-sidebar .pes-article-right-sidebar-move {
   width: 10px;

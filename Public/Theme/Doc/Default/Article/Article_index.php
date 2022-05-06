@@ -12,6 +12,16 @@
                         / <i class="am-icon-edit"></i> 最近更新于 <?= date('Y-m-d', $article_update_time) ?>
                     <?php endif; ?>
                     / <i class="am-icon-desktop"></i> <?= isset($article_view) ? $article_view : $doc['doc_view'] ?>
+                    
+                    <?php if(!empty($articleVersion)): ?>
+                    / 本页文档可切换别的版本
+                        <select class="switch-article-version" style="margin-top: -2px" data-aid="<?= $article_mark ?>" data-id="<?= $doc['doc_id'] ?>">
+                            <option>当前版本</option>
+                            <?php foreach($articleVersion as $value): ?>
+                                <option value="<?= $value['history_version'] ?>" <?= $_GET['version'] == $value['history_version'] ? 'selected="selected"' : '' ?> ><?= $value['history_version'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    <?php endif; ?>
                 </small>
             </div>
 

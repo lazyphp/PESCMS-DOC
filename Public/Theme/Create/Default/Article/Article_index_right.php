@@ -1,8 +1,11 @@
 <div class="pes-article-right-sidebar-move"></div>
-<a href="javascript:;" class="pes-article-save am-btn am-btn-default"><i class="am-icon-save"></i> 保存 <small class="am-text-secondary">[Ctrl + 回车]</small></a>
-<a href="javascript:;" class="pes-article-delete am-btn am-btn-danger am-hide ajax-click ajax-dialog " msg="确认要删除本文档吗？数据将无法恢复!"><i class="am-icon-remove"></i> 删除</a>
+<a href="javascript:;" class="pes-article-save am-btn am-btn-default"><i class="am-icon-save"></i> 保存
+    <small class="am-text-secondary">[Ctrl + 回车]</small></a>
+<a href="javascript:;" class="pes-article-delete am-btn am-btn-danger am-hide ajax-click ajax-dialog " msg="确认要删除本文档吗？数据将无法恢复!"><i class="am-icon-remove"></i>
+    删除</a>
 <div class="am-margin-top-xs pes-article-preview">
-    <a href="<?= $label->url('Doc-Article-index', ['id' => $doc['doc_id']]) ?>" class="am-btn am-btn-success" target="_blank"><i class="am-icon-newspaper-o"></i> 预览</a>
+    <a href="<?= $label->url('Doc-Article-index', ['id' => $doc['doc_id']]) ?>" class="am-btn am-btn-success" target="_blank"><i class="am-icon-newspaper-o"></i>
+        预览</a>
 </div>
 
 <div class="pes-sidebar-tool pes-doc-index-tool">
@@ -11,11 +14,11 @@
         <tr>
             <td colspan="2">版本号</td>
         </tr>
-        <?php foreach($docVersion as $key => $value): ?>
+        <?php foreach ($docVersion as $key => $value): ?>
             <tr>
                 <td><?= $value['version_number'] ?></td>
                 <td>
-                    <?php if($value['version_number'] == $doc['doc_version']): ?>
+                    <?php if ($value['version_number'] == $doc['doc_version']): ?>
                         当前
                     <?php else: ?>
                         <a href="javascript:;" data="<?= $label->url('Create-Doc-version', ['vid' => $value['version_id'], 'id' => $doc['doc_id'], 'method' => 'PUT']) ?>" class="ajax-click ajax-dialog" msg="确认要切换至'<?= $value['version_number'] ?>'版本吗？"><i class="am-icon-check"></i></a>
@@ -40,7 +43,7 @@
         </tr>
         <tr>
             <td class="am-padding-horizontal-0" colspan="2">
-                <input type="text" class="version-number">
+                <input type="text" class="version-number am-margin-bottom" >
                 <button class="am-btn am-btn-primary am-btn-xs submit-version"><i class="am-icon-plus"></i> 创建</button>
             </td>
         </tr>
@@ -51,17 +54,8 @@
 
 <div class="pes-sidebar-tool pes-doc-article-tool">
     <input type="hidden" id="history-result">
-    <table class="am-table am-table-bordered am-text-xs pes-history">
-        <tr>
-            <td colspan="3">文档操作历史</td>
-        </tr>
-        <tr class="pes-history-title">
-            <td>历史</td>
-            <td>时间</td>
-            <td>操作</td>
-        </tr>
-        <tr>
-            <td colspan="3">暂无</td>
-        </tr>
-    </table>
+
+    <div class="pes-history-list"></div>
+
+
 </div>
