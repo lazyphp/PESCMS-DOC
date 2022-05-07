@@ -176,9 +176,15 @@
          * 点击目录，获取文档内容
          */
         $(document).on('click', '.pes-doc-path a, .pes-add-article', function () {
-
             var id = '<?= $doc['doc_id'] ?>';
             var aid = $(this).data('id');
+
+            //处理URL地址
+            var link = $(this).data('link');
+            if(link && link.length > 0){
+                history.pushState({aid:aid}, $(this).text().trim(), link)
+            }
+
             $('.pes-doc-path a').removeClass('am-active')
             if (aid != 'new') {
                 $(this).addClass('am-active');
@@ -476,6 +482,22 @@
 
             return false;
         })
+
+        //页面跳转编辑
+        var searchParams = new URLSearchParams(window.location.href);
+        var urlAid = searchParams.get('aid');
+        if(urlAid > 0){
+            setTimeout(function (){
+                $('.pes-doc-path a[data-id="'+urlAid+'"]').trigger('click');
+            }, 600)
+
+        }else if(urlAid == 'new'){
+            setTimeout(function (){
+                $('.pes-add-article').trigger('click')
+            }, 600)
+
+        }
+
 
     })
 </script>

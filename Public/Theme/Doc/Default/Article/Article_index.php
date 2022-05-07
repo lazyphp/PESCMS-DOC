@@ -22,6 +22,10 @@
                             <?php endforeach; ?>
                         </select>
                     <?php endif; ?>
+                    
+                    <?php if(!empty(self::session()->get('doc')['member_id'])): ?>
+                    / <a href="<?= $label->url('Create-Article-index', ['id' => $doc['doc_id'], 'aid' => $article_id]) ?>">[编辑本文档]</a>
+                    <?php endif; ?>
                 </small>
             </div>
 
