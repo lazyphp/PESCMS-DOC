@@ -8,7 +8,7 @@
             <input type="hidden" name="id" value="<?= $doc['doc_id']; ?>">
 
             <div class="am-form-group am-input-group">
-                <input type="text" class="am-form-field" name="keyword" value="<?= $label->xss($_GET['keyword']); ?>" placeholder="搜索">
+                <input type="text" class="am-form-field" name="keyword" value="<?= $label->xss($_GET['keyword'] ?? ''); ?>" placeholder="搜索">
                 <span class="am-input-group-btn">
                     <button class="am-btn am-btn-default search-article" type="submit"><span class="am-icon-search"></span></button>
                 </span>
@@ -23,7 +23,7 @@
         <select name="version" class="version" data-am-selected="{btnWidth: '100%'}">
             <option value="">选择版本</option>
             <?php foreach ($docVersion as $key => $value): ?>
-                <option value="<?= $value['version_number'] ?>"<?= $doc['doc_version'] == $value['version_number'] ? 'selected="selected"' : '' ?> ><?= $value['version_number'] ?><?= $value['default'] == 1 ? '(当前版本)' : '' ?> </option>
+                <option value="<?= $value['version_number'] ?>"<?= $doc['doc_version'] == $value['version_number'] ? 'selected="selected"' : '' ?> ><?= $value['version_number'] ?><?= !empty($value['default']) && $value['default'] == 1 ? '(当前版本)' : '' ?> </option>
             <?php endforeach; ?>
         </select>
     <?php endif; ?>

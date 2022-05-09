@@ -28,6 +28,8 @@ class HandleMember extends \Core\Slice\Slice {
     private function setPassword(){
         if (METHOD == 'POST') {
             $this->isP('password', '请填写密码');
+        }else if(METHOD == 'GET'){
+            return true;
         }
 
         if (empty($_POST['password'])) {

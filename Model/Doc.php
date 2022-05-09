@@ -64,7 +64,8 @@ class Doc extends \Core\Model\Model {
      * @return bool
      */
     public static function checkReadAuth(array $doc){
-        if( !in_array(self::session()->get('doc')['member_organize_id'], explode(',', $doc['doc_read_organize'])) && $doc['doc_open'] == 1 ){
+        $moid = self::session()->get('doc')['member_organize_id'] ?? null;
+        if( !in_array($moid, explode(',', $doc['doc_read_organize'])) && $doc['doc_open'] == 1 ){
             return false;
         }else{
             return true;

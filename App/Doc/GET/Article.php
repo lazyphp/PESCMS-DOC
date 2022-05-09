@@ -75,10 +75,11 @@ class Article extends \Core\Controller\Controller {
 
         $position = array_search($article['article_id'], array_keys($result));
 
+
         if ($position > 0) {
             $page['prev'] = array_slice($result, $position - 1, 1)[0];
         }
-        $page['next'] = array_slice($result, $position + 1, 1)[0];
+        $page['next'] = array_slice($result, $position + 1, 1)[0] ?? '';
 
         $this->assign('page', $page);
     }

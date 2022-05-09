@@ -24,7 +24,8 @@ class Option extends \Core\Slice\Slice{
             $system[$value['option_name']] = $value['value'];
         }
 
-        $this->assign('resources', substr(md5($system['siteTitle'].substr(md5(self::$config['USER_KEY']), 5, 10). $system['version'].$system['openindex'].$system['notice_way']), 4, 10));
+
+        $this->assign('resources', substr(md5($system['siteTitle'].substr(md5(self::$config['USER_KEY']), 5, 10). $system['version']), 4, 10));
 
         $this->assign('system', $system);
     }

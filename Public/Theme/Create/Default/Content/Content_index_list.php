@@ -16,7 +16,7 @@
                 <table class="am-table am-table-bordered am-table-striped am-table-hover">
                     <tr>
                         <th class="table-checked"><input type="checkbox" class="checkbox-all"></th>
-                        <?php if ($listsort): ?>
+                        <?php if (isset($listsort)): ?>
                             <th class="table-sort">排序</th>
                         <?php endif; ?>
                         <th class="table-set">ID</th>
@@ -35,7 +35,7 @@
                             <td class="am-text-middle">
                                 <input type="checkbox" class="checkbox-all-children" name="id[<?= $value["{$fieldPrefix}id"]; ?>]" value="<?= $value["{$fieldPrefix}id"]; ?>" >
                             </td>
-                            <?php if ($listsort): ?>
+                            <?php if (isset($listsort)): ?>
                                 <td class="am-text-middle">
                                     <input type="text" class="am-input-sm" name="id[<?= $value["{$fieldPrefix}id"]; ?>]"
                                            value="<?= $value["{$fieldPrefix}listsort"]; ?>">
@@ -60,7 +60,7 @@
 
                 <div class="am-g am-g-collapse">
                     <div class="am-u-sm-12 am-u-lg-6">
-                        <?php if ($listsort && $label->checkAuth(GROUP.'-DELETE-'.MODULE.'-listsort') === true ): ?>
+                        <?php if (isset($listsort) && $label->checkAuth(GROUP.'-DELETE-'.MODULE.'-listsort') === true ): ?>
                         <button type="submit" class="am-btn am-btn-primary am-btn-xs am-radius">排序</button>
                         <?php endif; ?>
 
@@ -70,7 +70,7 @@
                     </div>
                     <div class="am-u-sm-12 am-u-lg-6">
                         <ul class="am-pagination am-pagination-right am-margin-0">
-                            <?= $page; ?>
+                            <?= $page ?? ''; ?>
                         </ul>
                     </div>
                 </div>

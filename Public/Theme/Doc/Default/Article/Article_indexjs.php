@@ -216,7 +216,7 @@
             var num = parseInt($('.pes-like-num').html());
             $.ajaxSubmit({
                 url: '/?g=Doc&m=Article&a=like',
-                data: {id: '<?= $doc['doc_id'] ?>', aid: '<?= $article_mark ?>', method: 'PUT'},
+                data: {id: '<?= $doc['doc_id'] ?>', aid: '<?= $article_mark ?? '' ?>', method: 'PUT'},
                 method: 'POST',
                 skipAutoTips: true,
                 stopJump: true,
