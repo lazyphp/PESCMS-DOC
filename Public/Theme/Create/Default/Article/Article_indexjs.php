@@ -484,14 +484,20 @@
         })
 
         //页面跳转编辑
+        var editLoading = function (){
+            $('.pes-article-paper h1').html('<i class="am-icon-spinner am-icon-spin"></i> 加载中...');
+        }
+
         var searchParams = new URLSearchParams(window.location.href);
         var urlAid = searchParams.get('aid');
         if(urlAid > 0){
+            editLoading();
             setTimeout(function (){
                 $('.pes-doc-path a[data-id="'+urlAid+'"]').trigger('click');
             }, 600)
 
         }else if(urlAid == 'new'){
+            editLoading();
             setTimeout(function (){
                 $('.pes-add-article').trigger('click')
             }, 600)

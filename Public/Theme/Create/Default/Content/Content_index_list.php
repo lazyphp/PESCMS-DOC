@@ -6,7 +6,7 @@
 ?>
 
         <?php if (empty($list)): ?>
-            <div class="pes-alert pes-alert-info am-margin-top am-margin-bottom am-text-center" >
+            <div class="am-alert am-alert-info am-margin-top am-margin-bottom am-text-center" >
                 <p class="am-margin-0">本页面没有数据 :-(</p>
             </div>
         <?php else: ?>

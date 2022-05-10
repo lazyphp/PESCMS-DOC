@@ -16,7 +16,7 @@
             </li>
 
             <li class="am-dropdown">
-                <a class="am-dropdown-toggle" href="<?= base64_decode($_GET['back_url']) ?>">
+                <a class="am-dropdown-toggle" href="<?= empty($_GET['back_url']) ? $label->url('Create-Doc-index') : base64_decode($_GET['back_url']) ?>">
                     <span class="am-icon-list"></span> 文档列表 <span class="am-icon-caret-down"></span>
                 </a>
                 <div class="am-dropdown-layer">

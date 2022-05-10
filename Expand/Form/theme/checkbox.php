@@ -1,5 +1,5 @@
 <?php
-$itemValue = explode(',', $field['value']);
+$itemValue = explode(',', $field['value'] ?? null);
 $itemDefault = explode(',', $field['field_default']);
 ?>
 <?php if (is_array(json_decode(htmlspecialchars_decode($field['field_option']), true))): ?>

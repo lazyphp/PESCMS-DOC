@@ -1,5 +1,5 @@
 <div id="<?= $field['field_name'] ?>" style="min-height: 400px" ></div>
-<textarea name="<?= $field['field_name'] ?>" style="display: none"><?= $field['value'] ?></textarea>
+<textarea name="<?= $field['field_name'] ?>" style="display: none"><?= $field['value'] ?? '' ?></textarea>
 <script>
     $(function () {
 
@@ -18,11 +18,11 @@
                 success(editor, msg) {
                     var res = JSON.parse(msg);
                     if (res.state == 'SUCCESS') {
-                        vd.tip('上传成功')
+                        pesMD.<?= $field['field_name'] ?>.tip('上传成功')
                         var isImg = res.action == 'uploadimage' ? '!' : ''
-                        vd.insertValue(`${isImg}[${res.original}](${res.url})`)
+                        pesMD.<?= $field['field_name'] ?>.insertValue(`${isImg}[${res.original}](${res.url})`)
                     } else {
-                        vd.tip(res.state)
+                        pesMD.<?= $field['field_name'] ?>.tip(res.state)
                     }
                 }
             },

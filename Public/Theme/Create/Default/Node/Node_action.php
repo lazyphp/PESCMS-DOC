@@ -21,8 +21,8 @@
 
         $('input[name="parent"]').before($('select[name="parent"]'))
         $('input[name="parent"]').remove();
-        $('select[name="parent"]').val('<?= $node_parent ?>')
-        $('select[name="parent"] option[value="<?=$node_id?>"]').attr('disabled', 'disabled')
+        $('select[name="parent"]').val('<?= $node_parent ?? '' ?>')
+        $('select[name="parent"] option[value="<?=$node_id ?? ''?>"]').attr('disabled', 'disabled')
     })
 
 </script>

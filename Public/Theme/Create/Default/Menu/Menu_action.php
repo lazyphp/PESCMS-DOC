@@ -7,8 +7,8 @@
 
         $('input[name="pid"]').before($('select[name="pid"]'))
         $('input[name="pid"]').remove();
-        $('select[name="pid"]').val('<?= $menu_pid ?>')
-        $('select[name="pid"] option[value="<?=$menu_id?>"]').attr('disabled', 'disabled')
+        $('select[name="pid"]').val('<?= $menu_pid ?? '' ?>')
+        $('select[name="pid"] option[value="<?=$menu_id ?? '' ?>"]').attr('disabled', 'disabled')
     })
 
 </script>
