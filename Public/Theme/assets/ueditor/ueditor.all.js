@@ -29,6 +29,8 @@ UE.version = "1.4.3";
 
 var dom = UE.dom = {};
 
+var wordImg = [];
+
 // core/browser.js
 /**
  * 浏览器判断模块
@@ -6751,6 +6753,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
 
         UE.instants['ueditorInstant' + me.uid] = me;
     };
+	
+	
+
+	
     Editor.prototype = {
          registerCommand : function(name,obj){
             this.commands[name] = obj;
@@ -7455,6 +7461,29 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             var me = this,
                 doc = me.document,
                 win = me.window;
+			
+			//监听word复制粘贴功能
+			doc.addEventListener("paste", function (e) {
+				
+				if (!(e.clipboardData && e.clipboardData.items)) {
+					return;
+				}
+
+				const clipboardData = e.clipboardData;
+				
+				//粘贴板中的HTML文本
+				let copyStr = clipboardData.getData('text/html');
+				
+				//粘贴板中的RTF数据
+				let rtf = clipboardData.getData('text/rtf');
+				
+				//获取粘贴板中图片的数量
+				let imgs = me.findAllImageElementsWithLocalSource(copyStr);
+
+				me.replaceImagesFileSourceWithInlineRepresentation(imgs, me.extractImageDataFromRtf(rtf))
+				
+			})
+				
             me._proxyDomEvent = utils.bind(me._proxyDomEvent, me);
             domUtils.on(doc, ['click', 'contextmenu', 'mousedown', 'keydown', 'keyup', 'keypress', 'mouseup', 'mouseover', 'mouseout', 'selectstart'], me._proxyDomEvent);
             domUtils.on(win, ['focus', 'blur'], me._proxyDomEvent);
@@ -7472,6 +7501,71 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 me._selectionChange(250, evt);
             });
         },
+		
+		//获取粘贴板中图片数量
+		findAllImageElementsWithLocalSource:function(copyStr){
+			let imgs = $(copyStr).find('img');
+			return imgs;
+		},
+		
+		//处理图片信息
+		extractImageDataFromRtf:function(rtfData){
+            if (!rtfData) {
+                return [];
+            }
+
+            const regexPictureHeader = /{\\pict[\s\S]+?\\bliptag-?\d+(\\blipupi-?\d+)?({\\\*\\blipuid\s?[\da-fA-F]+)?[\s}]*?/;
+            const regexPicture = new RegExp('(?:(' + regexPictureHeader.source + '))([\\da-fA-F\\s]+)\\}', 'g');
+            const images = rtfData.match(regexPicture);
+            const result = [];
+
+            if (images) {
+                for (const image of images) {
+                    let imageType = false;
+
+                    if (image.includes('\\pngblip')) {
+                        imageType = 'image/png';
+                    } else if (image.includes('\\jpegblip')) {
+                        imageType = 'image/jpeg';
+                    }
+
+                    if (imageType) {
+                        result.push({
+                            hex: image.replace(regexPictureHeader, '').replace(/[^\da-fA-F]/g, ''),
+                            type: imageType
+                        });
+                    }
+                }
+            }
+
+            return result;
+		},
+		
+		//16进制转换为base64
+		_convertHexToBase64:function(hexString){
+			return btoa(hexString.match(/\w{2}/g).map(char => {
+                return String.fromCharCode(parseInt(char, 16));
+            }).join(''));
+		},
+		
+		//存储图片资源
+		replaceImagesFileSourceWithInlineRepresentation:function(imageElements, imagesHexSources){
+            // Assume there is an equal amount of image elements and images HEX sources so they can be matched accordingly based on existing order.
+            if (imageElements.length === imagesHexSources.length) {
+                for (let i = 0; i < imageElements.length; i++) {
+                    const newSrc = `data:${imagesHexSources[i].type};base64,${this._convertHexToBase64(imagesHexSources[i].hex)}`;
+
+					wordImg.push(newSrc);
+                  
+                    // writer.setAttribute('src', newSrc, imageElements[i]);
+                }
+            }
+			
+			console.dir(wordImg)
+			
+		},
+		
+		
         /**
          * 触发事件代理
          * @method _proxyDomEvent
@@ -8424,6 +8518,9 @@ var filterWord = UE.filterWord = function () {
     }
 
     function filterPasteWord( str ) {
+		
+		
+		
         return str.replace(/[\t\r\n]+/g,' ')
                 .replace( /<!--[\s\S]*?-->/ig, "" )
                 //转换图片
@@ -9993,10 +10090,7 @@ UE.plugins['defaultfilter'] = function () {
                     case 'img':
                         //todo base64暂时去掉，后边做远程图片上传后，干掉这个
                         if (val = node.getAttr('src')) {
-                            if (/^data:/.test(val)) {
-                                node.parentNode.removeChild(node);
-                                break;
-                            }
+                            
                         }
                         node.setAttr('_src', node.getAttr('src'));
                         break;
@@ -14015,7 +14109,7 @@ UE.plugin.register('wordimage',function(){
             }
         },
         inputRule : function (root) {
-            utils.each(root.getNodesByTagName('img'), function (img) {
+            utils.each(root.getNodesByTagName('img'), function (img, key) {
                 var attrs = img.attrs,
                     flag = parseInt(attrs.width) < 128 || parseInt(attrs.height) < 43,
                     opt = me.options,
@@ -14025,12 +14119,14 @@ UE.plugin.register('wordimage',function(){
                         width:attrs.width,
                         height:attrs.height,
                         alt:attrs.alt,
-                        word_img: attrs.src,
-                        src:src,
+                        src:wordImg[key],
                         'style':'background:url(' + ( flag ? opt.themePath + opt.theme + '/images/word.gif' : opt.langPath + opt.lang + '/images/localimage.png') + ') no-repeat center center;border:1px solid #ddd'
                     })
                 }
             })
+			//清空调用记录
+			wordImg = [];
+			
         }
     }
 });
