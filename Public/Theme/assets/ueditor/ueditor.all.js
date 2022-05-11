@@ -7473,14 +7473,21 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
 				
 				//粘贴板中的HTML文本
 				let copyStr = clipboardData.getData('text/html');
-				
-				//粘贴板中的RTF数据
-				let rtf = clipboardData.getData('text/rtf');
-				
-				//获取粘贴板中图片的数量
-				let imgs = me.findAllImageElementsWithLocalSource(copyStr);
 
-				me.replaceImagesFileSourceWithInlineRepresentation(imgs, me.extractImageDataFromRtf(rtf))
+				if(me.isWordDocument(copyStr) == true){
+					
+					//粘贴板中的RTF数据
+					let rtf = clipboardData.getData('text/rtf');
+					
+					//获取粘贴板中图片的数量
+					let imgs = me.findAllImageElementsWithLocalSource(copyStr);
+
+					me.replaceImagesFileSourceWithInlineRepresentation(imgs, me.extractImageDataFromRtf(rtf))
+				}else{
+					wordImg = [];
+				}
+			
+
 				
 			})
 				
@@ -7501,6 +7508,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 me._selectionChange(250, evt);
             });
         },
+		
+		isWordDocument:function( str ) {
+			return /(class="?Mso|style="[^"]*\bmso\-|w:WordDocument|<(v|o):|lang=)/ig.test( str );
+		},
 		
 		//获取粘贴板中图片数量
 		findAllImageElementsWithLocalSource:function(copyStr){
@@ -7561,7 +7572,6 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 }
             }
 			
-			console.dir(wordImg)
 			
 		},
 		
@@ -14110,16 +14120,20 @@ UE.plugin.register('wordimage',function(){
         },
         inputRule : function (root) {
             utils.each(root.getNodesByTagName('img'), function (img, key) {
+				
+				Object.assign(img.attrs, {src:wordImg[key], _src: ''});
+				
                 var attrs = img.attrs,
                     flag = parseInt(attrs.width) < 128 || parseInt(attrs.height) < 43,
                     opt = me.options,
-                    src = opt.UEDITOR_HOME_URL + 'themes/default/images/spacer.gif';
+                    src = wordImg[key];
+					
                 if (attrs['src'] && /^(?:(file:\/+))/.test(attrs['src'])) {
                     img.setAttr({
                         width:attrs.width,
                         height:attrs.height,
                         alt:attrs.alt,
-                        src:wordImg[key],
+                        src:attrs.src,
                         'style':'background:url(' + ( flag ? opt.themePath + opt.theme + '/images/word.gif' : opt.langPath + opt.lang + '/images/localimage.png') + ') no-repeat center center;border:1px solid #ddd'
                     })
                 }
