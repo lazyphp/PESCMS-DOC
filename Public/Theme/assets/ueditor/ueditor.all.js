@@ -14119,24 +14119,59 @@ UE.plugin.register('wordimage',function(){
             }
         },
         inputRule : function (root) {
+			
             utils.each(root.getNodesByTagName('img'), function (img, key) {
 				
-				Object.assign(img.attrs, {src:wordImg[key], _src: ''});
+				if(wordImg.length > 0){
+					
+					var convertID = Date.now() + '_'+key;
+					
+					Object.assign(img.attrs, {src:'', _src: '', 'class':'loadingclass', id:'word_img_'+convertID});
+					
+					var dataurl = wordImg[key]; 
+
+					//上传到服务器
+					var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+					bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+					while(n--){
+					u8arr[n] = bstr.charCodeAt(n);
+					}
+					var obj = new Blob([u8arr], {type:mime});
+					var fd = new FormData();
+					fd.append("upfile", obj, convertID+".png");
+					
+					$.ajax({
+						url: me.getActionUrl(me.getOpt('imageActionName')),
+						type: "POST",
+						processData: false,
+						contentType: false,
+						data: fd,
+						success: function (res) {
+							try{
+								var jsonRes = JSON.parse(res);
+
+								var replace = jsonRes.original.replace(/\.png/, '');
+								$(me.document).find('#word_img_'+convertID).attr({src:jsonRes.url, 'class':''}).removeAttr('id');
+							}catch(e){
+								
+							}
+							
+						},
+						error :function(res){
+							me.fireEvent('showmessage', {
+								'id': 'asd',
+								'content': '上传出错了',
+								'type': 'error',
+								'timeout': 4000
+							});
+						}
+					});
+				}
 				
+
                 var attrs = img.attrs,
                     flag = parseInt(attrs.width) < 128 || parseInt(attrs.height) < 43,
-                    opt = me.options,
-                    src = wordImg[key];
-					
-                if (attrs['src'] && /^(?:(file:\/+))/.test(attrs['src'])) {
-                    img.setAttr({
-                        width:attrs.width,
-                        height:attrs.height,
-                        alt:attrs.alt,
-                        src:attrs.src,
-                        'style':'background:url(' + ( flag ? opt.themePath + opt.theme + '/images/word.gif' : opt.langPath + opt.lang + '/images/localimage.png') + ') no-repeat center center;border:1px solid #ddd'
-                    })
-                }
+                    opt = me.options;
             })
 			//清空调用记录
 			wordImg = [];
