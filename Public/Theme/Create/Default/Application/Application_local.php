@@ -20,7 +20,7 @@
             </div>
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
             <div>
-                <div class="pes-alert pes-alert-dark"><i class="am-icon-lightbulb-o"></i> 收费应用插件需要登录PESCMS账号才可以检查更新。</div>
+                <div class="am-alert am-alert-dark"><i class="am-icon-lightbulb-o"></i> 收费应用插件需要登录PESCMS账号才可以检查更新。</div>
                 <table class="am-margin-top am-table am-table-striped am-table-hover am-table-centered">
 
                     <?php if(empty($list)): ?>
@@ -60,7 +60,7 @@
                                 <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'option']) ?>" class="am-badge am-badge-warning am-radius">配置</a>
                                 <?php endif; ?>
 
-                                <a href="<?= $label->url(GROUP.'-Application-upgrade', ['name' => $value['info']['name'], 'version' => $value['info']['version'], 'enname' => $value['info']['enname'], 'method' => 'GET']) ?>" class="am-badge am-badge-warning am-radius ajax-click ajax-dialog check-update am-hide" msg="请确保已备份本插件，更新过程存在出错的可能" name="<?= $value['info']['name'] ?>" version="<?= $value['info']['version'] ?>">有可用更新</a>
+                                <a href="javascript:;" data="<?= $label->url(GROUP.'-Application-upgrade', ['name' => $value['info']['name'], 'version' => $value['info']['version'], 'enname' => $value['info']['enname'], 'method' => 'GET']) ?>" class="am-badge am-badge-warning am-radius ajax-click ajax-dialog check-update am-hide" msg="请确保已备份本插件，更新过程存在出错的可能" name="<?= $value['info']['name'] ?>" version="<?= $value['info']['version'] ?>">有可用更新</a>
 
                                 <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'remove']) ?>" class="am-badge am-badge-danger am-radius ajax-click ajax-dialog" msg="您确定要此删除插件吗?">删除</a>
                             </td>

@@ -37,7 +37,7 @@
                                 <p class="am-margin-xs">官网：<?= $item['website'] ?></p>
                                 <p class="am-margin-xs">简介：<?= $item['content'] ?></p>
 
-                                <a href="<?= $label->url(GROUP.'-Theme-upgrade', ['name' => $item['name'], 'enname' => $item['enname'], 'version' => $item['version'], 'method' => 'GET']) ?>" class="am-badge am-badge-warning am-radius check-update am-margin-vertical am-hide" name="<?= $item['name'] ?>" version="<?= $item['version'] ?>">有可用更新</a>
+                                <a href="javascript:;" data="<?= $label->url(GROUP.'-Theme-upgrade', ['name' => $item['name'], 'enname' => $item['enname'], 'version' => $item['version'], 'method' => 'GET']) ?>" class="am-badge am-badge-warning am-radius check-update am-margin-vertical am-hide" name="<?= $item['name'] ?>" version="<?= $item['version'] ?>">有可用更新</a>
                             </div>
 
                             <label class="am-radio-inline">
@@ -63,12 +63,13 @@
             }
 
             var template = $(this).val();
-            $.ajaxsubmit({
+            $.ajaxSubmit({
                 url:'<?= $label->url('Create-Theme-call') ?>',
                 data: {
                     template:template,
                     method:'PUT'
-                }
+                },
+                method:'POST'
             }, function(){
 
             });
@@ -110,15 +111,16 @@
             if(confirm('请确保已备份本主题，更新过程存在出错的可能') == false){
                 return false;
             }
-            var url = $(this).attr('href');
+            var url = $(this).attr('data');
             var appkey = $('input[name="appkey"]').val();
             if(appkey == ''){
                 alert('获取API数据失败，请刷新页面再试.')
             }
 
-            $.ajaxsubmit({
+            $.ajaxSubmit({
                 url: url,
-                data: {appkey:appkey}
+                data: {appkey:appkey},
+                method:'POST'
             }, function () {
             });
 

@@ -12,7 +12,7 @@ namespace Slice\Doc;
 /**
  * 文章前后置方法
  * Class Login
- * @package Slice\Ticket
+ * @package Slice\Doc
  */
 class Article extends \Core\Slice\Slice{
 

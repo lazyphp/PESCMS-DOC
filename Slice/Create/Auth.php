@@ -12,7 +12,7 @@ namespace Slice\Create;
 /**
  * 全局权限判断
  * Class Login
- * @package Slice\Ticket
+ * @package Slice\Create
  */
 class Auth extends \Core\Slice\Slice{
 

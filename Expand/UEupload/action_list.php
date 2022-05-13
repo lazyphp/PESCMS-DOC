@@ -25,7 +25,7 @@ class resource{
 
         $this->session = \Core\Func\CoreFunc::session();
         //判断是否登录状态下获取资源列表
-        if(empty($this->session->get('ticket')) && empty($this->session->get('member')) ){
+        if(empty($this->session->get('doc')) && empty($this->session->get('member')) ){
             die($this->returnMsg('非法请求，我们已记录此错误信息'));
         }
 
@@ -46,7 +46,7 @@ class resource{
         }
 
         //管理员登录状态，则覆写搜索条件
-        if(!empty($this->session->get('ticket'))){
+        if(!empty($this->session->get('doc'))){
             $condition = ' AND attachment_owner = 1';
         }
 

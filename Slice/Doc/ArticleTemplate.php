@@ -12,7 +12,7 @@ namespace Slice\Doc;
 /**
  * 文档通用模板
  * Class Login
- * @package Slice\Ticket
+ * @package Slice\Doc
  */
 class ArticleTemplate extends \Core\Slice\Slice{
 

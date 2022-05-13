@@ -17,7 +17,8 @@ class Theme extends \Core\Controller\Controller {
     public function index(){
         $this->assign('title', '模板列表');
         $this->assign('currentTheme', \Core\Func\CoreFunc::getThemeName('Doc'));
-        $this->assign('list', $this->getThemeList());
+        $list = $this->getThemeList();
+        $this->assign('list', $list);
 
         $this->layout();
     }
@@ -69,7 +70,7 @@ class Theme extends \Core\Controller\Controller {
 
         (new \Expand\Install('2', THEME.'/Doc/'))->downloadPlugin($name);
 
-        $this->success('主题安装完毕', $this->url('Ticket-Theme-index'));
+        $this->success('主题安装完毕', $this->url('Create-Theme-index'));
 
     }
 

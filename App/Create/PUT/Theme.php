@@ -13,12 +13,12 @@ class Theme extends \Core\Controller\Controller {
 
     public function call(){
         $template = $this->isP('template', '请提交您要切换的主题模板');
-        if(!is_dir(THEME."/Form/{$template}")){
+        if(!is_dir(THEME."/Doc/{$template}")){
             $this->error('无法找到切换的主题模板，请再次提交');
         }
 
-        $privateKey = md5('Form' . self::$config['PRIVATE_KEY']);
-        $markUsingFile = THEME . "/Form/{$privateKey}";
+        $privateKey = md5('Doc' . self::$config['PRIVATE_KEY']);
+        $markUsingFile = THEME . "/Doc/{$privateKey}";
 
         $f = fopen($markUsingFile, 'w');
         fwrite($f, $template);

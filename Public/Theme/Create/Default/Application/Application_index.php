@@ -31,9 +31,10 @@
             var name = $(this).attr('data')
             var enname = $(this).attr('enname')
             var appkey = $('input[name=appkey]').val();
-            $.ajaxsubmit({
+            $.ajaxSubmit({
                 url:'<?= $label->url(GROUP.'-Application-install', ['method' => 'GET']) ?>',
-                data:{name:name, enname:enname, appkey:appkey}
+                data:{name:name, enname:enname, appkey:appkey},
+                method:'POST'
             }, function(){
 
             })
