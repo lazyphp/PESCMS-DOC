@@ -89,7 +89,14 @@ class Article extends \Core\Model\Model {
                 'article_doc_id'  => $doc['doc_id'],
             ]);
         if (empty($articel)) {
-            self::error('文档不存在');
+            //如果是前台，跳转历史版本可能因为改版本没有此文档，所以直接重定向到文档首页。
+            if(GROUP == 'Doc'){
+                self::jump(self::url('Doc-Article-index',['id' => $doc['doc_id']]));
+            }else{
+                self::error('文档不存在');
+            }
+
+
         }
         return $articel;
     }
