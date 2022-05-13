@@ -5,28 +5,37 @@
     <section class="content">
         <article class="am-article">
             <div class="am-article-hd">
-                <h1 class="am-article-title"><?= empty($_GET['aid']) ? $doc['doc_title'] : $article_title ?></h1>
-                <small>
-                    <i class="am-icon-calendar"></i> 创建于 <?= date('Y-m-d', !empty($article_time) && $article_time ?: $doc['doc_createtime']) ?>
-                    <?php if (!empty($article_update_time) && $article_update_time > 0): ?>
-                        / <i class="am-icon-edit"></i> 最近更新于 <?= date('Y-m-d', $article_update_time) ?>
-                    <?php endif; ?>
-                    / <i class="am-icon-desktop"></i> <?= isset($article_view) ? $article_view : $doc['doc_view'] ?>
-                    
-                    <?php if(!empty($articleVersion)): ?>
-                    / 本页文档可切换别的版本
-                        <select class="switch-article-version" style="margin-top: -2px" data-aid="<?= $article_mark ?>" data-id="<?= $doc['doc_id'] ?>">
-                            <option>当前版本</option>
-                            <?php foreach($articleVersion as $value): ?>
-                                <option value="<?= $value['history_version'] ?>" <?= !empty($_GET['version']) && $_GET['version'] == $value['history_version'] ? 'selected="selected"' : '' ?> ><?= $value['history_version'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    <?php endif; ?>
-                    
-                    <?php if(!empty(self::session()->get('doc')['member_id'])): ?>
-                    / <a href="<?= $label->url('Create-Article-index', ['id' => $doc['doc_id'], 'aid' => $article_id ?? '']) ?>">[编辑本文档]</a>
-                    <?php endif; ?>
-                </small>
+                <h1 class="am-article-title "><?= empty($_GET['aid']) ? $doc['doc_title'] : $article_title ?></h1>
+                <div class="am-g am-g-collapse">
+                    <div class="am-u-sm-12 am-u-lg-9"><small>
+                            <i class="am-icon-calendar"></i> 创建于 <?= date('Y-m-d', $article_time ?? $doc['doc_createtime']) ?>
+                            <?php if (!empty($article_update_time) && $article_update_time > 0): ?>
+                                / <i class="am-icon-edit"></i> 最近更新于 <?= date('Y-m-d', $article_update_time) ?>
+                            <?php endif; ?>
+                            / <i class="am-icon-desktop"></i> <?= isset($article_view) ? $article_view : $doc['doc_view'] ?>
+
+                            <?php if(!empty($articleVersion)): ?>
+                                / <span class="am-text-warning"><i class="am-icon-lightbulb-o"></i> 本页文档可切换别的版本</span>
+                                <select class="switch-article-version" style="margin-top: -2px" data-aid="<?= $article_mark ?>" data-id="<?= $doc['doc_id'] ?>">
+                                    <option>当前版本</option>
+                                    <?php foreach($articleVersion as $value): ?>
+                                        <option value="<?= $value['history_version'] ?>" <?= !empty($_GET['version']) && $_GET['version'] == $value['history_version'] ? 'selected="selected"' : '' ?> ><?= $value['history_version'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            <?php endif; ?>
+
+                            <?php if(!empty(self::session()->get('doc')['member_id'])): ?>
+                                / <a href="<?= $label->url('Create-Article-index', ['id' => $doc['doc_id'], 'aid' => $article_id ?? '']) ?>">[编辑本文档]</a>
+                            <?php endif; ?>
+                        </small></div>
+                    <div class="am-u-sm-12 am-u-lg-3 am-text-right">
+                        <i class="am-icon-font"></i>字体：
+                        <span class="font-set" data="0">[默认]</span>
+                        <span class="font-set" data="3">[大]</span>
+                        <span class="font-set" data="6">[更大]</span>
+                    </div>
+                </div>
+
             </div>
 
             <?php if ($currentVersion != $doc['doc_version']): ?>
