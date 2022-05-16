@@ -88,6 +88,12 @@
          */
         var getHistory = function (aid) {
 
+            //新文档不请求历史记录
+            if(aid == 'new'){
+                $('.pes-history-list').html('')
+                return false;
+            }
+
             $.ajaxSubmit({
                 url: '/?g=Create&m=Article&a=history&aid=' + aid,
                 skipAutoTips: true,
@@ -95,11 +101,11 @@
                 success: function (res) {
                     //读取历史信息
                     var history = res?.data?.html || false;
-                    $('.pes-history-title').nextAll().remove();
+
                     if (history) {
-                        $('.pes-history-title').after(history)
+                        $('.pes-history-list').html(history)
                     } else {
-                        $('.pes-history-title').after('<tr><td colspan="3">暂无</td></tr>')
+                        $('.pes-history-list').html('<div class="am-alert am-alert-danger">获取文档操作历史出错</div>')
                     }
                 }
             });
@@ -170,9 +176,15 @@
          * 点击目录，获取文档内容
          */
         $(document).on('click', '.pes-doc-path a, .pes-add-article', function () {
-
             var id = '<?= $doc['doc_id'] ?>';
             var aid = $(this).data('id');
+
+            //处理URL地址
+            var link = $(this).data('link');
+            if(link && link.length > 0){
+                history.pushState({aid:aid}, $(this).text().trim(), link)
+            }
+
             $('.pes-doc-path a').removeClass('am-active')
             if (aid != 'new') {
                 $(this).addClass('am-active');
@@ -424,6 +436,73 @@
             return false;
         })
 
+        /**
+         * 提交页内版本
+         */
+        $(document).on('click', '.submit-article-version', function (){
+            var aid = $(this).attr('data');
+            var version = $('.article-version-number').val();
+            var sort = $('.article-version-sort').val();
+
+            var token = $('input[name="token"]').val()
+            $.ajaxSubmit({
+                url: '/?g=Create&m=Article&a=version',
+                method: 'POST',
+                stopJump: true,
+                data: {aid: aid, version:version, sort:sort, token:token},
+                complete: function (res){
+                    getHistory(aid);
+                }
+            });
+
+            return false;
+        })
+
+        /**
+         * 页内版本版本号排序
+         */
+        $(document).on('click', '.submit-article-version-sort', function (){
+
+            var aid = $(this).attr('data');
+            var dom = $(this).parents('form');
+            var data = dom.serializeArray();
+            var token = $('input[name="token"]').val()
+            var url = dom.attr('action')
+
+            data.push({name:'token', value:token})
+            $.ajaxSubmit({
+                url: url,
+                method: 'POST',
+                stopJump: true,
+                data: data,
+                complete: function (res){
+                    getHistory(aid);
+                }
+            });
+
+            return false;
+        })
+
+        //页面跳转编辑
+        var editLoading = function (){
+            $('.pes-article-paper h1').html('<i class="am-icon-spinner am-icon-spin"></i> 加载中...');
+        }
+
+        var searchParams = new URLSearchParams(window.location.href);
+        var urlAid = searchParams.get('aid');
+        if(urlAid > 0){
+            editLoading();
+            setTimeout(function (){
+                $('.pes-doc-path a[data-id="'+urlAid+'"]').trigger('click');
+            }, 600)
+
+        }else if(urlAid == 'new'){
+            editLoading();
+            setTimeout(function (){
+                $('.pes-add-article').trigger('click')
+            }, 600)
+
+        }
 
 
     })

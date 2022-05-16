@@ -116,7 +116,9 @@ class Article extends \Core\Controller\Controller {
             'history_id',
             'article_id',
             'article_json',
-            'history_time'
+            'history_time',
+            'history_version',
+            'history_version_listsort',
                  ] as $item){
             unset($articleContent[$item]);
         }
@@ -157,6 +159,27 @@ class Article extends \Core\Controller\Controller {
         $this->db()->commit();
 
         $this->success('切换历史版本成功', $this->url('Create-Article-index', ['id' => $aid]));
+
+    }
+
+    /**
+     * 页内版本权重排序
+     * @return void
+     */
+    public function pageVersionSort(){
+        if(empty($_POST['history_id']) || count($_POST['history_id']) == 0 ){
+            $this->error('请提交要排序的页内版本');
+        }
+        foreach ($_POST['history_id'] as $id => $value) {
+            $this->db('article_content_history')->where('history_id = :history_id')->update([
+                'noset' => [
+                    'history_id' => $id
+                ],
+                'history_version_listsort' => $value
+            ]);
+        }
+
+        $this->success('页内版本权重排序完成');
 
     }
 

@@ -32,11 +32,6 @@
                 </button>
             <?php endif; ?>
         </div>
-        <div class="am-u-sm-12 am-u-lg-6">
-            <ul class="am-pagination am-pagination-right am-margin-0">
-                <?= $page; ?>
-            </ul>
-        </div>
     </div>
 </form>
 

@@ -225,6 +225,14 @@ html {
 .content .am-article-hd small {
   color: #b5b5b5;
 }
+@media only screen and (max-width: 640px) {
+  .content .am-article-hd .am-u-sm-12 {
+    text-align: left !important;
+  }
+}
+.content .am-article-hd .font-set {
+  cursor: pointer;
+}
 .content .am-article-bd {
   min-height: 60vh;
 }

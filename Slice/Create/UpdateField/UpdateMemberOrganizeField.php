@@ -11,7 +11,7 @@ namespace Slice\Create\UpdateField;
 /**
  * 执行更新客户分组字段的动作
  * Class Login
- * @package Slice\Ticket
+ * @package Slice\Create
  */
 class UpdateMemberOrganizeField extends \Core\Slice\Slice{
 

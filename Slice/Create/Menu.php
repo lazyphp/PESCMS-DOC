@@ -12,7 +12,7 @@ namespace Slice\Create;
 /**
  * 全局菜单
  * Class Login
- * @package Slice\Ticket
+ * @package Slice\Create
  */
 class Menu extends \Core\Slice\Slice{
 

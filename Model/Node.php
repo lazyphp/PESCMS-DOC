@@ -44,12 +44,10 @@ class Node extends \Core\Model\Model {
             $node[$item['node_id']] = $item;
         }
         foreach ($list as $item) {
-            if ($node[$item['node_parent']]) {
+            if (isset($node[$item['node_parent']])) {
                 $node[$item['node_parent']]['child'][$item['node_id']] = $item;
             }
         }
-        
-
         return $node;
 
     }

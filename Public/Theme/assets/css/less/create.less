@@ -103,6 +103,16 @@ html,body{
   z-index: 3;
   background: #fff;
   padding: 30px 10px 0 10px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 10px;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: #82c0ff;
+  }
 
   .pes-article-right-sidebar-move{
     width: 10px;

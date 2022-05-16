@@ -43,4 +43,35 @@ class Article extends \Core\Controller\Controller {
             ]
         ]);
     }
+
+    /**
+     * 创建页内版本
+     * @return void
+     */
+    public function version(){
+        $aid = $this->isP('aid', '请提交要生成页内版本的文档');
+        $version = $this->isP('version', '请提交您的页内版本号');
+        $sort = $this->p('sort');
+        $article = \Model\Content::findContent(['article', true], $aid, 'article_id')->emptyTips('更新的文档不存在，请重新点击侧栏读取内容.');
+
+        $articleContent = \Model\Content::findContent('article_content', $aid, 'article_id');
+
+        //生成历史记录
+        $this->db('article_content_history')->insert([
+            'article_id' => $aid,
+            'article_json' => json_encode($article),
+            'article_content' => $articleContent['article_content'],
+            'article_content_md' => $articleContent['article_content_md'],
+            'article_content_editor' => $articleContent['article_content_editor'],
+            'article_content_time' => $articleContent['article_content_time'],
+            'article_keyword' => $articleContent['article_keyword'],
+            'article_description' => $articleContent['article_description'],
+            'history_time' => time(),
+            'history_version' => $version,
+            'history_version_listsort' => $sort,
+        ]);
+
+        $this->success('页内版本号添加完成');
+
+    }
 }

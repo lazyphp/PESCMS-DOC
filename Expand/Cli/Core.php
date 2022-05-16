@@ -35,7 +35,7 @@ abstract class Core {
         /**
          * 配置原因，
          */
-        define('GROUP', 'Ticket');
+        define('GROUP', 'Create');
         define('DEBUG', TRUE);
 
         spl_autoload_register(array($this, 'loader'));

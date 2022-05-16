@@ -18,7 +18,9 @@ class HandleRoute extends \Core\Slice\Slice {
      * 更新哈希值
      */
     public function before() {
-        $_POST['hash'] = (string)md5($_POST['controller'] . $_POST['param']);
+        $controller = $_POST['controller'] ?? '';
+        $param = $_POST['param'] ?? '';
+        $_POST['hash'] = (string)md5($controller . $param);
     }
 
     /**

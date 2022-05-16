@@ -25,12 +25,16 @@ class Article extends \Core\Controller\Controller {
         if(!empty($hasChild)){
             $this->error('当前删除的文档存在子类，请先移除再删除');
         }
+        $getDocID = \Model\Content::findContent('article', $aid, 'article_id');
+        if(empty($getDocID)){
+            $this->error('您要删除的文档不存在，请检查再尝试提交。');
+        }
 
         $this->db('article')->where('article_id = :article_id')->delete([
             'article_id' => $aid
         ]);
 
-        $this->success('文档删除完成');
+        $this->success('文档删除完成', $this->url('Create-Article-index', ['id' => $getDocID['article_doc_id']]));
     }
 
     /**

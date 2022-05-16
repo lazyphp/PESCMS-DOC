@@ -11,7 +11,7 @@ namespace Slice\Create\HandleForm;
 
 /**
  * 处理后台 用户添加/编辑提交过来的密码表单
- * @package Slice\Ticket
+ * @package Slice\Create
  */
 class HandleMember extends \Core\Slice\Slice {
 
@@ -28,6 +28,8 @@ class HandleMember extends \Core\Slice\Slice {
     private function setPassword(){
         if (METHOD == 'POST') {
             $this->isP('password', '请填写密码');
+        }else if(METHOD == 'GET'){
+            return true;
         }
 
         if (empty($_POST['password'])) {

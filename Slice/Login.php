@@ -12,7 +12,8 @@ namespace Slice;
 class Login extends \Core\Slice\Slice{
 
     public function before() {
-        $mid = $this->session()->get('doc')['member_id'];
+        $mid = $this->session()->get('doc')['member_id'] ?? null;
+
         if(empty($mid) && MODULE != 'Login' ){
 
             /**
