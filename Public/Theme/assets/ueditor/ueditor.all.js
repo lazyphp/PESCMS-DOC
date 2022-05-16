@@ -7473,11 +7473,17 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
 				
 				//粘贴板中的HTML文本
 				let copyStr = clipboardData.getData('text/html');
+				
 
 				if(me.isWordDocument(copyStr) == true){
 					
+					console.dir("本次复制Word内容长度为：" + copyStr.length)
+					
 					//粘贴板中的RTF数据
 					let rtf = clipboardData.getData('text/rtf');
+					
+					console.dir("当前程序读取RTF数据长度为：" + rtf.length)
+					
 					
 					//获取粘贴板中图片的数量
 					let imgs = me.findAllImageElementsWithLocalSource(copyStr);
@@ -7515,7 +7521,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
 		
 		//获取粘贴板中图片数量
 		findAllImageElementsWithLocalSource:function(copyStr){
-			let imgs = $(copyStr).find('img');
+			var parser = new DOMParser();
+			var doc = parser.parseFromString(copyStr.replace(/v:imagedata/ig, 'imagedata'), "text/html");
+						
+			let imgs = doc.querySelectorAll('img, imagedata');
+
+			console.dir('从剪切板获取到Word文档图片元素:' + imgs.length);
+			console.dir('请校验本次获取的图片数量与Word文档的图片数量是否一致。');
+			
 			return imgs;
 		},
 		
@@ -7548,6 +7561,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     }
                 }
             }
+			
+			console.log("成功从剪切板转换图片数量为:" + result.length);
 
             return result;
 		},
@@ -7567,10 +7582,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     const newSrc = `data:${imagesHexSources[i].type};base64,${this._convertHexToBase64(imagesHexSources[i].hex)}`;
 
 					wordImg.push(newSrc);
+
                   
                     // writer.setAttribute('src', newSrc, imageElements[i]);
                 }
             }
+			
+			console.log("转换为Base64图片数量为:" + wordImg.length);
 			
 			
 		},
@@ -14120,7 +14138,14 @@ UE.plugin.register('wordimage',function(){
         },
         inputRule : function (root) {
 			
-            utils.each(root.getNodesByTagName('img'), function (img, key) {
+			var key = 0;
+			
+            utils.each(root.getNodesByTagName('img'), function (img) {
+				
+				//word文档锚点图片。
+				if(img.attrs.class == 'anchorclass'){
+					return true;
+				}
 				
 				if(wordImg.length > 0){
 					
@@ -14129,6 +14154,8 @@ UE.plugin.register('wordimage',function(){
 					Object.assign(img.attrs, {src:'', _src: '', 'class':'loadingclass', id:'word_img_'+convertID});
 					
 					var dataurl = wordImg[key]; 
+					
+					key++;
 
 					//上传到服务器
 					var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
