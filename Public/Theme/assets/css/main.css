@@ -1,5 +1,6 @@
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 70px;
 }
 .am-topbar {
   box-shadow: 0 2px 4px 0 rgba(116, 129, 141, 0.1);
