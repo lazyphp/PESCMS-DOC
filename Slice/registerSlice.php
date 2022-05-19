@@ -97,6 +97,27 @@ $SLICE_ARRYR = [
         ['\Doc\ArticleTemplate']
     ],
 
+    //注册全局插件访问入口
+    'GLOBAL-APPLICATION-PLUGIN' => [
+        'any',
+        [':g-Application-Plugin'],
+        ['\ApplicationPlugin']
+    ],
+
+    //注册插件初始化入口
+    'Create-APPLICATION-Init' => [
+        'any',
+        ['Create-Application-Init'],
+        ['\Create\ApplicationInit']
+    ],
+
+    //插件全局事件
+    'APPLICATION-GLOBAL-EVENT' => [
+        'any',
+        ['Create-:m-:a', 'Doc-:m-:a'],
+        ['\ApplicationGlobalEvent'],
+    ],
+
 ];
 
 //执行切片注册

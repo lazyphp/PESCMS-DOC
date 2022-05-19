@@ -116,8 +116,8 @@ class Setting extends \Core\Controller\Controller {
      * 手动更新
      */
     public function mtUpgrade() {
-        $file = $_FILES['zip'];
-        if (pathinfo($file['name'])['extension'] != 'zip') {
+        $file = $_FILES['zip'] ?? NULL;
+        if ( empty($file) || pathinfo($file['name'])['extension'] != 'zip') {
             $this->error('请导入zip的更新补丁');
         }
 
@@ -212,6 +212,19 @@ class Setting extends \Core\Controller\Controller {
             'id' => 2,
             'type' => 2,
             'version' => $version
+        ]);
+    }
+
+    /**
+     * 标记已读帮助文档提示
+     * @return void
+     */
+    public function readHelpDoc(){
+        $this->db('option')->where('option_id = :option_id')->update([
+            'noset' => [
+                'option_id' => '-3'
+            ],
+            'value' => 1
         ]);
     }
 

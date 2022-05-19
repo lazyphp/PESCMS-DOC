@@ -15,7 +15,7 @@ class Index extends \App\Install\Common {
      * 欢迎界面
      */
     public function index() {
-        $this->assign('program', '欢迎使用PESCMS DOC文档管理系统');
+        $this->assign('program', 'PESCMS DOC文档管理系统');
         $this->assign('title', '欢迎使用PESCMS DOC文档管理系统');
         $this->checkRunning();
         $this->layout();

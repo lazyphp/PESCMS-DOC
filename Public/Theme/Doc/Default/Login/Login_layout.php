@@ -9,6 +9,9 @@
                 <h2><?= $system['siteTitle'] ?></h2>
             </div>
             <?php require $file?>
+
+            <?= $label->loginEvent(); ?>
+
         </div>
     </div>
 </div>

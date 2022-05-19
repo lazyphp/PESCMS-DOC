@@ -36,6 +36,7 @@ class Article extends \Core\Controller\Controller {
             $doc = json_decode($getVersionContent['doc_json'], true);
         }
 
+        \Model\Article::$openSidebar = $doc['doc_open_sidebar'];
         $path = \Model\Article::obArticle($doc['doc_id'], $doc['doc_version']);
 
         if (!empty($_GET['aid'])) {

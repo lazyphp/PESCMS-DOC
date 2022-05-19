@@ -17,6 +17,8 @@ class Article extends \Core\Model\Model {
 
     public static $selectedID;
 
+    public static $openSidebar = 0;
+
     /**
      * 打开输出控制缓冲文档目录
      * @param int $docID

@@ -5,7 +5,10 @@
     <section class="content">
         <article class="am-article">
             <div class="am-article-hd">
-                <h1 class="am-article-title "><?= empty($_GET['aid']) ? $doc['doc_title'] : $article_title ?></h1>
+                <h1 class="am-article-title ">
+                    <?= empty($_GET['aid']) ? $doc['doc_title'] : $article_title ?>
+                    <i class="am-icon-link article-copy-link" title="复制链接"></i>
+                </h1>
                 <div class="am-g am-g-collapse">
                     <div class="am-u-sm-12 am-u-lg-9"><small>
                             <i class="am-icon-calendar"></i> 创建于 <?= date('Y-m-d', $article_time ?? $doc['doc_createtime']) ?>
@@ -27,6 +30,9 @@
                             <?php if(!empty(self::session()->get('doc')['member_id']) && $label->checkAuth('Create-GET-Article-index') === true): ?>
                                 / <a href="<?= $label->url('Create-Article-index', ['id' => $doc['doc_id'], 'aid' => $article_id ?? '']) ?>">[编辑本文档]</a>
                             <?php endif; ?>
+
+                            <?= (new \Core\Plugin\Plugin())->event('articleColumn', NULL); ?>
+
                         </small></div>
                     <div class="am-u-sm-12 am-u-lg-3 am-text-right">
                         <i class="am-icon-font"></i>字体：
@@ -44,7 +50,12 @@
                 </div>
             <?php endif; ?>
 
+            <?= (new \Core\Plugin\Plugin())->event('articleContentBefore', NULL); ?>
+
             <div class="am-article-bd"><?= htmlspecialchars_decode(str_replace($articleTemplate['replace'], $articleTemplate['ue'], empty($article_content) ? $doc['doc_content'] : $article_content))?></div>
+
+            <?= (new \Core\Plugin\Plugin())->event('articleContentAfter', NULL); ?>
+
             <input type="hidden" class="use-md" value="<?= isset($article_content_editor) ?  $article_content_editor : $doc['doc_content_editor']?>" data="<?= $article_content_editor ?? '' ?>">
 
             <div class="pes-like am-text-center am-margin-top">

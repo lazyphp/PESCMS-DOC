@@ -51,18 +51,18 @@
                             <td><?= $value['info']['content'] ?></td>
                             <td>
                                 <?php if($value['info']['status'] == 'enabled'): ?>
-                                <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'disabled']) ?>" class="am-badge am-badge-secondary am-radius ajax-click">禁用</a>
+                                <a href="javascript:;" data="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'disabled']) ?>" class="am-badge am-badge-secondary am-radius ajax-click">禁用</a>
                                 <?php else: ?>
-                                <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'enabled']) ?>" class="am-badge am-badge-secondary am-radius ajax-click">启用</a>
+                                <a href="javascript:;" data="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'enabled']) ?>" class="am-badge am-badge-secondary am-radius ajax-click">启用</a>
                                 <?php endif; ?>
 
-                                <?php if($value['info']['option'] == 1): ?>
+                                <?php if(isset($value['info']['option']) && $value['info']['option'] == 1): ?>
                                 <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'option']) ?>" class="am-badge am-badge-warning am-radius">配置</a>
                                 <?php endif; ?>
 
                                 <a href="javascript:;" data="<?= $label->url(GROUP.'-Application-upgrade', ['name' => $value['info']['name'], 'version' => $value['info']['version'], 'enname' => $value['info']['enname'], 'method' => 'GET']) ?>" class="am-badge am-badge-warning am-radius ajax-click ajax-dialog check-update am-hide" msg="请确保已备份本插件，更新过程存在出错的可能" name="<?= $value['info']['name'] ?>" version="<?= $value['info']['version'] ?>">有可用更新</a>
 
-                                <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'remove']) ?>" class="am-badge am-badge-danger am-radius ajax-click ajax-dialog" msg="您确定要此删除插件吗?">删除</a>
+                                <a href="javascript:;" data="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'remove']) ?>" class="am-badge am-badge-danger am-radius ajax-click ajax-dialog" msg="您确定要此删除插件吗?">删除</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>

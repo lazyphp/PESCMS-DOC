@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?= empty($title) ? $system['siteTitle'] : "{$title} - {$system['siteTitle']}" ?></title>
     <meta name="author" content="PESCMS">
-    <meta name="keywords" content="<?= $docKeyword ?? ($system['siteKeyword'] ?? '') ?>">
-    <meta name="description" content="<?= $docDescription ?? ($system['siteDescription'] ?? '') ?>">
+    <meta name="keywords" content="<?= $docKeyword ?? ($system['keyword'] ?? '') ?>">
+    <meta name="description" content="<?= $docDescription ?? ($system['description'] ?? '') ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
