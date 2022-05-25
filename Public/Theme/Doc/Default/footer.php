@@ -15,10 +15,14 @@
                 <?php endif; ?>
                 <span class="footer-line"></span>
                 <a href="https://www.pescms.com/download/3.html" target="_blank" class="am-link-success" >Power By PESCMS DOC
+                </a>
             </div>
         </div>
     </div>
 </div>
+
+<?php $label->footerEvent() ?>
+
 <div style="display: none;">
     <?= $system['siteScript'] ?>
 </div>
