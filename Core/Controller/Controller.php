@@ -254,10 +254,12 @@ class Controller {
     /**
      * 切片开始前执行的动作
      */
-    private static function beforeInitView() {
-        array_walk(\Core\Slice\InitSlice::$slice, function ($obj) {
+    private static function beforeInitView(bool $isJump = false) {
+        array_walk(\Core\Slice\InitSlice::$slice, function ($obj) use ($isJump) {
             \Core\Slice\InitSlice::$beforeViewToExecAfter = true;
-            $obj->after();
+            if($isJump == false){
+                $obj->after();
+            }
         });
     }
 
@@ -290,7 +292,7 @@ class Controller {
      */
     private static function tipsJump($message, $code, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3'){
 
-        self::beforeInitView();
+        self::beforeInitView(true);
         \Core\Func\CoreFunc::isAjax(is_array($message) ? $message : ['msg' => $message],$code, $jumpUrl, $waitSecond);
 
         if($waitSecond == -1 && $jumpUrl != 'javascript:history.go(-1)' ){
