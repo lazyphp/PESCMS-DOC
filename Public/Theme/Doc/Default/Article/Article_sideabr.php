@@ -17,7 +17,7 @@
     </div>
 
     <h2 class="am-text-center">
-        <a class="app-name-link" data-nosearch="" href="javascript:;"><?= $doc['doc_title'] ?></a></h2>
+        <a class="app-name-link" data-nosearch="" href="<?= $label->url('Doc-Article-index', ['id' => $doc['doc_id']]) ?>"><?= $doc['doc_title'] ?></a></h2>
 
     <?php if(!empty($docVersion)): ?>
         <select name="version" class="version" data-am-selected="{btnWidth: '100%'}">

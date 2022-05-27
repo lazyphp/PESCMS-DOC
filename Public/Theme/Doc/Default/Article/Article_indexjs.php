@@ -85,6 +85,8 @@
                 }
                 var name = $(this).text();
 
+                $(this).append(' <i class="am-icon-link article-copy-link" title="复制链接"></i>')
+
                 var ulStr = '<li class="nav-' + i + '-' + $(this)[0].nodeName + ' nav-index-' + $(this)[0].nodeName + '"><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>';
 
                 if ($(this)[0].nodeName == 'H1' || key == firstHTagTitle) {
@@ -310,9 +312,42 @@
             window.location.href = `/?g=Doc&m=Article&a=index&id=${id}&aid=${aid}&version=${version}`;
         })
 
+        /**
+         * 快速复制文档地址
+         */
+        $(document).on('click', '.article-copy-link', function () {
 
+            var hash = '';
 
+            if($(this).parents('.am-article-bd').hasClass('am-article-bd') == true){
+                hash = '#' + $(this).parent().attr('id')
+            }
 
+            var dom = $(this)
+            var link = window.location.href.replace(window.location.hash, '') + hash;
+            const input = document.createElement('input');
+            input.setAttribute('value', link);
+            document.body.appendChild(input);
+            input.select();
+            if (document.execCommand('copy')) {
+                dom.addClass('am-text-secondary');
+                document.execCommand('copy');
+                var d = dialog({
+                    id: 'copy-tips',
+                    fixed: true,
+                    skin: 'submit-warning',
+                    zIndex: '777',
+                    content: '<i class="am-icon-check-circle"></i> 复制成功'
+                }).show();
+                setTimeout(function () {
+                    dom.removeClass('am-text-secondary');
+                    d.close();
+                }, 2000)
+
+            }
+            document.body.removeChild(input);
+            return false;
+        })
 
 
 

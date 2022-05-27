@@ -5,7 +5,10 @@
     <section class="content">
         <article class="am-article">
             <div class="am-article-hd">
-                <h1 class="am-article-title "><?= empty($_GET['aid']) ? $doc['doc_title'] : $article_title ?></h1>
+                <h1 class="am-article-title ">
+                    <?= empty($_GET['aid']) ? $doc['doc_title'] : $article_title ?>
+                    <i class="am-icon-link article-copy-link" title="复制链接"></i>
+                </h1>
                 <div class="am-g am-g-collapse">
                     <div class="am-u-sm-12 am-u-lg-9"><small>
                             <i class="am-icon-calendar"></i> 创建于 <?= date('Y-m-d', $article_time ?? $doc['doc_createtime']) ?>

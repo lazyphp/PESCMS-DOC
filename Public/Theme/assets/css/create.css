@@ -35,7 +35,6 @@ body {
   padding-left: 1rem;
   font-size: 1.6rem;
   list-style: none;
-  white-space: nowrap;
   margin: 0;
 }
 .pes-article-left-sidebar .pes-doc-path-container .pes-doc-path li > a.am-active {

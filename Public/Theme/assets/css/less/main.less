@@ -1,4 +1,4 @@
-html{
+html {
   scroll-behavior: smooth;
   scroll-padding-top: 70px;
 }
@@ -8,13 +8,15 @@ html{
   box-shadow: 0 2px 4px 0 rgb(116 129 141 / 10%);
   background: #fff;
 }
+
 //文档页的导航栏
-.pes-article-topbar{
-  h1{
+.pes-article-topbar {
+  h1 {
     display: none !important;
   }
+
   @media only screen and (max-width: 640px) {
-    h1{
+    h1 {
       display: block !important;
     }
 
@@ -59,14 +61,14 @@ html{
 文章详细页的导航
 ===================
 */
-.pes-article-nav{
+.pes-article-nav {
 
-  .pes-article-nav-title{
+  .pes-article-nav-title {
     font-weight: bold;
 
   }
 
-  >li+li:before{
+  > li + li:before {
     content: "»\00a0";
     padding: 0;
     color: #666666;
@@ -75,14 +77,15 @@ html{
     vertical-align: -16%;
   }
 
-  .am-dropdown-layer{
+  .am-dropdown-layer {
     right: 0;
     width: 75%;
   }
 
-  >li>a{
+  > li > a {
     display: inline-block;
-    &:hover::after{
+
+    &:hover::after {
       border: none;
     }
   }
@@ -179,7 +182,6 @@ html{
         overflow: hidden;
         text-decoration: none;
         text-overflow: ellipsis;
-        white-space: nowrap;
 
         &:hover {
           color: #5eb95e;
@@ -235,6 +237,7 @@ html{
   }
 
 }
+
 //手机版文档目录的遮罩层
 @media only screen and (max-width: 640px) {
   .mask-layer {
@@ -257,7 +260,7 @@ html{
 */
 .content {
   padding-top: 30px;
-  margin:0 50px 0 350px ;
+  margin: 0 50px 0 350px;
   transition: left .25s ease;
 
   .am-article-title {
@@ -272,25 +275,56 @@ html{
       padding-bottom: 1rem;
       border-bottom: 1px solid #ccc;
       margin-bottom: 1rem;
+
     }
 
     small {
       color: #b5b5b5;
     }
-    .am-u-sm-12{
+
+    .am-u-sm-12 {
       @media only screen and (max-width: 640px) {
         text-align: left !important;
       }
     }
 
-    .font-set{
-       cursor: pointer;
+    .font-set {
+      cursor: pointer;
     }
 
   }
 
   .am-article-bd {
     min-height: 60vh;
+
+    img{
+      border: 1px solid #ebeef5;
+      background-color: #fff;
+      color: #303133;
+      transition: .3s;
+      border-radius: 5px;
+      box-shadow:  0px 0px 12px rgba(0, 0, 0, .12);
+
+      &:hover{
+        box-shadow: 0 2px 30px rgb(0 0 0 / 22%), 0 2px 5px rgb(0 0 0 / 10%) !important;
+      }
+
+    }
+
+  }
+
+
+  .am-article-hd, .am-article-bd {
+    h1, h2, h3, h4, h5, h6 {
+      .article-copy-link {
+        cursor: pointer;
+        display: none;
+      }
+
+      &:hover > .article-copy-link {
+        display: inline-block;
+      }
+    }
   }
 
   .am-pagination {
@@ -306,7 +340,7 @@ html{
     }
   }
 
-  .pes-like{
+  .pes-like {
     cursor: pointer;
   }
 
@@ -335,7 +369,7 @@ html{
 
   z-index: 999;
 
-  .title-nav-hide{
+  .title-nav-hide {
     background-color: #efefef;
     border-radius: 10px 0 0 10px;
     border-width: 1px 0px 1px 1px;
@@ -348,34 +382,39 @@ html{
     position: absolute;
     top: 50%;
   }
-  .title-nav-content{
+
+  .title-nav-content {
     height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
     overflow: -moz-scrollbars-none;
-    &::-webkit-scrollbar { width: 0 !important }
+
+    &::-webkit-scrollbar {
+      width: 0 !important
+    }
   }
 
 
-
-  ul{
+  ul {
     list-style: disc;
     margin: 0.5rem 0;
-    li.active > a{
+
+    li.active > a {
       color: #E6A23C;
       font-weight: 500;
     }
 
   }
 
-  a{
-    white-space:nowrap;
+  a {
+    white-space: nowrap;
     text-decoration: none;
     display: block;
     padding: .125rem 0;
     color: #656262;
     transition: all 50ms ease-in-out;
-    &:hover,:focus{
+
+    &:hover, :focus {
       color: #E6A23C;
     }
   }
@@ -392,10 +431,11 @@ html{
   padding-bottom: 40px;
   background: #fafafa;
 
-  .am-field-error, .am-form-error .am-form-field ,
-  .am-field-valid, .am-form-success .am-form-field{
+  .am-field-error, .am-form-error .am-form-field,
+  .am-field-valid, .am-form-success .am-form-field {
     box-shadow: none !important;
-    :hover,:focus{
+
+    :hover, :focus {
       box-shadow: none !important;
     }
 
@@ -444,15 +484,18 @@ html{
 
       .am-form {
         margin: 0 20px;
-        .pes-login-secret-key-container{
+
+        .pes-login-secret-key-container {
           border: 1px dashed #E6A23C;
           padding: 0 5px;
           margin-bottom: 10px;
-          .pes-login-secret-key{
+
+          .pes-login-secret-key {
             padding-left: 3px;
             border-radius: 2px;
             border-width: 1px;
-            &:hover,&:focus{
+
+            &:hover, &:focus {
               border-color: #d9d9d9;
             }
           }
@@ -481,11 +524,12 @@ html{
 搜索相关样式
 ===================
 */
-.pes-search-panel{
+.pes-search-panel {
 
-  .pes-search-tool{
+  .pes-search-tool {
     margin-bottom: 10px;
-    div{
+
+    div {
       background: #f5f5f5;
       display: inline-block;
       padding: 2px 20px;
@@ -493,19 +537,21 @@ html{
 
   }
 
-  .am-g{
+  .am-g {
     padding: 2rem 0;
-     border-bottom: 1px solid #efefef;
-    &:last-child{
-      border-bottom:none;
+    border-bottom: 1px solid #efefef;
+
+    &:last-child {
+      border-bottom: none;
     }
 
-    a>h2{
+    a > h2 {
       color: #606266;
     }
 
   }
-  .pes-search-content{
+
+  .pes-search-content {
     color: #b3b3b3;
   }
 }
