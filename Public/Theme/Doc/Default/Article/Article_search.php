@@ -62,6 +62,9 @@
                                     /
                                     <i class="am-icon-edit"></i> 最近更新于 <?= date('Y-m-d', $value['article_update_time']) ?>
                                 <?php endif; ?>
+
+                                <?= (new \Core\Plugin\Plugin())->event('searchInfoBar', $value); ?>
+
                             </div>
 
                         </div>

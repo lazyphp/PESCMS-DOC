@@ -30,6 +30,9 @@
                             <?php if(!empty(self::session()->get('doc')['member_id']) && $label->checkAuth('Create-GET-Article-index') === true): ?>
                                 / <a href="<?= $label->url('Create-Article-index', ['id' => $doc['doc_id'], 'aid' => $article_id ?? '']) ?>">[编辑本文档]</a>
                             <?php endif; ?>
+
+                            <?= (new \Core\Plugin\Plugin())->event('articleColumn', NULL); ?>
+
                         </small></div>
                     <div class="am-u-sm-12 am-u-lg-3 am-text-right">
                         <i class="am-icon-font"></i>字体：
@@ -47,7 +50,12 @@
                 </div>
             <?php endif; ?>
 
+            <?= (new \Core\Plugin\Plugin())->event('articleContentBefore', NULL); ?>
+
             <div class="am-article-bd"><?= htmlspecialchars_decode(str_replace($articleTemplate['replace'], $articleTemplate['ue'], empty($article_content) ? $doc['doc_content'] : $article_content))?></div>
+
+            <?= (new \Core\Plugin\Plugin())->event('articleContentAfter', NULL); ?>
+
             <input type="hidden" class="use-md" value="<?= isset($article_content_editor) ?  $article_content_editor : $doc['doc_content_editor']?>" data="<?= $article_content_editor ?? '' ?>">
 
             <div class="pes-like am-text-center am-margin-top">
