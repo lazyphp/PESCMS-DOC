@@ -1,15 +1,16 @@
 @leftSidebarWidth: 250px;
 @rightSidebarWidth: 250px;
-html,body{
+html, body {
   background-color: #fafafa;
 }
+
 //导航栏
-.am-topbar{
+.am-topbar {
   box-shadow: 0 2px 4px 0 rgb(116 129 141 / 10%);
   background: #fff;
 }
 
-#wrapper{
+#wrapper {
   min-height: 87vh;
 }
 
@@ -39,7 +40,7 @@ html,body{
   }
 
   //文档目录
-  .pes-doc-path-container{
+  .pes-doc-path-container {
 
     .pes-doc-path {
       padding-left: 1rem;
@@ -48,8 +49,8 @@ html,body{
       margin: 0;
 
       li {
-        >a.am-active{
-          border-width: 3px!important;
+        > a.am-active {
+          border-width: 3px !important;
           border-right: 3px solid #5eb95e;
         }
 
@@ -62,9 +63,11 @@ html,body{
           padding: 5px 0;
           color: #606266;
           display: block;
-          sup{
+
+          sup {
             cursor: help;
           }
+
           z-index: 1;
         }
 
@@ -76,7 +79,7 @@ html,body{
           padding-left: 1.8rem;
         }
 
-        .pes-article-copy-link{
+        .pes-article-copy-link {
           position: absolute;
           left: -3px;
           cursor: copy;
@@ -113,7 +116,7 @@ html,body{
     background: #82c0ff;
   }
 
-  .pes-article-right-sidebar-move{
+  .pes-article-right-sidebar-move {
     width: 10px;
     height: 100%;
     position: absolute;
@@ -122,30 +125,107 @@ html,body{
     cursor: col-resize;
   }
 
-  .pes-sidebar-tool{
+  .pes-sidebar-tool {
     margin-top: 1.6rem;
     padding-top: 1.6rem;
     border-top: 1px solid #DCDFE6;
   }
 
-  .pes-doc-article-tool{
+  .pes-doc-article-tool {
     display: none;
   }
 
 }
+
+.mobile-button{
+  display: none;
+}
+
+@media only screen and (max-width: 640px) {
+  .pes-article-left-sidebar{
+    display: none;
+    z-index: 9999;
+    top:0 !important;
+    transition: transform .25s ease-out;
+    animation: bounceInLeft 0.6s infinite cubic-bezier(0.6, 0.9, 0.1, 1.000);
+    animation-iteration-count: 1;
+
+    @keyframes bounceInLeft {
+      0% {
+        opacity: 0;
+        transform: translate3d(-3000px, 0, 0);
+      }
+      60% {
+        opacity: 1;
+        transform: translate3d(0px, 0, 0);
+      }
+      75% {
+        transform: translate3d(0px, 0, 0);
+      }
+      90% {
+        transform: translate3d(0px, 0, 0);
+      }
+      100% {
+        transform: none;
+      }
+    }
+  }
+
+
+
+  .mask-layer {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(3, 14, 27, .7);
+    transition: opacity 1s ease-in-out;
+    z-index: 1001;
+    display: none;
+  }
+
+  .pes-article-right-sidebar{
+    position: relative;
+    width: 100%;
+    .pes-article-right-sidebar-move{
+      display: none;
+    }
+  }
+
+  .pes-article-paper{
+    margin: 0 15px !important;
+    padding: 0 !important;
+  }
+
+  //移动端的功能按钮
+  .mobile-button{
+    display: block;
+    position: fixed;
+    bottom: 50px;
+    right: 10px;
+    z-index: 9999;
+    a{
+      display: block;
+      margin: 10px 0;
+    }
+  }
+
+}
+
 //左右侧栏滚动置顶固定类
 .pes-article-sidebar-scroll {
   top: 0px;
   border-top: 0;
 
-  .pes-article-history-left-divider{
-  border-left: 1px solid #DCDFE6;
-  position: absolute;
-  left: -1px;
-  top: 0;
-  height: 100%;
-}
-  .pes-article-history-right-divider{
+  .pes-article-history-left-divider {
+    border-left: 1px solid #DCDFE6;
+    position: absolute;
+    left: -1px;
+    top: 0;
+    height: 100%;
+  }
+
+  .pes-article-history-right-divider {
     border-right: 1px solid #DCDFE6;
     position: absolute;
     right: 0px;
@@ -182,14 +262,14 @@ html,body{
     }
   }
 
-  .vditor-content{
+  .vditor-content {
     min-height: 400px;
   }
 
 }
 
 //文档封面
-.pes-doc-cover{
+.pes-doc-cover {
   width: 150px;
   height: 150px;
   background-size: 100%;
@@ -199,7 +279,8 @@ html,body{
   display: inline-block;
   border: 1px solid #DCDFE6;
   border-radius: 10px;
-  &:hover{
+
+  &:hover {
     opacity: 0.5;
     transition: opacity 0.6s;
   }
@@ -210,9 +291,10 @@ html,body{
 表格声明
 ===================
 */
-.table-checked{
+.table-checked {
   width: 30px;
 }
+
 .table-sort {
   width: 60px;
 }
@@ -227,41 +309,47 @@ html,body{
 .away_icon,
 .zero_icon,
 .plus_icon,
-.plus_end_icon{
-  background:url(/Theme/assets/i/icon_list.png) no-repeat;
-  display:inline-block;
-  vertical-align:middle;
+.plus_end_icon {
+  background: url(/Theme/assets/i/icon_list.png) no-repeat;
+  display: inline-block;
+  vertical-align: middle;
 }
+
 .start_icon,
 .away_icon,
 .zero_icon,
-.plus_none_icon{
+.plus_none_icon {
   background: none !important;
-  width:20px;
-  height:20px;
-  overflow:hidden;
-  cursor:pointer;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  cursor: pointer;
 }
-.away_icon{
-  background-position:0 -20px;
+
+.away_icon {
+  background-position: 0 -20px;
 }
-.zero_icon{
-  background-position:-20px 0;
-  cursor:default;
+
+.zero_icon {
+  background-position: -20px 0;
+  cursor: default;
 }
+
 .plus_icon,
-.plus_end_icon{
-  width:40px;
-  height:24px;
-  background-position:0 -43px;
-  margin-right:5px;
+.plus_end_icon {
+  width: 40px;
+  height: 24px;
+  background-position: 0 -43px;
+  margin-right: 5px;
 }
-.plus_end_icon{
-  background-position:0 -70px;
+
+.plus_end_icon {
+  background-position: 0 -70px;
 }
-.plus_on_icon{
-  background-position:0 -100px;
-  cursor:default;
+
+.plus_on_icon {
+  background-position: 0 -100px;
+  cursor: default;
 }
 
 @import "status";

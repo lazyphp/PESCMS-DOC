@@ -38,7 +38,7 @@ body {
   margin: 0;
 }
 .pes-article-left-sidebar .pes-doc-path-container .pes-doc-path li > a.am-active {
-  border-width: 3px!important;
+  border-width: 3px !important;
   border-right: 3px solid #5eb95e;
 }
 .pes-article-left-sidebar .pes-doc-path-container .pes-doc-path li .am-active {
@@ -102,6 +102,70 @@ body {
 }
 .pes-article-right-sidebar .pes-doc-article-tool {
   display: none;
+}
+.mobile-button {
+  display: none;
+}
+@media only screen and (max-width: 640px) {
+  .pes-article-left-sidebar {
+    display: none;
+    z-index: 9999;
+    top: 0 !important;
+    transition: transform 0.25s ease-out;
+    animation: bounceInLeft 0.6s infinite cubic-bezier(0.6, 0.9, 0.1, 1);
+    animation-iteration-count: 1;
+  }
+  @keyframes bounceInLeft {
+    0% {
+      opacity: 0;
+      transform: translate3d(-3000px, 0, 0);
+    }
+    60% {
+      opacity: 1;
+      transform: translate3d(0px, 0, 0);
+    }
+    75% {
+      transform: translate3d(0px, 0, 0);
+    }
+    90% {
+      transform: translate3d(0px, 0, 0);
+    }
+    100% {
+      transform: none;
+    }
+  }
+  .mask-layer {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(3, 14, 27, 0.7);
+    transition: opacity 1s ease-in-out;
+    z-index: 1001;
+    display: none;
+  }
+  .pes-article-right-sidebar {
+    position: relative;
+    width: 100%;
+  }
+  .pes-article-right-sidebar .pes-article-right-sidebar-move {
+    display: none;
+  }
+  .pes-article-paper {
+    margin: 0 15px !important;
+    padding: 0 !important;
+  }
+  .mobile-button {
+    display: block;
+    position: fixed;
+    bottom: 50px;
+    right: 10px;
+    z-index: 9999;
+  }
+  .mobile-button a {
+    display: block;
+    margin: 10px 0;
+  }
 }
 .pes-article-sidebar-scroll {
   top: 0px;

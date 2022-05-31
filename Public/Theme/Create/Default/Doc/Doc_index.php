@@ -48,6 +48,8 @@
                                             <a href="<?= $label->url('Doc-Article-index', ['id' => $value['doc_id']]) ?>" target="_blank" ><i class="am-icon-external-link"></i> 预览文档</a>
                                         </li>
 
+                                        <?= (new \Core\Plugin\Plugin())->event('docManageButton', $value); ?>
+
                                         <?php if ($label->checkAuth('Create-DELETE-Doc-action') === true): ?>
                                         <li class="am-divider"></li>
                                         <li>

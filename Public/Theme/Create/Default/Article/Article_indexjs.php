@@ -238,6 +238,9 @@
                 },
                 complete: function (res) {
                     getHistory(aid);
+
+                    $('.mobile-show').hide()
+
                 }
             })
             return false;
@@ -289,6 +292,17 @@
                     $('.pes-article-tips').removeClass('am-alert-success').removeClass('am-alert-warning').removeClass('am-hide');
                     $('.pes-article-tips').addClass(status == 200 ? 'am-alert-success' : 'am-alert-warning').show().html(msg + FullDate);
 
+                    if($('.pes-article-tips')[0].getBoundingClientRect().y < 0){
+
+                        var autoTipsWidth = $('.pes-article-paper').width();
+
+                        $('.pes-article-tips').css({position: 'fixed', width: autoTipsWidth+'px', 'z-index' : '9999999', top: '0px'})
+
+                        setTimeout(function (){
+                            $('.pes-article-tips').removeAttr('style')
+                        }, 1800)
+                    }
+
                     refreshPath();
                 }
             })
@@ -334,7 +348,7 @@
             var scrollbar = $(this).scrollTop();  //滚动高度
             var dom = $('.pes-article-left-sidebar, .pes-article-right-sidebar')
             if (scrollbar > 50) {
-                dom.addClass('pes-article-sidebar-scroll').removeAttr('style');
+                dom.addClass('pes-article-sidebar-scroll').css('top', '');
             } else {
                 var topPx = 6.7 - (scrollbar / 10)
                 dom.removeClass('pes-article-sidebar-scroll').css({top: `${topPx}rem`});
@@ -503,6 +517,15 @@
             }, 600)
 
         }
+
+
+        $(document).on('click', '.mobile-button>.am-icon-exchange', function (){
+            $('.pes-article-left-sidebar, .mask-layer').show().addClass('mobile-show');
+        })
+
+        $('.mask-layer').on('click', function () {
+            $('.mask-layer, .pes-article-left-sidebar').hide()
+        })
 
 
     })
