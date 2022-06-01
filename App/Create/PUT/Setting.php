@@ -116,8 +116,8 @@ class Setting extends \Core\Controller\Controller {
      * 手动更新
      */
     public function mtUpgrade() {
-        $file = $_FILES['zip'];
-        if (pathinfo($file['name'])['extension'] != 'zip') {
+        $file = $_FILES['zip'] ?? NULL;
+        if ( empty($file) || pathinfo($file['name'])['extension'] != 'zip') {
             $this->error('请导入zip的更新补丁');
         }
 
