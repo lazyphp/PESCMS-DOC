@@ -215,4 +215,17 @@ class Setting extends \Core\Controller\Controller {
         ]);
     }
 
+    /**
+     * 标记已读帮助文档提示
+     * @return void
+     */
+    public function readHelpDoc(){
+        $this->db('option')->where('option_id = :option_id')->update([
+            'noset' => [
+                'option_id' => '-3'
+            ],
+            'value' => 1
+        ]);
+    }
+
 }

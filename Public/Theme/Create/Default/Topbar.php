@@ -1,6 +1,6 @@
 <header class="am-topbar">
     <h1 class="am-topbar-brand">
-        <a href="/"><?= $system['siteTitle'] ?></a>
+        <a href="<?= DOCUMENT_ROOT ?>"><?= $system['siteTitle'] ?></a>
     </h1>
 
     <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"

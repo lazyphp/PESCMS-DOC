@@ -19,7 +19,7 @@ class Setting extends \Core\Controller\Controller {
             if($item['option_id'] == '-1'){
                 $sort = json_decode($item['value'], true);
                 continue;
-            }elseif($item['option_id'] == '-2'){
+            }elseif($item['option_id'] < '0'){
                 continue;
             }
 
@@ -41,6 +41,7 @@ class Setting extends \Core\Controller\Controller {
                 'value' => $value,
                 'listsort' => $item['option_listsort'],
             ];
+
 
             //配置信息排序
             uasort($option[$item['option_node']], function ($a, $b){
