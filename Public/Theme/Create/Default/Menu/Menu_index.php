@@ -17,6 +17,7 @@
                 <th>菜单名称</th>
                 <th>菜单地址</th>
                 <th>链接类型</th>
+                <th>新窗口打开</th>
                 <th class="table-set">操作</th>
             </tr>
 

@@ -12,6 +12,7 @@
 
         <td><?= $value['menu_link'] ?></td>
         <td><?= $label->getFieldOptionToMatch(25, $value['menu_type']); ?></td>
+        <td><?= $label->getFieldOptionToMatch(94, $value['menu_window_open']); ?></td>
 
         <td class="am-text-middle">
             <a class="am-text-primary" href="<?= $label->url(GROUP . '-' . MODULE . '-action', array ('id' => $label->xss($value["menu_id"]), 'back_url' => base64_encode($_SERVER['REQUEST_URI']))) ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
@@ -27,7 +28,7 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td colspan="4">
+                <td colspan="5">
                     <?= $space ?><span class="plus_icon <?= end(\Model\Doc::getDocList()) == $doc ? 'plus_end_icon' : '' ?>"></span><?= $doc['doc_title'] ?></td>
             </tr>
         <?php endforeach; ?>

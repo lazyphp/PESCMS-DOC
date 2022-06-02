@@ -6,13 +6,13 @@
     <?php foreach ($result as $item): ?>
 
         <li class="<?= $result[0]['menu_pid'] == 0 ? 'am-dropdown' : '' ?>" >
-            <a class="am-dropdown-toggle" href="<?= empty($item['menu_link']) ? 'javascript:;' : ($item['menu_type'] == 0 ? $label->url($item['menu_link']) : $item['menu_link']) ?>"><?= $item['menu_name'] ?></a>
+            <a class="am-dropdown-toggle" href="<?= empty($item['menu_link']) ? 'javascript:;' : ($item['menu_type'] == 0 ? $label->url($item['menu_link']) : $item['menu_link']) ?>" <?= $item['menu_window_open'] == 1 ? 'target="_blank"' : '' ?> ><?= $item['menu_name'] ?></a>
 
             <?php if($item['menu_type'] == 2 && !empty(\Model\Doc::getDocList())): ?>
                 <div class="am-dropdown-layer">
                     <ul class="am-dropdown-content">
                         <?php foreach(\Model\Doc::getDocList() as $doc): ?>
-                        <li><a href="<?= $label->url('Doc-Article-index', ['id' => $doc['doc_id']]) ?>"><?= $doc['doc_title'] ?></a></li>
+                        <li><a href="<?= $label->url('Doc-Article-index', ['id' => $doc['doc_id']]) ?>" <?= $item['menu_window_open'] == 1 ? 'target="_blank"' : '' ?> ><?= $doc['doc_title'] ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
