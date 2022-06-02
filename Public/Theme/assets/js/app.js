@@ -210,6 +210,17 @@ $(function () {
     });
 
     /**
+     * 批量删除全选按钮
+     */
+    $('.checkbox-all').on('click, change', function () {
+        if($(this).prop('checked') == true){
+            $('.checkbox-all-children').prop('checked', 'checked')
+        }else{
+            $('.checkbox-all-children').removeAttr('checked');
+        }
+    })
+
+    /**
      * 批量删除
      */
     $(document).on('click', '.delete-batch', function () {
