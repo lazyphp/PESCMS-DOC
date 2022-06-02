@@ -160,7 +160,7 @@
         var articleNode = function () {
             var nodeValue = $('input[name="article_node"]:checked').val();
             $('.pes-article-editor, .article_external_link').hide();
-            if (nodeValue == '0') {
+            if (nodeValue == '0' || nodeValue == '3') {
                 $('.pes-article-editor').show();
             }else if(nodeValue == '2'){
                 $('.article_external_link').show()
@@ -527,6 +527,62 @@
             $('.mask-layer, .pes-article-left-sidebar').hide()
         })
 
+
+        /**
+         * 切换填写内容
+         */
+        $(document).on('click', '.pes-api-article-setting li', function (){
+            var index = $(this).index();
+            $('.pes-api-article-setting li').removeClass('am-active')
+            $(this).addClass('am-active');
+
+            $('#api-header, #api-body').hide();
+
+            switch (index){
+                case 1:
+                    $('#api-body').show();
+                    break;
+                default:
+                    $('#api-header').show();
+            }
+        })
+
+        /**
+         * 当指定输入框有内容输入，自动追新一行
+         */
+        $(document).on('keyup', '.api-new-input', function (){
+            var nextDom = $(this).parents('tr');
+            var copyHtml = '<tr>'+nextDom.html()+'</tr>';//复制行
+            nextDom.after(copyHtml)
+            $(nextDom).find('input').removeClass('api-new-input');//移除追新标记
+            nextDom.next().find('input[type=hidden]').val(0);//重置勾选标记
+        })
+
+        /**
+         * 发送API测试数据
+         */
+        $(document).on('click', '.api-send', function (){
+
+            console.dir(ue)
+            console.dir(vd)
+
+            var data = $('.pes-api-article').find('select, input').serializeArray();
+
+            $.post('/?g=Create&m=Article&a=api', data, function (res){
+                console.dir(res)
+            }, 'JSON')
+        })
+
+        /**
+         * API选项标记
+         */
+        $(document).on('click', '.api-use', function (){
+            if($(this).prop('checked') == true){
+                $(this).next('input').val('1')
+            }else{
+                $(this).next('input').val('0')
+            }
+        })
 
     })
 </script>

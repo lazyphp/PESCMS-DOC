@@ -13,7 +13,7 @@ class Article extends \Core\Controller\Controller {
 
     public function __init() {
         parent::__init();
-        $this->checkToken();
+//        $this->checkToken();
     }
 
     /**
@@ -72,6 +72,67 @@ class Article extends \Core\Controller\Controller {
         ]);
 
         $this->success('页内版本号添加完成');
+
+    }
+
+    public function api(){
+        $method = $this->isP('api-method', '请提交您要链接API的请求方式');
+        $url = $this->isP('api-url', '请提交您要链接API的地址');
+
+        $data = [];
+        $send = [];
+
+        foreach (['header', 'body'] as $item){
+            if(!empty($_POST["{$item}_key"]) && !empty($_POST["{$item}_value"]) ){
+                $array = [];
+                foreach ($_POST["{$item}_key"] as $key => $value){
+
+                    $_key = $this->handleData($value);
+                    $_value = $this->handleData($_POST["{$item}_value"][$key]);
+                    $_require = (int) $this->handleData($_POST["{$item}_require"][$key]);
+                    $_desc = $this->handleData($_POST["{$item}_desc"][$key]);
+
+                    if(empty($_value) && empty($_key)){
+                        continue;
+                    }
+
+                    $data[$item][] = [
+                        'key' => $_key,
+                        'value' => $_value,
+                        'require' => $_require,
+                        'desc' => $_desc,
+                    ];
+
+
+
+                    if(empty($_POST["{$item}_send"][$key])){
+                        continue;
+                    }
+                    //组装header数组
+                    $array[] = "{$_key}: {$_value}";
+                    //组装发送的数据
+                    $send[$item][$_key] = $_value;
+                }
+
+                if($item == 'header' && !empty($array)){
+                    $send[$item] = [
+                        CURLOPT_HTTPHEADER => $array
+                    ];
+                }
+            }
+        }
+
+        $this->assign('data', $data);
+
+        $this->display('Article_api_content_example');
+
+        echo '<pre>';
+        print_r($data);
+        print_r($send);
+        echo '</pre>';
+        echo '<br/>';
+        exit;
+
 
     }
 }

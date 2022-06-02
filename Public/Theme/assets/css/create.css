@@ -191,6 +191,9 @@ body {
   border-width: 1px 0px 0 0;
   margin: 0 250px 0 250px;
   padding: 30px 30px;
+  /**
+   * API相关样式设置
+   */
 }
 .pes-article-paper h1 {
   padding-bottom: 15px;
@@ -209,6 +212,51 @@ body {
 }
 .pes-article-paper .vditor-content {
   min-height: 400px;
+}
+.pes-article-paper .pes-api-article {
+  padding: 10px;
+  border: 1px dashed #cfcfcf;
+}
+.pes-article-paper .pes-api-article input,
+.pes-article-paper .pes-api-article select {
+  border-radius: 0 !important;
+}
+.pes-article-paper .pes-api-article .am-input-group-select {
+  display: table-cell;
+  vertical-align: middle;
+  width: 10%;
+  white-space: nowrap;
+}
+.pes-article-paper .pes-api-article .am-input-group-select select {
+  height: 33px;
+  margin-right: -1px !important;
+  background-color: #fafafa;
+}
+.pes-article-paper .pes-api-article .am-input-group-select select:focus,
+.pes-article-paper .pes-api-article .am-input-group-select select:active {
+  background-color: #fff;
+}
+.pes-article-paper .pes-api-article .am-input-group-select select:hover {
+  background-color: #e9e9e9;
+}
+.pes-article-paper .pes-api-article .pes-api-article-setting {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  background-color: #fafafa;
+}
+.pes-article-paper .pes-api-article .pes-api-article-setting li {
+  cursor: pointer;
+  padding: 5px;
+  color: #a9a9a9;
+}
+.pes-article-paper .pes-api-article .pes-api-article-setting li.am-active,
+.pes-article-paper .pes-api-article .pes-api-article-setting li.am-active:hover {
+  color: #464646;
+  border-bottom: 3px solid #f47023;
+}
+.pes-article-paper .pes-api-article .pes-api-article-setting li:hover {
+  color: #808080;
 }
 .pes-doc-cover {
   width: 150px;

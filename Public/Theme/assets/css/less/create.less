@@ -137,15 +137,15 @@ html, body {
 
 }
 
-.mobile-button{
+.mobile-button {
   display: none;
 }
 
 @media only screen and (max-width: 640px) {
-  .pes-article-left-sidebar{
+  .pes-article-left-sidebar {
     display: none;
     z-index: 9999;
-    top:0 !important;
+    top: 0 !important;
     transition: transform .25s ease-out;
     animation: bounceInLeft 0.6s infinite cubic-bezier(0.6, 0.9, 0.1, 1.000);
     animation-iteration-count: 1;
@@ -172,7 +172,6 @@ html, body {
   }
 
 
-
   .mask-layer {
     position: fixed;
     top: 0;
@@ -184,27 +183,29 @@ html, body {
     display: none;
   }
 
-  .pes-article-right-sidebar{
+  .pes-article-right-sidebar {
     position: relative;
     width: 100%;
-    .pes-article-right-sidebar-move{
+
+    .pes-article-right-sidebar-move {
       display: none;
     }
   }
 
-  .pes-article-paper{
+  .pes-article-paper {
     margin: 0 15px !important;
     padding: 0 !important;
   }
 
   //移动端的功能按钮
-  .mobile-button{
+  .mobile-button {
     display: block;
     position: fixed;
     bottom: 50px;
     right: 10px;
     z-index: 9999;
-    a{
+
+    a {
       display: block;
       margin: 10px 0;
     }
@@ -264,6 +265,58 @@ html, body {
 
   .vditor-content {
     min-height: 400px;
+  }
+
+  /**
+   * API相关样式设置
+   */
+  .pes-api-article {
+    padding: 10px;
+    border: 1px dashed #cfcfcf;
+    input, select{
+      border-radius: 0 !important;
+    }
+
+    .am-input-group-select {
+      display: table-cell;
+      vertical-align: middle;
+      width: 10%;
+      white-space: nowrap;
+      select{
+        height: 33px;
+        margin-right: -1px !important;
+        background-color: #fafafa;
+        &:focus, &:active{
+          background-color: #fff;
+        }
+        &:hover{
+          background-color: #e9e9e9;
+        }
+      }
+    }
+
+    .pes-api-article-setting {
+      list-style: none;
+      padding: 0px;
+      margin: 0px;
+      background-color: #fafafa;
+
+      li {
+        cursor: pointer;
+        padding: 5px;
+        color: #a9a9a9;
+        &.am-active, &.am-active:hover{
+          color: #464646;
+          border-bottom: 3px solid #f47023;
+        }
+        &:hover{
+          color: #808080;
+        }
+      }
+
+
+    }
+
   }
 
 }
