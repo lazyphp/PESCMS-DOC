@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT ?>/Theme/assets/css/amazeui.min.css?v=<?=$resources?>"/>
 
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/ui-dialog.min.css?v=<?=$resources?>">
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/main.min.css?v=<?=$resources?>">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/main.css?v=<?=$resources?>">
 
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.min.js?v=<?=$resources?>"></script>
 

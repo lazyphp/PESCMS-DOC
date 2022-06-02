@@ -91,11 +91,19 @@ $SLICE_ARRYR = [
         ['\Doc\Article']
     ],
 
-    'DOC-ARTICLETEMPLATE' => [
+    //文档通用模板内容替换
+    'DOC-ARTICLE-TEMPLATE' => [
         'get',
         ['Doc-Article-index'],
         ['\Doc\ArticleTemplate']
     ],
+    'CREATE-ARTICLE-API-FIELD-TYPE' => [
+        'any',
+        ['Create-Article-:a'],
+        ['\Create\HandleForm\HandleArticle']
+    ],
+
+
 
     //注册全局插件访问入口
     'GLOBAL-APPLICATION-PLUGIN' => [

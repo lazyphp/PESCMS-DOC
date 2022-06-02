@@ -551,6 +551,12 @@
          * 当指定输入框有内容输入，自动追新一行
          */
         $(document).on('keyup', '.api-new-input', function (){
+
+            //特殊按键也出发了，迟点在修复
+            // var e = window.event;
+            // var code = e.charCode || e.keyCode;
+
+
             var nextDom = $(this).parents('tr');
             var copyHtml = '<tr>'+nextDom.html()+'</tr>';//复制行
             nextDom.after(copyHtml)

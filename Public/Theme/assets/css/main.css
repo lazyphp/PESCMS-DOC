@@ -247,6 +247,11 @@ html {
 .content .am-article-bd img:hover {
   box-shadow: 0 2px 30px rgba(0, 0, 0, 0.22), 0 2px 5px rgba(0, 0, 0, 0.1) !important;
 }
+.content .am-article-hd h2,
+.content .am-article-bd h2 {
+  border-left: 4px solid #ff7e7e;
+  padding-left: 10px;
+}
 .content .am-article-hd h1 .article-copy-link,
 .content .am-article-bd h1 .article-copy-link,
 .content .am-article-hd h2 .article-copy-link,

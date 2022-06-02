@@ -1,3 +1,9 @@
+<h2>基本信息</h2>
+
+<p><strong>接口地址：</strong><span style="color: rgb(255, 192, 0);"><?= $api_url ?></span></p>
+<p><strong>请求方式：</strong><span style="color: rgb(255, 192, 0);"><?= $api_method ?></span></p>
+<p><strong>请求类型：</strong><span style="color: rgb(255, 192, 0);">text/html</span></p>
+
 <?php if (!empty($data)): ?>
 
     <?php foreach ($data as $type => $item): ?>
@@ -6,7 +12,9 @@
         <table>
             <tr>
                 <td>名称</td>
-                <td>值</td>
+                <td>示例值</td>
+                <td>类型</td>
+                <td>默认值</td>
                 <td>是否必填</td>
                 <td>描述</td>
             </tr>
@@ -14,7 +22,9 @@
                 <tr>
                     <td><?= $value['key'] ?></td>
                     <td><?= $value['value'] ?></td>
-                    <td><?= $value['require'] ?></td>
+                    <td><?= $value['type'] ?></td>
+                    <td><?= $value['default'] ?></td>
+                    <td><?= $value['require'] == 1 ? '必填' : '非必填' ?></td>
                     <td><?= $value['desc'] ?></td>
                 </tr>
             <?php endforeach; ?>

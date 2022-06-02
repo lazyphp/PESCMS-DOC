@@ -76,8 +76,8 @@ class Article extends \Core\Controller\Controller {
     }
 
     public function api(){
-        $method = $this->isP('api-method', '请提交您要链接API的请求方式');
-        $url = $this->isP('api-url', '请提交您要链接API的地址');
+        $api_method = $this->isP('api-method', '请提交您要链接API的请求方式');
+        $api_url = $this->isP('api-url', '请提交您要链接API的地址');
 
         $data = [];
         $send = [];
@@ -89,6 +89,8 @@ class Article extends \Core\Controller\Controller {
 
                     $_key = $this->handleData($value);
                     $_value = $this->handleData($_POST["{$item}_value"][$key]);
+                    $_type = $this->handleData($_POST["{$item}_type"][$key]);
+                    $_default = $this->handleData($_POST["{$item}_default"][$key]);
                     $_require = (int) $this->handleData($_POST["{$item}_require"][$key]);
                     $_desc = $this->handleData($_POST["{$item}_desc"][$key]);
 
@@ -99,6 +101,8 @@ class Article extends \Core\Controller\Controller {
                     $data[$item][] = [
                         'key' => $_key,
                         'value' => $_value,
+                        'type' => $_type,
+                        'default' => $_default,
                         'require' => $_require,
                         'desc' => $_desc,
                     ];
@@ -123,6 +127,8 @@ class Article extends \Core\Controller\Controller {
         }
 
         $this->assign('data', $data);
+        $this->assign('api_method', $api_method);
+        $this->assign('api_url', $api_url);
 
         $this->display('Article_api_content_example');
 
