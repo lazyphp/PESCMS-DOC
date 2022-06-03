@@ -20,16 +20,17 @@
 
     <div class="am-u-sm-12 am-u-sm-centered">
         <ul class="pes-api-article-setting am-nbfc">
+            <li class="am-fl">GET设置</li>
             <li class="am-fl am-active">Header设置</li>
             <li class="am-fl">Body设置</li>
         </ul>
     </div>
 
     <div class="am-u-sm-12 am-u-sm-centered">
-        <?php foreach (['header', 'body'] as $value): ?>
-            <table id="api-<?= $value ?>" class="am-table am-table-bordered" <?= $value == 'body' ? 'style="display: none"' : '' ?>>
+        <?php foreach (['header', 'get', 'body'] as $value): ?>
+            <table id="api-<?= $value ?>" class="am-table am-table-bordered" <?= $value == 'header' ? '' : 'style="display: none"' ?>>
                 <tr>
-                    <th>发送数据</th>
+                    <th <?= $value == 'get' ? 'style="display: none"' : '' ?>>发送数据</th>
                     <th>名称</th>
                     <th>示例值</th>
                     <td>类型</td>
@@ -39,7 +40,7 @@
                     <th></th>
                 </tr>
                 <tr>
-                    <td class="am-text-middle">
+                    <td class="am-text-middle" <?= $value == 'get' ? 'style="display: none"' : '' ?>>
                         <input type="checkbox" class="api-use">
                         <input type="hidden" name="<?= $value ?>_send[]" value="0">
                     </td>
@@ -47,7 +48,7 @@
                     <td class="am-text-middle"><input type="text" class="api-new-input" name="<?= $value ?>_value[]">
                     </td>
                     <td class="am-text-middle">
-                        <select class="api-new-input" name="<?= $value ?>_type[]">
+                        <select name="<?= $value ?>_type[]">
                             <?php foreach ($apiField as $type): ?>
                                 <option value="<?= $type ?>"><?= $type ?></option>
                             <?php endforeach; ?>

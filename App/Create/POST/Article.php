@@ -77,12 +77,13 @@ class Article extends \Core\Controller\Controller {
 
     public function api(){
         $api_method = $this->isP('api-method', '请提交您要链接API的请求方式');
-        $api_url = $this->isP('api-url', '请提交您要链接API的地址');
+        $api_url = $this->isP('api-url', '请提交您要链接API的地址', false);
+
 
         $data = [];
         $send = [];
 
-        foreach (['header', 'body'] as $item){
+        foreach (['get', 'header', 'body'] as $item){
             if(!empty($_POST["{$item}_key"]) && !empty($_POST["{$item}_value"]) ){
                 $array = [];
                 foreach ($_POST["{$item}_key"] as $key => $value){
@@ -125,6 +126,14 @@ class Article extends \Core\Controller\Controller {
                 }
             }
         }
+
+        $res = (new \Expand\cURL())->init($api_url, $send['body'], $send['header']);
+        echo '<pre>';
+        print_r($res);
+        echo '</pre>';
+        echo '<br/>';
+        exit;
+
 
         $this->assign('data', $data);
         $this->assign('api_method', $api_method);

@@ -536,10 +536,13 @@
             $('.pes-api-article-setting li').removeClass('am-active')
             $(this).addClass('am-active');
 
-            $('#api-header, #api-body').hide();
+            $('[id^="api-"]').hide()
 
             switch (index){
-                case 1:
+                case 0:
+                    $('#api-get').show();
+                    break;
+                case 2:
                     $('#api-body').show();
                     break;
                 default:
@@ -555,13 +558,14 @@
             //特殊按键也出发了，迟点在修复
             // var e = window.event;
             // var code = e.charCode || e.keyCode;
-
-
             var nextDom = $(this).parents('tr');
             var copyHtml = '<tr>'+nextDom.html()+'</tr>';//复制行
             nextDom.after(copyHtml)
             $(nextDom).find('input').removeClass('api-new-input');//移除追新标记
             nextDom.next().find('input[type=hidden]').val(0);//重置勾选标记
+            //标记发送数据
+            nextDom.find('.api-use').eq(0).trigger('click');
+
         })
 
         /**
@@ -588,6 +592,57 @@
             }else{
                 $(this).next('input').val('0')
             }
+        })
+
+        var recordUrl;
+
+        /**
+         * 通过URL输入框获取GET参数
+         */
+        $(document).on('blur', 'input[name="api-url"]', function (){
+            var url = $(this).val();
+            if(url.length <= 0){
+                return true;
+            }
+
+            if(url == recordUrl){
+                return true;
+            }
+
+
+            //清空之前的
+            $('#api-get tr').each(function (){
+                if($(this).find('th').length > 0){
+                    return;
+                }
+                if($(this).find('input').hasClass('api-new-input') == false){
+                    $(this).remove();
+                }
+            })
+
+            var searchParams = new URLSearchParams(url.split('?')[1]);
+
+            var hasParams = false;
+
+            // 显示键/值对
+            for(var pair of searchParams.entries()) {
+                $('[id^="api-"]').hide()
+                $('#api-get').show();
+
+                var parentDom = $('#api-get input.api-new-input[name^="get_key"]').parents('tr');
+                $('#api-get input.api-new-input[name^="get_key"]').val(pair[0]).trigger('keyup').removeClass('api-new-input');
+                parentDom.find('input[name^="get_value"]').val(pair[1]);
+
+                hasParams = true;
+
+            }
+
+            if(hasParams == true){
+                $('.pes-api-article-setting li').eq(0).trigger('click')
+            }
+
+            //记录URL，后续判断内容是否有变
+            recordUrl = url;
         })
 
     })
