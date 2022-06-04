@@ -576,9 +576,12 @@
             console.dir(ue)
             console.dir(vd)
 
-            var data = $('.pes-api-article').find('select, input').serializeArray();
+            var data = $('.pes-api-article').find('select, input, textarea').serializeArray();
 
             $.post('/?g=Create&m=Article&a=api', data, function (res){
+                if(res.status == 200){
+                    $('.api-pre').html(res.data)
+                }
                 console.dir(res)
             }, 'JSON')
         })
@@ -643,6 +646,28 @@
 
             //记录URL，后续判断内容是否有变
             recordUrl = url;
+        })
+
+        /**
+         * body 发送数据类型切换
+         */
+        $(document).on('click', 'input[name="post-type"]', function (){
+            $('#api-body .post-raw').hide();
+
+            //清空之前的
+            $('#api-body tr').each(function (){
+                if($(this).find('th').length > 0){
+                    return;
+                }
+                if($(this).find('input').hasClass('api-new-input') == false){
+                    $(this).remove();
+                }
+            })
+            switch ($(this).val()){
+                case 'raw':
+                    $('#api-body .post-raw').show()
+                    break;
+            }
         })
 
     })

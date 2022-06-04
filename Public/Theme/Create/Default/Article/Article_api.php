@@ -29,12 +29,36 @@
     <div class="am-u-sm-12 am-u-sm-centered">
         <?php foreach (['header', 'get', 'body'] as $value): ?>
             <table id="api-<?= $value ?>" class="am-table am-table-bordered" <?= $value == 'header' ? '' : 'style="display: none"' ?>>
+                <?php if($value == 'body'): ?>
+                <tr class="body-type">
+                    <th class="am-text-middle" colspan="8">
+                        <div class="am-form-group am-margin-0">
+                            <label class="am-radio-inline">
+                                <input type="radio"  value="form-data" name="post-type" checked> form-data
+                            </label>
+                            <label class="am-radio-inline">
+                                <input type="radio" value="raw" name="post-type"> raw
+                            </label>
+                        </div>
+                    </th>
+                </tr>
+                <tr class="post-raw" style="display: none;">
+                    <th class="am-text-middle" colspan="8">
+                        <select name="raw-type">
+                            <?php foreach(['JSON', 'XML', 'Text', 'HTML'] as $rt): ?>
+                            <option value="<?= $rt ?>"><?= $rt ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <textarea name="raw" rows="10"></textarea>
+                    </th>
+                </tr>
+                <?php endif; ?>
                 <tr>
                     <th <?= $value == 'get' ? 'style="display: none"' : '' ?>>发送数据</th>
                     <th>名称</th>
                     <th>示例值</th>
-                    <td>类型</td>
-                    <td>默认值</td>
+                    <th>类型</th>
+                    <th>默认值</th>
                     <th>是否必填</th>
                     <th>描述</th>
                     <th></th>
@@ -44,8 +68,11 @@
                         <input type="checkbox" class="api-use">
                         <input type="hidden" name="<?= $value ?>_send[]" value="0">
                     </td>
-                    <td class="am-text-middle"><input type="text" class="api-new-input" name="<?= $value ?>_key[]"></td>
-                    <td class="am-text-middle"><input type="text" class="api-new-input" name="<?= $value ?>_value[]">
+                    <td class="am-text-middle">
+                        <input type="text" class="api-new-input" name="<?= $value ?>_key[]" <?= $value == 'get' ? 'readonly="readonly"' : '' ?>>
+                    </td>
+                    <td class="am-text-middle">
+                        <input type="text" class="api-new-input" name="<?= $value ?>_value[]" <?= $value == 'get' ? 'readonly="readonly"' : '' ?>>
                     </td>
                     <td class="am-text-middle">
                         <select name="<?= $value ?>_type[]">
@@ -68,5 +95,11 @@
         <?php endforeach; ?>
 
     </div>
+
+
+    <div class="am-u-sm-12 am-u-sm-centered api-pre">
+
+    </div>
+
 </div>
 

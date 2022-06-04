@@ -1,14 +1,20 @@
+<hr/>
 <h2>基本信息</h2>
 
 <p><strong>接口地址：</strong><span style="color: rgb(255, 192, 0);"><?= $api_url ?></span></p>
 <p><strong>请求方式：</strong><span style="color: rgb(255, 192, 0);"><?= $api_method ?></span></p>
-<p><strong>请求类型：</strong><span style="color: rgb(255, 192, 0);">text/html</span></p>
 
 <?php if (!empty($data)): ?>
 
     <?php foreach ($data as $type => $item): ?>
         <h2><?= ucfirst($type) ?></h2>
+        <?php if($type == 'body' && $postType == 'raw' ): ?>
+            <blockquote>
+                <p><strong>请求方式：</strong><span style="color: rgb(255, 192, 0);"><?= strtoupper($rawType) ?></span></p>
+                <p><strong>示例格式：</strong><pre><?= $raw ?></pre></p>
 
+            </blockquote>
+        <?php endif; ?>
         <table>
             <tr>
                 <td>名称</td>

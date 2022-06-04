@@ -218,8 +218,12 @@ body {
   border: 1px dashed #cfcfcf;
 }
 .pes-article-paper .pes-api-article input,
-.pes-article-paper .pes-api-article select {
+.pes-article-paper .pes-api-article select,
+.pes-article-paper .pes-api-article textarea {
   border-radius: 0 !important;
+}
+.pes-article-paper .pes-api-article select[name="raw-type"] {
+  margin-bottom: -1px;
 }
 .pes-article-paper .pes-api-article .am-input-group-select {
   display: table-cell;
