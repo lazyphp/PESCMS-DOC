@@ -159,9 +159,9 @@
          */
         var articleNode = function () {
             var nodeValue = $('input[name="article_node"]:checked').val();
-            $('.pes-article-editor, .article_external_link').hide();
+            $('.pes-article-editor, .article_external_link, .article_using_api_tool').hide();
             if (nodeValue == '0' || nodeValue == '3') {
-                $('.pes-article-editor').show();
+                $('.pes-article-editor, .article_using_api_tool').show();
             }else if(nodeValue == '2'){
                 $('.article_external_link').show()
             }
@@ -532,22 +532,19 @@
          * 切换填写内容
          */
         $(document).on('click', '.pes-api-article-setting li', function (){
-            var index = $(this).index();
+            var setting = $(this).attr('data');
             $('.pes-api-article-setting li').removeClass('am-active')
             $(this).addClass('am-active');
 
             $('[id^="api-"]').hide()
 
-            switch (index){
-                case 0:
-                    $('#api-get').show();
-                    break;
-                case 2:
-                    $('#api-body').show();
-                    break;
-                default:
-                    $('#api-header').show();
+            if(setting == 'body'){
+                if($('input[name="post-type"]:checked').val() == 'raw'){
+                    $('.post-raw').show();
+                }
             }
+
+            $('#api-'+setting).show();
         })
 
         /**
@@ -572,17 +569,18 @@
          * 发送API测试数据
          */
         $(document).on('click', '.api-send', function (){
-
-            console.dir(ue)
-            console.dir(vd)
-
             var data = $('.pes-api-article').find('select, input, textarea').serializeArray();
+
+            $('.api-pre').show();
 
             $.post('/?g=Create&m=Article&a=api', data, function (res){
                 if(res.status == 200){
-                    $('.api-pre').html(res.data)
+
+                    $('.pes-api-article-setting li:eq(3)').trigger('click')
+                    $('#api-result pre').html(res.data.res).show();
+
+                    $('.api-pre-content').html(res.data.html)
                 }
-                console.dir(res)
             }, 'JSON')
         })
 
@@ -669,6 +667,40 @@
                     break;
             }
         })
+
+        /**
+         * 切换返回结果
+         */
+        $(document).on('click', 'input[name="result-type"]', function (){
+            var vaule = $(this).val();
+            $('[id^=table_]').hide();
+            $('#table_'+vaule).show();
+        })
+
+        /**
+         * 将内容追加到编辑器
+         */
+        $(document).on('click', '.api-insert-editor', function (){
+            var apiContent = $('.api-pre-content').html().trim();
+            if(ue){
+                ue.focus();
+                ue.execCommand('inserthtml', apiContent);
+            }
+
+            if(vd){
+                vd.insertValue(vd.html2md(apiContent))
+            }
+        })
+
+        $(document).on('click', 'input[name="using_api_tool"]', function (){
+            if($(this).val() == '1'){
+                $('.pes-api-article').show();
+            }else{
+                $('.pes-api-article').hide();
+            }
+        })
+
+
 
     })
 </script>

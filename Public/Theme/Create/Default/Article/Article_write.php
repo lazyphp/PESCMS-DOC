@@ -41,15 +41,27 @@
                 <input type="radio" value="2" name="article_node" <?= isset($article_node) && $article_node == 2 && is_numeric($article_node) ? 'checked="checked"' : '' ?> required>
                 外链文章
             </label>
-            <label class="am-radio-inline">
-                <input type="radio" value="3" name="article_node" <?= isset($article_node) && $article_node == 3 && is_numeric($article_node) ? 'checked="checked"' : '' ?> required>
-                API文档
-            </label>
         </div>
     </div>
 </div>
 
-<?php require_once __DIR__.'/Article_api.php'?>
+<div class="am-g am-g-collapse article_using_api_tool">
+    <div class="am-u-sm-12 am-u-sm-centered">
+        <div class="am-form-group">
+            <label class="am-block">启用API转换文档工具</label>
+            <?php foreach (['0' => '暂停', '1' => '启用'] as $key => $value): ?>
+                <label class="am-radio-inline">
+                    <input type="radio" value="<?= $key ?>" name="using_api_tool" <?= isset($article_using_api_tool) && $article_using_api_tool == $key && is_numeric($article_using_api_tool) ? 'checked="checked"' : '' ?> required>
+                    <?= $value ?>
+
+                </label>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+
+
+<?php require_once __DIR__ . '/Article_api.php' ?>
 
 <div class="am-g am-g-collapse">
     <div class="am-u-sm-12 am-u-sm-centered">

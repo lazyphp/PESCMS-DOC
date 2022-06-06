@@ -1,23 +1,23 @@
-<hr/>
 <h2>基本信息</h2>
 
 <p><strong>接口地址：</strong><span style="color: rgb(255, 192, 0);"><?= $api_url ?></span></p>
 <p><strong>请求方式：</strong><span style="color: rgb(255, 192, 0);"><?= $api_method ?></span></p>
 
 <?php if (!empty($data)): ?>
-
+    <!-- API参数请求 -->
     <?php foreach ($data as $type => $item): ?>
-        <h2><?= ucfirst($type) ?></h2>
-        <?php if($type == 'body' && $postType == 'raw' ): ?>
+        <h2><?= ucfirst($type) ?>参数请求</h2>
+
+        <?php if ($type == 'body' && $postType == 'raw'): ?>
             <blockquote>
                 <p><strong>请求方式：</strong><span style="color: rgb(255, 192, 0);"><?= strtoupper($rawType) ?></span></p>
-                <p><strong>示例格式：</strong><pre><?= $raw ?></pre></p>
-
+                <p><strong>示例格式：</strong></p>
+                <pre><?= $raw ?></pre>
             </blockquote>
         <?php endif; ?>
-        <table>
+        <table class="am-table am-table-bordered am-table-striped am-table-hover">
             <tr>
-                <td>名称</td>
+                <td>参数</td>
                 <td>示例值</td>
                 <td>类型</td>
                 <td>默认值</td>
@@ -27,15 +27,44 @@
             <?php foreach ($item as $key => $value): ?>
                 <tr>
                     <td><?= $value['key'] ?></td>
-                    <td><?= $value['value'] ?></td>
+                    <td><?= $value['value'] ?? '-' ?></td>
                     <td><?= $value['type'] ?></td>
-                    <td><?= $value['default'] ?></td>
+                    <td><?= $value['default'] ?? '-' ?></td>
                     <td><?= $value['require'] == 1 ? '必填' : '非必填' ?></td>
-                    <td><?= $value['desc'] ?></td>
+                    <td><?= $value['desc'] ?? '-' ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
 
     <?php endforeach; ?>
 
+<?php endif; ?>
+
+<?php if (!empty($response)): ?>
+    <!-- 资源响应结果 -->
+    <?php foreach ($response as $type => $item): ?>
+
+        <h2><?= $type ?></h2>
+
+        <strong><?= $type ?>时返回的结构</strong>
+        <pre><?= $item['content'] ?></pre>
+
+        <?php if (!empty($item['detail'])): ?>
+            <p>返回参数说明</p>
+            <table class="am-table am-table-bordered am-table-striped am-table-hover">
+                <tr>
+                    <td>参数</td>
+                    <td>类型</td>
+                    <td>描述</td>
+                </tr>
+                <?php foreach ($item['detail'] as $key => $value): ?>
+                    <tr>
+                        <td><?= $value['key'] ?></td>
+                        <td><?= $value['type'] ?></td>
+                        <td><?= $value['desc'] ?? '-' ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php endif; ?>
+    <?php endforeach; ?>
 <?php endif; ?>

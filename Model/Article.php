@@ -48,7 +48,7 @@ class Article extends \Core\Model\Model {
     public static function article(int $docID, string $version, int $parent = 0, string $template = '', string $space = '') {
 
         static $label;
-        if(empty($label)){
+        if (empty($label)) {
             $label = new \Expand\Label();
         }
 
@@ -74,7 +74,8 @@ class Article extends \Core\Model\Model {
         return $article;
     }
 
-    public static function aaa(){}
+    public static function aaa() {
+    }
 
     /**
      * 获取文档详情
@@ -92,9 +93,9 @@ class Article extends \Core\Model\Model {
             ]);
         if (empty($articel)) {
             //如果是前台，跳转历史版本可能因为改版本没有此文档，所以直接重定向到文档首页。
-            if(GROUP == 'Doc'){
-                self::jump(self::url('Doc-Article-index',['id' => $doc['doc_id']]));
-            }else{
+            if (GROUP == 'Doc') {
+                self::jump(self::url('Doc-Article-index', ['id' => $doc['doc_id']]));
+            } else {
                 self::error('文档不存在');
             }
 
@@ -136,9 +137,9 @@ class Article extends \Core\Model\Model {
 
     }
 
-    public static function getHistoryVersion($aid){
+    public static function getHistoryVersion($aid) {
         return self::db('article_content_history')->field('history_id, history_version, history_version_listsort')->where('article_id = :article_id AND history_version != "" ')->order('history_version_listsort ASC, article_content_time DESC')->select([
-            'article_id' => $aid
+            'article_id' => $aid,
         ]);
     }
 
@@ -156,8 +157,14 @@ class Article extends \Core\Model\Model {
             self::error('请提交正确的文档属性');
         }
 
-        if($data['article_node'] == 2){
+        if ($data['article_node'] == 2) {
             $data['article_external_link'] = self::isP('article_external_link', '请填写外链地址');
+        }
+
+
+        $data['article_using_api_tool'] = self::p('using_api_tool');
+        if($data['article_using_api_tool'] == 1 && $data['article_node'] == 0){
+            $data['article_api_params'] = json_encode(self::apiForm());
         }
 
         $data['article_version'] = $doc['doc_version'];
@@ -196,6 +203,119 @@ class Article extends \Core\Model\Model {
         }
 
         return $content;
+
+    }
+
+    public static function apiForm(): array {
+        $api_method = self::isP('api-method', '请提交您要链接API的请求方式');
+        $api_url = self::isP('api-url', '请提交您要链接API的地址', false);
+
+        $data = [];
+        $send = [];
+
+        foreach (['get', 'header', 'body'] as $item) {
+            if (!empty($_POST["{$item}_key"]) && !empty($_POST["{$item}_value"])) {
+                $array = [];
+                foreach ($_POST["{$item}_key"] as $key => $value) {
+
+                    $_key = self::handleData($value);
+                    $_send = self::handleData($_POST["{$item}_send"][$key]);
+                    $_value = self::handleData($_POST["{$item}_value"][$key]);
+                    $_type = self::handleData($_POST["{$item}_type"][$key]);
+                    $_default = self::handleData($_POST["{$item}_default"][$key]);
+                    $_require = (int)self::handleData($_POST["{$item}_require"][$key]);
+                    $_desc = self::handleData($_POST["{$item}_desc"][$key]);
+
+                    if (empty($_value) && empty($_key)) {
+                        continue;
+                    }
+
+                    $data[$item][] = [
+                        'send'     => $_send,
+                        'key'     => $_key,
+                        'value'   => $_value,
+                        'type'    => $_type,
+                        'default' => $_default,
+                        'require' => $_require,
+                        'desc'    => $_desc,
+                    ];
+
+
+                    if (empty($_send)) {
+                        continue;
+                    }
+                    //组装header数组
+                    $array[] = "{$_key}: {$_value}";
+                    //组装发送的数据
+                    $send[$item][$_key] = $_value;
+                }
+
+                if ($item == 'header' && !empty($array)) {
+                    $send[$item] = [
+                        CURLOPT_HTTPHEADER => $array,
+                    ];
+                }
+            }
+        }
+
+        switch ($_POST['post-type']) {
+            case 'raw';
+                $send['body'] = $raw = self::p('raw');
+                $rawType = strtolower($_POST['raw-type']);
+                switch ($rawType) {
+                    case 'text':
+                        $accept = "text/plain";
+                        break;
+                    case 'html':
+                        $accept = "text/html";
+                        break;
+                    case 'json':
+                    case 'xml':
+                        $accept = "application/{$rawType}";
+                        break;
+                }
+
+                $send['header'][CURLOPT_HTTPHEADER] = array_merge($send['header'][CURLOPT_HTTPHEADER], ['Content-Type:' . $accept, 'Accept:' . $accept]);
+                break;
+        }
+
+        $response = [];
+        foreach (['success', 'error'] as $item) {
+            if (empty($_POST["{$item}_content"])) {
+                continue;
+            }
+
+            $response[$item]['content'] = self::handleData($_POST["{$item}_content"]);
+
+            foreach ($_POST["{$item}_key"] as $key => $value) {
+                if (empty($value)) {
+                    continue;
+                }
+                $_key = self::handleData($value);
+                $_type = self::handleData($_POST["{$item}_type"][$key]);
+                $_desc = self::handleData($_POST["{$item}_desc"][$key]);
+
+                $response[$item]['detail'][] = [
+                    'key'  => $_key,
+                    'type' => $_type,
+                    'desc' => $_desc,
+                ];
+
+            }
+        }
+
+
+        return [
+            'api_method' => $api_method,
+            'api_url'    => $api_url,
+            'data'       => $data,
+            'send'       => $send,
+            'response'   => $response,
+            'rawType'    => $rawType,
+            'raw'        => $raw,
+            'postType'   => self::p('post-type'),
+        ];
+
 
     }
 

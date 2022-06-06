@@ -34,13 +34,13 @@ class Article extends \Core\Controller\Controller {
         $this->db()->commit();
 
         $this->success([
-            'msg' => '新增文档完成',
+            'msg'  => '新增文档完成',
             'data' => [
                 'refresh' => 1,
-                'aid' => $aid,
-                'mark' => $data['article_mark'],
-                'url' => $this->url('Doc-Article-index', ['id' => $data['article_doc_id'], 'aid' => $data['article_mark']])
-            ]
+                'aid'     => $aid,
+                'mark'    => $data['article_mark'],
+                'url'     => $this->url('Doc-Article-index', ['id' => $data['article_doc_id'], 'aid' => $data['article_mark']]),
+            ],
         ]);
     }
 
@@ -58,16 +58,16 @@ class Article extends \Core\Controller\Controller {
 
         //生成历史记录
         $this->db('article_content_history')->insert([
-            'article_id' => $aid,
-            'article_json' => json_encode($article),
-            'article_content' => $articleContent['article_content'],
-            'article_content_md' => $articleContent['article_content_md'],
-            'article_content_editor' => $articleContent['article_content_editor'],
-            'article_content_time' => $articleContent['article_content_time'],
-            'article_keyword' => $articleContent['article_keyword'],
-            'article_description' => $articleContent['article_description'],
-            'history_time' => time(),
-            'history_version' => $version,
+            'article_id'               => $aid,
+            'article_json'             => json_encode($article),
+            'article_content'          => $articleContent['article_content'],
+            'article_content_md'       => $articleContent['article_content_md'],
+            'article_content_editor'   => $articleContent['article_content_editor'],
+            'article_content_time'     => $articleContent['article_content_time'],
+            'article_keyword'          => $articleContent['article_keyword'],
+            'article_description'      => $articleContent['article_description'],
+            'history_time'             => time(),
+            'history_version'          => $version,
             'history_version_listsort' => $sort,
         ]);
 
@@ -76,90 +76,12 @@ class Article extends \Core\Controller\Controller {
     }
 
     public function api() {
-        $api_method = $this->isP('api-method', '请提交您要链接API的请求方式');
-        $api_url = $this->isP('api-url', '请提交您要链接API的地址', false);
 
-        $data = [];
-        $send = [];
+        $data = \Model\Article::apiForm();
 
-        foreach (['get', 'header', 'body'] as $item) {
-            if (!empty($_POST["{$item}_key"]) && !empty($_POST["{$item}_value"])) {
-                $array = [];
-                foreach ($_POST["{$item}_key"] as $key => $value) {
+        $res = (new \Expand\cURL())->init($data['api_url'], $data['send']['body'] ?? NULL, $data['send']['header']);
 
-                    $_key = $this->handleData($value);
-                    $_value = $this->handleData($_POST["{$item}_value"][$key]);
-                    $_type = $this->handleData($_POST["{$item}_type"][$key]);
-                    $_default = $this->handleData($_POST["{$item}_default"][$key]);
-                    $_require = (int)$this->handleData($_POST["{$item}_require"][$key]);
-                    $_desc = $this->handleData($_POST["{$item}_desc"][$key]);
-
-                    if (empty($_value) && empty($_key)) {
-                        continue;
-                    }
-
-                    $data[$item][] = [
-                        'key' => $_key,
-                        'value' => $_value,
-                        'type' => $_type,
-                        'default' => $_default,
-                        'require' => $_require,
-                        'desc' => $_desc,
-                    ];
-
-
-                    if (empty($_POST["{$item}_send"][$key])) {
-                        continue;
-                    }
-                    //组装header数组
-                    $array[] = "{$_key}: {$_value}";
-                    //组装发送的数据
-                    $send[$item][$_key] = $_value;
-                }
-
-                if ($item == 'header' && !empty($array)) {
-                    $send[$item] = [
-                        CURLOPT_HTTPHEADER => $array
-                    ];
-                }
-            }
-        }
-
-
-        switch ($_POST['post-type']) {
-            case 'raw';
-                $send['body'] = $raw = $this->p('raw');
-                $rawType = strtolower($_POST['raw-type']);
-                switch ($rawType) {
-                    case 'text':
-                        $accept = "text/plain";
-                        break;
-                    case 'html':
-                        $accept = "text/html";
-                        break;
-                    case 'json':
-                    case 'xml':
-                        $accept = "application/{$rawType}";
-                        break;
-                }
-
-                $this->assign('rawType', $rawType);
-                $this->assign('raw', $raw);
-
-                $send['header'][CURLOPT_HTTPHEADER] = array_merge($send['header'][CURLOPT_HTTPHEADER], ['Content-Type:'.$accept , 'Accept:'.$accept]);
-                break;
-        }
-
-        $send['header'][CURLOPT_CUSTOMREQUEST] = $api_method;
-
-
-        $res = (new \Expand\cURL())->init($api_url, $send['body'] ?? NULL, $send['header']);
-
-
-        $this->assign('data', $data);
-        $this->assign('api_method', $api_method);
-        $this->assign('api_url', $api_url);
-        $this->assign('postType', $this->p('post-type'));
+        $this->assign($data);
 
         ob_start();
         $this->display('Article_api_content_example');
@@ -167,10 +89,33 @@ class Article extends \Core\Controller\Controller {
         ob_clean();
 
         $this->success([
-            'msg' => 'complete',
-            'data' => $html
+            'msg'  => 'complete',
+            'data' => [
+                'html' => str_replace(["\r", "\n"], '', $this->miniHtml($html)),
+                'res'  => $res,
+            ],
         ]);
 
 
+    }
+
+    private function miniHtml($html){
+        $search = array(
+
+            // Remove whitespaces after tags
+            '/\>[^\S ]+/s',
+
+            // Remove whitespaces before tags
+            '/[^\S ]+\</s',
+
+            // Remove multiple whitespace sequences
+            '/(\s)+/s',
+
+            // Removes comments
+            '/<!--(.|\s)*?-->/'
+        );
+        $replace = array('>', '<', '\\1');
+        $html = preg_replace($search, $replace, $html);
+        return $html;
     }
 }

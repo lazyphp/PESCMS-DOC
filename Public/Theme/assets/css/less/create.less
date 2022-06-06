@@ -273,12 +273,17 @@ html, body {
   .pes-api-article {
     padding: 10px;
     border: 1px dashed #cfcfcf;
-    input, select, textarea{
+    background: #fff;
+    input, select, textarea, .am-input-group-btn, .am-btn, .am-alert, pre, code{
       border-radius: 0 !important;
     }
 
     select[name="raw-type"]{
       margin-bottom: -1px;
+    }
+
+    textarea{
+      font-weight: normal !important;
     }
 
     .am-input-group-select {
@@ -302,7 +307,8 @@ html, body {
     .pes-api-article-setting {
       list-style: none;
       padding: 0px;
-      margin: 0px;
+      margin: -1px 0px;
+      border: 1px solid #dbdbdb;
       background-color: #fafafa;
 
       li {
@@ -318,6 +324,22 @@ html, body {
         }
       }
 
+
+    }
+
+    .api-pre{
+
+      .api-pre-title{
+         padding: 5px;
+         border: 1px solid #dbdbdb;
+         background-color: #fafafa;
+      }
+
+      .api-pre-content{
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 10px;
+      }
 
     }
 

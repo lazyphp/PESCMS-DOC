@@ -39,6 +39,11 @@ class Article extends \Core\Controller\Controller {
         if (!empty($aid) && $aid != 'new') {
             $articel = \Model\Article::getDetail($doc, $aid);
             $this->assign($articel);
+
+            if(!empty($articel['article_api_params'])){
+                $this->assign('apiParams', json_decode($articel['article_api_params'], true));
+            }
+
             $this->assign('method', 'PUT');
             \Model\Article::$selectedID = $articel['article_parent'];
         }
