@@ -714,34 +714,22 @@
          * 右侧边栏拖动效果
          */
         $(document).on('mousedown', '.api-pre', function (e) {
-            // var currentX = $('.api-pre').css('left').replace(/px/, '');
-            // var currentY = $('.api-pre').css('top').replace(/px/, '');
+            var left = parseInt($('.api-pre').css('left').replace(/px/, ''));
+            var top = parseInt($('.api-pre').css('top').replace(/px/, ''));
 
-            var currentX = $(this)[0].getBoundingClientRect().x
-            var currentY = $(this)[0].getBoundingClientRect().y
-
-            console.dir($(this)[0].getBoundingClientRect())
+            var currentX = e.clientX
+            var currentY = e.clientY
 
             $(document).on('mousemove', function (ev) {
-                console.dir(ev);
-                console.dir(ev.clientY - currentY);
-                console.dir(ev.clientX - currentX);
+                var afterY = ev.clientY - currentY;
+                var afterX = ev.clientY - currentY;
+                // console.dir(`X: ${currentX} Y: ${currentY} 鼠标X: ${ev.clientX} 鼠标Y: ${ev.clientY} 移动后X:${afterX} 移动后Y:${afterY} `);
                 $('.api-pre').css({
-                    top: (ev.clientY - currentY) + 'px',
-                    left: (ev.clientX - currentX) + 'px'
+                    top: (top + ev.clientY - currentY) + 'px',
+                    left: (left + ev.clientX - currentX) + 'px'
                 });
 
             });
-
-            // var initWidth = $('.pes-article-right-sidebar').outerWidth();
-            // $(document).on('mousemove', function (ev) {
-            //     var moveWidth = initWidth + e.pageX - ev.pageX;
-            //
-            //     $('.pes-article-right-sidebar').css({width: moveWidth + 'px'});
-            //     $('.pes-article-paper').css({'margin-right': moveWidth + 'px'});
-            //     var ueWidth = $('.pes-article-paper').width();
-            //     $('.edui-editor, .edui-editor-iframeholder').css({width: ueWidth + 'px'});
-            // })
         })
 
         /**
