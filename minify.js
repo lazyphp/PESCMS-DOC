@@ -2,6 +2,9 @@ var fs = require('fs');
 var uglify = require('uglify-js');
 var CleanCSS = require('clean-css');
 var program = require('commander');
+var path = require('path');
+var less = require('less');
+
 
 program
     .version('0.0.1')
@@ -43,6 +46,27 @@ function cssMinify(flieIn, fileOut) {
     })
 }
 
+function lessc(flieIn, fileOut, after){
+
+    fs.access(flieIn, function (error){
+        if(!error){
+            fs.readFile(flieIn,function(error,data){
+                data = data.toString();
+                less.render(data, {
+                    filename: path.resolve(flieIn)
+                }, function (e, css) {
+                    fs.writeFile(fileOut, css.css, function(err){
+                        console.log(flieIn+"文件编译完毕");
+                        after();
+                    });
+                });
+            });
+        }else{
+            after();
+        }
+    })
+}
+
 var myDate = new Date();
 console.log('开始时间: '+ myDate.getHours() + ':'+myDate.getMinutes()+':'+myDate.getSeconds());
 
@@ -68,11 +92,17 @@ for(var i in ueditor){
 
 
 //开始压缩CSS资源
-var css = ['create', 'main', 'ui-dialog', 'webuploader', 'Vditor'];
+var css = ['create', 'main', 'ui-dialog', 'webuploader', 'Vditor', 'api-table'];
 for(var i in css){
     if(cli.cheese !='' && css[i] != cli.cheese){
         continue;
     }
-    cssMinify(['./Public/Theme/assets/css/'+css[i]+'.css'], './Public/Theme/assets/css/'+css[i]+'.min.css');
-    console.log('压缩了样式: '+css[i]+'.css');
+
+    var file = css[i];
+
+    lessc('./Public/Theme/assets/css/less/'+file+'.less', './Public/Theme/assets/css/'+file+'.css', function (){
+        cssMinify(['./Public/Theme/assets/css/'+file+'.css'], './Public/Theme/assets/css/'+file+'.min.css');
+        console.log('压缩了样式: '+file+'.css');
+    })
+
 }

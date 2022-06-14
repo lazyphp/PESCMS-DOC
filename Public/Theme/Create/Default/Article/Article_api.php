@@ -163,12 +163,12 @@
 
     <div class="am-u-sm-12 am-u-sm-centered api-pre" style="display: none">
         <div class="api-pre-title am-nbfc">
-            <div class="am-fl">API文档渲染结果</div>
+            <div class="am-fl"><strong>API文档渲染结果</strong></div>
             <div class="am-fr">
-                <a href="javascript:;" class="am-btn am-btn-xs am-btn-default api-result-copy"><i class="am-icon-copy"></i>
-                    复制内容</a>
-                <a href="javascript:;" class="am-btn am-btn-xs am-btn-default api-insert-editor"><i class="am-icon-clipboard"></i>
-                    插入编辑器</a>
+                <a href="javascript:;" class="am-btn am-btn-xs am-btn-default api-clear-editor"><i class="am-icon-eraser"></i> 清空编辑器</a>
+                <a href="javascript:;" class="am-btn am-btn-xs am-btn-default api-result-copy"><i class="am-icon-copy"></i> 复制内容</a>
+                <a href="javascript:;" class="am-btn am-btn-xs am-btn-default api-insert-editor"><i class="am-icon-clipboard"></i> 插入编辑器</a>
+                <a href="javascript:;" class="am-btn am-btn-xs am-btn-default api-close-window"><i class="am-icon-close"></i> 关闭</a>
             </div>
         </div>
         <div class="api-pre-content"></div>

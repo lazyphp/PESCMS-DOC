@@ -571,17 +571,22 @@
         $(document).on('click', '.api-send', function (){
             var data = $('.pes-api-article').find('select, input, textarea').serializeArray();
 
-            $('.api-pre').show();
+            $('.api-pre').hide();
+
+            var d = dialog();
+            d.showModal();
 
             $.post('/?g=Create&m=Article&a=api', data, function (res){
                 if(res.status == 200){
-
+                    $('.api-pre').show();
                     $('.pes-api-article-setting li:eq(3)').trigger('click')
                     $('#api-result pre').html(res.data.res).show();
 
                     $('.api-pre-content').html(res.data.html)
                 }
-            }, 'JSON')
+            }, 'JSON').done(function() {
+                d.close();
+            })
         })
 
         /**
@@ -692,6 +697,56 @@
             }
         })
 
+        /**
+         * 清空编辑器内容
+         */
+        $(document).on('click', '.api-clear-editor', function (){
+            if(ue){
+                ue.setContent('')
+            }
+
+            if(vd){
+                vd.setValue('', true)
+            }
+        })
+
+        /**
+         * 右侧边栏拖动效果
+         */
+        $(document).on('mousedown', '.api-pre', function (e) {
+            // var currentX = $('.api-pre').css('left').replace(/px/, '');
+            // var currentY = $('.api-pre').css('top').replace(/px/, '');
+
+            var currentX = $(this)[0].getBoundingClientRect().x
+            var currentY = $(this)[0].getBoundingClientRect().y
+
+            console.dir($(this)[0].getBoundingClientRect())
+
+            $(document).on('mousemove', function (ev) {
+                console.dir(ev);
+                console.dir(ev.clientY - currentY);
+                console.dir(ev.clientX - currentX);
+                $('.api-pre').css({
+                    top: (ev.clientY - currentY) + 'px',
+                    left: (ev.clientX - currentX) + 'px'
+                });
+
+            });
+
+            // var initWidth = $('.pes-article-right-sidebar').outerWidth();
+            // $(document).on('mousemove', function (ev) {
+            //     var moveWidth = initWidth + e.pageX - ev.pageX;
+            //
+            //     $('.pes-article-right-sidebar').css({width: moveWidth + 'px'});
+            //     $('.pes-article-paper').css({'margin-right': moveWidth + 'px'});
+            //     var ueWidth = $('.pes-article-paper').width();
+            //     $('.edui-editor, .edui-editor-iframeholder').css({width: ueWidth + 'px'});
+            // })
+        })
+
+        /**
+         * 启用API工具
+         */
         $(document).on('click', 'input[name="using_api_tool"]', function (){
             if($(this).val() == '1'){
                 $('.pes-api-article').show();

@@ -272,9 +272,19 @@ body {
 .pes-article-paper .pes-api-article .pes-api-article-setting li:hover {
   color: #808080;
 }
+.pes-article-paper .pes-api-article .api-pre {
+  border: 1px solid #606060;
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  background: #fff;
+  left: 0px;
+  width: 800px;
+  cursor: move;
+}
 .pes-article-paper .pes-api-article .api-pre .api-pre-title {
   padding: 5px;
-  border: 1px solid #dbdbdb;
+  border-bottom: 1px solid #606060;
   background-color: #fafafa;
 }
 .pes-article-paper .pes-api-article .api-pre .api-pre-content {
@@ -399,4 +409,20 @@ body {
   width: 1px;
   height: 14px;
   background-color: #cecece;
+}
+.pes-article-api-table tr {
+  background: #fafbfc;
+}
+.pes-article-api-table tr:nth-child(2n) {
+  background: #fff;
+}
+.pes-article-api-table td,
+.pes-article-api-table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+  word-break: normal;
+}
+.pes-article-api-table th {
+  background-color: #fafbfc;
+  font-weight: 600;
 }

@@ -12,17 +12,17 @@
             <blockquote>
                 <p><strong>请求方式：</strong><span style="color: rgb(255, 192, 0);"><?= strtoupper($rawType) ?></span></p>
                 <p><strong>示例格式：</strong></p>
-                <pre><?= $raw ?></pre>
+                <pre><?= htmlspecialchars($raw) ?></pre>
             </blockquote>
         <?php endif; ?>
-        <table class="am-table am-table-bordered am-table-striped am-table-hover">
+        <table class="pes-article-api-table">
             <tr>
-                <td>参数</td>
-                <td>示例值</td>
-                <td>类型</td>
-                <td>默认值</td>
-                <td>是否必填</td>
-                <td>描述</td>
+                <th>参数</th>
+                <th>示例值</th>
+                <th>类型</th>
+                <th>默认值</th>
+                <th>是否必填</th>
+                <th>描述</th>
             </tr>
             <?php foreach ($item as $key => $value): ?>
                 <tr>
@@ -51,11 +51,11 @@
 
         <?php if (!empty($item['detail'])): ?>
             <p>返回参数说明</p>
-            <table class="am-table am-table-bordered am-table-striped am-table-hover">
+            <table class="pes-article-api-table">
                 <tr>
-                    <td>参数</td>
-                    <td>类型</td>
-                    <td>描述</td>
+                    <th>参数</th>
+                    <th>类型</th>
+                    <th>描述</th>
                 </tr>
                 <?php foreach ($item['detail'] as $key => $value): ?>
                     <tr>

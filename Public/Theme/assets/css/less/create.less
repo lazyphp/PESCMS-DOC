@@ -328,10 +328,18 @@ html, body {
     }
 
     .api-pre{
+      border: 1px solid #606060;
+      position: fixed;
+      z-index: 99999;
+      top: 0;
+      background: #fff;
+      left: 0px;
+      width: 800px;
+      cursor: move;
 
       .api-pre-title{
          padding: 5px;
-         border: 1px solid #dbdbdb;
+         border-bottom: 1px solid #606060;
          background-color: #fafafa;
       }
 
@@ -433,3 +441,4 @@ html, body {
 
 @import "status";
 @import "footer";
+@import "api-table";

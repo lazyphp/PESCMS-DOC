@@ -1,0 +1,16 @@
+.pes-article-api-table tr {
+  background: #fafbfc;
+}
+.pes-article-api-table tr:nth-child(2n) {
+  background: #fff;
+}
+.pes-article-api-table td,
+.pes-article-api-table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+  word-break: normal;
+}
+.pes-article-api-table th {
+  background-color: #fafbfc;
+  font-weight: 600;
+}
