@@ -421,13 +421,18 @@
         })
 
         /**
-         * 快速复制文档地址
+         * 快速复制功能
          */
-        $(document).on('click', '.pes-article-copy-link', function () {
+        $(document).on('click', '.pes-article-copy-link, .api-result-copy', function () {
             var dom = $(this)
-            var link = $(this).attr('link')
+            if($(this).hasClass('pes-article-copy-link')){
+                var copyValue = $(this).attr('link')
+            }else{
+                var copyValue = $('.api-pre-content').html()
+            }
+
             const input = document.createElement('input');
-            input.setAttribute('value', link);
+            input.setAttribute('value', copyValue);
             document.body.appendChild(input);
             input.select();
             if (document.execCommand('copy')) {
@@ -568,24 +573,37 @@
         /**
          * 发送API测试数据
          */
-        $(document).on('click', '.api-send', function (){
+        $(document).on('click', '.api-send, .api-refresh', function (){
             var data = $('.pes-api-article').find('select, input, textarea').serializeArray();
-
-            $('.api-pre').hide();
-
-            var d = dialog();
+            var type = $(this).hasClass('api-refresh') ? 'api-refresh' : 'api-send';
+            var d = dialog({
+                zIndex: 100000
+            });
             d.showModal();
 
-            $.post('/?g=Create&m=Article&a=api', data, function (res){
+            $.post('/?g=Create&m=Article&a=api&type='+type, data, function (res){
                 if(res.status == 200){
-                    $('.api-pre').show();
+                    $('input[name="api-url"]').val(res.data.api_url)
+                    $('.api-pre').show().removeAttr('style');
                     $('.pes-api-article-setting li:eq(3)').trigger('click')
                     $('#api-result pre').html(res.data.res).show();
-
                     $('.api-pre-content').html(res.data.html)
+                    d.close();
+                }else{
+                    var msg = res?.msg || '与服务器请求出错了'
+                    d.content(msg);
                 }
             }, 'JSON').done(function() {
-                d.close();
+                setTimeout(function (){
+                    d.close();
+                }, 1800)
+
+            }).fail(function (e){
+                var msg = e?.responseText || ''
+                d.content('发送API数据出错了' + msg );
+                setTimeout(function (){
+                    d.close();
+                }, 1800)
             })
         })
 
@@ -599,6 +617,8 @@
                 $(this).next('input').val('0')
             }
         })
+
+
 
         var recordUrl;
 
@@ -621,9 +641,9 @@
                 if($(this).find('th').length > 0){
                     return;
                 }
-                if($(this).find('input').hasClass('api-new-input') == false){
-                    $(this).remove();
-                }
+                // if($(this).find('input').hasClass('api-new-input') == false){
+                //     $(this).remove();
+                // }
             })
 
             var searchParams = new URLSearchParams(url.split('?')[1]);
@@ -635,9 +655,18 @@
                 $('[id^="api-"]').hide()
                 $('#api-get').show();
 
-                var parentDom = $('#api-get input.api-new-input[name^="get_key"]').parents('tr');
-                $('#api-get input.api-new-input[name^="get_key"]').val(pair[0]).trigger('keyup').removeClass('api-new-input');
+                var existInput = $('#api-get input[name^="get_key"][value="'+pair[0]+'"]');
+
+                if(existInput.length > 0){
+                    var parentDom = existInput.parents('tr')
+                }else{
+                    var parentDom = $('#api-get input.api-new-input[name^="get_key"]').parents('tr');
+                    $('#api-get input.api-new-input[name^="get_key"]').val(pair[0]).trigger('keyup').removeClass('api-new-input');
+
+                }
                 parentDom.find('input[name^="get_value"]').val(pair[1]);
+
+
 
                 hasParams = true;
 
@@ -709,6 +738,39 @@
                 vd.setValue('', true)
             }
         })
+
+        /**
+         * 关闭API浮窗
+         */
+        $(document).on('click', '.api-close-window', function (){
+            $('.api-pre').css({position:'unset', width:'100%'});
+        })
+
+        /**
+         * 显示API删除按钮
+         */
+        $(document).on({
+            mouseenter: function () {
+                var findRemoveClass = $(this).find('.api-param-remove')
+                if(findRemoveClass.length > 0){
+                    findRemoveClass.html('<a href="javascript:;"><i class="am-icon-remove"></i></a>')
+                }
+            },
+            mouseleave: function () {
+                var findRemoveClass = $(this).find('.api-param-remove')
+                if(findRemoveClass.length > 0){
+                    findRemoveClass.html('')
+                }
+            }
+        }, '[id^="api-"] tr');
+
+        /**
+         * 删除API参数
+         */
+        $(document).on('click', '.api-param-remove', function (){
+            $(this).parents('tr').remove();
+        })
+
 
         /**
          * 右侧边栏拖动效果

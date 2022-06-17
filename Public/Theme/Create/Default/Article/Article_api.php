@@ -11,7 +11,7 @@
             <input type="text" name="api-url" value="<?= $apiParams['api_url'] ?? '' ?>" class="am-form-field">
 
             <span class="am-input-group-btn">
-            <a href="javascript:;" class="am-btn am-btn-default api-send">发送/更新</a>
+            <a href="javascript:;" class="am-btn am-btn-default api-send">发送</a>
             </span>
 
         </div>
@@ -35,7 +35,7 @@
                             <div class="am-form-group am-margin-0">
                                 <?php foreach (['form-data', 'raw'] as $postType): ?>
                                     <label class="am-radio-inline">
-                                        <input type="radio" value="<?= $postType ?>" name="post-type" <?= isset($apiParams['postType']) && $apiParams['postType'] == $postType ? 'checked' : '' ?>>
+                                        <input type="radio" value="<?= $postType ?>" name="post-type" <?= (isset($apiParams['postType']) && $apiParams['postType'] == $postType) || ( empty($apiParams['postType']) && $postType == 'form-data' ) ? 'checked' : '' ?>>
                                         <?= $postType ?>
                                     </label>
                                 <?php endforeach; ?>
@@ -54,7 +54,7 @@
                     </tr>
                 <?php endif; ?>
                 <tr>
-                    <th <?= $apiName == 'get' ? 'style="display: none"' : '' ?>>发送数据</th>
+                    <th>发送数据</th>
                     <th>参数</th>
                     <th>示例值</th>
                     <th>类型</th>
@@ -65,15 +65,15 @@
                 </tr>
                 <?php foreach (array_merge($apiParams['data'][$apiName] ?? [], [['new' => 'new']]) as $key => $value): ?>
                     <tr>
-                        <td class="am-text-middle" <?= $apiName == 'get' ? 'style="display: none"' : '' ?>>
-                            <input type="checkbox" class="api-use" <?= isset($value['send']) && $value['require'] == 1 ? 'checked' : '' ?>>
+                        <td class="am-text-middle">
+                            <input type="checkbox" class="api-use" <?= isset($value['send']) && $value['send'] == 1 ? 'checked' : '' ?>>
                             <input type="hidden" name="<?= $apiName ?>_send[]" value="<?= $value['send'] ?? '0' ?>">
                         </td>
                         <td class="am-text-middle">
-                            <input type="text" class="<?= isset($value['new']) ? 'api-new-input' : '' ?>" name="<?= $apiName ?>_key[]" value="<?= $value['key'] ?? '' ?>" <?= $apiName == 'get' ? 'readonly="readonly"' : '' ?>>
+                            <input type="text" class="<?= isset($value['new']) ? 'api-new-input' : '' ?>" name="<?= $apiName ?>_key[]" value="<?= $value['key'] ?? '' ?>">
                         </td>
                         <td class="am-text-middle">
-                            <input type="text" class="<?= isset($value['new']) ? 'api-new-input' : '' ?>" name="<?= $apiName ?>_value[]" value="<?= $value['value'] ?? '' ?>" <?= $apiName == 'get' ? 'readonly="readonly"' : '' ?>>
+                            <input type="text" class="<?= isset($value['new']) ? 'api-new-input' : '' ?>" name="<?= $apiName ?>_value[]" value="<?= $value['value'] ?? '' ?>">
                         </td>
                         <td class="am-text-middle">
                             <select name="<?= $apiName ?>_type[]">
@@ -92,7 +92,7 @@
                         <td class="am-text-middle">
                             <input type="text" class="<?= isset($value['new']) ? 'api-new-input' : '' ?>" name="<?= $apiName ?>_desc[]" value="<?= $value['desc'] ?? '' ?>">
                         </td>
-                        <td class="am-text-middle"></td>
+                        <td class="am-text-middle api-param-remove"></td>
                     </tr>
                 <?php endforeach; ?>
 
@@ -143,7 +143,7 @@
                         <td class="am-text-middle">
                             <input type="text" class="<?= isset($value['new']) ? 'api-new-input' : '' ?>" name="<?= $apiName ?>_desc[]" value="<?= $value['desc'] ?? '' ?>">
                         </td>
-                        <td class="am-text-middle"></td>
+                        <td class="am-text-middle api-param-remove"></td>
                     </tr>
                     <?php endforeach; ?>
 
@@ -152,13 +152,6 @@
 
         </div>
 
-    </div>
-
-    <div class="am-u-sm-12 am-u-sm-centered am-text-xs">
-        <div class="am-alert am-alert-warning" data-am-alert>
-            <button type="button" class="am-close">&times;</button>
-            数值有任何变化都请点 [发送/更新] 按钮更新效果
-        </div>
     </div>
 
     <div class="am-u-sm-12 am-u-sm-centered api-pre" style="display: none">

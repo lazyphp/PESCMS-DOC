@@ -255,8 +255,22 @@ class Article extends \Core\Model\Model {
                         CURLOPT_HTTPHEADER => $array,
                     ];
                 }
+
+                if($item == 'get' && $_send == 1 ){
+                    $send[$item][$_key] = $_value;
+                }
+
             }
         }
+
+        if(!empty($send['get'])){
+            if(empty(parse_url($api_url)['query'])){
+                $api_url = $api_url.'?'.http_build_query($send['get']);
+            }else{
+                $api_url = str_replace(parse_url($api_url)['query'], http_build_query($send['get']), $api_url);
+            }
+        }
+
 
         switch ($_POST['post-type']) {
             case 'raw';

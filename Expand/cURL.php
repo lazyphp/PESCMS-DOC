@@ -25,6 +25,7 @@ class cURL {
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2); // 从证书中检查SSL加密算法是否存在
+        curl_setopt($curl, CURLOPT_ENCODING, '');
         if(!empty($curlOption)){
             foreach ($curlOption as $option => $value){
                 curl_setopt($curl, $option, $value);

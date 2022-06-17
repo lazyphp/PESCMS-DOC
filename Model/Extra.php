@@ -184,4 +184,29 @@ class Extra extends \Core\Model\Model {
         return $password;
     }
 
+    /**
+     * 压缩HTML
+     * @param $html
+     * @return array|string|string[]|null
+     */
+    public static function miniHtml($html){
+        $search = array(
+
+            // Remove whitespaces after tags
+            '/\>[^\S ]+/s',
+
+            // Remove whitespaces before tags
+            '/[^\S ]+\</s',
+
+            // Remove multiple whitespace sequences
+            '/(\s)+/s',
+
+            // Removes comments
+            '/<!--(.|\s)*?-->/'
+        );
+        $replace = array('>', '<', '\\1');
+        $html = preg_replace($search, $replace, $html);
+        return $html;
+    }
+
 }

@@ -75,6 +75,10 @@ class Article extends \Core\Controller\Controller {
 
     }
 
+    /**
+     * 测试API
+     * @return void
+     */
     public function api() {
 
         $data = \Model\Article::apiForm();
@@ -91,31 +95,12 @@ class Article extends \Core\Controller\Controller {
         $this->success([
             'msg'  => 'complete',
             'data' => [
-                'html' => str_replace(["\r", "\n"], '', $this->miniHtml($html)),
+                'html' => str_replace(["\r", "\n"], '', \Model\Extra::miniHtml($html)),
                 'res'  => $res,
+                'api_url'  => $data['api_url'],
             ],
         ]);
 
 
-    }
-
-    private function miniHtml($html){
-        $search = array(
-
-            // Remove whitespaces after tags
-            '/\>[^\S ]+/s',
-
-            // Remove whitespaces before tags
-            '/[^\S ]+\</s',
-
-            // Remove multiple whitespace sequences
-            '/(\s)+/s',
-
-            // Removes comments
-            '/<!--(.|\s)*?-->/'
-        );
-        $replace = array('>', '<', '\\1');
-        $html = preg_replace($search, $replace, $html);
-        return $html;
     }
 }
