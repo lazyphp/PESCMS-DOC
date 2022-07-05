@@ -2,6 +2,9 @@
 
     $(function () {
 
+        let recordScrollTop = localStorage.getItem('scrollTop') || 0;
+        $('.sidebar').scrollTop(recordScrollTop)
+
         var recordFontSet = localStorage.getItem('font-set');
 
         //递归寻找子元素
@@ -251,6 +254,7 @@
         })
 
         $('.sidebar-nav ul li a').on('click', function () {
+            localStorage.setItem('scrollTop', $('.sidebar').scrollTop())
             var target = $(this).attr('target')
             if (target) {
                 window.open($(this).attr('href'))
@@ -347,6 +351,11 @@
             }
             document.body.removeChild(input);
             return false;
+        })
+
+
+        $('.am-topbar a').on('click', function (){
+            localStorage.setItem('scrollTop', 0);
         })
 
 
