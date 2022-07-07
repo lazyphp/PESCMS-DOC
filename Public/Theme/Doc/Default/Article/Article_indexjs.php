@@ -2,11 +2,12 @@
 
     $(function () {
 
-        let recordScrollTop = localStorage.getItem('scrollTop') || 0;
-        $('.sidebar').scrollTop(recordScrollTop)
-
         var recordFontSet = localStorage.getItem('font-set');
 
+        let recordScrollTop = parseFloat($('.sidebar-nav li.am-active').offset().top) - 150;
+
+        $('.sidebar').smoothScroll({position: recordScrollTop})
+        
         //递归寻找子元素
         var findChildren = function (children, set) {
             var children = $(children).children();
@@ -254,7 +255,6 @@
         })
 
         $('.sidebar-nav ul li a').on('click', function () {
-            localStorage.setItem('scrollTop', $('.sidebar').scrollTop())
             var target = $(this).attr('target')
             if (target) {
                 window.open($(this).attr('href'))
@@ -351,11 +351,6 @@
             }
             document.body.removeChild(input);
             return false;
-        })
-
-
-        $('.am-topbar a').on('click', function (){
-            localStorage.setItem('scrollTop', 0);
         })
 
 
