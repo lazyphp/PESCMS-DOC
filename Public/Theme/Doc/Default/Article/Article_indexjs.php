@@ -4,10 +4,12 @@
 
         var recordFontSet = localStorage.getItem('font-set');
 
-        let recordScrollTop = parseFloat($('.sidebar-nav li.am-active').offset().top) - 150;
+        if($('.sidebar-nav li.am-active').offset()){
+            let recordScrollTop = parseFloat($('.sidebar-nav li.am-active').offset().top) - 150;
 
-        $('.sidebar').smoothScroll({position: recordScrollTop})
-        
+            $('.sidebar').smoothScroll({position: recordScrollTop})
+        }
+
         //递归寻找子元素
         var findChildren = function (children, set) {
             var children = $(children).children();
