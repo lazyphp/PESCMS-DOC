@@ -586,7 +586,7 @@
                     $('input[name="api-url"]').val(res.data.api_url)
                     $('.api-pre').show().removeAttr('style');
                     $('.pes-api-article-setting li:eq(3)').trigger('click')
-                    $('#api-result pre').html(res.data.res).show();
+                    $('#api-result pre').text(res.data.res).show();
                     $('.api-pre-content').html(res.data.html)
                     d.close();
                 }else{
@@ -641,9 +641,9 @@
                 if($(this).find('th').length > 0){
                     return;
                 }
-                // if($(this).find('input').hasClass('api-new-input') == false){
-                //     $(this).remove();
-                // }
+                if($(this).find('input').hasClass('api-new-input') == false){
+                    $(this).remove();
+                }
             })
 
             var searchParams = new URLSearchParams(url.split('?')[1]);
