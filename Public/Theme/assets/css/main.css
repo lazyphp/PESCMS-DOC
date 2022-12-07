@@ -247,6 +247,10 @@ html {
 .content .am-article-bd img:hover {
   box-shadow: 0 2px 30px rgba(0, 0, 0, 0.22), 0 2px 5px rgba(0, 0, 0, 0.1) !important;
 }
+.content .am-article-bd pre .pes-code-copy {
+  font-size: 130%;
+  cursor: pointer;
+}
 .content .am-article-hd,
 .content .am-article-bd {
   padding: 0 15px;
