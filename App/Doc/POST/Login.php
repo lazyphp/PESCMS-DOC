@@ -47,7 +47,7 @@ class Login extends \Core\Controller\Controller {
         $this->session()->set('login_expire', time());
 
         if (empty($_POST['back_url'])) {
-            $url = $this->url('Doc-Member-index');
+            $url = $this->url($member['member_loginafter'] ?? 'Doc-Member-index');
         } else {
             $url = base64_decode($_POST['back_url']);
         }

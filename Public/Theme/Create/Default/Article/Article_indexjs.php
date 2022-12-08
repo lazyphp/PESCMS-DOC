@@ -112,6 +112,8 @@
 
         }
 
+
+
         /**
          * 刷新目录
          */
@@ -122,6 +124,14 @@
                 skipAutoTips: true,
                 success: function (res) {
                     $('.pes-doc-path-container').html(res.data);
+
+                    let params = new URLSearchParams(document.location.href);
+                    let aid = params.get("aid");
+
+                    if(aid > 0){
+                        $('.pes-doc-path>li>[data-id="'+aid+'"]').addClass('am-active')
+                    }
+
                 }
             })
         }
@@ -243,6 +253,24 @@
 
                 }
             })
+            return false;
+        })
+
+        /**
+         * 目录收缩和展开
+         */
+        $(document).on('click', '.am-icon-caret-down, .am-icon-caret-right', function (){
+            let getClassName = $(this).attr('class');
+
+            let nextDom = $(this).parent('a').next('ul');
+            if(getClassName == 'am-icon-caret-down'){
+                nextDom.hide()
+            }else{
+                nextDom.show()
+            }
+
+            $(this).attr('class', getClassName == 'am-icon-caret-down' ? 'am-icon-caret-right' : 'am-icon-caret-down')
+
             return false;
         })
 
@@ -513,6 +541,13 @@
             editLoading();
             setTimeout(function (){
                 $('.pes-doc-path a[data-id="'+urlAid+'"]').trigger('click');
+
+                //添加侧栏滚动条跳转功能
+                if($('.pes-doc-path-container li .am-active').offset()){
+                    let recordScrollTop = parseFloat($('.pes-doc-path-container li .am-active').offset().top) - 150;
+                    $('.pes-article-left-sidebar').smoothScroll({position: recordScrollTop})
+                }
+
             }, 600)
 
         }else if(urlAid == 'new'){
