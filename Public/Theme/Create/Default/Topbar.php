@@ -39,7 +39,7 @@
 
             <?php elseif(MODULE == 'Setting' && in_array(ACTION, ['atUpgrade', 'mtUpgrade']) ): ?>
                 <li>
-                    <a class="am-dropdown-toggle" href="<?= $label->url('Create-Setting-mtUpgrade') ?>">
+                    <a class="am-dropdown-toggle" href="<?= $label->url('Create-Setting-upgrade') ?>">
                         <i class="am-icon-reply"></i> 返回检查升级
                     </a>
                 </li>

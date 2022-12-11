@@ -270,6 +270,7 @@ class Controller {
      * @param int $waitSecond 跳转等待时间
      */
     protected static function success($message, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3') {
+        self::beforeInitView();
         self::tipsJump($message, 200, $jumpUrl, $waitSecond);
     }
 
@@ -291,8 +292,6 @@ class Controller {
      * @param string $waitSecond 跳转等待时间
      */
     private static function tipsJump($message, $code, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3'){
-
-        self::beforeInitView(true);
         \Core\Func\CoreFunc::isAjax(is_array($message) ? $message : ['msg' => $message],$code, $jumpUrl, $waitSecond);
 
         if($waitSecond == -1 && $jumpUrl != 'javascript:history.go(-1)' ){
