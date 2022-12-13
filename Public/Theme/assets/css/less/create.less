@@ -39,8 +39,32 @@ html, body {
     background: #82c0ff;
   }
 
+  .pes-left-sidebar-tool{
+    width: 245px;
+    height: 70px;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    background-color: #f5f7f9;
+
+    @media only screen and (max-width: 640px) {
+      top: 0;
+    }
+
+    &:after{
+      border-bottom: 1px solid #eee;
+      content: " ";
+      display: table;
+      width: 90%;
+      margin: 0 auto;
+      padding-top: 20px;
+    }
+  }
+
   //文档目录
   .pes-doc-path-container {
+
+    margin-top: 70px;
 
     .pes-doc-path {
       padding-left: 1rem;

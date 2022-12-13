@@ -31,6 +31,30 @@ body {
 .pes-article-left-sidebar:hover::-webkit-scrollbar-thumb {
   background: #82c0ff;
 }
+.pes-article-left-sidebar .pes-left-sidebar-tool {
+  width: 245px;
+  height: 70px;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  background-color: #f5f7f9;
+}
+@media only screen and (max-width: 640px) {
+  .pes-article-left-sidebar .pes-left-sidebar-tool {
+    top: 0;
+  }
+}
+.pes-article-left-sidebar .pes-left-sidebar-tool:after {
+  border-bottom: 1px solid #eee;
+  content: " ";
+  display: table;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+.pes-article-left-sidebar .pes-doc-path-container {
+  margin-top: 70px;
+}
 .pes-article-left-sidebar .pes-doc-path-container .pes-doc-path {
   padding-left: 1rem;
   font-size: 1.6rem;

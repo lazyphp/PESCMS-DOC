@@ -1,9 +1,9 @@
 <div class="pes-article-left-sidebar">
-    <div class="am-text-center am-margin-top">
+    <div class="am-text-center am-padding-top pes-left-sidebar-tool">
         <a href="javascript:;" data-link="<?= $label->url('Create-Article-index', ['id' => $doc['doc_id'], 'aid' => 'new', 'back_url' => $label->xss($_GET['back_url'] ?? '')]) ?>" data-id="new" class="am-btn am-btn-default pes-add-article"><i class="am-icon-plus"></i> 新文档</a>
         <a href="<?= $label->url('Create-Article-index', ['id' => $doc['doc_id']]) ?>" class="am-btn am-btn-default"><i class="am-icon-home"></i> 文档首页</a>
     </div>
-    <hr/>
+
     <div class="pes-doc-path-container">
         <?= $path ?>
     </div>
