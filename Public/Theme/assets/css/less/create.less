@@ -41,7 +41,7 @@ html, body {
 
   .pes-left-sidebar-tool{
     width: 245px;
-    height: 70px;
+    height: 100px;
     position: fixed;
     z-index: 999;
     left: 0;
@@ -52,19 +52,44 @@ html, body {
     }
 
     &:after{
+      background-color: #f5f7f9;
       border-bottom: 1px solid #eee;
       content: " ";
       display: table;
       width: 90%;
       margin: 0 auto;
-      padding-top: 20px;
+      padding-top: 15px;
     }
+
+    #pes-article-search-dialog{
+      .pes-article-search-group{
+        position: relative;
+
+        input:focus+i{
+          display: none;
+        }
+
+        i{
+          position: absolute;
+          top: 3px;
+          right: 5px;
+        }
+      }
+
+      .am-dropdown-content{
+        left: 10px;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+
+    }
+
   }
 
   //文档目录
   .pes-doc-path-container {
 
-    margin-top: 70px;
+    margin-top: 115px;
 
     .pes-doc-path {
       padding-left: 1rem;

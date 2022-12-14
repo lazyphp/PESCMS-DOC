@@ -74,9 +74,6 @@ class Article extends \Core\Model\Model {
         return $article;
     }
 
-    public static function aaa() {
-    }
-
     /**
      * 获取文档详情
      * @param $doc

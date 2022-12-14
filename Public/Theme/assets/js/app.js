@@ -36,7 +36,7 @@ $(function () {
 
         var dialogOption = {id: 'submit-tips', zIndex: '9999', fixed: true, skin: 'submit-warning'};
 
-        $.ajax({
+        let xhr = $.ajax({
             url: obj.url,
             type: obj.method,
             data: obj.data,
@@ -138,6 +138,7 @@ $(function () {
             }
         })
 
+        return xhr;
     }
 
     /**
