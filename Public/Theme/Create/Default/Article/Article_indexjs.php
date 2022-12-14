@@ -14,9 +14,10 @@
          * 侧栏滚动条跳转
          */
         var jumpScrollforSideabr = function (){
-            if($('.pes-doc-path-container li .am-active').offset()){
-                let recordScrollTop = parseFloat($('.pes-doc-path-container li .am-active').offset().top) - 300;
 
+
+            if($('.pes-doc-path-container li .am-active').offset()){
+                let recordScrollTop = parseFloat(document.querySelectorAll('.pes-doc-path-container li .am-active')[0].offsetTop) - 600;
                 $('.pes-article-left-sidebar').smoothScroll({position: recordScrollTop})
             }
         }
@@ -852,6 +853,57 @@
             }
         })
 
+
+        let searchXhr;
+
+        $('.pes-article-search-group input').on('keyup', function (e) {
+
+            let disableKey = ['9', '16', '17', '18', '20', '45', '144'];
+
+            //跳开处理
+            if(disableKey.includes(e.keyCode.toString()) || e.altKey == true || e.ctrlKey == true){
+                return false;
+            }
+
+            if (searchXhr) {
+                searchXhr.abort();
+            }
+
+            let keyword = $(this).val();
+
+            if (keyword.length <= 0) {
+                return false;
+            }
+
+            let dropdown = $('#pes-article-search-dialog .am-dropdown-content')
+            dropdown.html('<li><a href="javascript:;"><i class="am-icon-refresh am-icon-spin"></i></a></li>');
+            $('#pes-article-search-dialog').dropdown('open');
+
+            let id = '<?= $doc['doc_id'] ?>';
+
+            searchXhr = $.ajaxSubmit({
+                url: '/?g=Create&m=Article&a=search&id=' + id + '&keyword=' + keyword + '&time=' + Math.random(),
+                skipAutoTips: true,
+                stopJump: true,
+                success: function (res) {
+
+                    if (res.status == 200) {
+                        dropdown.html(res.data);
+                    } else {
+                        dropdown.html('<li><a href="javascript:;">' + res.msg + '</a></li>');
+                    }
+                }
+            });
+        })
+
+        $(document).on('click', '#pes-article-search-dialog .am-dropdown-content a', function (){
+            let aid = $(this).attr('aid');
+            if(aid){
+                $('.pes-doc-path a[data-id="'+aid+'"]').trigger('click');
+                $('#pes-article-search-dialog').dropdown('close');
+                jumpScrollforSideabr();
+            }
+        })
 
 
     })

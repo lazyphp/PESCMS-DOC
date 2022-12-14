@@ -69,6 +69,16 @@ body {
   max-height: 400px;
   overflow-y: auto;
 }
+.pes-article-left-sidebar .pes-left-sidebar-tool #pes-article-search-dialog .am-dropdown-content::-webkit-scrollbar {
+  width: 4px;
+  height: 10px;
+}
+.pes-article-left-sidebar .pes-left-sidebar-tool #pes-article-search-dialog .am-dropdown-content:hover::-webkit-scrollbar-thumb {
+  background: #82c0ff;
+}
+.pes-article-left-sidebar .pes-left-sidebar-tool #pes-article-search-dialog .am-dropdown-content:hover::-webkit-scrollbar-thumb {
+  background: #82c0ff;
+}
 .pes-article-left-sidebar .pes-doc-path-container {
   margin-top: 115px;
 }

@@ -15,48 +15,6 @@
 
             </ul>
         </div>
-
-        <script>
-            $(function () {
-
-                let searchXhr;
-
-                $('.pes-article-search-group input').on('keyup', function () {
-
-                    if (searchXhr) {
-                        searchXhr.abort();
-                    }
-
-                    let keyword = $(this).val();
-
-                    if (keyword.length <= 0) {
-                        return false;
-                    }
-
-                    let dropdown = $('#pes-article-search-dialog .am-dropdown-content')
-                    dropdown.html('<li><a href="javascript:;"><i class="am-icon-refresh am-icon-spin"></i></a></li>');
-                    $('#pes-article-search-dialog').dropdown('open');
-
-                    let id = '<?= $doc['doc_id'] ?>';
-
-                    searchXhr = $.ajaxSubmit({
-                        url: '/?g=Create&m=Article&a=search&id=' + id + '&keyword=' + keyword + '&time=' + Math.random(),
-                        skipAutoTips: true,
-                        stopJump: true,
-                        success: function (res) {
-
-                            if (res.status == 200) {
-                                dropdown.html(res.data);
-                            } else {
-                                dropdown.html('<li><a href="javascript:;">' + res.msg + '</a></li>');
-                            }
-                        }
-                    });
-                })
-            })
-        </script>
-
-
     </div>
 
     <div class="pes-doc-path-container">
