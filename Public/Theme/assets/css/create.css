@@ -264,6 +264,14 @@ body {
 .pes-article-paper .vditor-content {
   min-height: 400px;
 }
+.pes-article-paper .pes-article-path-select + .am-selected-content .am-selected-list {
+  overflow-y: auto !important;
+  font-size: 1.4rem;
+}
+.pes-article-paper .pes-article-path-select + .am-selected-content .am-selected-list .am-checked {
+  color: #fff;
+  background: #84e753;
+}
 .pes-article-paper .pes-api-article {
   padding: 10px;
   border: 1px dashed #cfcfcf;

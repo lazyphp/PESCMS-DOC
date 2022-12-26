@@ -227,6 +227,14 @@
                         $('.pes-article-paper .am-form').attr('action', '')
 
                         $('.pes-form-wrapper').html(res.data.html);
+
+                        $('select[name="article_parent"]').selected({
+                            btnWidth: '100%',
+                            maxHeight: '600px',
+                            btnStyle: 'default pes-article-path-select',
+                            searchBox:true
+                        });
+
                         if ($('.use-ue').hasClass('am-active')) {
                             initUE();
                         } else {
