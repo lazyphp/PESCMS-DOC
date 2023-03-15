@@ -21,7 +21,8 @@
 
                             <?php if (!empty($articleVersion)): ?>
                                 / <span class="am-text-warning"><i class="am-icon-lightbulb-o"></i> 本页文档可切换别的版本</span>
-                                <select class="switch-article-version" style="margin-top: -2px" data-aid="<?= $article_mark ?>" data-id="<?= $doc['doc_id'] ?>">
+                                <select class="switch-article-version" style="margin-top: -2px"
+                                        data-aid="<?= $article_mark ?>" data-id="<?= $doc['doc_id'] ?>">
                                     <option>当前版本</option>
                                     <?php foreach ($articleVersion as $value): ?>
                                         <option value="<?= $value['history_version'] ?>" <?= !empty($_GET['version']) && $_GET['version'] == $value['history_version'] ? 'selected="selected"' : '' ?> ><?= $value['history_version'] ?></option>
@@ -59,15 +60,22 @@
 
             <?= (new \Core\Plugin\Plugin())->event('articleContentAfter', NULL); ?>
 
-            <input type="hidden" class="use-md" value="<?= $article_content_editor ?? $doc['doc_content_editor'] ?>" data="<?= $article_content_editor ?? '' ?>">
+            <input type="hidden" class="use-md" value="<?= $article_content_editor ?? $doc['doc_content_editor'] ?>"
+                   data="<?= $article_content_editor ?? '' ?>">
 
 
             <div class="pes-like am-text-center am-margin-top">
                 <i class="am-icon-thumbs-o-up am-icon-sm am-text-primary"></i>
-                <div class="am-margin-top">
+                <div class="am-margin-xs">
                     <span class="pes-like-num"><?= $article_like ?? $doc['doc_like'] ?></span> 人点赞过
                 </div>
             </div>
+
+            <?php if (!empty($doc['doc_copyright'])): ?>
+                <div class="pes-doc-copyright">
+                    <?= htmlspecialchars_decode($doc['doc_copyright']) ?>
+                </div>
+            <?php endif; ?>
 
             <?php if (!empty($page)): ?>
                 <hr/>
@@ -89,7 +97,8 @@
     <!--内容区-->
 
     <nav class="title-nav am-show-lg-only" data="<?= $doc['doc_open_nav'] ?>">
-        <div class="title-nav-hide" title="<?= $doc['doc_open_nav'] == '0' ? '展开标题导航' : '收起标题导航' ?>" data="<?= $doc['doc_open_nav'] == '0' ? '1' : '0' ?>">
+        <div class="title-nav-hide" title="<?= $doc['doc_open_nav'] == '0' ? '展开标题导航' : '收起标题导航' ?>"
+             data="<?= $doc['doc_open_nav'] == '0' ? '1' : '0' ?>">
             <i class="am-icon-angle-double-left"></i></div>
         <div class="title-nav-content">
             <ul>
@@ -100,7 +109,8 @@
 
 </main>
 <?php if (($article_content_editor ?? $doc['doc_content_editor']) == 0): ?>
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/highlight.js/styles/github.css?v=<?= $resources ?>">
+    <link rel="stylesheet"
+          href="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/highlight.js/styles/github.css?v=<?= $resources ?>">
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/highlight.js/highlight.pack.js?v=<?= $resources ?>"></script>
     <script>
         document.querySelectorAll('pre').forEach((el) => {

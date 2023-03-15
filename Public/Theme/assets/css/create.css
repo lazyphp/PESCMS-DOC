@@ -354,6 +354,10 @@ body {
   overflow-y: auto;
   padding: 10px;
 }
+.pes-doc-title-column {
+  display: flex;
+  justify-content: space-between;
+}
 .pes-doc-cover {
   width: 150px;
   height: 150px;

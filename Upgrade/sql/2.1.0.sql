@@ -14,4 +14,8 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (95, 20, 'loginafter', '登录后进入页面', 'select', '{&quot;\\u9ed8\\u8ba4[\\u8d26\\u6237\\u8bbe\\u7f6e]&quot;:&quot;Doc-Member-index&quot;,&quot;\\u6587\\u6863\\u5217\\u8868[\\u521b\\u4f5c\\u7a7a\\u95f4]&quot;:&quot;Create-Doc-index&quot;}', '', 'Doc-Member-index', 1, 95, 0, 1, 1, 0, 0, 'POST,PUT');
 ALTER TABLE `pes_member` ADD `member_loginafter` VARCHAR(128) NOT NULL DEFAULT 'Doc-Member-index';
 
+INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`, `field_is_null`, `field_only`, `field_action`) VALUES
+(NULL, 5, 'copyright', '版权声明', 'editor', '', '您可以根据自己的需求填写文档版权声明。当版权声明有内容时，当前文档所有页面（通常）底部都会展示出来。', '', 0, 97, 0, 1, 1, 0, 0, 'POST,PUT');
+
+ALTER TABLE `pes_doc` ADD `doc_copyright` TEXT NOT NULL;
 

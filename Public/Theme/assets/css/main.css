@@ -310,6 +310,14 @@ html {
     padding: 1rem;
   }
 }
+.content .pes-doc-copyright {
+  margin-top: 10px;
+  padding: 5px;
+  border: 2px dashed #cfcfcf;
+}
+.content .pes-doc-copyright p:last-child {
+  margin-bottom: 5px;
+}
 /*
 ===================
 标题导航
