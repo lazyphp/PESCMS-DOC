@@ -10,6 +10,8 @@
 define('PES_RUN_TIME', microtime(true));
 //PES已经自定义错误功能，因此禁用系统的错误信息
 error_reporting(0);
+//开启cookie http only
+ini_set("session.cookie_httponly", 1);
 date_default_timezone_set('Asia/Shanghai');
 header("Content-type: text/html; charset=utf-8");
 //调试模式

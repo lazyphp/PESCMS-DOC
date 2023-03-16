@@ -54,7 +54,7 @@ class Label {
      * @return type 返回处理好的数组
      */
     public function findContent($table, $field, $id) {
-        static $array = array();
+        static $array = array ();
         if (empty($array[$table])) {
             $list = \Model\Content::listContent(['table' => $table]);
             foreach ($list as $value) {
@@ -71,7 +71,7 @@ class Label {
      * @param type $filterHtmlSuffix 是否强制过滤HTML后缀 | 由于ajax GET请求中，若不过滤HTML，将会引起404的问题
      * @return type 返回URL
      */
-    public function url($controller, $param = array(), $filterHtmlSuffix = false) {
+    public function url($controller, $param = array (), $filterHtmlSuffix = false) {
         $url = \Core\Func\CoreFunc::url($controller, $param);
         if ($filterHtmlSuffix == true) {
             if (substr($url, '-5') == '.html') {
@@ -89,7 +89,7 @@ class Label {
      * @param bool $filterHtmlSuffix
      * @return type
      */
-    public function pluginUrl(array $param, $group = NULL, $filterHtmlSuffix = false){
+    public function pluginUrl(array $param, $group = NULL, $filterHtmlSuffix = false) {
         $group = empty($group) ? GROUP : $group;
         return $this->url("{$group}-Application-Plugin", $param, $filterHtmlSuffix);
     }
@@ -98,7 +98,7 @@ class Label {
      * 生成令牌
      */
     public function token() {
-        return '<input type="hidden" name="token" value="'.\Core\Func\CoreFunc::$token.'" >';
+        return '<input type="hidden" name="token" value="' . \Core\Func\CoreFunc::$token . '" >';
     }
 
 
@@ -113,7 +113,7 @@ class Label {
         $array = json_decode($option, true);
         $str = "";
         foreach ($array as $key => $value) {
-            $str .="{$key}|{$value}\n";
+            $str .= "{$key}|{$value}\n";
         }
         return trim($str);
     }
@@ -202,7 +202,7 @@ class Label {
      * @param type $value 进行匹配的值
      */
     public function getFieldOptionToMatch($fieldId, $value) {
-        if(empty($this->fieldOption[$fieldId])){
+        if (empty($this->fieldOption[$fieldId])) {
             $this->fieldOption[$fieldId] = \Model\Content::findContent('field', $fieldId, 'field_id');
         }
 
@@ -216,8 +216,8 @@ class Label {
      * @param $prefix 字段前缀名称
      * @param $value 内容值
      */
-    public function valueTheme($field, $prefix, $value){
-        require THEME_PATH.'/Content/Content_value_theme.php';
+    public function valueTheme($field, $prefix, $value) {
+        require THEME_PATH . '/Content/Content_value_theme.php';
     }
 
     /**
@@ -225,8 +225,8 @@ class Label {
      * @param $str
      * @return mixed
      */
-    public function xss($str){
-        if(empty($this->xss)){
+    public function xss($str) {
+        if (empty($this->xss)) {
             $this->xss = new \voku\helper\AntiXSS();
         }
 
@@ -238,7 +238,7 @@ class Label {
      * @param $auth
      * @return bool|\Model\type
      */
-    public function checkAuth($auth){
+    public function checkAuth($auth) {
         return \Model\Node::check($auth);
     }
 
@@ -247,12 +247,20 @@ class Label {
      * @param $string
      * @return array
      */
-    public function ubbUrl($string){
+    public function ubbUrl($string) {
         static $ubb;
-        if(is_object($ubb)){
+        if (is_object($ubb)) {
             return $ubb->url($string);
         }
         $ubb = new \Expand\UBB();
         return $ubb->url($string);
+    }
+
+    public function backTo() {
+        $backTo = $_GET['back_url'] ?? '';
+        if (base64_decode($backTo, true)) {
+            echo '<input type="hidden" name="back_url" value="' . $this->xss($backTo ?? '') . '">';
+        }
+
     }
 }

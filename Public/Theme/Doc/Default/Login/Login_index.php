@@ -1,6 +1,6 @@
 <form class="am-form  ajax-submit" action="" method="post" data-am-validator>
     <?= $label->token() ?>
-    <input type="hidden" name="back_url" value="<?= $label->xss($_GET['back_url'] ?? '') ?>">
+    <?= $label->backTo(); ?>
     <div class="am-g am-g-collapse">
         <div class="am-u-sm-12 am-u-sm-centered">
             <div class="am-form-group">
