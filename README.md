@@ -4,14 +4,14 @@ PESCMS DOC文档管理系统是一款以GPLv2协议发布的开源文档管理�
 
 * 集成富文本编辑和Markdown编辑器
 * 权限管理、阅读权限
-* 无限层级的文档
-* 通过接口编写PESCMS DOC文档（后续更新支持）
-* 根据API请求，编写或生成文档（后续更新支持）
-
+* 无限层级的文档  
+* 根据API请求，编写或生成指定风格的文档  
+* 通过接口编写PESCMS DOC文档（后续更新支持）  
+  
 ## 运行环境  
 * PHP7.0及以上版本  
 * Mysql5.5及以上版本  
-* 现代浏览器  
+* 现代浏览器（不再支持IE浏览器）  
 
 ## 安装使用
 1. 下载并解压程序至您的HTTP运行环境所在目录。
@@ -22,7 +22,7 @@ PESCMS DOC文档管理系统是一款以GPLv2协议发布的开源文档管理�
 邮箱：sale#pescms.com  
 演示地址：[https://doc.pescms.com](http://doc.pescms.com)  
 反馈问题：[https://forum.pescms.com/](https://forum.pescms.com/)  
-技术文档：[https://document.pescms.com/](https://document.pescms.com/)  
+技术文档：[https://document.pescms.com/article/4.html](https://document.pescms.com/article/4.html)  
 PESCMS官方QQ 1群：451828934 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=70b9d382c5751b7b64117191a71d083fbab885f1fb7c009f0dc427851300be3a"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PESCMS官方1群" title="PESCMS官方1群"></a>  
 PESCMS官方QQ 2群：496804032 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=5HqmNLN"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PESCMS官方2群" title="PESCMS官方2群"></a>  
 
@@ -38,5 +38,4 @@ PESCMS官方QQ 2群：496804032 <a target="_blank" href="https://jq.qq.com/?_wv=
 * [@Devil](https://gitee.com/zongzhige/) 本次重构过程，帮助测试以及修复了上传粘贴失效的问题。
 * 还有其他引用到的开源库，这里不一一列举了。
 ## 协议
-尽管本软件以GPLv2协议发布，但在使用前请先阅读PESCMS官方的[用户协议](https://www.pescms.com/article/view/-1.html)。  
-我们可能会在软件后续更新中，引入部分收费功能，原则上增加的收费功能以不影响系统整体正常运作为主，希望您能理解开源作者的不易。
+本软件以GPLv2协议发布，在使用前请先阅读PESCMS官方的[用户协议](https://www.pescms.com/article/view/-1.html)。  
