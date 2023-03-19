@@ -6,6 +6,8 @@ ALTER TABLE `pes_menu` ADD `menu_window_open` INT NOT NULL AFTER `menu_type`;
 
 INSERT INTO `pes_option` (`option_id`, `option_name`, `name`, `value`, `option_node`, `option_range`, `option_type`, `option_form`, `option_form_option`, `option_required`, `option_explain`, `option_listsort`) VALUES
     (17, 'api_field_type', 'API字段类型', '[\"int\",\"string\",\"array\",\"date\",\"byte\",\"boolean\",\"float\",\"double\"]', '文档设置', 'article', 'json', 'text', '', 1, '您可以通过修改本设置来调整API字段类型', 9);
+UPDATE `pes_option` SET `value` = '{\"上传设置\":2,\"网站信息\":1,\"账号设置\":3,\"文档设置\":\"4\"}' WHERE `pes_option`.`option_id` = -1;
+
 
 ALTER TABLE `pes_article` ADD `article_using_api_tool` INT NOT NULL COMMENT '是否启用API文档工具';
 ALTER TABLE `pes_article` ADD `article_api_params` TEXT NOT NULL COMMENT 'API结构' ;

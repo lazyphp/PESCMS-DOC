@@ -77,6 +77,13 @@ $SLICE_ARRYR = [
         ['\Create\HandleForm\HandleRoute', '\Create\UpdateRoute']
     ],
 
+    //处理文档基础信息 添加/编辑 提交的表单内容
+    'CREATE-DOC-ACTION' => [
+        'any',
+        ['Create-Doc-action'],
+        ['\Create\HandleForm\HandleDoc']
+    ],
+
     //注册自动处理后台会员提交的会员密码表单
     'CREATE-UPDATE-MEMBER-PWD' => [
         'any',
