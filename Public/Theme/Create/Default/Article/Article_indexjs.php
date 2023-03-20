@@ -644,6 +644,14 @@
                     $('.pes-api-article-setting li:eq(3)').trigger('click')
                     $('#api-result pre').text(res.data.res).show();
                     $('.api-pre-content').html(res.data.html)
+                    $('.api-pre-content .pretty-json').each(function (){
+                        try{
+                            $(this).html( JSON.stringify(JSON.parse($(this).html()),null,2) )
+                        }catch (e) {
+                            return false;
+                        }
+
+                    })
                     d.close();
                 }else{
                     var msg = res?.msg || '与服务器请求出错了'

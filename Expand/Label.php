@@ -256,11 +256,14 @@ class Label {
         return $ubb->url($string);
     }
 
+    /**
+     * 返回指定页面URL
+     * @return void
+     */
     public function backTo() {
         $backTo = $_GET['back_url'] ?? '';
         if (base64_decode($backTo, true)) {
             echo '<input type="hidden" name="back_url" value="' . $this->xss($backTo ?? '') . '">';
         }
-
     }
 }

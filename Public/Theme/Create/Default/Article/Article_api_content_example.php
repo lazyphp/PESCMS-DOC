@@ -47,7 +47,7 @@
         <h2><?= $type ?></h2>
 
         <strong><?= $type ?>时返回的结构</strong>
-        <pre><?= $item['content'] ?></pre>
+        <pre class="pretty-json"><?= $item['content'] ?></pre>
 
         <?php if (!empty($item['detail'])): ?>
             <p>返回参数说明</p>

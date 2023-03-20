@@ -13,7 +13,9 @@ class Article extends \Core\Controller\Controller {
 
     public function __init() {
         parent::__init();
-        //        $this->checkToken();
+        if(ACTION != 'api'){
+            $this->checkToken();
+        }
     }
 
     /**
@@ -95,9 +97,9 @@ class Article extends \Core\Controller\Controller {
         $this->success([
             'msg'  => 'complete',
             'data' => [
-                'html' => str_replace(["\r", "\n"], '', \Model\Extra::miniHtml($html)),
-                'res'  => $res,
-                'api_url'  => $data['api_url'],
+                'html'    => str_replace(["\r", "\n"], '', \Model\Extra::miniHtml($html)),
+                'res'     => $res,
+                'api_url' => $data['api_url'],
             ],
         ]);
 
