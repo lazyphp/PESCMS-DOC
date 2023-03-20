@@ -13,7 +13,7 @@
                             <label>
                                 <input class="checkbox-all-children" type="checkbox" name="id[<?= $value["doc_id"]; ?>]"
                                        value="<?= $value["doc_id"]; ?>">
-                                <?= $value['doc_title'] ?>
+                                <?= $value['doc_title'] ?> <?= $value['doc_open'] == 1 ? '<i class="am-icon-users" data-am-popover="{content: \'本文档需要登录查询\', trigger: \'hover\'}"></i>' : '' ?>
                             </label>
                             <a href="<?= $label->url('Doc-Article-index', ['id' => $value['doc_id']]) ?>"
                                target="_blank"><i class="am-icon-external-link"></i> 预览</a>

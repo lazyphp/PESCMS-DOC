@@ -291,22 +291,22 @@ class Article extends \Core\Model\Model {
         }
 
         $response = [];
-        foreach (['success', 'error'] as $item) {
-            if (empty($_POST["{$item}_content"])) {
+        foreach (['success' => '成功', 'error' => '失败'] as $type => $name) {
+            if (empty($_POST["{$type}_content"])) {
                 continue;
             }
 
-            $response[$item]['content'] = self::handleData($_POST["{$item}_content"]);
+            $response[$name]['content'] = self::handleData($_POST["{$type}_content"]);
 
-            foreach ($_POST["{$item}_key"] as $key => $value) {
+            foreach ($_POST["{$type}_key"] as $key => $value) {
                 if (empty($value)) {
                     continue;
                 }
                 $_key = self::handleData($value);
-                $_type = self::handleData($_POST["{$item}_type"][$key]);
-                $_desc = self::handleData($_POST["{$item}_desc"][$key]);
+                $_type = self::handleData($_POST["{$type}_type"][$key]);
+                $_desc = self::handleData($_POST["{$type}_desc"][$key]);
 
-                $response[$item]['detail'][] = [
+                $response[$name]['detail'][] = [
                     'key'  => $_key,
                     'type' => $_type,
                     'desc' => $_desc,
