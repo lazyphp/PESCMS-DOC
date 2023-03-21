@@ -10,6 +10,18 @@
             }
         }, false);
 
+        /**
+         * 侧栏滚动条跳转
+         */
+        var jumpScrollforSideabr = function (){
+
+
+            if($('.pes-doc-path-container li .am-active').offset()){
+                let recordScrollTop = parseFloat(document.querySelectorAll('.pes-doc-path-container li .am-active')[0].offsetTop) - 600;
+                $('.pes-article-left-sidebar').smoothScroll({position: recordScrollTop})
+            }
+        }
+
 
         var ue, vd;
 
@@ -112,6 +124,8 @@
 
         }
 
+
+
         /**
          * 刷新目录
          */
@@ -122,6 +136,14 @@
                 skipAutoTips: true,
                 success: function (res) {
                     $('.pes-doc-path-container').html(res.data);
+
+                    let params = new URLSearchParams(document.location.href);
+                    let aid = params.get("aid");
+
+                    if(aid > 0){
+                        $('.pes-doc-path>li>[data-id="'+aid+'"]').addClass('am-active')
+                    }
+
                 }
             })
         }
@@ -159,9 +181,9 @@
          */
         var articleNode = function () {
             var nodeValue = $('input[name="article_node"]:checked').val();
-            $('.pes-article-editor, .article_external_link').hide();
-            if (nodeValue == '0') {
-                $('.pes-article-editor').show();
+            $('.pes-article-editor, .article_external_link, .article_using_api_tool').hide();
+            if (nodeValue == '0' || nodeValue == '3') {
+                $('.pes-article-editor, .article_using_api_tool').show();
             }else if(nodeValue == '2'){
                 $('.article_external_link').show()
             }
@@ -205,6 +227,14 @@
                         $('.pes-article-paper .am-form').attr('action', '')
 
                         $('.pes-form-wrapper').html(res.data.html);
+
+                        $('select[name="article_parent"]').selected({
+                            btnWidth: '100%',
+                            maxHeight: '600px',
+                            btnStyle: 'default pes-article-path-select',
+                            searchBox:true
+                        });
+
                         if ($('.use-ue').hasClass('am-active')) {
                             initUE();
                         } else {
@@ -243,6 +273,24 @@
 
                 }
             })
+            return false;
+        })
+
+        /**
+         * 目录收缩和展开
+         */
+        $(document).on('click', '.am-icon-caret-down, .am-icon-caret-right', function (){
+            let getClassName = $(this).attr('class');
+
+            let nextDom = $(this).parent('a').next('ul');
+            if(getClassName == 'am-icon-caret-down'){
+                nextDom.hide()
+            }else{
+                nextDom.show()
+            }
+
+            $(this).attr('class', getClassName == 'am-icon-caret-down' ? 'am-icon-caret-right' : 'am-icon-caret-down')
+
             return false;
         })
 
@@ -421,13 +469,18 @@
         })
 
         /**
-         * 快速复制文档地址
+         * 快速复制功能
          */
-        $(document).on('click', '.pes-article-copy-link', function () {
+        $(document).on('click', '.pes-article-copy-link, .api-result-copy', function () {
             var dom = $(this)
-            var link = $(this).attr('link')
+            if($(this).hasClass('pes-article-copy-link')){
+                var copyValue = $(this).attr('link')
+            }else{
+                var copyValue = $('.api-pre-content').html()
+            }
+
             const input = document.createElement('input');
-            input.setAttribute('value', link);
+            input.setAttribute('value', copyValue);
             document.body.appendChild(input);
             input.select();
             if (document.execCommand('copy')) {
@@ -508,6 +561,10 @@
             editLoading();
             setTimeout(function (){
                 $('.pes-doc-path a[data-id="'+urlAid+'"]').trigger('click');
+
+                //添加侧栏滚动条跳转功能
+                jumpScrollforSideabr();
+
             }, 600)
 
         }else if(urlAid == 'new'){
@@ -521,10 +578,347 @@
 
         $(document).on('click', '.mobile-button>.am-icon-exchange', function (){
             $('.pes-article-left-sidebar, .mask-layer').show().addClass('mobile-show');
+            jumpScrollforSideabr()
         })
 
         $('.mask-layer').on('click', function () {
-            $('.mask-layer, .pes-article-left-sidebar').hide()
+            $('.mask-layer, .pes-article-left-sidebar').fadeIn(function (){
+                $('.pes-article-left-sidebar').smoothScroll({position: 0, speed: 0})
+            }).fadeOut();
+
+        })
+
+
+        /**
+         * 切换填写内容
+         */
+        $(document).on('click', '.pes-api-article-setting li', function (){
+            var setting = $(this).attr('data');
+            $('.pes-api-article-setting li').removeClass('am-active')
+            $(this).addClass('am-active');
+
+            $('[id^="api-"]').hide()
+
+            if(setting == 'body'){
+                if($('input[name="post-type"]:checked').val() == 'raw'){
+                    $('.post-raw').show();
+                }
+            }
+
+            $('#api-'+setting).show();
+        })
+
+        /**
+         * 当指定输入框有内容输入，自动追新一行
+         */
+        $(document).on('keyup', '.api-new-input', function (){
+
+            //特殊按键也出发了，迟点在修复
+            // var e = window.event;
+            // var code = e.charCode || e.keyCode;
+            var nextDom = $(this).parents('tr');
+            var copyHtml = '<tr>'+nextDom.html()+'</tr>';//复制行
+            nextDom.after(copyHtml)
+            $(nextDom).find('input').removeClass('api-new-input');//移除追新标记
+            nextDom.next().find('input[type=hidden]').val(0);//重置勾选标记
+            //标记发送数据
+            nextDom.find('.api-use').eq(0).trigger('click');
+
+        })
+
+        /**
+         * 发送API测试数据
+         */
+        $(document).on('click', '.api-send, .api-refresh', function (){
+            var data = $('.pes-api-article').find('select, input, textarea').serializeArray();
+            var type = $(this).hasClass('api-refresh') ? 'api-refresh' : 'api-send';
+            var d = dialog({
+                zIndex: 100000
+            });
+            d.showModal();
+
+            $.post('/?g=Create&m=Article&a=api&type='+type, data, function (res){
+                if(res.status == 200){
+                    $('input[name="api-url"]').val(res.data.api_url)
+                    $('.api-pre').show().removeAttr('style');
+                    $('.pes-api-article-setting li:eq(3)').trigger('click')
+                    $('#api-result pre').text(res.data.res).show();
+                    $('.api-pre-content').html(res.data.html)
+                    $('.api-pre-content .pretty-json').each(function (){
+                        try{
+                            $(this).html( JSON.stringify(JSON.parse($(this).html()),null,2) )
+                        }catch (e) {
+                            return false;
+                        }
+
+                    })
+                    d.close();
+                }else{
+                    var msg = res?.msg || '与服务器请求出错了'
+                    d.content(msg);
+                }
+            }, 'JSON').done(function() {
+                setTimeout(function (){
+                    d.close();
+                }, 1800)
+
+            }).fail(function (e){
+                var msg = e?.responseText || ''
+                d.content('发送API数据出错了' + msg );
+                setTimeout(function (){
+                    d.close();
+                }, 1800)
+            })
+        })
+
+        /**
+         * API选项标记
+         */
+        $(document).on('click', '.api-use', function (){
+            if($(this).prop('checked') == true){
+                $(this).next('input').val('1')
+            }else{
+                $(this).next('input').val('0')
+            }
+        })
+
+
+
+        var recordUrl;
+
+        /**
+         * 通过URL输入框获取GET参数
+         */
+        $(document).on('blur', 'input[name="api-url"]', function (){
+            var url = $(this).val();
+            if(url.length <= 0){
+                return true;
+            }
+
+            if(url == recordUrl){
+                return true;
+            }
+
+
+            //清空之前的
+            $('#api-get tr').each(function (){
+                if($(this).find('th').length > 0){
+                    return;
+                }
+                if($(this).find('input').hasClass('api-new-input') == false){
+                    $(this).remove();
+                }
+            })
+
+            var searchParams = new URLSearchParams(url.split('?')[1]);
+
+            var hasParams = false;
+
+            // 显示键/值对
+            for(var pair of searchParams.entries()) {
+                $('[id^="api-"]').hide()
+                $('#api-get').show();
+
+                var existInput = $('#api-get input[name^="get_key"][value="'+pair[0]+'"]');
+
+                if(existInput.length > 0){
+                    var parentDom = existInput.parents('tr')
+                }else{
+                    var parentDom = $('#api-get input.api-new-input[name^="get_key"]').parents('tr');
+                    $('#api-get input.api-new-input[name^="get_key"]').val(pair[0]).trigger('keyup').removeClass('api-new-input');
+
+                }
+                parentDom.find('input[name^="get_value"]').val(pair[1]);
+
+
+
+                hasParams = true;
+
+            }
+
+            if(hasParams == true){
+                $('.pes-api-article-setting li').eq(0).trigger('click')
+            }
+
+            //记录URL，后续判断内容是否有变
+            recordUrl = url;
+        })
+
+        /**
+         * body 发送数据类型切换
+         */
+        $(document).on('click', 'input[name="post-type"]', function (){
+            $('#api-body .post-raw').hide();
+
+            //清空之前的
+            $('#api-body tr').each(function (){
+                if($(this).find('th').length > 0){
+                    return;
+                }
+                if($(this).find('input').hasClass('api-new-input') == false){
+                    $(this).remove();
+                }
+            })
+            switch ($(this).val()){
+                case 'raw':
+                    $('#api-body .post-raw').show()
+                    break;
+            }
+        })
+
+        /**
+         * 切换返回结果
+         */
+        $(document).on('click', 'input[name="result-type"]', function (){
+            var vaule = $(this).val();
+            $('[id^=table_]').hide();
+            $('#table_'+vaule).show();
+        })
+
+        /**
+         * 将内容追加到编辑器
+         */
+        $(document).on('click', '.api-insert-editor', function (){
+            var apiContent = $('.api-pre-content').html().trim();
+            if(ue){
+                ue.focus();
+                ue.execCommand('inserthtml', apiContent);
+            }
+
+            if(vd){
+                vd.insertValue(vd.html2md(apiContent))
+            }
+        })
+
+        /**
+         * 清空编辑器内容
+         */
+        $(document).on('click', '.api-clear-editor', function (){
+            if(ue){
+                ue.setContent('')
+            }
+
+            if(vd){
+                vd.setValue('', true)
+            }
+        })
+
+        /**
+         * 关闭API浮窗
+         */
+        $(document).on('click', '.api-close-window', function (){
+            $('.api-pre').css({position:'unset', width:'100%'});
+        })
+
+        /**
+         * 显示API删除按钮
+         */
+        $(document).on({
+            mouseenter: function () {
+                var findRemoveClass = $(this).find('.api-param-remove')
+                if(findRemoveClass.length > 0){
+                    findRemoveClass.html('<a href="javascript:;"><i class="am-icon-remove"></i></a>')
+                }
+            },
+            mouseleave: function () {
+                var findRemoveClass = $(this).find('.api-param-remove')
+                if(findRemoveClass.length > 0){
+                    findRemoveClass.html('')
+                }
+            }
+        }, '[id^="api-"] tr');
+
+        /**
+         * 删除API参数
+         */
+        $(document).on('click', '.api-param-remove', function (){
+            $(this).parents('tr').remove();
+        })
+
+
+        /**
+         * 右侧边栏拖动效果
+         */
+        $(document).on('mousedown', '.api-pre', function (e) {
+            var left = parseInt($('.api-pre').css('left').replace(/px/, ''));
+            var top = parseInt($('.api-pre').css('top').replace(/px/, ''));
+
+            var currentX = e.clientX
+            var currentY = e.clientY
+
+            $(document).on('mousemove', function (ev) {
+                var afterY = ev.clientY - currentY;
+                var afterX = ev.clientY - currentY;
+                // console.dir(`X: ${currentX} Y: ${currentY} 鼠标X: ${ev.clientX} 鼠标Y: ${ev.clientY} 移动后X:${afterX} 移动后Y:${afterY} `);
+                $('.api-pre').css({
+                    top: (top + ev.clientY - currentY) + 'px',
+                    left: (left + ev.clientX - currentX) + 'px'
+                });
+
+            });
+        })
+
+        /**
+         * 启用API工具
+         */
+        $(document).on('click', 'input[name="using_api_tool"]', function (){
+            if($(this).val() == '1'){
+                $('.pes-api-article').show();
+            }else{
+                $('.pes-api-article').hide();
+            }
+        })
+
+
+        let searchXhr;
+
+        $('.pes-article-search-group input').on('keyup', function (e) {
+
+            let disableKey = ['9', '16', '17', '18', '20', '45', '144'];
+
+            //跳开处理
+            if(disableKey.includes(e.keyCode.toString()) || e.altKey == true || e.ctrlKey == true){
+                return false;
+            }
+
+            if (searchXhr) {
+                searchXhr.abort();
+            }
+
+            let keyword = $(this).val();
+
+            if (keyword.length <= 0) {
+                return false;
+            }
+
+            let dropdown = $('#pes-article-search-dialog .am-dropdown-content')
+            dropdown.html('<li><a href="javascript:;"><i class="am-icon-refresh am-icon-spin"></i></a></li>');
+            $('#pes-article-search-dialog').dropdown('open');
+
+            let id = '<?= $doc['doc_id'] ?>';
+
+            searchXhr = $.ajaxSubmit({
+                url: '/?g=Create&m=Article&a=search&id=' + id + '&keyword=' + keyword + '&time=' + Math.random(),
+                skipAutoTips: true,
+                stopJump: true,
+                success: function (res) {
+
+                    if (res.status == 200) {
+                        dropdown.html(res.data);
+                    } else {
+                        dropdown.html('<li><a href="javascript:;">' + res.msg + '</a></li>');
+                    }
+                }
+            });
+        })
+
+        $(document).on('click', '#pes-article-search-dialog .am-dropdown-content a', function (){
+            let aid = $(this).attr('aid');
+            if(aid){
+                $('.pes-doc-path a[data-id="'+aid+'"]').trigger('click');
+                $('#pes-article-search-dialog').dropdown('close');
+                jumpScrollforSideabr();
+            }
         })
 
 

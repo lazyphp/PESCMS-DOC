@@ -52,7 +52,7 @@
 
     })
 
-    $('header').before('<div class="am-alert am-alert-postscript am-text-sm am-margin-0 " data-am-alert style="position: fixed;width: 100%;bottom: 0px;z-index: 9999"><button type="button" class="close-f1 am-close">&times;</button><i class="am-icon-leanpub"></i> 按F1可以打开PESCMS Doc帮助文档</div>')
+    $('header').before('<div class="am-alert am-alert-postscript am-text-sm am-margin-0 " data-am-alert style="position: fixed;width: 100%;bottom: 0px;z-index: 9999"><button type="button" class="close-f1 am-close">&times;</button><i class="am-icon-leanpub"></i> 按F1可以打开PESCMS Doc帮助文档 [点击右侧X按钮可永久关闭本提示]</div>')
     $('html, body').animate({scrollTop: 0}, '500');
     $('.close-f1').on('click', function () {
         confirm('请谨记按F1可随时打开PESCMS Doc帮助文档。');

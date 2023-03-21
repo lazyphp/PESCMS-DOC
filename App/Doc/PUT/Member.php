@@ -24,6 +24,15 @@ class Member extends \Core\Controller\Controller {
             if($item['field_only'] == 1 && \Model\Member::checkOnly($item['field_name'], $data["member_{$item['field_name']}"]) == false ){
                 $this->error("`{$data["member_{$item['field_name']}"]}`已存在，请更换");
             }
+
+            if($item['field_name'] == 'loginafter'){
+                $verifyLoginUrl = \Model\Field::findField('95', true)->deFieldOptionToArray();
+                if(!in_array($data["member_{$item['field_name']}"], $verifyLoginUrl)){
+                    $this->error('非法的登录地址');
+                }
+
+            }
+
         }
 
         if(!empty($_POST['password'])){

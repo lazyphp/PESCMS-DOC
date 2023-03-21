@@ -36,7 +36,7 @@ $(function () {
 
         var dialogOption = {id: 'submit-tips', zIndex: '9999', fixed: true, skin: 'submit-warning'};
 
-        $.ajax({
+        let xhr = $.ajax({
             url: obj.url,
             type: obj.method,
             data: obj.data,
@@ -138,6 +138,7 @@ $(function () {
             }
         })
 
+        return xhr;
     }
 
     /**
@@ -208,6 +209,17 @@ $(function () {
         var src = $(this).attr('src')
         $(this).attr('src', src + '&time=' + Math.random());
     });
+
+    /**
+     * 批量删除全选按钮
+     */
+    $('.checkbox-all').on('click, change', function () {
+        if($(this).prop('checked') == true){
+            $('.checkbox-all-children').prop('checked', 'checked')
+        }else{
+            $('.checkbox-all-children').removeAttr('checked');
+        }
+    })
 
     /**
      * 批量删除

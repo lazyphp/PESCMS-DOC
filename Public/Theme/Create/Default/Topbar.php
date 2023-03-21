@@ -1,6 +1,6 @@
 <header class="am-topbar">
     <h1 class="am-topbar-brand">
-        <a href="<?= DOCUMENT_ROOT ?>"><?= $system['siteTitle'] ?></a>
+        <a href="/"><?= $system['siteTitle'] ?></a>
     </h1>
 
     <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
@@ -39,7 +39,7 @@
 
             <?php elseif(MODULE == 'Setting' && in_array(ACTION, ['atUpgrade', 'mtUpgrade']) ): ?>
                 <li>
-                    <a class="am-dropdown-toggle" href="<?= $label->url('Create-Setting-mtUpgrade') ?>">
+                    <a class="am-dropdown-toggle" href="<?= $label->url('Create-Setting-upgrade') ?>">
                         <i class="am-icon-reply"></i> 返回检查升级
                     </a>
                 </li>

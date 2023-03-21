@@ -77,6 +77,13 @@ $SLICE_ARRYR = [
         ['\Create\HandleForm\HandleRoute', '\Create\UpdateRoute']
     ],
 
+    //处理文档基础信息 添加/编辑 提交的表单内容
+    'CREATE-DOC-ACTION' => [
+        'any',
+        ['Create-Doc-action'],
+        ['\Create\HandleForm\HandleDoc']
+    ],
+
     //注册自动处理后台会员提交的会员密码表单
     'CREATE-UPDATE-MEMBER-PWD' => [
         'any',
@@ -91,11 +98,19 @@ $SLICE_ARRYR = [
         ['\Doc\Article']
     ],
 
-    'DOC-ARTICLETEMPLATE' => [
+    //文档通用模板内容替换
+    'DOC-ARTICLE-TEMPLATE' => [
         'get',
         ['Doc-Article-index'],
         ['\Doc\ArticleTemplate']
     ],
+    'CREATE-ARTICLE-API-FIELD-TYPE' => [
+        'any',
+        ['Create-Article-:a'],
+        ['\Create\HandleForm\HandleArticle']
+    ],
+
+
 
     //注册全局插件访问入口
     'GLOBAL-APPLICATION-PLUGIN' => [

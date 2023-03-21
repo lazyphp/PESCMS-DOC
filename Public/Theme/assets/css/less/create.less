@@ -39,8 +39,71 @@ html, body {
     background: #82c0ff;
   }
 
+  .pes-left-sidebar-tool{
+    width: 245px;
+    height: 100px;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    background-color: #f5f7f9;
+
+    @media only screen and (max-width: 640px) {
+      top: 0;
+    }
+
+    &:after{
+      background-color: #f5f7f9;
+      border-bottom: 1px solid #eee;
+      content: " ";
+      display: table;
+      width: 90%;
+      margin: 0 auto;
+      padding-top: 15px;
+    }
+
+    #pes-article-search-dialog{
+      .pes-article-search-group{
+        position: relative;
+
+        input:focus+i{
+          display: none;
+        }
+
+        i{
+          position: absolute;
+          top: 3px;
+          right: 5px;
+        }
+      }
+
+      .am-dropdown-content{
+        left: 10px;
+        max-height: 400px;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+          width: 4px;
+          height: 10px;
+        }
+
+        &:hover::-webkit-scrollbar-thumb {
+          background: #82c0ff;
+        }
+
+        &:hover::-webkit-scrollbar-thumb {
+          background: #82c0ff;
+        }
+
+      }
+
+    }
+
+  }
+
   //文档目录
   .pes-doc-path-container {
+
+    margin-top: 115px;
 
     .pes-doc-path {
       padding-left: 1rem;
@@ -137,15 +200,15 @@ html, body {
 
 }
 
-.mobile-button{
+.mobile-button {
   display: none;
 }
 
 @media only screen and (max-width: 640px) {
-  .pes-article-left-sidebar{
+  .pes-article-left-sidebar {
     display: none;
     z-index: 9999;
-    top:0 !important;
+    top: 0 !important;
     transition: transform .25s ease-out;
     animation: bounceInLeft 0.6s infinite cubic-bezier(0.6, 0.9, 0.1, 1.000);
     animation-iteration-count: 1;
@@ -172,7 +235,6 @@ html, body {
   }
 
 
-
   .mask-layer {
     position: fixed;
     top: 0;
@@ -184,27 +246,29 @@ html, body {
     display: none;
   }
 
-  .pes-article-right-sidebar{
+  .pes-article-right-sidebar {
     position: relative;
     width: 100%;
-    .pes-article-right-sidebar-move{
+
+    .pes-article-right-sidebar-move {
       display: none;
     }
   }
 
-  .pes-article-paper{
+  .pes-article-paper {
     margin: 0 15px !important;
     padding: 0 !important;
   }
 
   //移动端的功能按钮
-  .mobile-button{
+  .mobile-button {
     display: block;
     position: fixed;
     bottom: 50px;
     right: 10px;
     z-index: 9999;
-    a{
+
+    a {
       display: block;
       margin: 10px 0;
     }
@@ -266,6 +330,114 @@ html, body {
     min-height: 400px;
   }
 
+  .pes-article-path-select+.am-selected-content{
+    .am-selected-list{
+      overflow-y: auto !important;
+      font-size: 1.4rem;
+      .am-checked{
+        color: #fff;
+        background: #84e753;
+      }
+    }
+  }
+
+  /**
+   * API相关样式设置
+   */
+  .pes-api-article {
+    padding: 10px;
+    border: 1px dashed #cfcfcf;
+    background: #fff;
+    input, select, textarea, .am-input-group-btn, .am-btn, .am-alert, pre, code{
+      border-radius: 0 !important;
+    }
+
+    select[name="raw-type"]{
+      margin-bottom: -1px;
+    }
+
+    textarea{
+      font-weight: normal !important;
+    }
+
+    .am-input-group-select {
+      display: table-cell;
+      vertical-align: middle;
+      width: 10%;
+      white-space: nowrap;
+      select{
+        height: 33px;
+        margin-right: -1px !important;
+        background-color: #fafafa;
+        &:focus, &:active{
+          background-color: #fff;
+        }
+        &:hover{
+          background-color: #e9e9e9;
+        }
+      }
+    }
+
+    .pes-api-article-setting {
+      list-style: none;
+      padding: 0px;
+      margin: -1px 0px;
+      border: 1px solid #dbdbdb;
+      background-color: #fafafa;
+
+      li {
+        cursor: pointer;
+        padding: 5px;
+        color: #a9a9a9;
+        &.am-active, &.am-active:hover{
+          color: #464646;
+          border-bottom: 3px solid #f47023;
+        }
+        &:hover{
+          color: #808080;
+        }
+      }
+
+
+    }
+
+    .api-param-remove{
+      width: 26px;
+    }
+
+    .api-pre{
+      border: 1px solid #606060;
+      position: fixed;
+      z-index: 99999;
+      top: 0;
+      background: #fff;
+      left: 0px;
+      width: 800px;
+      cursor: move;
+
+      .api-pre-title{
+         padding: 5px;
+         border-bottom: 1px solid #606060;
+         background-color: #fafafa;
+      }
+
+      .api-pre-content{
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 10px;
+      }
+
+    }
+
+  }
+
+}
+
+
+//文档标题栏
+.pes-doc-title-column{
+  display: flex;
+  justify-content: space-between;
 }
 
 //文档封面
@@ -354,3 +526,4 @@ html, body {
 
 @import "status";
 @import "footer";
+@import "api-table";

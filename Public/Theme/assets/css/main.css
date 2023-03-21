@@ -247,6 +247,20 @@ html {
 .content .am-article-bd img:hover {
   box-shadow: 0 2px 30px rgba(0, 0, 0, 0.22), 0 2px 5px rgba(0, 0, 0, 0.1) !important;
 }
+.content .am-article-bd pre .pes-code-copy {
+  font-size: 130%;
+  cursor: pointer;
+}
+.content .am-article-hd,
+.content .am-article-bd {
+  padding: 0 15px;
+}
+.content .am-article-hd h2,
+.content .am-article-bd h2 {
+  border-left: 4px solid #ff7e7e;
+  padding-left: 10px;
+  margin-left: -15px;
+}
 .content .am-article-hd h1 .article-copy-link,
 .content .am-article-bd h1 .article-copy-link,
 .content .am-article-hd h2 .article-copy-link,
@@ -293,8 +307,16 @@ html {
   .content {
     width: auto;
     margin: 0 auto;
-    padding: 1.5rem;
+    padding: 1rem;
   }
+}
+.content .pes-doc-copyright {
+  margin-top: 10px;
+  padding: 5px;
+  border: 2px dashed #cfcfcf;
+}
+.content .pes-doc-copyright p:last-child {
+  margin-bottom: 5px;
 }
 /*
 ===================
@@ -343,7 +365,6 @@ html {
   font-weight: 500;
 }
 .title-nav a {
-  white-space: nowrap;
   text-decoration: none;
   display: block;
   padding: 0.125rem 0;
@@ -515,4 +536,20 @@ html {
   width: 1px;
   height: 14px;
   background-color: #cecece;
+}
+.pes-article-api-table tr {
+  background: #fafbfc;
+}
+.pes-article-api-table tr:nth-child(2n) {
+  background: #fff;
+}
+.pes-article-api-table td,
+.pes-article-api-table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+  word-break: normal;
+}
+.pes-article-api-table th {
+  background-color: #fafbfc;
+  font-weight: 600;
 }

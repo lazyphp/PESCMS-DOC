@@ -39,10 +39,15 @@ class Article extends \Core\Controller\Controller {
         if (!empty($aid) && $aid != 'new') {
             $articel = \Model\Article::getDetail($doc, $aid);
             $this->assign($articel);
+
+            if (!empty($articel['article_api_params'])) {
+                $this->assign('apiParams', json_decode($articel['article_api_params'], true));
+            }
+
             $this->assign('method', 'PUT');
             \Model\Article::$selectedID = $articel['article_parent'];
         }
-        
+
         $pathOption = \Model\Article::obArticle($doc['doc_id'], $doc['doc_version'], 0, THEME_PATH . '/Article/Article_pathOption.php');
 
         $this->assign('pathOption', $pathOption);
@@ -55,7 +60,7 @@ class Article extends \Core\Controller\Controller {
             'msg'  => '读取数据成功',
             'data' => [
                 'html' => $content,
-                'url' => !empty($aid) && $aid != 'new' && $articel['article_node'] == 0 ? $this->url('Doc-Article-index', ['id' => $articel['article_doc_id'], 'aid' => $articel['article_mark']]) : ''
+                'url'  => !empty($aid) && $aid != 'new' && $articel['article_node'] == 0 ? $this->url('Doc-Article-index', ['id' => $articel['article_doc_id'], 'aid' => $articel['article_mark']]) : '',
             ],
         ]);
     }
@@ -99,10 +104,39 @@ class Article extends \Core\Controller\Controller {
     /**
      * 刷新目录
      */
-    public function refreshPath(){
+    public function refreshPath() {
         $doc = \Model\Doc::findDocWithID();
         $path = \Model\Article::obArticle($doc['doc_id'], $doc['doc_version']);
         $this->success(['msg' => '获取新目录成功', 'data' => $path]);
+    }
+
+    /**
+     * 文档模糊搜索
+     * @return void
+     */
+    public function search() {
+
+        $doc = \Model\Doc::findDocWithID();
+        $keyword = '%' . $this->isG('keyword', '请提交要搜索的内容') . '%';
+
+        $list = $this->db('article')->where(' article_doc_id = :article_doc_id AND article_version = :article_version AND  article_title LIKE :article_title')->order('article_listsort ASC')->select([
+            'article_doc_id'  => $doc['doc_id'],
+            'article_version' => $doc['doc_version'],
+            'article_title'   => $keyword,
+        ]);
+
+        if (empty($list)) {
+            $this->error('没有找到符合的文档');
+        } else {
+            $this->assign('list', $list);
+            ob_start();
+            $this->display('Article_search');
+            $html = ob_get_contents();
+            ob_clean();
+
+            $this->success(['msg' => '完成', 'data' => $html]);
+
+        }
     }
 
 

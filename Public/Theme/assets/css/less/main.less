@@ -297,16 +297,24 @@ html {
   .am-article-bd {
     min-height: 60vh;
 
-    img{
+    img {
       border: 1px solid #ebeef5;
       background-color: #fff;
       color: #303133;
       transition: .3s;
       border-radius: 5px;
-      box-shadow:  0px 0px 12px rgba(0, 0, 0, .12);
+      box-shadow: 0px 0px 12px rgba(0, 0, 0, .12);
 
-      &:hover{
+      &:hover {
         box-shadow: 0 2px 30px rgb(0 0 0 / 22%), 0 2px 5px rgb(0 0 0 / 10%) !important;
+      }
+
+    }
+
+    pre {
+      .pes-code-copy {
+        font-size: 130%;
+        cursor: pointer;
       }
 
     }
@@ -315,6 +323,14 @@ html {
 
 
   .am-article-hd, .am-article-bd {
+    padding: 0 15px;
+
+    h2 {
+      border-left: 4px solid #ff7e7e;
+      padding-left: 10px;
+      margin-left: -15px;
+    }
+
     h1, h2, h3, h4, h5, h6 {
       .article-copy-link {
         cursor: pointer;
@@ -347,7 +363,18 @@ html {
   @media only screen and (max-width: 640px) {
     width: auto;
     margin: 0 auto;
-    padding: 1.5rem;
+    padding: 1rem;
+  }
+
+  //版权声明
+  .pes-doc-copyright {
+    margin-top: 10px;
+    padding: 5px;
+    border: 2px dashed #cfcfcf;
+
+    p:last-child {
+      margin-bottom: 5px;
+    }
   }
 
 }
@@ -407,7 +434,6 @@ html {
   }
 
   a {
-    white-space: nowrap;
     text-decoration: none;
     display: block;
     padding: .125rem 0;
@@ -558,6 +584,6 @@ html {
 
 @import "status";
 @import "footer";
-
+@import "api-table";
 
 

@@ -6910,7 +6910,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     'body{margin:8px !important;background:none !important;font-family:sans-serif;font-size:1.4rem !important;}' +
                     //设置段落间距
                     'p{margin:5px 0;}</style>' +
-                    ( options.iframeCssUrl ? '<link rel=\'stylesheet\' type=\'text/css\' href=\'' + utils.unhtml(options.iframeCssUrl) + '\'/>' : '' ) +
+                    ( options.iframeCssUrl ? '<link rel=\'stylesheet\' type=\'text/css\' href=\'' + utils.unhtml(options.iframeCssUrl) + '\'/>' : '' ) + ( options.iframeApiTableUrl ? '<link rel=\'stylesheet\' type=\'text/css\' href=\'' + utils.unhtml(options.iframeApiTableUrl) + '\'/>' : '' ) +
                     (options.initialStyle ? '<style>' + options.initialStyle + '</style>' : '') +
                     '</head><body class=\'view\' ></body>' +
                     '<script type=\'text/javascript\' ' + (ie ? 'defer=\'defer\'' : '' ) +' id=\'_initialScript\'>' +
@@ -8151,6 +8151,7 @@ UE.Editor.defaultOptions = function(editor){
         initialStyle:'',
         autoClearinitialContent: false,
         iframeCssUrl: PESCMS_PATH +'/Theme/assets/css/amazeui.min.css',
+        iframeApiTableUrl: PESCMS_PATH +'/Theme/assets/css/api-table.min.css',
         textarea: 'editorValue',
         focus: false,
         focusInEnd: true,

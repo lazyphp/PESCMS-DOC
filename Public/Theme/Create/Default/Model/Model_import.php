@@ -10,8 +10,8 @@
 </div>
 <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
 <form class="am-form am-form-horizontal ajax-submit" action="" method="post" data-am-validator>
-    <input type="hidden" name="back_url" value="<?= $_GET['back_url'] ?>"/>
     <?= $label->token() ?>
+    <?=$label->backTo()?>
     <div class="am-g am-g-collapse">
         <div class="am-u-sm-12 am-u-sm-centered">
             <div class="am-form-group">
