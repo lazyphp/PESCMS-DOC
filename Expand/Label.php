@@ -98,6 +98,10 @@ class Label {
      * 生成令牌
      */
     public function token() {
+        //当token为空时，重新生成
+        if(empty(\Core\Func\CoreFunc::$token)){
+            \Core\Func\CoreFunc::token();
+        }
         return '<input type="hidden" name="token" value="' . \Core\Func\CoreFunc::$token . '" >';
     }
 

@@ -10,7 +10,9 @@
             </div>
             <?php require $file?>
 
-            <?= $label->loginEvent(); ?>
+            <div class="am-padding-horizontal am-padding-top">
+                <?= $label->loginEvent(); ?>
+            </div>
 
         </div>
     </div>

@@ -30,7 +30,3 @@
         <a href="<?= $label->url('Doc-Login-signup') ?>">账号注册</a>
     <?php endif; ?>
 </div>
-
-<div class="am-padding-horizontal am-padding-top">
-    <?= $label->loginEvent(); ?>
-</div>
