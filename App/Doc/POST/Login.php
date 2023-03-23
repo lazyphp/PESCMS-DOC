@@ -6,6 +6,7 @@
  * For the full copyright and license information, please view
  * the file LICENSE that was distributed with this source code.
  */
+
 namespace App\Doc\POST;
 
 class Login extends \Core\Controller\Controller {
@@ -22,7 +23,7 @@ class Login extends \Core\Controller\Controller {
     /**
      * 账户登录
      */
-    public function index(){
+    public function index() {
         $condition = 'member_account = :member_account';
         $param['member_account'] = $this->isP('account', '请填写您的账号');
 
@@ -36,9 +37,8 @@ class Login extends \Core\Controller\Controller {
         }
 
 
-        if($member['member_status'] == 0){
-            $statusMsg = $this->system['member_review'] == 2 ? '请先打开邮箱完成账号激活。' : '当前账号处于待审核/被禁用，请联系网站管理员解决。';
-            $this->error($statusMsg);
+        if ($member['member_status'] == 0) {
+            $this->error('当前账号处于待审核/被禁用，请联系网站管理员解决。');
         }
 
         unset($member['member_password']);
@@ -58,9 +58,9 @@ class Login extends \Core\Controller\Controller {
     /**
      * 账号注册
      */
-    public function signup(){
+    public function signup() {
 
-        if($this->system['open_register'] == 0){
+        if ($this->system['open_register'] == 0) {
             $this->error('当前系统关闭了注册渠道');
         }
 
@@ -82,10 +82,10 @@ class Login extends \Core\Controller\Controller {
 
         //写入安全密钥
         $this->db('member')->where('member_id = :member_id')->update([
-            'noset' =>[
-                'member_id' => $addResult
+            'noset'             => [
+                'member_id' => $addResult,
             ],
-            'member_secret_key' => $secretKey
+            'member_secret_key' => $secretKey,
         ]);
 
 
@@ -101,25 +101,25 @@ class Login extends \Core\Controller\Controller {
         $secretKey = $this->secretKey();
 
         $checkmember = $this->db('member')->where('member_account = :member_account AND member_secret_key = :member_secret_key')->find([
-            'member_account' => $account,
-            'member_secret_key' => $secretKey
+            'member_account'    => $account,
+            'member_secret_key' => $secretKey,
         ]);
 
-        if(empty($checkmember)){
+        if (empty($checkmember)) {
             $this->error('登录账号不存在或者安全密钥错误');
         }
 
-        $mark = 'PESDOC-'.md5((new \Godruoyi\Snowflake\Snowflake)->id());
+        $mark = 'PESDOC-' . md5((new \Godruoyi\Snowflake\Snowflake)->id());
 
         $this->db('findpassword')->where('findpassword_createtime < :time')->delete([
-            'time' => time() - 86400
+            'time' => time() - 86400,
         ]);
 
         //创建标记
         $this->db('findpassword')->insert([
-            'member_id' => $checkmember['member_id'],
-            'findpassword_mark' => $mark,
-            'findpassword_createtime' => time()
+            'member_id'               => $checkmember['member_id'],
+            'findpassword_mark'       => $mark,
+            'findpassword_createtime' => time(),
         ]);
 
         $this->success('匹配完成，将重定向重置密码', $this->url('Doc-Login-resetpw', ['mark' => $mark]), '-1');
@@ -132,8 +132,8 @@ class Login extends \Core\Controller\Controller {
         $mark = $this->isG('mark', '请提交正确的MARK');
 
         $checkMark = $this->db('findpassword')->where('findpassword_createtime >= :time AND findpassword_mark = :findpassword_mark ')->find([
-            'time' => time() - 86400,
-            'findpassword_mark' => $mark
+            'time'              => time() - 86400,
+            'findpassword_mark' => $mark,
         ]);
 
         $loginUrl = $this->url('Doc-Login-index');
@@ -154,7 +154,7 @@ class Login extends \Core\Controller\Controller {
         $this->db('member')->where('member_id = :member_id')->update($data);
 
         $this->db('findpassword')->where('findpassword_id = :id')->delete([
-            'id' => $checkMark['findpassword_id']
+            'id' => $checkMark['findpassword_id'],
         ]);
 
         $this->success('密码修改成功!', $loginUrl);
@@ -164,7 +164,7 @@ class Login extends \Core\Controller\Controller {
      * 生成安全密钥
      * @return string|null
      */
-    private function secretKey(){
+    private function secretKey() {
         return \Core\Func\CoreFunc::generatePwd($this->isP('secret_key', '请提交您的安全密钥'), 'USER_KEY');
     }
 

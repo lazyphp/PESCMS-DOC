@@ -2,7 +2,8 @@
     <div class="am-container">
         <div class="pes-footer">
             <div class="pes-logo am-text-middle">
-                <img src="<?= $system['siteLogo'] ?: DOCUMENT_ROOT . '/Theme/assets/i/PESCMS_LOGO.png' ?> " alt="<?= $system['siteTitle'] ?: 'PESCMS' ?>" height="24" class="">
+                <img src="<?= $system['siteLogo'] ?: DOCUMENT_ROOT . '/Theme/assets/i/PESCMS_LOGO.png' ?> "
+                     alt="<?= $system['siteTitle'] ?: 'PESCMS' ?>" height="24" class="">
             </div>
             <span class="footer-line"></span>
             <div class="links" data-testid="links">
@@ -13,10 +14,13 @@
                 <?php else: ?>
                     <?= $system['siteFooter'] ?>
                 <?php endif; ?>
-                <span class="footer-line"></span>
-                <a href="https://www.pescms.com/download/3.html" target="_blank" class="am-link-success">Power By PESCMS
-                    DOC
-                </a>
+                <?php if (empty($system['is_authorize']) || $system['is_authorize'] != 'right'): ?>
+                    <span class="footer-line"></span>
+                    <a href="https://www.pescms.com/download/3.html" target="_blank" class="am-link-success">Power By
+                        PESCMS
+                        DOC
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -44,7 +48,7 @@
                 } catch (e) {
                     window.open('https://document.pescms.com/article/4.html')
                 }
-            }).fail(function (){
+            }).fail(function () {
                 window.open('https://document.pescms.com/article/4.html')
             })
             return false;
