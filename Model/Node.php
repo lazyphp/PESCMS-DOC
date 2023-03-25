@@ -66,8 +66,17 @@ class Node extends \Core\Model\Model {
 
         $findNode = \Model\Content::findContent('node', $auth, 'node_value');
         //没有添加权限验证的，只能返回true.
-        if(empty($findNode)){
-            return true;
+        if (empty($findNode)) {
+            //如果按照默认值校验权限，程序将会再匹配一个不带请求的权限校验，有时候权限校验需要所有请求都判断。
+            if ($auth == GROUP . '-' . METHOD . '-' . MODULE . '-' . ACTION) {
+                $findNode = \Model\Content::findContent('node', GROUP . '-' . MODULE . '-' . ACTION, 'node_value');
+                if (empty($findNode)) {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+
         }
 
         $list = \Model\Content::listContent([
