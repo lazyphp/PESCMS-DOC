@@ -37,7 +37,7 @@
                     <?php endif; ?>
                 <?php endforeach; ?>
 
-            <?php elseif(MODULE == 'Setting' && in_array(ACTION, ['atUpgrade', 'mtUpgrade']) ): ?>
+            <?php elseif (MODULE == 'Setting' && in_array(ACTION, ['atUpgrade', 'mtUpgrade'])): ?>
                 <li>
                     <a class="am-dropdown-toggle" href="<?= $label->url('Create-Setting-upgrade') ?>">
                         <i class="am-icon-reply"></i> 返回检查升级
@@ -48,6 +48,14 @@
 
         <div class="am-topbar-right">
             <ul class="am-nav am-nav-pills am-topbar-nav">
+                <?php if ($label->checkAuth('Create-GET-Index-clean') === true): ?>
+                    <li>
+                        <a class="am-dropdown-toggle am-text-success ajax-click ajax-dialog" msg="确认需要清空缓存吗?"
+                           data="<?= $label->url('Create-Index-clean', ['method' => 'GET']); ?>" href="javascript:;">
+                            <i class="am-icon-recycle"></i> 清理缓存
+                        </a>
+                    </li>
+                <?php endif; ?>
                 <li class="am-dropdown am-dropdown-flip">
                     <a class="am-dropdown-toggle" href="javascript:;">
                         <i class="am-icon-btn am-icon-btn-sm am-icon-user"></i>
