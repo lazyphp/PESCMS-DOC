@@ -28,6 +28,10 @@
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/Vditor.min.css?=<?=$resources?>"/>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/Vditor.min.js?v=<?=$resources?>"></script>
 
+    <!--图片放大器-->
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/jquery.fancybox.min.css?=<?=$resources?>"/>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.fancybox.js?v=<?=$resources?>"></script>
+
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.min.js?v=<?= $resources ?>"></script>
     <?php if(!empty($system['siteStyle'])): ?>
         <style><?= $system['siteStyle'] ?></style>

@@ -183,6 +183,33 @@
             });
         }
 
+        /**
+         * 图片放大器
+         */
+        var viewBigPicture = function (){
+            $('.am-article img').each(function () {
+                var dom = $(this)
+                var parent = $(this).parent();
+                if(parent[0].tagName != 'a'){
+                    var imgStr = '<a href="'+dom.attr('src')+'" data-fancybox="gallery" class="am-inline-block"><img src="'+dom.attr('src')+'" class="am-img-responsive" /></a>';
+                    parent.append(imgStr)
+                    dom.remove();
+                }
+            })
+
+            $(document).fancybox({
+                buttons: [
+                    "zoom",
+                    "fullScreen",
+                    "download",
+                    "thumbs",
+                    "rotate",
+                    "close"
+                ],
+                selector: '[data-fancybox^="gallery"]'
+            });
+        }
+
         if ($('.use-md').val() == 1) {
             try {
                 Vditor.preview(document.getElementsByClassName('am-article-bd')[0], `<?= str_replace('`', '\`',
@@ -190,6 +217,7 @@
                 ) ?>`, {
                     after() {
                         titleNavigation();
+                        viewBigPicture();
                         if(recordFontSet){
                             $('.font-set[data="'+recordFontSet+'"]').trigger('click')
                         }
@@ -210,6 +238,7 @@
             }
         } else {
             titleNavigation();
+            viewBigPicture();
         }
 
 
