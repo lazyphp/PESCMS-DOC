@@ -271,7 +271,7 @@ class Article extends \Core\Model\Model {
 
         switch ($_POST['post-type']) {
             case 'raw';
-                $send['body'] = $raw = self::p('raw');
+                $send['body'] = $raw = self::p('raw', false);
                 $rawType = strtolower($_POST['raw-type']);
                 switch ($rawType) {
                     case 'text':
@@ -286,7 +286,7 @@ class Article extends \Core\Model\Model {
                         break;
                 }
 
-                $send['header'][CURLOPT_HTTPHEADER] = array_merge($send['header'][CURLOPT_HTTPHEADER], ['Content-Type:' . $accept, 'Accept:' . $accept]);
+                $send['header'][CURLOPT_HTTPHEADER] = array_merge($send['header'][CURLOPT_HTTPHEADER] ?? [], ['Content-Type:' . $accept, 'Accept:' . $accept]);
                 break;
         }
 
