@@ -9,11 +9,9 @@
         <h2><?= ucfirst($type) ?>参数请求</h2>
 
         <?php if ($type == 'body' && $postType == 'raw'): ?>
-            <blockquote>
-                <p><strong>请求方式：</strong><span style="color: rgb(255, 192, 0);"><?= strtoupper($rawType) ?></span></p>
-                <p><strong>示例格式：</strong></p>
-                <pre><?= htmlspecialchars($raw) ?></pre>
-            </blockquote>
+            <p><strong>请求方式：</strong><span style="color: rgb(255, 192, 0);"><?= strtoupper($rawType) ?></span></p>
+            <p><strong>示例格式：</strong></p>
+            <pre <?= strtoupper($rawType) == 'JSON' ? 'class="pretty-json"' : '' ?>><?= htmlspecialchars($raw) ?></pre>
         <?php endif; ?>
         <table class="pes-article-api-table">
             <tr>
