@@ -28,27 +28,27 @@
                     <div class="am-padding">
                         <hr/>
                         <div class="am-g am-g-collapse">
-                            <div class="am-u-sm-3">
+                            <div class="am-u-sm-4">
                                 <time class="time am-text-middle"><?= date('Y-m-d', $value['doc_createtime']) ?></time>
                             </div>
-                            <div class="am-u-sm-9 am-text-right">
-
-                                <?php if ($label->checkAuth('Create-GET-Doc-action') === true): ?>
-                                    <a href="<?= $label->url('Create-Doc-action', ['id' => $value['doc_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" class="am-btn am-btn-default am-btn-xs"><i class="am-icon-cogs"></i> 设置</a>
-                                <?php endif; ?>
-
-                                <?php if ($label->checkAuth('Create-GET-Article-index') === true): ?>
-
-                                    <a href="<?= $label->url('Create-Article-index', ['id' => $value['doc_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" class="am-btn am-btn-default am-btn-xs"><i class="am-icon-pencil"></i> 编写</a>
-
-                                <?php endif; ?>
+                            <div class="am-u-sm-8 am-text-right">
 
                                 <div class="am-dropdown" data-am-dropdown>
                                     <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle"
-                                            data-am-dropdown-toggle>更多
+                                            data-am-dropdown-toggle>管理文档
                                         <span class="am-icon-caret-down"></span></button>
                                     <ul class="am-dropdown-content">
-                                        <?= (new \Core\Plugin\Plugin())->event('docManageButton', $value); ?>
+                                        <?php if ($label->checkAuth('Create-GET-Doc-action') === true): ?>
+                                            <li>
+                                                <a href="<?= $label->url('Create-Doc-action', ['id' => $value['doc_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" ><i class="am-icon-cogs"></i> 基础信息设置</a>
+                                            </li>
+                                        <?php endif; ?>
+
+                                        <?php if ($label->checkAuth('Create-GET-Article-index') === true): ?>
+                                            <li>
+                                                <a href="<?= $label->url('Create-Article-index', ['id' => $value['doc_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" ><i class="am-icon-pencil"></i> 开始编辑文档</a>
+                                            </li>
+                                        <?php endif; ?>
 
                                         <?php if ($label->checkAuth('Create-DELETE-Doc-action') === true): ?>
                                             <li>
@@ -58,6 +58,9 @@
                                                             class="am-icon-remove"></i> 删除文档</a>
                                             </li>
                                         <?php endif; ?>
+
+                                        <?= (new \Core\Plugin\Plugin())->event('docManageButton', $value); ?>
+
                                     </ul>
                                 </div>
 

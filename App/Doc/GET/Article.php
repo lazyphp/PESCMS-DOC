@@ -108,6 +108,7 @@ class Article extends \Core\Controller\Controller {
                 'article_content' => $keyword,
             ]);
 
+        $this->assign('title', "在「{$doc['doc_title']}」搜索内容");
         $this->assign('doc', $doc);
         $this->assign('list', $list);
         $this->assign('keyword', $this->g('keyword'));

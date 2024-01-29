@@ -1,4 +1,4 @@
-/*! Amaze UI for PESCMS magic reform v3.0.0 | by Amaze UI Team and PESCMS | (c) 2021 AllMobilize, Inc, PESCMS. | Licensed under MIT | 2021-09-05T20:29:39-0700 */
+/*! Amaze UI for PESCMS magic reform v3.0.0 | by Amaze UI Team and PESCMS | (c) 2024 AllMobilize, Inc, PESCMS. | Licensed under MIT | 2024-01-28T19:23:32-0800 */
 /* ==========================================================================
    Component: Base
  ============================================================================ */
@@ -393,7 +393,7 @@ body {
   background: #fff;
   font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;
   font-weight: normal;
-  line-height: 26px;
+  line-height: 1.5em;
   color: #606266;
   font-size: 1.4rem;
 }
@@ -2017,10 +2017,10 @@ fieldset[disabled] .am-btn-link:focus {
 }
 /* button size */
 .am-btn-xs {
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 .am-btn-sm {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 .am-btn-lg {
   font-size: 1.6rem;
@@ -2620,7 +2620,7 @@ input[type="date"].am-form-field {
 .am-form input[type="date"].am-input-sm,
 input[type="datetime-local"].am-form-field.am-input-sm,
 input[type="date"].am-form-field.am-input-sm {
-  height: 28px;
+  height: 32px;
 }
 .am-form input[type="datetime-local"] .am-input-lg,
 .am-form input[type="date"] .am-input-lg,
@@ -2857,7 +2857,7 @@ fieldset[disabled] .am-checkbox-inline {
 }
 /* Form field size */
 .am-input-sm {
-  font-size: 1.2rem !important;
+  font-size: 1.4rem !important;
 }
 .am-input-lg {
   font-size: 1.6rem !important;
@@ -2866,7 +2866,7 @@ fieldset[disabled] .am-checkbox-inline {
 .am-form-group-sm .am-radio,
 .am-form-group-sm .am-form-label,
 .am-form-group-sm .am-form-field {
-  font-size: 1.2rem !important;
+  font-size: 1.4rem !important;
 }
 .am-form-group-lg .am-checkbox,
 .am-form-group-lg .am-radio,
@@ -4045,7 +4045,7 @@ fieldset[disabled] .am-checkbox-inline {
   display: inline-block;
   min-width: 10px;
   padding: 0.25em 0.625em;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: #fff;
   line-height: 1;
@@ -4423,10 +4423,10 @@ a.am-badge:focus {
   border-top-left-radius: 0;
 }
 .am-btn-group-xs > .am-btn {
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 .am-btn-group-sm > .am-btn {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 .am-btn-group-lg > .am-btn {
   font-size: 1.6rem;
@@ -6885,11 +6885,11 @@ a.am-close:hover {
 .am-input-group-sm > .am-form-field,
 .am-input-group-sm > .am-input-group-label,
 .am-input-group-sm > .am-input-group-btn > .am-btn {
-  height: 29px;
-  font-size: 1.2rem !important;
+  height: 33px;
+  font-size: 1.4rem !important;
 }
 .am-input-group-sm > .am-input-group-label {
-  line-height: 27px;
+  line-height: 31px;
 }
 .am-input-group-primary .am-input-group-label {
   background: #409EFF;
@@ -7294,7 +7294,7 @@ a.am-close:hover {
   float: left;
   width: 0;
   height: 100%;
-  font-size: 1rem;
+  font-size: 1.2rem;
   line-height: 2rem;
   color: #fff;
   text-align: center;
@@ -8273,10 +8273,10 @@ img.am-thumbnail,
 }
 */
 .am-text-xs {
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 .am-text-sm {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 .am-text-lg {
   font-size: 1.6rem;
@@ -8751,7 +8751,7 @@ ul.am-dropdown-content > .am-disabled > a:focus {
 .am-dropdown-header {
   display: block;
   padding: 6px 20px;
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #C0C4CC;
 }
 .am-fr > .am-dropdown-content {
@@ -9649,7 +9649,7 @@ TODO:
   margin-top: -4px;
 }
 .am-popover-sm {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 .am-popover-sm .am-popover-inner {
   padding: 5px;

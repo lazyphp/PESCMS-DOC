@@ -17,9 +17,8 @@ class ModelManage extends \Core\Model\Model {
 
     /**
      * 查找模型(动态条件)
-     * @param  $value 查询值
-     * @param string $condition 查询条件
-     * @return mixed
+     * @param type $value 查询值
+     * @param type $condition 查询条件
      */
     public static function findModel($value, $condition = 'model_id') {
         return self::db('model')->where("{$condition} = :$condition")->find([$condition => $value]);
@@ -38,10 +37,9 @@ class ModelManage extends \Core\Model\Model {
 
     /**
      * 依据模型 + 字段:模型_id 进行排序动作
-     * @param $model 模型名称
-     * @param $id 待排序的ID
-     * @param $sortValue 排序的值
-     * @return mixed
+     * @param type $model 模型名称
+     * @param type $id 待排序的ID
+     * @param type $sortValue 排序的值
      */
     public static function updateSortFromModel($model, $id, $sortValue) {
         $model = strtolower($model);

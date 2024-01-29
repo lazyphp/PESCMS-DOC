@@ -1,6 +1,6 @@
 <!--侧栏-->
 <aside class="sidebar">
-    <div class="search">
+    <div class="search am-margin-top-xs">
         <form class="" method="GET" action="<?= DOCUMENT_ROOT ?>/" role="search">
             <input type="hidden" name="g" value="Doc">
             <input type="hidden" name="m" value="Article">

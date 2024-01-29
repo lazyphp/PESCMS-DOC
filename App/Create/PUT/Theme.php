@@ -11,9 +11,9 @@ namespace App\Create\PUT;
 
 class Theme extends \Core\Controller\Controller {
 
-    public function call(){
+    public function call() {
         $template = $this->isP('template', '请提交您要切换的主题模板');
-        if(!is_dir(THEME."/Doc/{$template}")){
+        if (!is_dir(THEME . "/Doc/{$template}")) {
             $this->error('无法找到切换的主题模板，请再次提交');
         }
 
@@ -25,6 +25,33 @@ class Theme extends \Core\Controller\Controller {
         fclose($f);
 
         $this->success('切换主题模板成功！');
+
+    }
+
+    /**
+     * 更新主题首页布局设置
+     * @return void
+     */
+    public function setting() {
+        $check = \Model\Theme::checkIndexSetting();
+
+        $data['title'] = $this->p('title');
+        $data['subtitle'] = $this->p('subtitle');
+        $data['title_display'] = (int)$this->isP('title_display', '请提交您是否要显示主题标题');
+        $data['search'] = (int)$this->isP('search', '请提交您是否要显示全局搜索框');
+        $data['doc_type'] = (int)$this->isP('doc_type', '请提交您首页文档布局形式');
+
+        $f = fopen($check['settingFile'], 'w');
+        fwrite($f, json_encode($data, JSON_UNESCAPED_UNICODE));
+        fclose($f);
+
+        if (!empty($_POST['back_url'])) {
+            $url = base64_decode($_POST['back_url']);
+        } else {
+            $url = $this->url(GROUP . 'Theme-index');
+        }
+
+        $this->success('更新主题首页布局设置成功！', $url);
 
     }
 

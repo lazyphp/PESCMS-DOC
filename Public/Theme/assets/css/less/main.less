@@ -1,96 +1,429 @@
+@screenDefaultWidth: 1200px;
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 70px;
-}
-
-//导航栏
-.am-topbar {
-  box-shadow: 0 2px 4px 0 rgb(116 129 141 / 10%);
-  background: #fff;
-}
-
-//文档页的导航栏
-.pes-article-topbar {
-  h1 {
-    display: none !important;
-  }
-
-  @media only screen and (max-width: 640px) {
-    h1 {
-      display: block !important;
-    }
-
-  }
 }
 
 #wrapper {
   min-height: 88vh;
 }
 
-/*
-===================
-首页样式
-===================
-*/
-.pes-doc-index {
-  .am-gallery-item {
-    border: 1px solid #ebeef5;
-    transition: .3s;
-    box-shadow: none;
+//导航栏
+.topbar {
+
+  background-color: #0052CC;
+  width: 100%;
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+  -moz-box-flex: 0;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+  position: relative;
+
+  a {
+    color: #ffffff;
 
     &:hover {
-      opacity: 0.5;
-      transition: opacity 1s;
-      box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+      background-color: #0747A6;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+    }
+
+    &::after {
+      content: none !important;
+    }
+  }
+
+  .topbar-container {
+    height: 88px;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 70px;
+    padding-right: 70px;
+    max-width: @screenDefaultWidth;
+
+    .topbar-logo {
+      margin-bottom: 0.5rem;
+
+      a:hover {
+        background: none;
+      }
+    }
+
+    > ul {
+      display: flex;
+      list-style: none;
+
+      > li > a {
+        display: block;
+        height: 32px;
+        line-height: 32px;
+        padding-right: 40px;
+        padding-left: 10px;
+      }
+    }
+
+    .topbar-menu {
+      flex-grow: 1;
+
+      //鼠标移动到菜单上方，列出子菜单同时标记父类菜单颜色
+      .am-dropdown-hover {
+        &:hover {
+          > a {
+            background: #0747A6;
+          }
+
+          > .doc-layer, > .am-dropdown-layer {
+            display: block;
+          }
+        }
+
+        > .am-dropdown-layer {
+          width: auto;
+          padding: 10px 300px;
+
+          ul {
+
+            position: absolute;
+            top: 18px;
+            left: 0;
+            list-style: none;
+            min-width: 160px;
+            background: #fff;
+            border: 1px solid #cfd1c5;
+            border-radius: 5px;
+            padding: 0;
+
+            &::before, &::after {
+              position: absolute;
+              left: 10px;
+              top: -16px;
+              display: block;
+              content: "";
+              width: 0;
+              height: 0;
+              border: 8px dashed transparent;
+              z-index: 1;
+            }
+
+            &::before {
+              border-bottom-color: #d7dae2;
+            }
+
+            &::after {
+              border-bottom-color: #fff;
+            }
+
+
+            li {
+              position: relative;
+
+              &:hover {
+                > a {
+                  background: #f5f5f5;
+                }
+              }
+
+              > .am-dropdown-layer {
+                right: -51px;
+                top: -1px;
+                padding: 25px;
+
+                ul {
+                  position: absolute;
+                  left: 10px;
+                  top: 0;
+
+                  &::before, &::after {
+                    left: -16px;
+                    top: 8px;
+                    transform: rotate(270deg);
+                  }
+
+                }
+              }
+            }
+
+            > li > a {
+              display: block;
+              padding: 6px 20px;
+              clear: both;
+              font-weight: 400;
+              color: #606266;
+              white-space: nowrap;
+
+              &:hover {
+                color: #545559 !important;
+                background-color: #f5f5f5;
+              }
+
+            }
+          }
+        }
+
+      }
+
+      //对子菜单进行隐藏
+      .am-dropdown-layer, .doc-layer {
+        display: none;
+      }
+
+      //文档菜单进行位置布局
+      .doc-layer {
+        width: 100% !important; //覆写子菜单宽度问题
+        left: 0;
+        top: 50px;
+        padding-bottom: 38px !important;
+
+        ul {
+          border: none !important;
+          min-width: auto !important;
+          position: relative !important;
+
+          &::before, &::after {
+            content: none !important;
+          }
+        }
+      }
+
+      .topbar-submenu {
+        width: 100%;
+        min-height: 30vh;
+        background-color: #fff;
+        top: 38px;
+        border: none;
+        border-radius: 0;
+        margin: 0;
+
+        &::before, &::after {
+          content: none;
+        }
+
+        a {
+          color: #42526E;
+
+          &:hover {
+            color: #42526E !important;
+            text-decoration: none;
+            background-color: #F4F5F7;
+          }
+        }
+
+        ul {
+          list-style: none;
+          width: 1000px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          margin: 0 auto;
+
+          li {
+            width: 33%;
+            margin-bottom: 20px;
+
+            a {
+              display: block;
+              line-height: 32px;
+              padding-right: 40px;
+              padding-left: 10px;
+
+              img {
+                width: 40px;
+                height: 40px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  //右栏样式
+  .am-topbar-right {
+
+    a:hover, a:focus {
+      color: #fff !important;
+    }
+
+    .am-dropdown-content > li > a:hover {
+      color: #545559 !important;
+      background-color: #f5f5f5;
+    }
+
+    .am-topbar-btn {
+      margin-top: 0;
+    }
+
+    .am-btn-login {
+      background-color: transparent;
+      color: #fff !important;;
+      border: 1px solid #fff;
+
+      &:hover {
+        background-color: #4373FB;
+      }
+    }
+
+    .am-btn-signup {
+      color: #05f !important;
+
+      &:hover {
+        color: #05f !important;
+        background-color: #e5eeff;
+        border: 1px solid #e5eeff !important;
+      }
     }
 
   }
 
-  .doc-cover {
-    width: 200px;
-    height: 200px;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position-x: center;
-    background-position-y: center;
-  }
-}
 
-/*
-===================
-文章详细页的导航
-===================
-*/
-.pes-article-nav {
+  @media only screen and (max-width: 640px) {
+    .topbar-container {
+      max-width: none;
+      padding: 0 0.5rem;
+      justify-content: space-between;
 
-  .pes-article-nav-title {
-    font-weight: bold;
+      .topbar-logo {
+        font-size: 2rem;
+      }
 
-  }
+      .topbar-menu {
+        display: none;
+      }
 
-  > li + li:before {
-    content: "»\00a0";
-    padding: 0;
-    color: #666666;
-    font-size: 175%;
-    font-weight: normal !important;
-    vertical-align: -16%;
-  }
+      .am-topbar-right {
+        .am-nav {
+          li {
+            display: inline-block;
+          }
+        }
+      }
 
-  .am-dropdown-layer {
-    right: 0;
-    width: 75%;
-  }
-
-  > li > a {
-    display: inline-block;
-
-    &:hover::after {
-      border: none;
     }
   }
 
 }
+
+//文章导航栏
+.article-topbar {
+  height: 50px;
+  z-index: 1000;
+
+  .topbar-container {
+    position: fixed;
+    width: 100%;
+    background-color: #0052CC;
+    height: 50px;
+    padding-left: 5px;
+    max-width: none;
+
+    .topbar-menu {
+      margin-top: 1.6rem;
+      padding-left: 0px;
+
+      > li + li::before {
+        content: "» ";
+        color: rgb(204, 204, 204);
+        padding: 0px 8px;
+      }
+
+      > li > a {
+        display: inline-block;
+        padding: 0 10px;
+      }
+
+      .topbar-submenu {
+        top: 50px !important;
+
+        ul {
+          width: 100%;
+
+          li {
+            width: 25%;
+          }
+        }
+
+      }
+    }
+
+
+  }
+
+  @media only screen and (max-width: 640px) {
+    .topbar-container {
+      .topbar-menu {
+        font-size: 1.2rem;
+        display: flex;
+
+        li {
+          display: inline-block;
+          overflow: hidden;
+
+          &:first-child {
+            display: none;
+          }
+
+          &:nth-child(2) {
+            width: 12rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            &::before {
+              content: none;
+            }
+          }
+
+          .topbar-submenu {
+            max-height: 70vh;
+            overflow-y: auto;
+            border-bottom: 1px solid #c7c7c7;
+            padding: 1rem 0.5rem 0 0.5rem;
+
+            > ul {
+              padding: 0 1rem;
+
+              > li {
+                width: 100%;
+                padding: 1rem 0;
+                border-bottom: 1px solid #e9ecf2;
+                margin-bottom: 0;
+
+                &:last-child {
+                  border-bottom: none;
+                }
+
+                a {
+                  padding: 0rem 0.5rem;
+
+                  img {
+                    width: 4rem;
+                    height: 4rem;
+                  }
+                }
+              }
+            }
+
+          }
+        }
+
+
+      }
+
+      .am-topbar-right {
+        display: none;
+      }
+    }
+
+  }
+
+}
+
+
 
 
 /*
@@ -100,7 +433,7 @@ html {
 */
 .sidebar {
   position: fixed;
-  border-right: 1px solid rgba(0, 0, 0, .07);
+  //border-right: 1px solid rgba(0, 0, 0, .07);
   overflow-y: auto;
   padding: 0;
   top: 51px;
@@ -110,8 +443,6 @@ html {
   width: 300px;
   z-index: 3;
   background: #F5F7F9;
-  scrollbar-width: thin;
-  scrollbar-color: #56817A #eee;
 
   &::-webkit-scrollbar {
     width: 4px
@@ -142,6 +473,11 @@ html {
     border-color: #ccc;
     -webkit-box-shadow: none;
     box-shadow: none;
+    border-radius: 0;
+  }
+
+  .am-selected-btn {
+    border-radius: 0;
   }
 
   .search .search-article {
@@ -447,143 +783,13 @@ html {
 
 }
 
-/*
-===================
-账户登录、注册相关的样式
-===================
-*/
-.pes-login {
-  min-height: 100vh;
-  padding-bottom: 40px;
-  background: #fafafa;
-
-  .am-field-error, .am-form-error .am-form-field,
-  .am-field-valid, .am-form-success .am-form-field {
-    box-shadow: none !important;
-
-    :hover, :focus {
-      box-shadow: none !important;
-    }
-
-  }
-
-  .pes-login-layer {
-    width: 400px;
-    margin: auto;
-    padding-top: 96px;
-
-    .pes-login-panel {
-      background-color: #fff;
-      padding: 36px 8px 35px;
-      margin-bottom: 64px;
-      border: 1px solid #e9e9e9;
-      border-radius: 4px;
-
-      .pes-login-logo {
-        max-width: 320px;
-        margin: 0 auto;
-        text-align: center;
-        padding-bottom: 20px;
-
-        img {
-          width: 150px;
-          height: 150px;
-          border-radius: 4px;
-        }
-      }
-
-      .pes-login-desc {
-        text-align: center;
-        padding-bottom: 20px;
-
-        h2 {
-          font-size: 32px;
-          line-height: 1.2;
-          color: #262626;
-        }
-
-        p {
-          font-size: 18px;
-          color: #595959;
-        }
-      }
-
-      .am-form {
-        margin: 0 20px;
-
-        .pes-login-secret-key-container {
-          border: 1px dashed #E6A23C;
-          padding: 0 5px;
-          margin-bottom: 10px;
-
-          .pes-login-secret-key {
-            padding-left: 3px;
-            border-radius: 2px;
-            border-width: 1px;
-
-            &:hover, &:focus {
-              border-color: #d9d9d9;
-            }
-          }
-        }
 
 
-        input {
-          border-radius: 0px;
-          padding: 1rem 0;
-          border-width: 0 0 0 0;
-          border-bottom: 1px solid #d9d9d9;
-        }
 
-        input:hover, input:focus {
-          border-bottom-color: #47c479;
-          box-shadow: none;
-        }
-      }
-
-    }
-  }
-}
-
-/*
-===================
-搜索相关样式
-===================
-*/
-.pes-search-panel {
-
-  .pes-search-tool {
-    margin-bottom: 10px;
-
-    div {
-      background: #f5f5f5;
-      display: inline-block;
-      padding: 2px 20px;
-      width: 65px;
-    }
-
-  }
-
-  .am-g {
-    padding: 2rem 0;
-    border-bottom: 1px solid #efefef;
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    a > h2 {
-      color: #606266;
-    }
-
-  }
-
-  .pes-search-content {
-    color: #b3b3b3;
-  }
-}
-
+@import "index";
+@import "search";
 @import "status";
+@import "login";
 @import "footer";
 @import "api-table";
 

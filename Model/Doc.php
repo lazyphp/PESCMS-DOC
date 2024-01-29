@@ -21,7 +21,7 @@ class Doc extends \Core\Model\Model {
      */
     public static function findDocWithID(string $method = 'isG', array $msg = [
         '请提交要查看的文档ID',
-        '查看的文档不存在'
+        '查看的文档不存在',
     ]) {
         $id = self::$method('id', $msg[0], 'doc_id');
         $doc = \Model\Content::findContent(['doc', true], $id, 'doc_id')->emptyTips($msg[1]);
@@ -32,11 +32,11 @@ class Doc extends \Core\Model\Model {
      * 检查版本号是否存在
      * @return $version 存在的版本号
      */
-    public static function checkVersionExist(){
+    public static function checkVersionExist() {
         $id = self::isG('id', '请提交文档ID');
         $vid = self::isG('vid', '请提交版本ID');
         $version = \Model\Content::findContent('doc_version', $vid, 'version_id');
-        if(empty($version) || $id != $version['doc_id'] ){
+        if (empty($version) || $id != $version['doc_id']) {
             self::error('切换的目标版本不存在，请检查再提交');
         }
 
@@ -48,10 +48,10 @@ class Doc extends \Core\Model\Model {
      * @param $data 当前文档的的doc表数据结构
      * @return mixed
      */
-    public static function saveCurrentDocInDocVersionJsonField($data){
+    public static function saveCurrentDocInDocVersionJsonField($data) {
         return self::db('doc_version')->where('doc_id = :doc_id AND version_number = :current_version')->update([
-            'noset' =>[
-                'doc_id' => $data['doc_id'],
+            'noset'    => [
+                'doc_id'          => $data['doc_id'],
                 'current_version' => $data['doc_version'],
             ],
             'doc_json' => json_encode($data),
@@ -63,11 +63,11 @@ class Doc extends \Core\Model\Model {
      * @param array $doc
      * @return bool
      */
-    public static function checkReadAuth(array $doc){
+    public static function checkReadAuth(array $doc) {
         $moid = self::session()->get('doc')['member_organize_id'] ?? null;
-        if( !in_array($moid, explode(',', $doc['doc_read_organize'])) && $doc['doc_open'] == 1 ){
+        if (!in_array($moid, explode(',', $doc['doc_read_organize'])) && $doc['doc_open'] == 1) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
@@ -76,24 +76,25 @@ class Doc extends \Core\Model\Model {
      * 获取文档列表 | 带阅读权限判断的
      * @return array
      */
-    public static function getDocList(){
+    public static function getDocList() {
         static $doc = [];
 
-        if(empty($doc)){
+        if (empty($doc)) {
             $condition = '1 = 1 ';
             $param = [];
             if (empty(self::session()->get('doc')['member_id'])) {
                 $condition .= ' AND doc_open = 0';
             }
             $list = \Model\Content::listContent([
-                'table' => 'doc',
+                'table'     => 'doc',
                 'condition' => $condition,
-                'order' => 'doc_listsort ASC, doc_id DESC',
-                'param' => $param,
+                'order'     => 'doc_listsort ASC, doc_id DESC',
+                'param'     => $param,
             ]);
-            if(!empty($list)){
-                foreach ($list as $item){
-                    if(\Model\Doc::checkReadAuth($item) === false ){
+
+            if (!empty($list)) {
+                foreach ($list as $item) {
+                    if (\Model\Doc::checkReadAuth($item) === false) {
                         continue;
                     }
                     $doc[$item['doc_id']] = $item;
@@ -109,21 +110,21 @@ class Doc extends \Core\Model\Model {
      * @param $doc
      * @return array
      */
-    public static function getDocVersionList($doc){
+    public static function getDocVersionList($doc) {
         $result = \Model\Content::listContent([
-            'table' => 'doc_version',
+            'table'     => 'doc_version',
             'condition' => 'doc_id = :doc_id',
-            'order' => 'version_id DESC',
-            'param' => [
-                'doc_id' => $doc['doc_id']
-            ]
+            'order'     => 'version_id DESC',
+            'param'     => [
+                'doc_id' => $doc['doc_id'],
+            ],
         ]);
 
         $docArray = [];
-        if(!empty($result)){
-            foreach ($result as $item){
+        if (!empty($result)) {
+            foreach ($result as $item) {
                 $docArray[$item['version_number']] = $item;
-                if($item['version_number'] == $doc['doc_version']){
+                if ($item['version_number'] == $doc['doc_version']) {
                     $docArray[$item['version_number']]['default'] = 1;
                 }
             }

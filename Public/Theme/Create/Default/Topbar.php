@@ -1,6 +1,6 @@
 <header class="am-topbar">
     <h1 class="am-topbar-brand">
-        <a href="/"><?= $system['siteTitle'] ?></a>
+        <a href="javascript:;"><?= $system['siteTitle'] ?></a>
     </h1>
 
     <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
@@ -48,6 +48,9 @@
 
         <div class="am-topbar-right">
             <ul class="am-nav am-nav-pills am-topbar-nav">
+                <li>
+                    <a href="/" target="_blank"><i class="am-icon-home"></i> 文档首页</a>
+                </li>
                 <?php if ($label->checkAuth('Create-GET-Index-clean') === true): ?>
                     <li>
                         <a class="am-dropdown-toggle am-text-success ajax-click ajax-dialog" msg="确认需要清空缓存吗?"

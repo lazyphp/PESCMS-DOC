@@ -23,7 +23,7 @@ class Content extends \Core\Model\Model {
     private static $contentResult = null;
 
     /**
-     * 查找指定内容（动态条件）
+     * 查找指定内容 [单一查询条件]（动态条件）
      * @param type $param 设置参数，字符串形式则为表名 | array 数组情况下，key 0 的为表名, key 1的为连贯操作
      * @param type $value 内容值
      * @param type $field 查找的字段
@@ -36,7 +36,7 @@ class Content extends \Core\Model\Model {
             $table = $param;
         }
 
-        $result = self::db($table)->field($showField)->where("{$field} = :$field")->find(array ($field => $value));
+        $result = self::db($table)->field($showField)->where("{$field} = :$field")->find([$field => $value]);
         self::$contentResult = empty($result) ? null :  $result;
 
         return $param['1'] === true ? new static() : self::$contentResult;
@@ -55,19 +55,51 @@ class Content extends \Core\Model\Model {
 
     /**
      * 列出内容（动态条件）
-     * @param type $table 内容表名
-     * @param array $param 绑定参数
-     * @param type $where 查找条件
-     * @param type $order 排序
-     * @param type $limit 限制输出
-     * @return type
+     * @param $param 动态查询条件
+     * @param $setKey 是否设置返回指定键值的内容
+     * @return array
      */
-    public static function listContent($param) {
+    public static function listContent($param, $setKey = null) {
         if (empty($param['table'])) {
             self::error('Unkonw Table!');
         }
-        $value = array_merge(['field' => '*', 'db' => '', 'prefix' => '', 'join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'lock' => '', 'param' => array ()], $param);
-        return self::db($value['table'], $value['db'], $value['prefix'])->field($value['field'])->join($value['join'])->where($value['condition'])->order($value['order'])->group($value['group'])->limit($value['limit'])->lock($value['lock'])->select($value['param']);
+        $value = array_merge([
+            'field'     => '*',
+            'db'        => '',
+            'prefix'    => '',
+            'join'      => '',
+            'condition' => '',
+            'order'     => '',
+            'group'     => '',
+            'limit'     => '',
+            'lock'      => '',
+            'param'     => [],
+        ], $param);
+
+        $result = self::db($value['table'], $value['db'], $value['prefix'])
+            ->field($value['field'])
+            ->join($value['join'])
+            ->where($value['condition'])
+            ->order($value['order'])
+            ->group($value['group'])
+            ->limit($value['limit'])
+            ->lock($value['lock'])
+            ->select($value['param']);
+
+        if (!empty($setKey)) {
+            $list = [];
+            foreach ($result as $item) {
+                //如果setkey不存在，则结束循环
+                if (empty($item[$setKey])) {
+                    $list = $result;
+                    break;
+                }
+                $list[$item[$setKey]] = $item;
+            }
+            return $list;
+        } else {
+            return $result;
+        }
     }
 
     /**
@@ -109,7 +141,7 @@ class Content extends \Core\Model\Model {
         self::$table = strtolower($modelName);
         self::$fieldPrefix = self::$table . "_";
         self::$model = \Model\ModelManage::findModel(self::$table, 'model_name');
-        $field = \Model\Field::fieldList(self::$model['model_id'], array ('field_status' => '1'));
+        $field = \Model\Field::fieldList(self::$model['model_id'], 'AND field_status = 1');
 
         if (self::p('method') == 'PUT') {
             $data['noset'][self::$fieldPrefix . 'id'] = self::isP('id', '丢失模型ID');
@@ -174,7 +206,7 @@ class Content extends \Core\Model\Model {
 
             $checkCondition = '1 = 1';
             $param = [
-                "{$checkField}" => $value
+                "{$checkField}" => $value,
             ];
 
             if(METHOD == 'PUT'){
@@ -196,7 +228,7 @@ class Content extends \Core\Model\Model {
      * @param type $cid 分类ID
      */
     public static function listCategoryContent($table, $cid) {
-        return self::db($table)->where("{$table}_catid = :cid")->select(array ('cid' => $cid));
+        return self::db($table)->where("{$table}_catid = :cid")->select(['cid' => $cid]);
     }
 
     /**
@@ -204,10 +236,10 @@ class Content extends \Core\Model\Model {
      * @param type $id 需要更新的ID
      */
     private static function setUrl($id) {
-        $existUrl = self::db()->fetch('SHOW columns FROM ' . self::$modelPrefix . self::$table . ' WHERE Field = :field;', array ('field' => self::$fieldPrefix . 'url'));
+        $existUrl = self::db()->fetch('SHOW columns FROM ' . self::$modelPrefix . self::$table . ' WHERE Field = :field;', ['field' => self::$fieldPrefix . 'url']);
         if (!empty($existUrl)) {
-            $url = self::url(MODULE . '-view', array ('id' => $id));
-            return self::db(self::$table)->where(self::$fieldPrefix . 'id = :id')->update(array (self::$fieldPrefix . 'url' => $url, 'noset' => array ('id' => $id)));
+            $url = self::url(MODULE . '-view', ['id' => $id]);
+            return self::db(self::$table)->where(self::$fieldPrefix . 'id = :id')->update([self::$fieldPrefix . 'url' => $url, 'noset' => ['id' => $id]]);
         }
     }
 
@@ -229,8 +261,8 @@ class Content extends \Core\Model\Model {
      *
      * @return array 结果返回：处理好的 列表二维数组和 一个分类超链接 还有分页的对象
      */
-    public static function quickListContent(array $sql = array ('count' => '', 'normal' => '', 'param' => array ())) {
-        $sql = array_merge(['param' => array (), 'page' => '10', 'style' => [], 'LANG' => []], $sql);
+    public static function quickListContent(array $sql = ['count' => '', 'normal' => '', 'param' => []]) {
+        $sql = array_merge(['param' => [], 'page' => '10', 'style' => [], 'LANG' => []], $sql);
         $page = new \Expand\Page();
         $page->style = $sql['style'];
         $page->LANG = $sql['LANG'];
@@ -240,7 +272,7 @@ class Content extends \Core\Model\Model {
         $page->total($total);
         $page->handle();
         $list = self::db()->getAll("{$sql['normal']} LIMIT {$page->firstRow}, {$page->listRows}", $sql['param']);
-        return array ('list' => $list, 'page' => $page->show(), 'pageObj' => $page);
+        return ['list' => $list, 'page' => $page->show(), 'pageObj' => $page];
     }
 
     /**
@@ -271,4 +303,37 @@ class Content extends \Core\Model\Model {
         }
     }
 
+    /**
+     * 检查重复[单一筛选条件]
+     * @param $table 查询的表
+     * @param $field 查询的字段
+     * @param $value 匹配的内容
+     * @return bool 存在重复返回true 。反之false
+     */
+    public static function checkRepeat($table, $field, $value) {
+        $checkRepeat = self::db($table)->where("$field = :$field")->find([
+            $field => $value,
+        ]);
+        if (!empty($checkRepeat)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    /**
+     * 通过多个等于匹配的条件查找指定表一条内容
+     * @param string $table 要查找的表
+     * @param array $params 查找内容的字段和筛选值
+     * @return array|void 返回查询结果
+     */
+    public static function getContentWithConditions(string $table, array $params) {
+        $field = '1 = 1 ';
+        if (empty($params)) {
+            die('请不要提交空白参数');
+        }
+        foreach (array_keys($params) as $item) {
+            $field .= " AND {$item} = :{$item}";
+        }
+        return self::db($table)->where($field)->find($params);
+    }
 }

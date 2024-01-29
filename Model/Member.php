@@ -17,7 +17,7 @@ class Member extends \Core\Model\Model {
      * @return array
      */
     public static function getModelField(){
-        $result = \Model\Field::fieldList('20', ['field_status' => 1]);
+        $result = \Model\Field::fieldList('20', 'AND field_status = 1');
         $field = [];
         foreach ($result as $item){
             switch ($item['field_name']){

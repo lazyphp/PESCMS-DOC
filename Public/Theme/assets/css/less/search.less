@@ -1,0 +1,54 @@
+/*
+===================
+搜索相关样式
+===================
+*/
+.pes-doc-search {
+  .search-form {
+    position: relative;
+    display: block;
+    input {
+      &:extend(.home-page form input);
+      &:focus {
+        &:extend(.home-page form input:focus);
+      }
+    }
+
+    .am-btn {
+      &:extend(.home-page form .am-btn);
+    }
+  }
+
+  .pes-search-panel {
+
+    .pes-search-tool {
+      margin-bottom: 10px;
+
+      div {
+        background: #f5f5f5;
+        display: inline-block;
+        padding: 2px 20px;
+        width: 65px;
+      }
+
+    }
+
+    .am-g {
+      padding: 2rem 0;
+      border-bottom: 1px solid #efefef;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      a > h2 {
+        color: #606266;
+      }
+
+    }
+
+    .pes-search-content {
+      color: #b3b3b3;
+    }
+  }
+}

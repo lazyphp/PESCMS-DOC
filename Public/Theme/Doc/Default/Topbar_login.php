@@ -1,8 +1,8 @@
 <div class="am-topbar-right">
     <?php if (empty(self::session()->get('doc'))): ?>
-        <a href="<?= $label->url('Doc-Login-index') ?>" class="am-btn am-btn-default am-topbar-btn am-btn-sm">登录</a>
+        <a href="<?= $label->url('Doc-Login-index') ?>" class="am-btn am-btn-default am-topbar-btn  am-btn-login">登录</a>
         <?php if($system['open_register'] == 1): ?>
-        <a href="<?= $label->url('Doc-Login-signup') ?>" class="am-btn am-btn-success am-topbar-btn am-btn-sm am-text-white">注册账号</a>
+        <a href="<?= $label->url('Doc-Login-signup') ?>" class="am-btn am-btn-default am-topbar-btn  am-btn-signup am-margin-left">注册账号</a>
         <?php endif; ?>
     <?php else: ?>
         <ul class="am-nav am-nav-pills am-topbar-nav">
@@ -11,7 +11,7 @@
                     <a href="<?= $label->url('Create-Doc-index') ?>"><i class="am-icon-pencil-square-o am-success"></i> 创作空间</a>
                 </li>
             <?php endif; ?>
-            <li class="am-dropdown am-dropdown-flip">
+            <li class="am-dropdown am-dropdown-hover am-dropdown-flip">
                 <a class="am-dropdown-toggle" href="javascript:;">
                     <i class="am-icon-btn am-icon-btn-sm am-icon-user"></i>
                     <span class="am-icon-caret-down am-margin-left-xs"></span>

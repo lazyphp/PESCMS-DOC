@@ -1,0 +1,111 @@
+/*
+===================
+账户登录、注册相关的样式
+===================
+*/
+.pes-login {
+  min-height: 94vh;
+  padding-bottom: 40px;
+  background: #fafafa;
+
+  .am-field-error, .am-form-error .am-form-field,
+  .am-field-valid, .am-form-success .am-form-field {
+    box-shadow: none !important;
+
+    :hover, :focus {
+      box-shadow: none !important;
+    }
+
+  }
+
+  .pes-login-layer {
+    width: 400px;
+    margin: auto;
+    padding-top: 96px;
+
+    .pes-login-panel {
+      background-color: #fff;
+      padding: 36px 8px 35px;
+      margin-bottom: 64px;
+      border: 1px solid #e9e9e9;
+      border-radius: 4px;
+
+      .pes-login-logo {
+        max-width: 320px;
+        margin: 0 auto;
+        text-align: center;
+        padding-bottom: 20px;
+
+        img {
+          width: 150px;
+          height: 150px;
+          border-radius: 4px;
+        }
+      }
+
+      .pes-login-desc {
+        text-align: center;
+        padding-bottom: 20px;
+
+        h2 {
+          font-size: 32px;
+          line-height: 1.2;
+          color: #262626;
+        }
+
+        p {
+          font-size: 18px;
+          color: #595959;
+        }
+      }
+
+      .am-form {
+        margin: 0 20px;
+
+        .pes-login-secret-key-container {
+          border: 1px dashed #E6A23C;
+          padding: 0 5px;
+          margin-bottom: 10px;
+
+          .pes-login-secret-key {
+            padding-left: 3px;
+            border-radius: 2px;
+            border-width: 1px;
+
+            &:hover, &:focus {
+              border-color: #d9d9d9;
+            }
+          }
+        }
+
+
+        input {
+          border-radius: 0px;
+          padding: 1rem 0;
+          border-width: 0 0 0 0;
+          border-bottom: 1px solid #d9d9d9;
+        }
+
+        input:hover, input:focus {
+          border-bottom-color: #47c479;
+          box-shadow: none;
+        }
+      }
+
+    }
+  }
+
+  @media only screen and (max-width: 640px) {
+    min-height: auto;
+    .pes-login-layer {
+      padding-top: 0;
+      width: 100%;
+      .pes-login-panel {
+        border: none;
+        border-radius: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+}

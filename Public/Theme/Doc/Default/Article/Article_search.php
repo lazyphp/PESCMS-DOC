@@ -1,33 +1,36 @@
 <div class="am-container am-margin-top">
-    <div class="am-u-sm-12 am-u-lg-centered pes-doc-index">
-        <form>
-            <div class="am-g am-margin-bottom-lg am-g-collapse">
+    <div class="am-u-sm-12 am-u-lg-centered pes-doc-search">
+        <div class="am-g am-margin-bottom-lg am-g-collapse">
+            <?php if (MODULE == 'Article'): ?>
                 <div class="am-u-lg-12">
-                    <h1><?= $doc['doc_title'] ?></h1>
+                    <h1><?= $title ?></h1>
                     <hr/>
                 </div>
-                <div class="am-u-lg-12 am-u-sm-centered">
+            <?php endif; ?>
+            <form data-am-validator>
+                <div class="am-u-lg-12">
 
                     <input type="hidden" name="g" value="Doc">
-                    <input type="hidden" name="m" value="Article">
-                    <input type="hidden" name="a" value="search">
-                    <input type="hidden" name="id" value="<?= $label->xss((int) $_GET['id']); ?>">
+                    <input type="hidden" name="m" value="<?= MODULE ?>">
+                    <input type="hidden" name="a" value="<?= ACTION ?>">
+                    <?php if (MODULE == 'Article'): ?>
+                        <input type="hidden" name="id" value="<?= (int)($_GET['id'] ?? null) ?>">
+                    <?php endif; ?>
 
-                    <div class="am-input-group">
-                        <input type="text" name="keyword" class="am-form-field" value="<?= $label->xss($keyword) ?>">
-                        <span class="am-input-group-btn">
-                        <button class="am-btn am-btn-default" type="button"><span class="am-icon-search"></span> </button>
-                    </span>
+                    <div class="search-form">
+                        <input type="text" name="keyword" class="am-form-field" value="<?= $label->xss($keyword ?? '') ?>" required>
+                        <button class="am-btn am-btn-default" type="submit"><span class="am-icon-search"></span> 搜索
+                        </button>
                     </div>
                 </div>
-            </div>
+        </div>
         </form>
 
         <div class="am-panel am-panel-default pes-search-panel">
             <?php if (empty($list)): ?>
                 <div class="am-g">
                     <div class="am-u-sm-12 am-text-center">
-                        没有找到与' <?= $label->xss($keyword) ?> '匹配的结果，请更换其他关键词再试。
+                        没有找到与' <?= $label->xss($keyword ?? '') ?> '匹配的结果，请更换其他关键词再试。
                     </div>
                 </div>
             <?php else: ?>
@@ -50,13 +53,17 @@
                         </div>
                         <div class="am-u-lg-10">
                             <a href="<?= $label->url('Doc-Article-index', ['id' => $value['article_doc_id'], 'aid' => $value['article_mark']]) ?>" target="_blank">
-                                <h2><?= $value['article_title'] ?></h2>
+                                <h2 class="am-margin-bottom-sm"><?= $value['article_title'] ?></h2>
 
                                 <div class="pes-search-content"><?= $label->strCut(strip_tags($value['article_content']), 300) ?></div>
                             </a>
 
 
                             <div class="am-margin-top am-text-xs">
+                                <?php if (MODULE != 'Article'): ?>
+                                    <i class="am-icon-book"></i> 「<?= $value['doc_title'] ?>」/
+                                <?php endif; ?>
+
                                 <i class="am-icon-calendar"></i> 创建于 <?= date('Y-m-d', $value['article_time']) ?>
                                 <?php if ($value['article_update_time'] > 0): ?>
                                     /
@@ -70,6 +77,15 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
+
+                <div class="am-g">
+                    <div class="am-u-sm-12">
+                        <ul class="am-pagination am-pagination-left am-margin-0">
+                            <?= $page ?? ''; ?>
+                        </ul>
+                    </div>
+                </div>
+
             <?php endif; ?>
         </div>
     </div>

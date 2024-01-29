@@ -37,5 +37,17 @@
             </li>
 
         </ul>
+
+        <div class="am-topbar-right">
+            <ul class="am-nav am-nav-pills am-topbar-nav">
+                <li>
+                    <a href="/" target="_blank"><i class="am-icon-home"></i> 文档首页</a>
+                </li>
+                <li>
+                    <a href="<?= $label->url('Doc-Article-index', ['id' => $doc['doc_id']]) ?>" target="_blank"><i class="am-icon-folder-open-o"></i> 查看本文档</a>
+                </li>
+            </ul>
+        </div>
+
     </div>
 </header>

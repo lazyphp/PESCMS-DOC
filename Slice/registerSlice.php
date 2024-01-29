@@ -77,6 +77,13 @@ $SLICE_ARRYR = [
         ['\Create\HandleForm\HandleRoute', '\Create\UpdateRoute']
     ],
 
+    //注册理路由规则 添加/编辑 提交的表单内容
+    'UPDATE-DOC-ATTR' => [
+        'any',
+        ['Create-Attr-:a'],
+        ['\Create\UpdateDocAttr']
+    ],
+
     //处理文档基础信息 添加/编辑 提交的表单内容
     'CREATE-DOC-ACTION' => [
         'any',
