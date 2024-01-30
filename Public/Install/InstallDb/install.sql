@@ -231,6 +231,7 @@ CREATE TABLE `pes_doc` (
   `doc_open_nav` int(11) NOT NULL COMMENT '是否展开标题导读',
   `doc_open_sidebar` int(11) NOT NULL,
   `doc_copyright` text NOT NULL,
+  `doc_attr` varchar(255) NOT NULL,
   PRIMARY KEY (`doc_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -589,4 +590,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-28 17:53:54
+-- Dump completed on 2024-01-30 22:48:37
