@@ -27,6 +27,9 @@ class Article extends \Core\Slice\Slice{
                 'doc_id' => $this->g('id')
             ]);
         }else{
+            if(empty(\Core\Func\CoreFunc::$param['article_id'])){
+                return true;
+            }
             $article = \Core\Func\CoreFunc::$param['article_id'];
             $this->db()->query("UPDATE {$this->prefix}article SET article_view = article_view + 1 WHERE article_id = :article_id ", [
                 'article_id' => $article

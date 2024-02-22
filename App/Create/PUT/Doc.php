@@ -13,7 +13,7 @@ class Doc extends Content {
 
     public function __init() {
         parent::__init();
-        if(ACTION != 'action'){
+        if(!in_array(ACTION, ['action','listsort'])){
             $this->checkToken();
         }
 

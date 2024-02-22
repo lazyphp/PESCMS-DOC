@@ -192,8 +192,7 @@
                 var parent = $(this).parent();
                 if(parent[0].tagName != 'a'){
                     var imgStr = '<a href="'+dom.attr('src')+'" data-fancybox="gallery" class="am-inline-block"><img src="'+dom.attr('src')+'" class="am-img-responsive" /></a>';
-                    parent.append(imgStr)
-                    dom.remove();
+                    $(this).prop('outerHTML', imgStr)
                 }
             })
 

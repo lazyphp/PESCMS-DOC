@@ -72,13 +72,22 @@ class Index extends \Core\Controller\Controller {
      */
     public function search() {
         $keyword = $this->isG('keyword', '请提交您要搜索的内容');
-
+        $param = [
+            'article_title'      => "%{$keyword}%",
+            'article_content'    => "%{$keyword}%",
+            'article_content_md' => "%{$keyword}%",
+        ];
+        
         $member = $this->session()->get('doc');
         $condition = "";
         if (empty($member)) {
             $condition .= "AND d.doc_open = 0";
         } else {
-            $condition .= " AND (d.doc_read_organize = '' OR d.doc_read_organize IN ({$member['member_organize_id']}))";
+            $condition .= " AND (
+            d.doc_read_organize = '' OR 
+            ( concat(',', concat(d.doc_read_organize, ',')) LIKE :member_organize_id  )
+            )";
+            $param['member_organize_id'] = "%,{$member['member_organize_id']},%";
         }
 
 
@@ -89,11 +98,6 @@ class Index extends \Core\Controller\Controller {
                 ORDER BY a.article_update_time DESC, a.article_time DESC
 
                 ";
-        $param = [
-            'article_title'      => "%{$keyword}%",
-            'article_content'    => "%{$keyword}%",
-            'article_content_md' => "%{$keyword}%",
-        ];
 
         $res = \Model\Content::quickListContent([
             'count'  => sprintf($sql, 'count(*)'),
