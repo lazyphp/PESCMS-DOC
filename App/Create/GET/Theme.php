@@ -72,9 +72,10 @@ class Theme extends \Core\Controller\Controller {
         $check = \Model\Theme::checkIndexSetting();
         $title = $this->g('title') ?: $check['theme'];
 
-        self::assign('setting', $check['setting']);
+        $this->assign('setting', $check['setting']);
+        $this->assign('indexField', $check['indexField']);
         $this->assign('title', "「{$title}」主题首页布局");
-
+        $this->assign('form', new \Expand\Form\Form());
         $this->layout();
     }
 
