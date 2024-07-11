@@ -50,6 +50,12 @@
                                             </li>
                                         <?php endif; ?>
 
+                                        <?php if ($label->checkAuth('Create-POST-Article-copy') === true): ?>
+                                            <li>
+                                                <a class="ajax-click ajax-dialog" msg="复制《<?= $value['doc_title'] ?>》文档，只会复制当前启用的版本。历史信息不会被复制。" data="<?= $label->url('Create-Article-copy', ['id' => $value['doc_id'], 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" ><i class="am-icon-copy"></i> 复制文档</a>
+                                            </li>
+                                        <?php endif; ?>
+
                                         <?php if ($label->checkAuth('Create-DELETE-Doc-action') === true): ?>
                                             <li>
                                                 <a class="am-text-danger ajax-click ajax-dialog" msg="确定删除吗？将无法恢复的！"
