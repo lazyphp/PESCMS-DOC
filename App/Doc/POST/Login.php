@@ -11,13 +11,21 @@ namespace App\Doc\POST;
 
 class Login extends \Core\Controller\Controller {
 
-    private $system;
+    private $system, $failLogin;
 
     public function __init() {
         parent::__init();
         $this->system = \Core\Func\CoreFunc::$param['system'];
         $this->checkToken();
-        $this->checkVerify();
+        if ($this->system['open_verify'] == 1) {
+            $this->checkVerify();
+        }
+
+        $this->failLogin = $this->getLoginFailRecord();
+        if ($this->failLogin['fail_num'] > $this->system['login_fail']) {
+            $this->error('您当前登录失败次数过多，请稍后再试。');
+        }
+
     }
 
     /**
@@ -33,6 +41,7 @@ class Login extends \Core\Controller\Controller {
 
         $member = $this->db('member')->where("{$condition} AND member_password = :member_password")->find($param);
         if (empty($member)) {
+            $this->recordFail();
             $this->error('账号不存在或者密码错误');
         }
 
@@ -139,6 +148,7 @@ class Login extends \Core\Controller\Controller {
         $loginUrl = $this->url('Doc-Login-index');
 
         if (empty($checkMark)) {
+            $this->recordFail();
             $this->error('MARK不正确或者不存在', $loginUrl);
         }
 
@@ -158,6 +168,43 @@ class Login extends \Core\Controller\Controller {
         ]);
 
         $this->success('密码修改成功!', $loginUrl);
+    }
+
+    /**
+     * 记录登录失败信息
+     * @return void
+     */
+    private function recordFail() {
+        //删除过去7天的记录
+        $this->db('login_fail')->where('fail_time < :fail_time')->delete([
+            'fail_time' => time() - 86400 * 7,
+        ]);
+
+        if (empty($this->failLogin)) {
+            $this->db('login_fail')->insert([
+                'fail_ip'   => $_SERVER['REMOTE_ADDR'],
+                'fail_num'  => 1,
+                'fail_time' => time(),
+            ]);
+        } else {
+            $this->db('login_fail')->where('fail_id = :fail_id')->update([
+                'noset'    => [
+                    'fail_id' => $this->failLogin['fail_id'],
+                ],
+                'fail_num' => $this->failLogin['fail_num'] + 1,
+            ]);
+        }
+    }
+
+    /**
+     * 获取当前登录失败次数记录
+     * @return array
+     */
+    private function getLoginFailRecord() {
+        return $this->db('login_fail')->where('fail_ip = :fail_ip AND fail_time >= :fail_time')->find([
+            'fail_ip'   => $_SERVER['REMOTE_ADDR'],
+            'fail_time' => time() - 3600,
+        ]);
     }
 
     /**
