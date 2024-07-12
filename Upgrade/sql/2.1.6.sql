@@ -16,3 +16,26 @@ CREATE TABLE IF NOT EXISTS `pes_login_fail` (
   `fail_time` int(11) NOT NULL COMMENT '记录时间',
   PRIMARY KEY (`fail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+UPDATE `pes_node` SET `node_parent` = '95', `node_listsort` = '10000' WHERE `pes_node`.`node_id` = 83;
+
+CREATE TABLE IF NOT EXISTS `pes_help_document` (
+  `help_document_id` int(11) NOT NULL AUTO_INCREMENT,
+  `help_document_controller` varchar(64) NOT NULL COMMENT '控制器',
+  `help_document_link` varchar(255) NOT NULL COMMENT '文档链接地址',
+  PRIMARY KEY (`help_document_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统帮助文档';
+
+--
+-- 转存表中的数据 `pes_help_document`
+--
+
+INSERT INTO `pes_help_document` (`help_document_id`, `help_document_controller`, `help_document_link`) VALUES
+(1, 'Create-Doc-index', 'https://document.pescms.com/article/4/264671296137199616.html'),
+(2, 'Create-Article-index', 'https://document.pescms.com/article/4/266408513767473152.html'),
+(3, 'Create-Attr-index', 'https://document.pescms.com/article/4/652329018963525632.html'),
+(4, 'Create-Article_template-index', 'https://document.pescms.com/article/4/275796556668469248.html'),
+(5, 'Create-Setting-index', 'https://document.pescms.com/article/4/267830579758628864.html'),
+(6, 'Create-Node-index', 'https://document.pescms.com/article/4/267887125200896000.html'),
+(7, 'Create-Menu-index', 'https://document.pescms.com/article/4/268204031128633344.html'),
+(8, 'Create-Route-index', 'https://document.pescms.com/article/4/268206800245882880.html');
