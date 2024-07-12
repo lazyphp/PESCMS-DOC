@@ -25,6 +25,9 @@ class Article extends \Core\Controller\Controller {
         $this->assign('path', $path);
         $this->assign('doc', $doc);
 
+        $fielExt = implode(', ', json_decode(\Model\Content::findContent('option', 'upload_file', 'option_name')['value'], true));
+
+        $this->assign('fielExt', $fielExt);
         $this->assign('docVersion', \Model\Doc::getDocVersionList($doc));
         $this->assign('title', "编写《{$doc['doc_title']}》文档");
         $this->layout('Article_index', 'Article_index_layout');

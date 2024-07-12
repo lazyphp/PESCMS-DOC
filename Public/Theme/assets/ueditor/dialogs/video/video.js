@@ -269,14 +269,11 @@
         if ( !url )return;
 
         var conUrl = convert_url(url);
-
-        $G("preview").innerHTML = '<div class="previewMsg"><span>'+lang.urlError+'</span></div>'+
-        '<embed class="previewVideo" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
-            ' src="' + conUrl + '"' +
-            ' width="' + 420  + '"' +
-            ' height="' + 280  + '"' +
-            ' wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true" >' +
-        '</embed>';
+        $G("preview").innerHTML = ''+
+            '<video controls width="420" height="280">' +
+            '<source src="'+conUrl+'" type="video/mp4">' +
+            '</video>' +
+            '';
     }
 
 
@@ -394,6 +391,10 @@
                 fileVal: editor.getOpt('videoFieldName'),
                 duplicate: true,
                 fileSingleSizeLimit: fileMaxSize,
+                accept:{
+                    title: 'Video',
+                    mimeTypes: '.mp4,.webm, .ogg'
+                },
                 compress: false
             });
             uploader.addButton({

@@ -38,7 +38,7 @@
             'indent', 'lineheight', '|',
             'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
             'link', 'unlink', '|',
-            'simpleupload', 'insertimage', 'attachment',
+            'simpleupload', 'insertimage', 'attachment', 'insertvideo',
             'horizontal', 'inserttable', 'drafts'
         ]]
                 //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
