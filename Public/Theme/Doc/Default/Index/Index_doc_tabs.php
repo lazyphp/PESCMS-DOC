@@ -20,8 +20,9 @@
                                     <li>
                                         <a href="<?= $label->url('Doc-Article-index', ['id' => $value['doc_id']]) ?>">
                                             <img src="<?= $value['doc_cover'] ?>">
+
+                                            <?= $value['doc_title'] ?>
                                         </a>
-                                        <a href="<?= $label->url('Doc-Article-index', ['id' => $value['doc_id']]) ?>"><?= $value['doc_title'] ?></a>
                                     </li>
                                 <?php endforeach; ?>
                             <?php endif; ?>

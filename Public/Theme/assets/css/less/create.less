@@ -39,7 +39,7 @@ html, body {
     background: #82c0ff;
   }
 
-  .pes-left-sidebar-tool{
+  .pes-left-sidebar-tool {
     width: 245px;
     height: 100px;
     position: fixed;
@@ -51,7 +51,7 @@ html, body {
       top: 0;
     }
 
-    &:after{
+    &:after {
       background-color: #f5f7f9;
       border-bottom: 1px solid #eee;
       content: " ";
@@ -61,22 +61,22 @@ html, body {
       padding-top: 15px;
     }
 
-    #pes-article-search-dialog{
-      .pes-article-search-group{
+    #pes-article-search-dialog {
+      .pes-article-search-group {
         position: relative;
 
-        input:focus+i{
+        input:focus + i {
           display: none;
         }
 
-        i{
+        i {
           position: absolute;
           top: 3px;
           right: 5px;
         }
       }
 
-      .am-dropdown-content{
+      .am-dropdown-content {
         left: 10px;
         max-height: 400px;
         overflow-y: auto;
@@ -330,11 +330,12 @@ html, body {
     min-height: 400px;
   }
 
-  .pes-article-path-select+.am-selected-content{
-    .am-selected-list{
+  .pes-article-path-select + .am-selected-content {
+    .am-selected-list {
       overflow-y: auto !important;
       font-size: 1.4rem;
-      .am-checked{
+
+      .am-checked {
         color: #fff;
         background: #84e753;
       }
@@ -344,19 +345,21 @@ html, body {
   /**
    * API相关样式设置
    */
+
   .pes-api-article {
     padding: 10px;
     border: 1px dashed #cfcfcf;
     background: #fff;
-    input, select, textarea, .am-input-group-btn, .am-btn, .am-alert, pre, code{
+
+    input, select, textarea, .am-input-group-btn, .am-btn, .am-alert, pre, code {
       border-radius: 0 !important;
     }
 
-    select[name="raw-type"]{
+    select[name="raw-type"] {
       margin-bottom: -1px;
     }
 
-    textarea{
+    textarea {
       font-weight: normal !important;
     }
 
@@ -365,14 +368,17 @@ html, body {
       vertical-align: middle;
       width: 10%;
       white-space: nowrap;
-      select{
+
+      select {
         height: 33px;
         margin-right: -1px !important;
         background-color: #fafafa;
-        &:focus, &:active{
+
+        &:focus, &:active {
           background-color: #fff;
         }
-        &:hover{
+
+        &:hover {
           background-color: #e9e9e9;
         }
       }
@@ -389,11 +395,13 @@ html, body {
         cursor: pointer;
         padding: 5px;
         color: #a9a9a9;
-        &.am-active, &.am-active:hover{
+
+        &.am-active, &.am-active:hover {
           color: #464646;
           border-bottom: 3px solid #f47023;
         }
-        &:hover{
+
+        &:hover {
           color: #808080;
         }
       }
@@ -401,11 +409,11 @@ html, body {
 
     }
 
-    .api-param-remove{
+    .api-param-remove {
       width: 26px;
     }
 
-    .api-pre{
+    .api-pre {
       border: 1px solid #606060;
       position: fixed;
       z-index: 99999;
@@ -415,13 +423,13 @@ html, body {
       width: 800px;
       cursor: move;
 
-      .api-pre-title{
-         padding: 5px;
-         border-bottom: 1px solid #606060;
-         background-color: #fafafa;
+      .api-pre-title {
+        padding: 5px;
+        border-bottom: 1px solid #606060;
+        background-color: #fafafa;
       }
 
-      .api-pre-content{
+      .api-pre-content {
         max-height: 400px;
         overflow-y: auto;
         padding: 10px;
@@ -433,12 +441,31 @@ html, body {
 
 }
 
-
-//文档标题栏
-.pes-doc-title-column{
+.pes-doc-table {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+
+  li {
+    display: flex;
+
+    .am-panel {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: space-between;
+      >div, >.am-panel-footer{
+        width: 100%;
+      }
+      //文档标题栏
+      .pes-doc-title-column {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+
 }
+
 
 //文档封面
 .pes-doc-cover {
