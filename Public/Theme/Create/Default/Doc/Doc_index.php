@@ -4,7 +4,7 @@
 <form class="ajax-submit" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">
     <input type="hidden" name="method" value="PUT"/>
     <?= $label->token() ?>
-    <ul class="am-avg-sm-1 am-avg-lg-5 am-thumbnails">
+    <ul class="am-avg-sm-1 am-avg-lg-5 am-thumbnails pes-doc-table">
         <?php foreach ($list as $key => $value): ?>
             <li>
                 <div class="am-panel am-panel-default ">
@@ -40,13 +40,22 @@
                                     <ul class="am-dropdown-content">
                                         <?php if ($label->checkAuth('Create-GET-Doc-action') === true): ?>
                                             <li>
-                                                <a href="<?= $label->url('Create-Doc-action', ['id' => $value['doc_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" ><i class="am-icon-cogs"></i> 基础信息设置</a>
+                                                <a href="<?= $label->url('Create-Doc-action', ['id' => $value['doc_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><i class="am-icon-cogs"></i>
+                                                    基础信息设置</a>
                                             </li>
                                         <?php endif; ?>
 
                                         <?php if ($label->checkAuth('Create-GET-Article-index') === true): ?>
                                             <li>
-                                                <a href="<?= $label->url('Create-Article-index', ['id' => $value['doc_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" ><i class="am-icon-pencil"></i> 开始编辑文档</a>
+                                                <a href="<?= $label->url('Create-Article-index', ['id' => $value['doc_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><i class="am-icon-pencil"></i>
+                                                    开始编辑文档</a>
+                                            </li>
+                                        <?php endif; ?>
+
+                                        <?php if ($label->checkAuth('Create-POST-Article-copy') === true): ?>
+                                            <li>
+                                                <a class="ajax-click ajax-dialog" msg="复制《<?= $value['doc_title'] ?>》文档，只会复制当前启用的版本。历史信息不会被复制。" data="<?= $label->url('Create-Article-copy', ['id' => $value['doc_id'], 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><i class="am-icon-copy"></i>
+                                                    复制文档</a>
                                             </li>
                                         <?php endif; ?>
 
@@ -54,7 +63,7 @@
                                             <li>
                                                 <a class="am-text-danger ajax-click ajax-dialog" msg="确定删除吗？将无法恢复的！"
                                                    href="javascript:;"
-                                                   data="<?= $label->url(GROUP . '-' . MODULE . '-action', array ('id' => $label->xss($value["doc_id"]), 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))) ?>"><i
+                                                   data="<?= $label->url(GROUP . '-' . MODULE . '-action', ['id' => $label->xss($value["doc_id"]), 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><i
                                                             class="am-icon-remove"></i> 删除文档</a>
                                             </li>
                                         <?php endif; ?>
@@ -67,6 +76,16 @@
 
                             </div>
                         </div>
+
+                        <?php if (!empty($value['doc_attr'])): ?>
+                            <div class="am-margin-top">
+                                <?php foreach (explode(',', $value['doc_attr']) as $attr): ?>
+                                    <?php $attrName = $label->getFieldOptionToMatch('101', $attr); ?>
+                                    <span class="am-badge am-badge-primary"><?= $attrName ?></span>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
 
                     <footer class="am-panel-footer am-cf">

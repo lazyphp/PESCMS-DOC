@@ -35,11 +35,19 @@ class Theme extends \Core\Controller\Controller {
     public function setting() {
         $check = \Model\Theme::checkIndexSetting();
 
-        $data['title'] = $this->p('title');
-        $data['subtitle'] = $this->p('subtitle');
-        $data['title_display'] = (int)$this->isP('title_display', '请提交您是否要显示主题标题');
-        $data['search'] = (int)$this->isP('search', '请提交您是否要显示全局搜索框');
-        $data['doc_type'] = (int)$this->isP('doc_type', '请提交您首页文档布局形式');
+        $data = [
+            'title'         => $this->p('title'),
+            'subtitle'      => $this->p('subtitle'),
+            'title_display' => (int)$this->isP('title_display', '请提交您是否要显示主题标题'),
+            'search'        => (int)$this->isP('search', '请提交您是否要显示全局搜索框'),
+            'doc_type'      => (int)$this->isP('doc_type', '请提交您首页文档布局形式'),
+        ];
+
+        if (!empty($check['indexField']) && count($check['indexField']) > 0) {
+            foreach ($check['indexField'] as $key => $value) {
+                $data[$key] = $this->p($key);
+            }
+        }
 
         $f = fopen($check['settingFile'], 'w');
         fwrite($f, json_encode($data, JSON_UNESCAPED_UNICODE));

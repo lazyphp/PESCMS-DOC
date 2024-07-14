@@ -15,6 +15,7 @@ class Login extends \Core\Controller\Controller {
     public function __init() {
         parent::__init();
         $this->system = \Core\Func\CoreFunc::$param['system'];
+        $this->assign('open_verify', $this->system['open_verify']);
     }
 
     /**

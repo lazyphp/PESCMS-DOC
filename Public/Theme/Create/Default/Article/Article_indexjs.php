@@ -65,7 +65,7 @@
                 mode: 'sv',
                 value: $('textarea[name="md"]').val(),
                 upload: {
-                    accept: 'image/*,.mp3, .wav, .rar, .zip',
+                    accept: 'image/*, .mp4, .webm, .ogg, <?= $fielExt ?>',
                     token: 'test',
                     multiple: false,
                     url: pesMDUploadURL,

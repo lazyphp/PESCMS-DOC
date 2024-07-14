@@ -28,6 +28,8 @@ class Upload extends \Core\Controller\Controller {
         $img = json_decode(\Model\Content::findContent('option', 'upload_img', 'option_name')['value'], true);
         if( in_array('.'.strtolower(pathinfo($_FILES['upfile']['name'])['extension']), $img) ){
             $_GET['action'] = 'uploadimage';
+        }elseif( in_array('.'.strtolower(pathinfo($_FILES['upfile']['name'])['extension']), ['.mp4','.webm', '.ogg'] )){
+            $_GET['action'] = 'uploadvideo';
         }else{
             $_GET['action'] = 'uploadfile';
         }

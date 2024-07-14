@@ -354,7 +354,24 @@ body {
   overflow-y: auto;
   padding: 10px;
 }
-.pes-doc-title-column {
+.pes-doc-table {
+  display: flex;
+  flex-wrap: wrap;
+}
+.pes-doc-table li {
+  display: flex;
+}
+.pes-doc-table li .am-panel {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+.pes-doc-table li .am-panel > div,
+.pes-doc-table li .am-panel > .am-panel-footer {
+  width: 100%;
+}
+.pes-doc-table li .am-panel .pes-doc-title-column {
   display: flex;
   justify-content: space-between;
 }

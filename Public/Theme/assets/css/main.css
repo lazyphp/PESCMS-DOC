@@ -306,6 +306,9 @@ html {
     border-bottom: 1px solid #e9ecf2;
     margin-bottom: 0;
   }
+  .article-topbar .topbar-container .topbar-menu li .topbar-submenu > ul > li:first-child {
+    display: block;
+  }
   .article-topbar .topbar-container .topbar-menu li .topbar-submenu > ul > li:last-child {
     border-bottom: none;
   }
@@ -755,6 +758,7 @@ html {
 .home-page .home-doc-tabs .am-tabs-bd .am-gallery li a {
   display: block;
   color: #42526E;
+  width: 100%;
 }
 .home-page .home-doc-tabs .am-tabs-bd .am-gallery li a img {
   width: 80px;

@@ -1,3 +1,4 @@
+<?php if($open_verify == 1): ?>
 <div class="am-g am-g-collapse">
     <div class="am-u-sm-12 am-u-sm-centered">
         <div class="am-alert am-alert-secondary am-text-center am-margin-vertical-xs">
@@ -9,3 +10,4 @@
         </div>
     </div>
 </div>
+<?php endif; ?>
