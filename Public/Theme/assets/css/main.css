@@ -758,6 +758,7 @@ html {
 .home-page .home-doc-tabs .am-tabs-bd .am-gallery li a {
   display: block;
   color: #42526E;
+  width: 100%;
 }
 .home-page .home-doc-tabs .am-tabs-bd .am-gallery li a img {
   width: 80px;
