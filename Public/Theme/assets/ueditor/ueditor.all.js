@@ -10906,7 +10906,16 @@ UE.plugin.register('autosubmit',function(){
                         form = domUtils.findParentByTagName(me.iframe,"form", false);
 
                     if (form){
-                        $('#pes-article-submit').submit();
+                        if(me.fireEvent("beforesubmit")===false){
+                            return;
+                        }
+                        me.sync();
+                        if (form && form.classList.contains('am-form')) {
+                            $(".am-form").submit();
+                        }else{
+                            
+                            form.submit();
+                        }
                     }
                 }
             }
