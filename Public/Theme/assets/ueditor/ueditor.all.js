@@ -10911,7 +10911,7 @@ UE.plugin.register('autosubmit',function(){
                         }
                         me.sync();
                         if (form && form.classList.contains('am-form')) {
-                            $(".am-form").submit();
+                            $(form).trigger('submit');
                         }else{
                             
                             form.submit();
