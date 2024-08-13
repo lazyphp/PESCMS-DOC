@@ -35,7 +35,7 @@ class Index extends \App\Install\Common {
         fclose(fopen(APP_PATH . 'install.txt', 'w+'));
         fclose(fopen(APP_PATH . 'index.html', 'w+'));
 
-        \Model\Extra::clearDirAllFile(PES_CORE.'/Upgrade/sql', PES_CORE.'/Upgrade/sql');
+        \Model\Extra::clearDirAllFile(PES_CORE . '/Upgrade/sql', PES_CORE . '/Upgrade/sql');
 
         $this->success(['msg' => '安装完成!', 'data' => $this->manageUrl]);
     }
@@ -61,7 +61,7 @@ class Index extends \App\Install\Common {
         $installConfig = require CONFIG_PATH . 'config_same.php';
         $fopen = @fopen(CONFIG_PATH . 'config.php', 'w+');
         if (!$fopen) {
-            $this->error('无法正常写入安装配置信息，请检查当前运行环境是否有写入'.CONFIG_PATH . 'config.php的权限');
+            $this->error('无法正常写入安装配置信息，请检查当前运行环境是否有写入' . CONFIG_PATH . 'config.php的权限');
         }
 
         $str = "<?php\n return array(\n";
@@ -96,20 +96,20 @@ class Index extends \App\Install\Common {
 
         $fopen = @fopen(PES_CORE . 'Config/config.php', 'w+');
         if (!$fopen) {
-            $this->error('无法正常写入程序的配置信息，请检查当前运行环境是否有写入'.PES_CORE . 'Config/config.php的权限');
+            $this->error('无法正常写入程序的配置信息，请检查当前运行环境是否有写入' . PES_CORE . 'Config/config.php的权限');
         }
 
         $str = "<?php\n \$config = array(\n";
 
-        $urlModelArray['URLMODEL'] = array('index' => 0, 'suffix' => '1');
+        $urlModelArray['URLMODEL'] = ['index' => 0, 'suffix' => '1'];
         foreach (array_merge($data, $config, $urlModelArray) as $key => $value) {
-            if(is_array($value)){
+            if (is_array($value)) {
                 $str .= "'{$key}' => array(\n";
-                foreach($value as $ik => $iv){
-                    $str .= "'".strtoupper($ik)."' => '{$iv}',\n";
+                foreach ($value as $ik => $iv) {
+                    $str .= "'" . strtoupper($ik) . "' => '{$iv}',\n";
                 }
                 $str .= "),";
-            }else{
+            } else {
                 $str .= "'{$key}' => '{$value}',\n";
             }
         }
@@ -121,11 +121,10 @@ class Index extends \App\Install\Common {
     }
 
 
-
     /**
      * 设置网站信息
      */
-    private function setSiteInfo(){
+    private function setSiteInfo() {
         $data['member_account'] = $this->isP('account', '请填写初始账号');
 
         $password = \Model\Extra::verifyPassword();
@@ -139,7 +138,7 @@ class Index extends \App\Install\Common {
         $data['member_secret_key'] = \Core\Func\CoreFunc::generatePwd($this->isP('secret_key', '请提交您的安全密钥'), 'USER_KEY');
 
 
-        if($this->p('passwd') !== $this->p('repasswd')){
+        if ($this->p('passwd') !== $this->p('repasswd')) {
             $this->error('两次输入的密码不一致');
         }
 
@@ -147,23 +146,28 @@ class Index extends \App\Install\Common {
 
         $option['version'] = $this->version;//设置系统版本
         //更新配置信息
-        foreach($option as $optionkey => $optionvalue){
+        foreach ($option as $optionkey => $optionvalue) {
             $this->db('option')->where('option_name = :option_name')->update([
                 'value' => $optionvalue,
                 'noset' => [
-                    'option_name' => $optionkey
-                ]
+                    'option_name' => $optionkey,
+                ],
             ]);
         }
 
         //写入管理员账号
         $this->db('member')->insert($data);
+
+        //更新API接口
+        \Model\Option::updateApiKEY();
+        \Model\Option::updateApiSecret();
+
     }
 
     /**
      * 安装数据库
      */
-    private function installDB(){
+    private function installDB() {
         //读取数据库文件
         $sqlFile = file_get_contents(APP_PATH . 'InstallDb/install.sql');
         if (empty($sqlFile)) {
@@ -181,7 +185,7 @@ class Index extends \App\Install\Common {
             $db = new \PDO("mysql:host={$config['DB_HOST']};port={$config['DB_PORT']};dbname={$config['DB_NAME']}", $config['DB_USER'], $config['DB_PWD']);
 
         } catch (\PDOException $e) {
-            $this->error("数据库连接错误: ".$e->getMessage());
+            $this->error("数据库连接错误: " . $e->getMessage());
         }
 
         //检查是否开启MYSQL严格模式
