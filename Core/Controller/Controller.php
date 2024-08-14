@@ -90,13 +90,14 @@ class Controller {
     protected static function r($name, $htmlentities = TRUE) {
         return self::handleData($_REQUEST[$name] ?? null, $htmlentities);
     }
+
     /**
      * 处理数据
      * @param $data 传递过来的数据
      * @param bool $htmlentities 是否转义
      * @return array|bool|string
      */
-    protected static function handleData($data, $htmlentities = TRUE){
+    protected static function handleData($data, $htmlentities = TRUE) {
         if (empty($data) && !is_numeric($data)) {
             return '';
         }
@@ -107,8 +108,8 @@ class Controller {
         if ((bool)$htmlentities) {
             $antiXss = new \voku\helper\AntiXSS();
             //允许内联样式
-            $antiXss->removeEvilAttributes(array('style'));
-            $name = htmlspecialchars($antiXss-> xss_clean(trim($data)));
+            $antiXss->removeEvilAttributes(['style']);
+            $name = htmlspecialchars($antiXss->xss_clean(trim($data)));
         } else {
             $name = trim($data);
         }
@@ -125,7 +126,7 @@ class Controller {
     protected static function isG($name, $message, $htmlentities = TRUE) {
         //当为0时，直接返回
         return self::isEmpty('g', $name, $message, $htmlentities);
-        }
+    }
 
     /**
      * 判断POST是否有数据提交
@@ -136,7 +137,8 @@ class Controller {
      */
     protected static function isP($name, $message, $htmlentities = TRUE) {
         return self::isEmpty('p', $name, $message, $htmlentities);
-        }
+    }
+
     /**
      * 判断任意类型请求是否有数据提交
      * @param sting $name 名称
@@ -156,8 +158,8 @@ class Controller {
      * @param boolean $htmlentities 是否转义HTML标签
      * @return mixed|void
      */
-    private static function isEmpty($type, $name, $message, $htmlentities){
-        switch ($type){
+    private static function isEmpty($type, $name, $message, $htmlentities) {
+        switch ($type) {
             case 'g':
                 $type = $_GET;
                 $func = 'g';
@@ -195,8 +197,9 @@ class Controller {
         if (is_array($name)) {
             \Core\Func\CoreFunc::$param = array_merge(\Core\Func\CoreFunc::$param, $name);
         } elseif (is_object($name)) {
-            foreach ($name as $key => $val)
+            foreach ($name as $key => $val) {
                 \Core\Func\CoreFunc::$param[$key] = $val;
+            }
         } else {
             \Core\Func\CoreFunc::$param[$name] = $value;
         }
@@ -236,10 +239,10 @@ class Controller {
         $layoutFile = THEME . '/' . GROUP . "/{$this->theme}/{$layout}.php";
 
         if (!is_file($layoutFile)) {
-	        $layoutFile = THEME . '/' . GROUP . "/{$this->theme}/" . MODULE . "/{$layout}.php";
-	        if(!is_file($layoutFile)){
-		        $this->error("The theme file {$layout} not exist!");
-	        }
+            $layoutFile = THEME . '/' . GROUP . "/{$this->theme}/" . MODULE . "/{$layout}.php";
+            if (!is_file($layoutFile)) {
+                $this->error("The theme file {$layout} not exist!");
+            }
         }
 
         require $layoutFile;
@@ -248,12 +251,12 @@ class Controller {
     /**
      * 404专用提示
      */
-    protected function _404($layout = false, $title = '404 - 页面被怪兽吃掉了'){
+    protected function _404($layout = false, $title = '404 - 页面被怪兽吃掉了') {
         header("HTTP/1.1 404 Page not found");
         $this->assign('title', $title);
-        if($layout == true){
+        if ($layout == true) {
             $this->layout('404');
-        }else{
+        } else {
             $this->display('404');
         }
 
@@ -298,7 +301,7 @@ class Controller {
     private static function beforeInitView(bool $isJump = false) {
         array_walk(\Core\Slice\InitSlice::$slice, function ($obj) use ($isJump) {
             \Core\Slice\InitSlice::$beforeViewToExecAfter = true;
-            if($isJump == false){
+            if ($isJump == false) {
                 $obj->after();
             }
         });
@@ -332,10 +335,10 @@ class Controller {
      * @param string $jumpUrl 跳转地址|默认为返回上一页
      * @param string $waitSecond 跳转等待时间
      */
-    private static function tipsJump($message, $code, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3'){
-        \Core\Func\CoreFunc::isAjax(is_array($message) ? $message : ['msg' => $message],$code, $jumpUrl, $waitSecond);
+    private static function tipsJump($message, $code, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3') {
+        \Core\Func\CoreFunc::isAjax(is_array($message) ? $message : ['msg' => $message], $code, $jumpUrl, $waitSecond);
 
-        if($waitSecond == -1 && $jumpUrl != 'javascript:history.go(-1)' ){
+        if ($waitSecond == -1 && $jumpUrl != 'javascript:history.go(-1)') {
             self::jump($jumpUrl);
         }
 
@@ -354,9 +357,9 @@ class Controller {
      * @param string $msg 提示信息 | 默认 系统将为您重定向新页面...
      */
     protected static function jump($url, $msg = '系统将为您重定向新页面...') {
-        if(\Core\Func\CoreFunc::X_REQUESTED_WITH() === false){
+        if (\Core\Func\CoreFunc::X_REQUESTED_WITH() === false) {
             header("Location:{$url}");
-        }else{
+        } else {
             header("HTTP/1.1 302 Page redirect");
             \Core\Func\CoreFunc::isAjax(['msg' => $msg], '302', $url);
         }
@@ -368,11 +371,11 @@ class Controller {
      * @return type 返回模板
      */
     private static function promptPage() {
-	    if(is_file(THEME_PATH.'/jump.php')){
-		    return THEME_PATH . '/jump.php';
-	    }else{
-		    return PES_CORE . 'Core/Theme/jump.php';
-	    }
+        if (is_file(THEME_PATH . '/jump.php')) {
+            return THEME_PATH . '/jump.php';
+        } else {
+            return PES_CORE . 'Core/Theme/jump.php';
+        }
 
     }
 
@@ -389,17 +392,22 @@ class Controller {
      * 验证令牌
      */
     protected static function checkToken() {
-        $token = self::handleData($_REQUEST['token']);
+
+        if (\Core\Func\CoreFunc::$param['isApi'] == true) {
+            return true;
+        }
+
+        $token = self::handleData($_REQUEST['token'] ?? null);
         if (empty($token)) {
             self::error('令牌丢失，请再次提交或刷新当前页面');
         }
 
-        $tokenArray = \Core\Func\CoreFunc::session()->get('token');
+        $tokenArray = \Core\Func\CoreFunc::session()->get('token') ?? [];
 
 
         if (!in_array($token, $tokenArray)) {
             self::error('您提交了一个过时或者不存在的令牌，请再次提交或刷新当前页面。');
-        }elseif(\Core\Func\CoreFunc::checkTokenExpired($tokenArray[$token]) == true){
+        } elseif (\Core\Func\CoreFunc::checkTokenExpired($tokenArray[$token]) == true) {
             self::error('您提交的令牌已过时，请再次提交数据。');
         }
         unset($tokenArray[$token]);
@@ -428,7 +436,7 @@ class Controller {
      * @param array $param 参数
      * @return type 返回URL
      */
-    protected static function url($controller, $param = array()) {
+    protected static function url($controller, $param = []) {
         return \Core\Func\CoreFunc::url($controller, $param);
     }
 
@@ -439,7 +447,7 @@ class Controller {
      * @param bool $filterHtmlSuffix
      * @return type
      */
-    protected function pluginUrl(array $param, $group = NULL, $filterHtmlSuffix = false){
+    protected function pluginUrl(array $param, $group = NULL, $filterHtmlSuffix = false) {
         $group = empty($group) ? GROUP : $group;
         return $this->url("{$group}-Application-Plugin", $param, $filterHtmlSuffix);
     }
@@ -467,7 +475,7 @@ class Controller {
      * 调用session
      * @return \duncan3dc\Sessions\SessionInstance
      */
-    public final static function session($id = ''){
+    public final static function session($id = '') {
         return \Core\Func\CoreFunc::session($id);
     }
 

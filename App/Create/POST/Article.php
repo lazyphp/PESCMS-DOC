@@ -85,7 +85,13 @@ class Article extends \Core\Controller\Controller {
 
         $data = \Model\Article::apiForm();
 
-        $res = (new \Expand\cURL())->init($data['api_url'], $data['send']['body'] ?? NULL, $data['send']['header']);
+        $curl = new \Expand\cURL();
+
+        if($data['api_method'] != 'GET'){
+            $curl->setMethod($data['api_method']);
+        }
+
+        $res = $curl->init($data['api_url'], $data['send']['body'] ?? NULL, $data['send']['header']);
 
         $this->assign($data);
 
