@@ -6,18 +6,14 @@
  * For the full copyright and license information, please view
  * the file LICENSE that was distributed with this source code.
  */
+
 namespace App\Doc\POST;
 
+class ArticleApi extends \Core\Controller\Controller {
 
-class Doc extends \Core\Controller\Controller {
-
-    /**
-     * 新增文档接口
-     * @return void
-     */
-    public function action(){
-        $doc = new \App\Create\POST\Doc();
-        $doc->action();
+    public function index(){
+        $article = new \App\Create\POST\Article();
+        $article->index();
     }
 
 }

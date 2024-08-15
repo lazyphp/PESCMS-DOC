@@ -282,7 +282,7 @@ class CoreFunc {
     public static function isApiRequest(): bool {
 
         //缺少授权头部
-        if (empty($_SERVER['HTTP_AUTHORIZATION'])) {
+        if (empty($_SERVER['HTTP_AUTHORIZATION']) && empty($_SERVER['CONTENT_TYPE']) ) {
             return false;
         }
 
@@ -300,6 +300,7 @@ class CoreFunc {
         if (isset($_SERVER['HTTP_ACCEPT']) && stripos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false) {
             return true;
         }
+
 
         return false;
     }

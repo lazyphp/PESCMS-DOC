@@ -11,11 +11,12 @@ namespace App\Doc\PUT;
 
 class Doc extends \Core\Controller\Controller {
 
-    protected $doc;
-
+    /**
+     * 更新文档接口
+     */
     public function action(){
-        $this->doc = new \App\Create\PUT\Doc();
-        $this->doc->action();
+        $doc = new \App\Create\PUT\Doc();
+        $doc->action();
     }
 
 }

@@ -143,7 +143,7 @@ $SLICE_ARRYR = [
     // API接口校验
     'API-AUTHORIZE' => [
         'any',
-        ['Doc-Doc-:a'],
+        ['Doc-Doc-:a', 'Doc-ArticleApi-:a', 'Doc-Upload-index'],
         ['\Doc\AuthorizeApi']
     ]
 

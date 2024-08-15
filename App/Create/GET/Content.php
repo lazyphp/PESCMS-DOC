@@ -77,6 +77,7 @@ class Content extends \Core\Controller\Controller {
         $this->page->handle();
         $list = $this->db($this->table)->where($this->condition)->order($orderBy)->limit("{$this->page->firstRow}, {$this->page->listRows}")->select($this->param);
         $show = $this->page->show();
+        $this->assign('pageObj', $this->page);
         $this->assign('page', $show);
         $this->assign('list', $list);
         $this->assign('title', $this->model['model_title']);

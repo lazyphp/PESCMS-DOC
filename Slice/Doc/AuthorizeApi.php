@@ -15,6 +15,14 @@ namespace Slice\Doc;
 class AuthorizeApi extends \Core\Slice\Slice {
 
     public function before() {
+
+        $_SERVER['CONTENT_TYPE'] = 'application/json';
+
+        $apiStatus = \Model\Option::getOptionValue('api_status');
+        if($apiStatus == 0) {
+            $this->_404();
+        }
+
         if (empty($_SERVER['HTTP_AUTHORIZATION'])) {
             $this->error('请提交接口授权码');
         }
@@ -42,9 +50,6 @@ class AuthorizeApi extends \Core\Slice\Slice {
                 // URL 编码格式数据解析成功
                 $_POST = $parsedArray;
                 $_REQUEST = array_merge($_REQUEST, $parsedArray);
-            } else {
-                // 如果两种格式都不能解析，返回错误
-                $this->error('接口数据格式错误');
             }
         }
 

@@ -330,4 +330,26 @@ class Article extends \Core\Model\Model {
 
     }
 
+    /**
+     * 递归获取文档路径
+     * @param array $doc 文档信息
+     * @param int $parentID 父级ID
+     * @return array
+     */
+    public static function recursionApiPath(array $doc, int $parentID = 0): array {
+        $list = [];
+        $res = self::db('article')->where('article_doc_id = :article_doc_id AND article_version = :article_version AND article_parent = :article_parent')->order('article_listsort ASC, article_id DESC')->select([
+            'article_doc_id' => $doc['doc_id'],
+            'article_version' => $doc['doc_version'],
+            'article_parent' => $parentID,
+        ]);
+        if(!empty($res)){
+            foreach ($res as $key => $value){
+                $list[$key] = $value;
+                $list[$key]['child'] = self::recursionApiPath($doc, $value['article_id']);
+            }
+        }
+        return $list;
+    }
+
 }
