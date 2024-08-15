@@ -254,6 +254,9 @@ class Controller {
     protected function _404($layout = false, $title = '404 - 页面被怪兽吃掉了') {
         header("HTTP/1.1 404 Page not found");
         $this->assign('title', $title);
+
+        \Core\Func\CoreFunc::isAjax(['msg' => $title], 404);
+
         if ($layout == true) {
             $this->layout('404');
         } else {
