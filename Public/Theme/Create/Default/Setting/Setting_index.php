@@ -86,10 +86,16 @@
             if (res.status == 200) {
                 $('input[name="api_key"]').val(res.data.api_key)
                 $('input[name="api_secret"]').val(res.data.api_secret)
+                $('.pes-api-authorization').val( btoaAuthorization(res.data.api_key, res.data.api_secret))
+
             } else {
                 alert(res.msg)
             }
         })
+    }
+
+    function btoaAuthorization(key, secret){
+        return btoa(key + ':' + secret)
     }
 
     $(function () {
@@ -138,7 +144,7 @@
 
             let api_key = $('input[name="api_key"]').val()
             let api_secret = $('input[name="api_secret"]').val()
-            let authorization = btoa(api_key + ':' + api_secret)
+            let authorization = btoaAuthorization(api_key, api_secret)
 
 
             $('input[name="api_secret"]').after('<div class="am-margin-top" style="display: flex;align-items: center"><button type="button" class="am-btn am-btn-primary am-btn-xs am-radius" onclick="generateSecret()"><i class="am-icon-refresh"></i> 生成新的API KEY和Secret</button><span class="am-margin-horizontal-xs">[点击右侧输入框复制API Authorization] : </span><input type="text"  class="form-text-input input-leng3 am-radius pes-api-authorization" value="' + authorization + '" style="width: 400px"> <a href="https://document.pescms.com/article/4/664720334762541056.html" class="am-margin-left" target="_blank"><i class="am-icon-external-link"></i> 查看API使用说明文档</a> </div>')
