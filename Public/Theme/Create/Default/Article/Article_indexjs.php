@@ -208,11 +208,19 @@
             }
 
             $('.pes-doc-path a').removeClass('am-active')
+
             if (aid != 'new') {
                 $(this).addClass('am-active');
+
+                $('.pes-article-operate').show();
+                $('.pes-article-delete').attr('data', '/?g=Create&m=Article&a=delete&method=DELETE&aid=' + aid);
+                $('.pes-article-copy').attr('data', '/?g=Create&m=Article&a=copy&method=POST&aid=' + aid);
+
+            }else{
+                $('.pes-article-operate').hide();
             }
             $('.pes-doc-article-tool').show();
-            $('.pes-article-delete').removeClass('am-hide').attr('data', '/?g=Create&m=Article&a=delete&method=DELETE&aid=' + aid);
+
             $('.pes-doc-index-tool, .pes-article-preview').hide();
             $('.pes-article-tips').addClass('am-hide')
             $('.pes-article-tips').removeClass('am-alert-success').removeClass('am-alert-warning');

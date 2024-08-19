@@ -1,8 +1,14 @@
 <div class="pes-article-right-sidebar-move"></div>
 <a href="javascript:;" class="pes-article-save am-btn am-btn-default"><i class="am-icon-save"></i> 保存
     <small class="am-text-secondary">[Ctrl + 回车]</small></a>
-<a href="javascript:;" class="pes-article-delete am-btn am-btn-danger am-hide ajax-click ajax-dialog " msg="确认要删除本文档吗？数据将无法恢复!"><i class="am-icon-remove"></i>
-    删除</a>
+
+<div class="pes-article-operate am-margin-top-xs" style="display: none">
+    <a href="javascript:;" class="pes-article-delete am-btn am-btn-danger ajax-click ajax-dialog " msg="确认要删除本文档吗？数据将无法恢复!"><i class="am-icon-remove"></i>
+        删除</a>
+    <a href="javascript:;" class="pes-article-copy am-btn am-btn-primary ajax-click ajax-dialog " msg="确认复制本篇文档吗？"><i class="am-icon-copy"></i>
+        复制</a>
+</div>
+
 <div class="am-margin-top-xs pes-article-preview">
     <a href="<?= $label->url('Doc-Article-index', ['id' => $doc['doc_id']]) ?>" class="am-btn am-btn-success" target="_blank"><i class="am-icon-newspaper-o"></i>
         预览</a>

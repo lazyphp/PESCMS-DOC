@@ -358,20 +358,20 @@ body {
   display: flex;
   flex-wrap: wrap;
 }
-.pes-doc-table li {
+.pes-doc-table > li {
   display: flex;
 }
-.pes-doc-table li .am-panel {
+.pes-doc-table > li .am-panel {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-content: space-between;
 }
-.pes-doc-table li .am-panel > div,
-.pes-doc-table li .am-panel > .am-panel-footer {
+.pes-doc-table > li .am-panel > div,
+.pes-doc-table > li .am-panel > .am-panel-footer {
   width: 100%;
 }
-.pes-doc-table li .am-panel .pes-doc-title-column {
+.pes-doc-table > li .am-panel .pes-doc-title-column {
   display: flex;
   justify-content: space-between;
 }
