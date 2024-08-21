@@ -1,0 +1,6 @@
+{
+  "watch": ["Public/Theme/assets/css/create.css", "Public/Theme/assets/css/main.css"],
+  "ext": "css",
+  "ignore": ["Public/Theme/assets/css/*.min.css"],
+  "exec": "node compress-css.js"
+}

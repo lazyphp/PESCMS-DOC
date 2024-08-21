@@ -392,9 +392,11 @@ html {
                 padding: 1rem 0;
                 border-bottom: 1px solid #e9ecf2;
                 margin-bottom: 0;
-                &:first-child{
+
+                &:first-child {
                   display: block;
                 }
+
                 &:last-child {
                   border-bottom: none;
                 }
@@ -424,8 +426,6 @@ html {
   }
 
 }
-
-
 
 
 /*
@@ -785,7 +785,73 @@ html {
 
 }
 
+#super-ad {
 
+  max-width: 1200px !important;
+
+  > .am-g > .am-u-sm-12 {
+    display: flex;
+
+    > .am-panel {
+      width: 800px;
+    }
+
+    .super-sidebar {
+      width: 400px;
+      margin-left: 10px;
+    }
+
+  }
+
+  //公告栏
+  .announcement-container {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    background-color: #f5f8fc;
+    color: #1d1d1f;
+    overflow: hidden;
+    position: relative;
+
+    a {
+      color: #333;
+
+      &:hover {
+        color: #5eb95e;
+      }
+    }
+
+    .am-icon-bullhorn {
+      margin: 0 10px;
+    }
+
+    .am-text-danger {
+      position: absolute;
+      right: 5px;
+    }
+
+    .announcement {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      position: relative;
+
+      div {
+        width: 100%;
+        position: absolute;
+        display: none;
+      }
+
+      .active {
+        display: block;
+      }
+
+      .inactive {
+        display: none;
+      }
+    }
+  }
+}
 
 
 @import "index";

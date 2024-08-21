@@ -633,6 +633,58 @@ html {
 .title-nav a :focus {
   color: #E6A23C;
 }
+#super-ad {
+  max-width: 1200px !important;
+}
+#super-ad > .am-g > .am-u-sm-12 {
+  display: flex;
+}
+#super-ad > .am-g > .am-u-sm-12 > .am-panel {
+  width: 800px;
+}
+#super-ad > .am-g > .am-u-sm-12 .super-sidebar {
+  width: 400px;
+  margin-left: 10px;
+}
+#super-ad .announcement-container {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  background-color: #f5f8fc;
+  color: #1d1d1f;
+  overflow: hidden;
+  position: relative;
+}
+#super-ad .announcement-container a {
+  color: #333;
+}
+#super-ad .announcement-container a:hover {
+  color: #5eb95e;
+}
+#super-ad .announcement-container .am-icon-bullhorn {
+  margin: 0 10px;
+}
+#super-ad .announcement-container .am-text-danger {
+  position: absolute;
+  right: 5px;
+}
+#super-ad .announcement-container .announcement {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  position: relative;
+}
+#super-ad .announcement-container .announcement div {
+  width: 100%;
+  position: absolute;
+  display: none;
+}
+#super-ad .announcement-container .announcement .active {
+  display: block;
+}
+#super-ad .announcement-container .announcement .inactive {
+  display: none;
+}
 .home-page {
   display: flex;
   width: 100%;
