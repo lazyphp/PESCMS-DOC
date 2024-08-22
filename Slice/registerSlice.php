@@ -140,6 +140,13 @@ $SLICE_ARRYR = [
         ['\ApplicationGlobalEvent'],
     ],
 
+    // API接口校验
+    'API-AUTHORIZE' => [
+        'any',
+        ['Doc-Doc-:a', 'Doc-ArticleApi-:a', 'Doc-Upload-index'],
+        ['\Doc\AuthorizeApi']
+    ]
+
 ];
 
 //执行切片注册

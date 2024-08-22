@@ -72,8 +72,15 @@ class Theme extends \Core\Controller\Controller {
         $check = \Model\Theme::checkIndexSetting();
         $title = $this->g('title') ?: $check['theme'];
 
+        $tabTitle = ['首页'];
+        if(!empty($check['indexField'])){
+            $tabTitle = array_merge($tabTitle, array_keys($check['indexField']));
+            $tabTitle = array_unique($tabTitle); // 去除重复值
+        }
+
         $this->assign('setting', $check['setting']);
         $this->assign('indexField', $check['indexField']);
+        self::assign('tabTitle', $tabTitle);
         $this->assign('title', "「{$title}」主题首页布局");
         $this->assign('form', new \Expand\Form\Form());
         $this->layout();

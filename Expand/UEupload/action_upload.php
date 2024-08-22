@@ -64,4 +64,4 @@ $up = new \Expand\Uploader($action, $fieldName, $config, $base64, $upload['uploa
  */
 
 /* 返回数据 */
-return json_encode($up->getFileInfo());
+return json_encode($up->getFileInfo(), JSON_UNESCAPED_UNICODE);

@@ -143,7 +143,7 @@ class Content extends \Core\Model\Model {
         self::$model = \Model\ModelManage::findModel(self::$table, 'model_name');
         $field = \Model\Field::fieldList(self::$model['model_id'], 'AND field_status = 1');
 
-        if (self::p('method') == 'PUT') {
+        if (self::r('method') == 'PUT') {
             $data['noset'][self::$fieldPrefix . 'id'] = self::isP('id', '丢失模型ID');
             if (!self::findContent(self::$table, $data['noset'][self::$fieldPrefix . 'id'], self::$fieldPrefix . 'id')) {
                 self::error('不存在的模型');
@@ -155,7 +155,7 @@ class Content extends \Core\Model\Model {
             /**
              * 判断提交的字段是否为数组
              */
-            if (is_array($_POST[$value['field_name']])) {
+            if (isset($_POST[$value['field_name']]) && is_array($_POST[$value['field_name']])) {
                 $_POST[$value['field_name']] = (string)implode(',', $_POST[$value['field_name']]);
             }
 
@@ -164,7 +164,7 @@ class Content extends \Core\Model\Model {
              * @todo 此地方可能存在一个问题，值为空时，需要填写的为0还是最新的时间？
              */
             if ($value['field_type'] == 'date') {
-                $_POST[$value['field_name']] = empty($_POST[$value['field_name']]) ? 0 : (string)strtotime($_POST[$value['field_name']]);
+                $_POST[$value['field_name']] = empty($_POST[$value['field_name']]) ? null : (string)strtotime($_POST[$value['field_name']]);
             }
 
             if(!in_array(METHOD, explode(',', $value['field_action']))){
