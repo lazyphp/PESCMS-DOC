@@ -92,7 +92,7 @@ for(var i in ueditor){
 
 
 //开始压缩CSS资源
-var css = ['create', 'main', 'ui-dialog', 'webuploader', 'Vditor', 'api-table'];
+var css = ['create', 'main', 'ui-dialog', 'webuploader', 'Vditor', 'api-table', 'blockquote'];
 for(var i in css){
     if(cli.cheese !='' && css[i] != cli.cheese){
         continue;
