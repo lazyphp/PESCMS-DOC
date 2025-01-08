@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/ui-dialog.min.css?v=<?= $resources ?>">
 
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/create.min.css?v=<?=time()?>">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/blockquote.min.css?v=<?=time()?>">
     <script>
         var PESCMS_URL = '<?= PESCMS_URL ?>';
         var PESCMS_PATH = '<?= DOCUMENT_ROOT; ?>';
