@@ -221,6 +221,17 @@
             // 设置菜单的相对位置
             dropdown.style.top = `${button.offsetHeight}px`;
             dropdown.style.left = '0';
+
+            // 为 document 添加点击事件，点击其他地方时关闭菜单
+            const closeDropdown = (e) => {
+                if (!button.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.remove(); // 关闭菜单
+                    document.removeEventListener('click', closeDropdown); // 移除事件监听
+                }
+            };
+
+            document.addEventListener('click', closeDropdown);
+
         }
 
         function insertQuote(name, classname) {
