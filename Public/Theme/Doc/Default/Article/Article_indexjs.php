@@ -91,6 +91,13 @@
                     const id = text.trim().replace(/\s+/g, '-').toLowerCase(); // 生成唯一ID
                     heading.id = id; // 为每个标题添加ID
 
+                    // 添加复制链接的图标
+                    const icon = document.createElement('i');
+                    icon.className = 'am-icon-link article-copy-link';
+                    icon.title = '复制链接';
+                    heading.appendChild(icon); // 在标题后插入图标
+
+
                     // 创建目录项
                     const li = document.createElement('li');
                     const link = document.createElement('a');
@@ -363,13 +370,23 @@
             }
 
             var dom = $(this)
+
+            var text = dom.parent().text().trim();
+            let pasteText;
+            if(dom.parents('.am-article-bd').length > 0){
+                let docTitle = $('.am-article-title').text().trim()
+                pasteText = `《${docTitle}》—— ${text} \r\n`;
+            }else{
+                pasteText = `《${text}》`;
+            }
+
             var link = window.location.href.replace(window.location.hash, '') + hash;
-            const input = document.createElement('input');
-            input.setAttribute('value', link);
-            document.body.appendChild(input);
-            input.select();
+            const textarea = document.createElement('textarea');
+            textarea.value = pasteText + link;
+            document.body.appendChild(textarea);
+            textarea.select();
             if (document.execCommand('copy')) {
-                dom.addClass('am-text-secondary');
+                dom.addClass('am-text-primary');
                 document.execCommand('copy');
                 var d = dialog({
                     id: 'copy-tips',
@@ -384,7 +401,7 @@
                 }, 2000)
 
             }
-            document.body.removeChild(input);
+            document.body.removeChild(textarea);
             return false;
         })
 
