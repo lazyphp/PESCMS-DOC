@@ -108,6 +108,7 @@ class Index extends \Core\Controller\Controller {
         $this->assign('title', "全局搜索「{$keyword}」相关的内容");
         $this->assign('list', $res['list']);
         $this->assign('page', $res['page']);
+        $this->assign('pageObj', $res['pageObj']);
         $this->assign('keyword', $keyword);
         $this->layout('Article/Article_search');
     }
