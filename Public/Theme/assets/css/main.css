@@ -917,6 +917,9 @@ html {
 .pes-doc-search .pes-search-panel .pes-search-content {
   color: #b3b3b3;
 }
+.pes-doc-search .pes-search-panel .pes-search-content .highlight {
+  color: #ff0018;
+}
 .pes-jump {
   padding-top: 5%;
 }

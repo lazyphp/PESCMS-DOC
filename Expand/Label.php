@@ -54,7 +54,7 @@ class Label {
      * @return type 返回处理好的数组
      */
     public function findContent($table, $field, $id) {
-        static $array = array ();
+        static $array = [];
         if (empty($array[$table])) {
             $list = \Model\Content::listContent(['table' => $table]);
             foreach ($list as $value) {
@@ -71,7 +71,7 @@ class Label {
      * @param type $filterHtmlSuffix 是否强制过滤HTML后缀 | 由于ajax GET请求中，若不过滤HTML，将会引起404的问题
      * @return type 返回URL
      */
-    public function url($controller, $param = array (), $filterHtmlSuffix = false) {
+    public function url($controller, $param = [], $filterHtmlSuffix = false) {
         $url = \Core\Func\CoreFunc::url($controller, $param);
         if ($filterHtmlSuffix == true) {
             if (substr($url, '-5') == '.html') {
@@ -99,7 +99,7 @@ class Label {
      */
     public function token() {
         //当token为空时，重新生成
-        if(empty(\Core\Func\CoreFunc::$token)){
+        if (empty(\Core\Func\CoreFunc::$token)) {
             \Core\Func\CoreFunc::token();
         }
         return '<input type="hidden" name="token" value="' . \Core\Func\CoreFunc::$token . '" >';
@@ -269,5 +269,41 @@ class Label {
         if (base64_decode($backTo, true)) {
             echo '<input type="hidden" name="back_url" value="' . $this->xss($backTo ?? '') . '">';
         }
+    }
+
+    /**
+     * 高亮匹配关键词并提取前后内容
+     *
+     * @param string $keyword 关键词
+     * @param string $content 文本内容
+     * @param string $colorClass 定义的标签类名，用于样式
+     * @param int $beforeLength 匹配关键词前的字符数（默认50）
+     * @param int $afterLength 匹配关键词后的字符数（默认100）
+     * @return string 返回匹配的高亮内容数组
+     */
+    public function highlightKeyword($keyword, $content, $colorClass = 'highlight', $beforeLength = 50, $afterLength = 100) {
+        // 去除 HTML 标签和多余的空白符
+        $content = strip_tags($content);
+        $content = preg_replace('/\s+/', ' ', $content);
+        $content = trim($content);
+        
+
+        // 构建正则表达式
+        $regex = "/.{0,{$beforeLength}}{$keyword}.{0,{$afterLength}}/ui";
+
+        // 只匹配第一个关键词出现的内容
+        if (preg_match($regex, $content, $match)) {
+            // 高亮显示关键词
+            $highlighted = preg_replace(
+                "/{$keyword}/ui",
+                "<b class='{$colorClass}'>{$keyword}</b>",
+                $match[0]
+            );
+
+            return $highlighted;
+        }
+
+        // 如果未匹配到关键词，返回处理后的完整内容
+        return $this->strCut($content, $beforeLength + $afterLength, '');
     }
 }
