@@ -170,7 +170,7 @@
                 toolbar: defaultToolbar,
 
                 after() {
-                    $('.vditor-toolbar').attr('style', 'z-index:10;display:flex').sticky()
+                    $('.vditor-toolbar').attr('style', 'z-index:10;display:flex;flex-wrap: wrap;').sticky()
                 }
             };
             if (!vd) {
