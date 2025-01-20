@@ -38,7 +38,7 @@
 
                                 <?php if ($k == 0): ?>
 
-                                    <div class="am-g am-g-collapse">
+                                    <div class="am-g am-g-collapse <?= in_array('title', $disableThemeSetting) ? 'am-hide' : '' ?> ">
                                         <div class="am-u-sm-12 am-u-sm-centered">
                                             <div class="am-form-group">
                                                 <label class="am-block">主题居中标题</label>
@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="am-g am-g-collapse">
+                                    <div class="am-g am-g-collapse <?= in_array('subtitle', $disableThemeSetting) ? 'am-hide' : '' ?>">
                                         <div class="am-u-sm-12 am-u-sm-centered">
                                             <div class="am-form-group">
                                                 <label class="am-block">主题副标题</label>
@@ -56,7 +56,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="am-g am-g-collapse">
+                                    <div class="am-g am-g-collapse <?= in_array('title_display', $disableThemeSetting) ? 'am-hide' : '' ?>">
                                         <div class="am-u-sm-12 am-u-sm-centered">
                                             <div class="am-form-group">
                                                 <label class="am-block">显示主题标题<i class="am-text-danger">*</i></label>
@@ -72,7 +72,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="am-g am-g-collapse">
+                                    <div class="am-g am-g-collapse <?= in_array('search', $disableThemeSetting) ? 'am-hide' : '' ?>">
                                         <div class="am-u-sm-12 am-u-sm-centered">
                                             <div class="am-form-group">
                                                 <label class="am-block">显示全局搜索框<i class="am-text-danger">*</i></label>
@@ -88,7 +88,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="am-g am-g-collapse">
+                                    <div class="am-g am-g-collapse <?= in_array('doc_type', $disableThemeSetting) ? 'am-hide' : '' ?>">
                                         <div class="am-u-sm-12 am-u-sm-centered">
                                             <div class="am-form-group">
                                                 <label class="am-block">首页文档布局形式<i class="am-text-danger">*</i></label>
