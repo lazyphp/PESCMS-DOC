@@ -98,7 +98,7 @@ class Theme extends \Core\Controller\Controller {
     public function install() {
         $name = $this->isP('name', '请提交您要安装的主题');
 
-        (new \Expand\Install('2', THEME . '/Doc/'))->downloadPlugin($name);
+        (new \Expand\Install('2'))->downloadPlugin($name);
 
         $this->success('主题安装完毕', $this->url('Create-Theme-index'));
 
@@ -113,7 +113,7 @@ class Theme extends \Core\Controller\Controller {
         $enname = $this->isG('enname', '请提交主题英文名称');
 
         //开始下载新版本和安装新版文件。
-        $installObj = new \Expand\Install('2', THEME . '/Doc/');
+        $installObj = new \Expand\Install('2');
         $installObj->downloadPlugin($name, $version);
 
         $templateList = $this->getThemeList();
