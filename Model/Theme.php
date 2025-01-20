@@ -12,7 +12,11 @@ namespace Model;
 
 class Theme extends \Core\Model\Model {
 
-    public static function getThemeIndexSetting() {
+    /**
+     * 获取主题设置信息
+     * @return array|mixed
+     */
+    public static function getThemeSetting() {
         $settingFile = THEME_PATH . '/index.json';
         return is_file($settingFile) ? json_decode(file_get_contents($settingFile), true) : [];
     }

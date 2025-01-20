@@ -37,120 +37,125 @@ use \Core\Slice\InitSlice as InitSlice;
 
 $SLICE_ARRYR = [
 
-    'SYSTEM-SETTING' => [
+    'SYSTEM-SETTING'                => [
         'any',
         ['Doc-:m-:a', 'Create-:m-:a'],
-        ['\Option']
+        ['\Option'],
     ],
 
     //登录状态判断
-    'GLOBAL-LOGIN' => [
+    'GLOBAL-LOGIN'                  => [
         'any',
         ['Create-:m-:a', 'Doc-Member-:a', 'Doc-Login-:a'],
-        ['\Login']
+        ['\Login'],
     ],
 
     //校验权限
-    'CREATE-SLICE' => [
+    'CREATE-SLICE'                  => [
         'any',
         ['Create-:m-:a'],
-        ['\Create\Auth']
+        ['\Create\Auth'],
     ],
     //获取后台菜单
-    'CREATE-MENU' => [
+    'CREATE-MENU'                   => [
         'get',
         ['Create-:m-:a'],
-        ['\Create\Menu']
+        ['\Create\Menu'],
     ],
 
     //注册自动更新客户分组字段的信息
-    'CREATE-UPDATE-MEMBERORGANIZE' => [
+    'CREATE-UPDATE-MEMBERORGANIZE'  => [
         'any',
         ['Create-Member-:a', 'Create-Member_organize-:a'],
-        ['\Create\UpdateField\UpdateMemberOrganizeField']
+        ['\Create\UpdateField\UpdateMemberOrganizeField'],
     ],
 
     //注册理路由规则 添加/编辑 提交的表单内容
-    'CREATE-ROUTE-ACTION' => [
+    'CREATE-ROUTE-ACTION'           => [
         'any',
         ['Create-Route-action'],
-        ['\Create\HandleForm\HandleRoute', '\Create\UpdateRoute']
+        ['\Create\HandleForm\HandleRoute', '\Create\UpdateRoute'],
     ],
 
     //注册理路由规则 添加/编辑 提交的表单内容
-    'UPDATE-DOC-ATTR' => [
+    'UPDATE-DOC-ATTR'               => [
         'any',
         ['Create-Attr-:a'],
-        ['\Create\UpdateDocAttr']
+        ['\Create\UpdateDocAttr'],
     ],
 
     //处理文档基础信息 添加/编辑 提交的表单内容
-    'CREATE-DOC-ACTION' => [
+    'CREATE-DOC-ACTION'             => [
         'any',
         ['Create-Doc-action'],
-        ['\Create\HandleForm\HandleDoc']
+        ['\Create\HandleForm\HandleDoc'],
     ],
 
     //注册自动处理后台会员提交的会员密码表单
-    'CREATE-UPDATE-MEMBER-PWD' => [
+    'CREATE-UPDATE-MEMBER-PWD'      => [
         'any',
         ['Create-Member-action'],
-        ['\Create\HandleForm\HandleMember']
+        ['\Create\HandleForm\HandleMember'],
     ],
 
     //文章前后置方法
-    'DOC-ARTICLE-FUNC' => [
+    'DOC-ARTICLE-FUNC'              => [
         'get',
         ['Doc-Article-index'],
-        ['\Doc\Article']
+        ['\Doc\Article'],
     ],
 
     //文档通用模板内容替换
-    'DOC-ARTICLE-TEMPLATE' => [
+    'DOC-ARTICLE-TEMPLATE'          => [
         'get',
         ['Doc-Article-index'],
-        ['\Doc\ArticleTemplate']
+        ['\Doc\ArticleTemplate'],
     ],
     'CREATE-ARTICLE-API-FIELD-TYPE' => [
         'any',
         ['Create-Article-:a'],
-        ['\Create\HandleForm\HandleArticle']
+        ['\Create\HandleForm\HandleArticle'],
     ],
-
 
 
     //注册全局插件访问入口
-    'GLOBAL-APPLICATION-PLUGIN' => [
+    'GLOBAL-APPLICATION-PLUGIN'     => [
         'any',
         [':g-Application-Plugin'],
-        ['\ApplicationPlugin']
+        ['\ApplicationPlugin'],
     ],
 
     //注册插件初始化入口
-    'Create-APPLICATION-Init' => [
+    'Create-APPLICATION-Init'       => [
         'any',
         ['Create-Application-Init'],
-        ['\Create\ApplicationInit']
+        ['\Create\ApplicationInit'],
     ],
 
     //插件全局事件
-    'APPLICATION-GLOBAL-EVENT' => [
+    'APPLICATION-GLOBAL-EVENT'      => [
         'any',
         ['Create-:m-:a', 'Doc-:m-:a'],
         ['\ApplicationGlobalEvent'],
     ],
 
     // API接口校验
-    'API-AUTHORIZE' => [
+    'API-AUTHORIZE'                 => [
         'any',
         ['Doc-Doc-:a', 'Doc-ArticleApi-:a', 'Doc-Upload-index'],
-        ['\Doc\AuthorizeApi']
-    ]
+        ['\Doc\AuthorizeApi'],
+    ],
+
+    'DOC-GET' => [
+        'get',
+        ['Doc-:m-:a'],
+        ['\Doc\ThemeSetting'],
+    ],
 
 ];
 
 //执行切片注册
-foreach ($SLICE_ARRYR as $item){
+foreach ($SLICE_ARRYR as $item) {
     $method = $item['0'];
     $exclude = empty($item['3']) ? [] : $item['3'];
     InitSlice::$method($item[1], $item[2], $exclude);

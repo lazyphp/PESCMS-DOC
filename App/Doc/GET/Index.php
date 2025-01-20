@@ -20,8 +20,6 @@ class Index extends \Core\Controller\Controller {
         $this->assign('doc', $doc);
         $this->docWithAttr($doc);
 
-        $this->assign('indexSetting', \Model\Theme::getThemeIndexSetting());
-
         $this->layout();
     }
 
