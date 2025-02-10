@@ -6911,6 +6911,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     //设置段落间距
                     'p{margin:5px 0;}</style>' +
                     ( options.iframeCssUrl ? '<link rel=\'stylesheet\' type=\'text/css\' href=\'' + utils.unhtml(options.iframeCssUrl) + '\'/>' : '' ) + ( options.iframeApiTableUrl ? '<link rel=\'stylesheet\' type=\'text/css\' href=\'' + utils.unhtml(options.iframeApiTableUrl) + '\'/>' : '' ) +
+                    ( options.iframeCssUrl ? '<link rel=\'stylesheet\' type=\'text/css\' href=\'' + utils.unhtml(options.iframeCssUrl) + '\'/>' : '' ) + ( options.iframeBlockquote ? '<link rel=\'stylesheet\' type=\'text/css\' href=\'' + utils.unhtml(options.iframeBlockquote) + '\'/>' : '' ) +
                     (options.initialStyle ? '<style>' + options.initialStyle + '</style>' : '') +
                     '</head><body class=\'view\' ></body>' +
                     '<script type=\'text/javascript\' ' + (ie ? 'defer=\'defer\'' : '' ) +' id=\'_initialScript\'>' +
@@ -8152,6 +8153,7 @@ UE.Editor.defaultOptions = function(editor){
         autoClearinitialContent: false,
         iframeCssUrl: PESCMS_PATH +'/Theme/assets/css/amazeui.min.css',
         iframeApiTableUrl: PESCMS_PATH +'/Theme/assets/css/api-table.min.css',
+        iframeBlockquote: PESCMS_PATH +'/Theme/assets/css/blockquote.min.css',
         textarea: 'editorValue',
         focus: false,
         focusInEnd: true,
@@ -13239,6 +13241,55 @@ UE.plugins['lineheight'] = function(){
         }
     };
 };
+
+    UE.plugins['myquote'] = function () {
+        var me = this;
+        me.setOpt({
+            'myquote': [
+                { label: '蓝色引用', value: 'blue' },
+                { label: '灰色提示', value: 'info' },
+                { label: '橙色引用', value: 'warning' },
+                { label: '红色引用', value: 'danger' },
+                { label: '绿色引用', value: 'success' }
+            ]
+        });
+
+        me.commands['myquote'] = {
+            execCommand: function (cmdName, value) {
+                if (!value) return false;
+
+                var range = this.selection.getRange();
+                var blockquote = document.createElement('blockquote');
+                blockquote.className = value;
+
+                if (!range.collapsed) {
+                    // 有选中的内容
+                    var content = range.extractContents(); // 提取选区内容
+                    blockquote.appendChild(content); // 把内容放入 blockquote
+                    range.insertNode(blockquote); // 在选区插入 blockquote
+                } else {
+                    // 没有选中内容
+                    blockquote.innerHTML = '<br>'; // 给空引用一个占位符
+                    range.insertNode(blockquote);
+                    range.setStart(blockquote, 0); // 设置光标位置到新插入的 blockquote 内
+                    range.collapse(true);
+                }
+
+                range.select();
+                return true;
+            },
+            queryCommandValue: function () {
+                var pN = domUtils.filterNodeList(
+                    this.selection.getStartElementPath(),
+                    function (node) {
+                        return node.tagName === 'BLOCKQUOTE';
+                    }
+                );
+                return pN ? pN.className : null;
+            }
+        };
+    };
+
 
 
 
@@ -28488,6 +28539,53 @@ UE.ui = baidu.editor.ui = {};
         });
         return ui;
     };
+
+    editorui.myquote = function (editor) {
+        var options = editor.options.myquote || [];
+        if (!options.length) return;
+
+        // 设置下拉菜单项
+        var items = options.map(function (item) {
+            return {
+                label: item.label,
+                value: item.value,
+                theme: editor.options.theme,
+                onclick: function () {
+                    editor.execCommand('myquote', this.value);
+                }
+            };
+        });
+
+        // 创建 MenuButton
+        var ui = new editorui.MenuButton({
+            editor: editor,
+            className: 'edui-for-blockquote', // 使用默认 blockquote 图标
+            title: '引用类型',
+            items: items,
+            onbuttonclick: function () {
+                // 点击主按钮时，默认插入普通引用
+                editor.execCommand('myquote', 'normal');
+            }
+        });
+
+        editorui.buttons['myquote'] = ui;
+
+        // 监听选区变化
+        editor.addListener('selectionchange', function () {
+            var state = editor.queryCommandState('myquote');
+            if (state === -1) {
+                ui.setDisabled(true);
+            } else {
+                ui.setDisabled(false);
+                var value = editor.queryCommandValue('myquote');
+                ui.setValue(value || 'normal'); // 默认值设置为普通引用
+            }
+        });
+
+        return ui;
+    };
+
+
 
     var rowspacings = ['top', 'bottom'];
     for (var r = 0, ri; ri = rowspacings[r++];) {

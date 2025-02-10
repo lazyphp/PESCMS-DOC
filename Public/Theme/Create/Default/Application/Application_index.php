@@ -5,11 +5,11 @@
                 <div class="am-fl">
                     <ol class="am-breadcrumb am-breadcrumb-slash am-margin-0 am-padding-0">
                         <li>
-                            <strong class="am-text-default am-text-lg"><a href="<?= $label->url(GROUP .'-' . MODULE . '-index'); ?>"><?= $title ?></a>
+                            <strong class="am-text-primary am-text-lg"><a class="am-link-muted" href="<?= $label->url(GROUP .'-' . MODULE . '-local'); ?>">本地应用</a>
                             </strong>
                         </li>
                         <li>
-                            <strong class="am-text-primary am-text-lg"><a class="am-link-muted" href="<?= $label->url(GROUP .'-' . MODULE . '-local'); ?>">本地应用</a>
+                            <strong class="am-text-default am-text-lg"><a href="<?= $label->url(GROUP .'-' . MODULE . '-index'); ?>"><?= $title ?></a>
                             </strong>
                         </li>
                     </ol>

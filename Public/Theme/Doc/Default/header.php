@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/ui-dialog.min.css?v=<?=$resources?>">
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/main.min.css?v=<?=$resources?>">
 
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/blockquote.min.css?v=<?=time()?>">
+
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.min.js?v=<?=$resources?>"></script>
 
 

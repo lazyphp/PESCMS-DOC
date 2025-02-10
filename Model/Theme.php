@@ -12,7 +12,11 @@ namespace Model;
 
 class Theme extends \Core\Model\Model {
 
-    public static function getThemeIndexSetting() {
+    /**
+     * 获取主题设置信息
+     * @return array|mixed
+     */
+    public static function getThemeSetting() {
         $settingFile = THEME_PATH . '/index.json';
         return is_file($settingFile) ? json_decode(file_get_contents($settingFile), true) : [];
     }
@@ -47,6 +51,16 @@ class Theme extends \Core\Model\Model {
             'settingFile' => $settingFile,
             'indexField'  => $indexField,
         ];
+    }
+
+    /**
+     * 获取主题配置信息
+     * @param $theme
+     * @return array|false
+     */
+    public static function getThemeINI($theme) {
+        $themePatch = THEME . '/Doc/' . $theme . '/info.ini';
+        return is_file($themePatch) ? parse_ini_file($themePatch, true) : [];
     }
 
 }

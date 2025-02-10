@@ -7,7 +7,10 @@
         if($('.sidebar-nav li.am-active').offset()){
             let recordScrollTop = parseFloat($('.sidebar-nav li.am-active').offset().top) - 150;
 
-            $('.sidebar').smoothScroll({position: recordScrollTop})
+            document.querySelector('.sidebar').scrollTo({
+                top: recordScrollTop, // 考虑头部的高度
+                behavior: 'auto',
+            });
         }
 
         //递归寻找子元素
@@ -28,14 +31,11 @@
                             var lineHeight = parseFloat($(this).attr('lineHeight-size'));
                         }
 
-
                         var changeSize = size + set;
                         var changeLineHeight = lineHeight + set;
-
                         $(this).css({'line-height': changeLineHeight+'px', 'font-size':changeSize + 'px'})
                     }
                     findChildren($(this), set)
-
                 })
             }
         }
@@ -75,67 +75,66 @@
         })
 
         var titleNavigation = function () {
-            var i = 0;
-            var parent = `.nav-${i}-H1`;
             var hasTitleNagContent = false;
-            var firstHTagTitle = null;
 
-            $('.am-article-bd').children().each(function (key) {
+            const contentPath = document.querySelector('.title-nav-content');
+            const headings = document.querySelectorAll('.am-article-bd h1, .am-article-bd h2, .am-article-bd h3, .am-article-bd h4, .am-article-bd h5, .am-article-bd h6');
 
-                if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes($(this)[0].nodeName) == false) {
-                    return;
-                }
+            // 生成目录树
+            function generateToc() {
+                const toc = document.createElement('ul');
+                const stack = [{ level: 0, parent: toc }]; // 用于管理层级的栈
 
-                if (firstHTagTitle == null) {
-                    firstHTagTitle = key;
-                }
-                var name = $(this).text();
+                headings.forEach((heading) => {
+                    const level = parseInt(heading.tagName[1], 10); // 获取标题等级 H1 -> 1, H2 -> 2...
+                    const text = heading.textContent;
+                    const id = text.trim().replace(/\s+/g, '-').toLowerCase(); // 生成唯一ID
+                    heading.id = id; // 为每个标题添加ID
 
-                $(this).append(' <i class="am-icon-link article-copy-link" title="复制链接"></i>')
-
-                var ulStr = '<li class="nav-' + i + '-' + $(this)[0].nodeName + ' nav-index-' + $(this)[0].nodeName + '"><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>';
-
-                if ($(this)[0].nodeName == 'H1' || key == firstHTagTitle) {
-                    $('.title-nav-content>ul').append('<li class="nav-' + i + '-' + $(this)[0].nodeName + ' nav-index-' + $(this)[0].nodeName + '"><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>')
-
-                    parent = `.nav-${i}-` + $(this)[0].nodeName;
-                    $(this).attr('id', `nav-${i}-` + $(this)[0].nodeName)
-                    i++;
-                    hasTitleNagContent = true;
-                } else {
-
-                    var nodeName = $(this)[0].nodeName;
+                    // 添加复制链接的图标
+                    const icon = document.createElement('i');
+                    icon.className = 'am-icon-link article-copy-link';
+                    icon.title = '复制链接';
+                    heading.appendChild(icon); // 在标题后插入图标
 
 
-                    //同级父类不变化
-                    if (`.nav-${i}-` + nodeName == parent || parent.substr(-2) == nodeName) {
-                        i++;
-                        $(parent).parent().append('<li class="nav-' + i + '-' + $(this)[0].nodeName + ' nav-index-' + $(this)[0].nodeName + ' "><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>')
-                        parent = `.nav-${i}-` + $(this)[0].nodeName;
+                    // 创建目录项
+                    const li = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.textContent = text;
+                    link.href = `#${id}`; // 锚点链接
+                    li.appendChild(link);
 
-                    } else if (nodeName.substr(1) < parent.substr(-1)) {
-
-                        i++;
-                        if ($('.nav-index-' + $(this)[0].nodeName).last().length > 0) {
-                            var element = $('.nav-index-' + $(this)[0].nodeName).last();
-                        } else {
-                            var element = $(parent).parent().parent('li')
-                        }
-
-
-                        element.after('<li class="nav-' + i + '-' + $(this)[0].nodeName + ' nav-index-' + $(this)[0].nodeName + '"><a href="#nav-' + i + '-' + $(this)[0].nodeName + '">' + name + '</a></li>')
-
-                        parent = `.nav-${i}-` + $(this)[0].nodeName;
-
-                    } else {
-
-                        $(parent).append('<ul>' + ulStr + '</ul>')
-                        parent = `.nav-${i}-` + $(this)[0].nodeName;
+                    // 处理层级关系
+                    while (stack.length > 1 && stack[stack.length - 1].level >= level) {
+                        stack.pop();
                     }
-                    $(this).attr('id', `nav-${i}-` + $(this)[0].nodeName);
+
+                    const parent = stack[stack.length - 1].parent;
+                    if (!parent.querySelector('ul')) {
+                        const ul = document.createElement('ul');
+                        parent.appendChild(ul);
+                    }
+                    const ul = parent.querySelector('ul');
+                    ul.appendChild(li);
+
+                    stack.push({ level, parent: li });
+                });
+
+                const firstLi = toc.querySelector('li');
+                if (firstLi) {
+                    firstLi.classList.add('active');
+                }
+
+                contentPath.appendChild(toc);
+
+                if($('.title-nav-content').find('li').length > 0){
                     hasTitleNagContent = true;
                 }
-            })
+
+            }
+            generateToc();
+
 
             if (hasTitleNagContent == false) {
                 //没有成功生成标题导航直接隐藏相关操作
@@ -155,8 +154,6 @@
                     if (openWidth > 0) {
                         $(this).find('i').attr('class', 'am-icon-angle-double-right');
                     }
-
-
                     //标题导航刷新后，进行锚点跳转。假定URL锚点参数。
                     if (window.location.hash.length > 0) {
                         var anchorPoint = window.location.href;
@@ -167,20 +164,35 @@
                 })
             }
 
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    const id = entry.target.getAttribute('id');
-                    if (entry.intersectionRatio > 0) {
-                        document.querySelector(`.title-nav-content li a[href="#${id}"]`).parentElement.classList.add('active');
-                    } else {
-                        document.querySelector(`.title-nav-content li a[href="#${id}"]`).parentElement.classList.remove('active');
-                    }
-                });
-            });
 
-            document.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]').forEach((section) => {
-                observer.observe(section);
-            });
+            // 获取所有标题和目录项
+            const tocItems = document.querySelectorAll('.title-nav-content li');
+
+            function highlightToc() {
+
+                const scrollPosition = window.scrollY + 0; // 增加偏移以更早触发高亮
+                let activeId = null;
+
+                // 遍历标题，找到最后一个在屏幕顶部或以上的标题
+                for (let i = headings.length - 1; i >= 0; i--) {
+                    const heading = headings[i];
+                    if (heading.offsetTop - 110 <= scrollPosition) {
+                        activeId = heading.id;
+                        break;
+                    }
+                }
+
+                // 如果找到一个合适的标题，更新目录高亮
+                if (activeId) {
+                    document.querySelectorAll('.title-nav-content a').forEach((link) => {
+                        link.parentElement.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
+                    });
+                }
+            }
+            // 监听滚动事件
+            window.addEventListener('scroll', highlightToc);
+
+
         }
 
         /**
@@ -358,13 +370,23 @@
             }
 
             var dom = $(this)
+
+            var text = dom.parent().text().trim();
+            let pasteText;
+            if(dom.parents('.am-article-bd').length > 0){
+                let docTitle = $('.am-article-title').text().trim()
+                pasteText = `《${docTitle}》—— ${text} \r\n`;
+            }else{
+                pasteText = `《${text}》`;
+            }
+
             var link = window.location.href.replace(window.location.hash, '') + hash;
-            const input = document.createElement('input');
-            input.setAttribute('value', link);
-            document.body.appendChild(input);
-            input.select();
+            const textarea = document.createElement('textarea');
+            textarea.value = pasteText + link;
+            document.body.appendChild(textarea);
+            textarea.select();
             if (document.execCommand('copy')) {
-                dom.addClass('am-text-secondary');
+                dom.addClass('am-text-primary');
                 document.execCommand('copy');
                 var d = dialog({
                     id: 'copy-tips',
@@ -379,7 +401,7 @@
                 }, 2000)
 
             }
-            document.body.removeChild(input);
+            document.body.removeChild(textarea);
             return false;
         })
 

@@ -55,7 +55,7 @@
                             <a href="<?= $label->url('Doc-Article-index', ['id' => $value['article_doc_id'], 'aid' => $value['article_mark']]) ?>" target="_blank">
                                 <h2 class="am-margin-bottom-sm"><?= $value['article_title'] ?></h2>
 
-                                <div class="pes-search-content"><?= $label->strCut(strip_tags($value['article_content']), 300) ?></div>
+                                <div class="pes-search-content"><?= $label->highlightKeyword($keyword, $value['article_content']) ?></div>
                             </a>
 
 

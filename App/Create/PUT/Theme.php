@@ -52,7 +52,7 @@ class Theme extends \Core\Controller\Controller {
         }
 
         $f = fopen($check['settingFile'], 'w');
-        fwrite($f, json_encode($data, JSON_UNESCAPED_UNICODE));
+        fwrite($f, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
         fclose($f);
 
         if (!empty($_POST['back_url'])) {

@@ -1,3 +1,25 @@
+<style>
+    /* 下拉菜单样式 */
+    .color-quote-dropdown {
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    .color-quote-dropdown div {
+        padding: 5px 10px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .color-quote-dropdown div:hover {
+        background-color: #f0f0f0;
+    }
+</style>
 <script>
     $(function () {
 
@@ -5,7 +27,7 @@
          * 注册热键提交文档
          */
         document.addEventListener('keyup', function (e) {
-            if(e.ctrlKey && e.key == 'Enter'){
+            if (e.ctrlKey && e.key == 'Enter') {
                 $('#pes-article-submit').submit();
             }
         }, false);
@@ -13,10 +35,10 @@
         /**
          * 侧栏滚动条跳转
          */
-        var jumpScrollforSideabr = function (){
+        var jumpScrollforSideabr = function () {
 
 
-            if($('.pes-doc-path-container li .am-active').offset()){
+            if ($('.pes-doc-path-container li .am-active').offset()) {
                 let recordScrollTop = parseFloat(document.querySelectorAll('.pes-doc-path-container li .am-active')[0].offsetTop) - 600;
                 $('.pes-article-left-sidebar').smoothScroll({position: recordScrollTop})
             }
@@ -54,10 +76,73 @@
             $('textarea[id="content"]').remove();
         }
 
+        function insertQuote(color) {
+            const html = `<blockquote style="border-left: 5px solid ${color}; padding-left: 10px;">引用内容</blockquote>`;
+            vditor.insertValue(html);
+        }
+
         /**
          * 初始化MD编辑器
          */
         var initMD = function () {
+
+            const defaultToolbar = [
+                "emoji",
+                "headings",
+                "bold",
+                "italic",
+                "strike",
+                "link",
+                "|",
+                "list",
+                "ordered-list",
+                "check",
+                "outdent",
+                "indent",
+                "|",
+                "quote",
+                {
+                    tip: "色彩引用",
+                    hotkey: "⌘'",
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32"><text x="0" y="76" font-family="Arial, sans-serif" font-size="100" fill="#586069" >“</text></svg>`,
+                    tipPosition: "n",
+                    className: 'myquote',
+                    click: (e) => {
+                        showColorDropdown(e.target.closest('.myquote'))
+                    },
+                },
+                "|",
+                "line",
+                "code",
+                "inline-code",
+                "insert-before",
+                "insert-after",
+                "|",
+                "upload",
+                "record",
+                "table",
+                "|",
+                "undo",
+                "redo",
+                "|",
+                "fullscreen",
+                "edit-mode",
+                {
+                    name: "more",
+                    toolbar: [
+                        "both",
+                        "code-theme",
+                        "content-theme",
+                        "export",
+                        "outline",
+                        "preview",
+                        "devtools",
+                        "info",
+                        "help",
+                    ],
+                },
+            ];
+
             var vdOption = {
                 cache: {
                     enable: false
@@ -81,8 +166,11 @@
                         }
                     }
                 },
-                after(){
-                    $('.vditor-toolbar').attr('style', 'z-index:10;display:flex').sticky()
+
+                toolbar: defaultToolbar,
+
+                after() {
+                    $('.vditor-toolbar').attr('style', 'z-index:10;display:flex;flex-wrap: wrap;').sticky()
                 }
             };
             if (!vd) {
@@ -95,13 +183,71 @@
             $('input[name="editor"]').val('1')
         }
 
+
+        function showColorDropdown(button) {
+            // 检查是否已有下拉菜单
+            const existingMenu = button.querySelector('.color-quote-dropdown');
+            if (existingMenu) {
+                existingMenu.remove();
+                return;
+            }
+
+            // 创建下拉菜单
+            const dropdown = document.createElement('div');
+            dropdown.className = 'color-quote-dropdown';
+
+            // 定义颜色选项
+            const colors = [
+                {name: '蓝色引用', color: 'blue', classname: 'blue'},
+                {name: '灰色引用', color: 'gray', classname: 'info'},
+                {name: '橙色引用', color: 'orange', classname: 'warning'},
+                {name: '红色引用', color: 'red', classname: 'danger'},
+                {name: '绿色引用', color: 'green', classname: 'success'},
+            ];
+
+            colors.forEach(({name, color, classname}) => {
+                const item = document.createElement('div');
+                item.innerHTML = `<span style="color: ${color};">■</span> ${name}`;
+                item.onclick = () => {
+                    insertQuote(name, classname);
+                    dropdown.remove(); // 选择后关闭菜单
+                };
+                dropdown.appendChild(item);
+            });
+
+            // 添加菜单到按钮中
+            button.appendChild(dropdown);
+
+            // 设置菜单的相对位置
+            dropdown.style.top = `${button.offsetHeight}px`;
+            dropdown.style.left = '0';
+
+            // 为 document 添加点击事件，点击其他地方时关闭菜单
+            const closeDropdown = (e) => {
+                if (!button.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.remove(); // 关闭菜单
+                    document.removeEventListener('click', closeDropdown); // 移除事件监听
+                }
+            };
+
+            document.addEventListener('click', closeDropdown);
+
+        }
+
+        function insertQuote(name, classname) {
+            const html = `<blockquote class="${classname}">${name}</blockquote>`;
+            vd.setValue(vd.getValue() + `\n\n${html}`);
+
+        }
+
+
         /**
          * 获取历史记录
          */
         var getHistory = function (aid) {
 
             //新文档不请求历史记录
-            if(aid == 'new'){
+            if (aid == 'new') {
                 $('.pes-history-list').html('')
                 return false;
             }
@@ -125,7 +271,6 @@
         }
 
 
-
         /**
          * 刷新目录
          */
@@ -140,8 +285,8 @@
                     let params = new URLSearchParams(document.location.href);
                     let aid = params.get("aid");
 
-                    if(aid > 0){
-                        $('.pes-doc-path>li>[data-id="'+aid+'"]').addClass('am-active')
+                    if (aid > 0) {
+                        $('.pes-doc-path>li>[data-id="' + aid + '"]').addClass('am-active')
                     }
 
                 }
@@ -184,7 +329,7 @@
             $('.pes-article-editor, .article_external_link, .article_using_api_tool').hide();
             if (nodeValue == '0' || nodeValue == '3') {
                 $('.pes-article-editor, .article_using_api_tool').show();
-            }else if(nodeValue == '2'){
+            } else if (nodeValue == '2') {
                 $('.article_external_link').show()
             }
 
@@ -203,8 +348,8 @@
 
             //处理URL地址
             var link = $(this).data('link');
-            if(link && link.length > 0){
-                history.pushState({aid:aid}, $(this).text().trim(), link)
+            if (link && link.length > 0) {
+                history.pushState({aid: aid}, $(this).text().trim(), link)
             }
 
             $('.pes-doc-path a').removeClass('am-active')
@@ -216,7 +361,7 @@
                 $('.pes-article-delete').attr('data', '/?g=Create&m=Article&a=delete&method=DELETE&aid=' + aid);
                 $('.pes-article-copy').attr('data', '/?g=Create&m=Article&a=copy&method=POST&aid=' + aid);
 
-            }else{
+            } else {
                 $('.pes-article-operate').hide();
             }
             $('.pes-doc-article-tool').show();
@@ -240,7 +385,7 @@
                             btnWidth: '100%',
                             maxHeight: '600px',
                             btnStyle: 'default pes-article-path-select',
-                            searchBox:true
+                            searchBox: true
                         });
 
                         if ($('.use-ue').hasClass('am-active')) {
@@ -253,7 +398,7 @@
 
                         //显示预览按钮
                         var url = res?.data?.url || ''
-                        if(url != ''){
+                        if (url != '') {
                             $('.pes-article-preview').show().find('a').attr('href', url);
                         }
 
@@ -287,13 +432,13 @@
         /**
          * 目录收缩和展开
          */
-        $(document).on('click', '.am-icon-caret-down, .am-icon-caret-right', function (){
+        $(document).on('click', '.am-icon-caret-down, .am-icon-caret-right', function () {
             let getClassName = $(this).attr('class');
 
             let nextDom = $(this).parent('a').next('ul');
-            if(getClassName == 'am-icon-caret-down'){
+            if (getClassName == 'am-icon-caret-down') {
                 nextDom.hide()
-            }else{
+            } else {
                 nextDom.show()
             }
 
@@ -325,7 +470,7 @@
                     }
 
                     let refresh = res?.responseJSON?.data?.refresh || false;
-                    if(refresh == 1){
+                    if (refresh == 1) {
                         var newAid = res?.responseJSON?.data?.aid || -1;
                         var markID = res?.responseJSON?.data?.mark || '';
                         $('input[name="aid"]').val(newAid);
@@ -336,7 +481,7 @@
 
                     var status = res?.responseJSON?.status || 0;
                     //只有提交成功才显示预览按钮
-                    if(status == 200){
+                    if (status == 200) {
                         var url = res?.responseJSON?.data?.url || 'javascript:;'
                         $('.pes-article-preview').show().find('a').attr('href', url);
                     }
@@ -348,13 +493,18 @@
                     $('.pes-article-tips').removeClass('am-alert-success').removeClass('am-alert-warning').removeClass('am-hide');
                     $('.pes-article-tips').addClass(status == 200 ? 'am-alert-success' : 'am-alert-warning').show().html(msg + FullDate);
 
-                    if($('.pes-article-tips')[0].getBoundingClientRect().y < 0){
+                    if ($('.pes-article-tips')[0].getBoundingClientRect().y < 0) {
 
                         var autoTipsWidth = $('.pes-article-paper').width();
 
-                        $('.pes-article-tips').css({position: 'fixed', width: autoTipsWidth+'px', 'z-index' : '9999999', top: '0px'})
+                        $('.pes-article-tips').css({
+                            position: 'fixed',
+                            width: autoTipsWidth + 'px',
+                            'z-index': '9999999',
+                            top: '0px'
+                        })
 
-                        setTimeout(function (){
+                        setTimeout(function () {
                             $('.pes-article-tips').removeAttr('style')
                         }, 1800)
                     }
@@ -449,7 +599,7 @@
             $.ajaxSubmit({
                 url: '/?g=Create&m=Doc&a=version',
                 method: 'POST',
-                data: {id: id, number: number, empty: empty, token:token}
+                data: {id: id, number: number, empty: empty, token: token}
             });
 
         })
@@ -481,9 +631,9 @@
          */
         $(document).on('click', '.pes-article-copy-link, .api-result-copy', function () {
             var dom = $(this)
-            if($(this).hasClass('pes-article-copy-link')){
+            if ($(this).hasClass('pes-article-copy-link')) {
                 var copyValue = $(this).attr('link')
-            }else{
+            } else {
                 var copyValue = $('.api-pre-content').html()
             }
 
@@ -514,7 +664,7 @@
         /**
          * 提交页内版本
          */
-        $(document).on('click', '.submit-article-version', function (){
+        $(document).on('click', '.submit-article-version', function () {
             var aid = $(this).attr('data');
             var version = $('.article-version-number').val();
             var sort = $('.article-version-sort').val();
@@ -524,8 +674,8 @@
                 url: '/?g=Create&m=Article&a=version',
                 method: 'POST',
                 stopJump: true,
-                data: {aid: aid, version:version, sort:sort, token:token},
-                complete: function (res){
+                data: {aid: aid, version: version, sort: sort, token: token},
+                complete: function (res) {
                     getHistory(aid);
                 }
             });
@@ -536,7 +686,7 @@
         /**
          * 页内版本版本号排序
          */
-        $(document).on('click', '.submit-article-version-sort', function (){
+        $(document).on('click', '.submit-article-version-sort', function () {
 
             var aid = $(this).attr('data');
             var dom = $(this).parents('form');
@@ -544,13 +694,13 @@
             var token = $('input[name="token"]').val()
             var url = dom.attr('action')
 
-            data.push({name:'token', value:token})
+            data.push({name: 'token', value: token})
             $.ajaxSubmit({
                 url: url,
                 method: 'POST',
                 stopJump: true,
                 data: data,
-                complete: function (res){
+                complete: function (res) {
                     getHistory(aid);
                 }
             });
@@ -559,38 +709,38 @@
         })
 
         //页面跳转编辑
-        var editLoading = function (){
+        var editLoading = function () {
             $('.pes-article-paper h1').html('<i class="am-icon-spinner am-icon-spin"></i> 加载中...');
         }
 
         var searchParams = new URLSearchParams(window.location.href);
         var urlAid = searchParams.get('aid');
-        if(urlAid > 0){
+        if (urlAid > 0) {
             editLoading();
-            setTimeout(function (){
-                $('.pes-doc-path a[data-id="'+urlAid+'"]').trigger('click');
+            setTimeout(function () {
+                $('.pes-doc-path a[data-id="' + urlAid + '"]').trigger('click');
 
                 //添加侧栏滚动条跳转功能
                 jumpScrollforSideabr();
 
             }, 600)
 
-        }else if(urlAid == 'new'){
+        } else if (urlAid == 'new') {
             editLoading();
-            setTimeout(function (){
+            setTimeout(function () {
                 $('.pes-add-article').trigger('click')
             }, 600)
 
         }
 
 
-        $(document).on('click', '.mobile-button>.am-icon-exchange', function (){
+        $(document).on('click', '.mobile-button>.am-icon-exchange', function () {
             $('.pes-article-left-sidebar, .mask-layer').show().addClass('mobile-show');
             jumpScrollforSideabr()
         })
 
         $('.mask-layer').on('click', function () {
-            $('.mask-layer, .pes-article-left-sidebar').fadeIn(function (){
+            $('.mask-layer, .pes-article-left-sidebar').fadeIn(function () {
                 $('.pes-article-left-sidebar').smoothScroll({position: 0, speed: 0})
             }).fadeOut();
 
@@ -600,32 +750,32 @@
         /**
          * 切换填写内容
          */
-        $(document).on('click', '.pes-api-article-setting li', function (){
+        $(document).on('click', '.pes-api-article-setting li', function () {
             var setting = $(this).attr('data');
             $('.pes-api-article-setting li').removeClass('am-active')
             $(this).addClass('am-active');
 
             $('[id^="api-"]').hide()
 
-            if(setting == 'body'){
-                if($('input[name="post-type"]:checked').val() == 'raw'){
+            if (setting == 'body') {
+                if ($('input[name="post-type"]:checked').val() == 'raw') {
                     $('.post-raw').show();
                 }
             }
 
-            $('#api-'+setting).show();
+            $('#api-' + setting).show();
         })
 
         /**
          * 当指定输入框有内容输入，自动追新一行
          */
-        $(document).on('keyup', '.api-new-input', function (){
+        $(document).on('keyup', '.api-new-input', function () {
 
             //特殊按键也出发了，迟点在修复
             // var e = window.event;
             // var code = e.charCode || e.keyCode;
             var nextDom = $(this).parents('tr');
-            var copyHtml = '<tr>'+nextDom.html()+'</tr>';//复制行
+            var copyHtml = '<tr>' + nextDom.html() + '</tr>';//复制行
             nextDom.after(copyHtml)
             $(nextDom).find('input').removeClass('api-new-input');//移除追新标记
             nextDom.next().find('input[type=hidden]').val(0);//重置勾选标记
@@ -637,7 +787,7 @@
         /**
          * 发送API测试数据
          */
-        $(document).on('click', '.api-send, .api-refresh', function (){
+        $(document).on('click', '.api-send, .api-refresh', function () {
             var data = $('.pes-api-article').find('select, input, textarea').serializeArray();
             var type = $(this).hasClass('api-refresh') ? 'api-refresh' : 'api-send';
             var d = dialog({
@@ -645,35 +795,35 @@
             });
             d.showModal();
 
-            $.post('/?g=Create&m=Article&a=api&type='+type, data, function (res){
-                if(res.status == 200){
+            $.post('/?g=Create&m=Article&a=api&type=' + type, data, function (res) {
+                if (res.status == 200) {
                     $('input[name="api-url"]').val(res.data.api_url)
                     $('.api-pre').show().removeAttr('style');
                     $('.pes-api-article-setting li:eq(3)').trigger('click')
                     $('#api-result pre').text(res.data.res).show();
                     $('.api-pre-content').html(res.data.html)
-                    $('.api-pre-content .pretty-json').each(function (){
-                        try{
-                            $(this).html( JSON.stringify(JSON.parse($(this).html()),null,2) )
-                        }catch (e) {
+                    $('.api-pre-content .pretty-json').each(function () {
+                        try {
+                            $(this).html(JSON.stringify(JSON.parse($(this).html()), null, 2))
+                        } catch (e) {
                             return false;
                         }
 
                     })
                     d.close();
-                }else{
+                } else {
                     var msg = res?.msg || '与服务器请求出错了'
                     d.content(msg);
                 }
-            }, 'JSON').done(function() {
-                setTimeout(function (){
+            }, 'JSON').done(function () {
+                setTimeout(function () {
                     d.close();
                 }, 1800)
 
-            }).fail(function (e){
+            }).fail(function (e) {
                 var msg = e?.responseText || ''
-                d.content('发送API数据出错了' + msg );
-                setTimeout(function (){
+                d.content('发送API数据出错了' + msg);
+                setTimeout(function () {
                     d.close();
                 }, 1800)
             })
@@ -682,14 +832,13 @@
         /**
          * API选项标记
          */
-        $(document).on('click', '.api-use', function (){
-            if($(this).prop('checked') == true){
+        $(document).on('click', '.api-use', function () {
+            if ($(this).prop('checked') == true) {
                 $(this).next('input').val('1')
-            }else{
+            } else {
                 $(this).next('input').val('0')
             }
         })
-
 
 
         var recordUrl;
@@ -697,23 +846,23 @@
         /**
          * 通过URL输入框获取GET参数
          */
-        $(document).on('blur', 'input[name="api-url"]', function (){
+        $(document).on('blur', 'input[name="api-url"]', function () {
             var url = $(this).val();
-            if(url.length <= 0){
+            if (url.length <= 0) {
                 return true;
             }
 
-            if(url == recordUrl){
+            if (url == recordUrl) {
                 return true;
             }
 
 
             //清空之前的
-            $('#api-get tr').each(function (){
-                if($(this).find('th').length > 0){
+            $('#api-get tr').each(function () {
+                if ($(this).find('th').length > 0) {
                     return;
                 }
-                if($(this).find('input').hasClass('api-new-input') == false){
+                if ($(this).find('input').hasClass('api-new-input') == false) {
                     $(this).remove();
                 }
             })
@@ -723,15 +872,15 @@
             var hasParams = false;
 
             // 显示键/值对
-            for(var pair of searchParams.entries()) {
+            for (var pair of searchParams.entries()) {
                 $('[id^="api-"]').hide()
                 $('#api-get').show();
 
-                var existInput = $('#api-get input[name^="get_key"][value="'+pair[0]+'"]');
+                var existInput = $('#api-get input[name^="get_key"][value="' + pair[0] + '"]');
 
-                if(existInput.length > 0){
+                if (existInput.length > 0) {
                     var parentDom = existInput.parents('tr')
-                }else{
+                } else {
                     var parentDom = $('#api-get input.api-new-input[name^="get_key"]').parents('tr');
                     $('#api-get input.api-new-input[name^="get_key"]').val(pair[0]).trigger('keyup').removeClass('api-new-input');
 
@@ -739,12 +888,11 @@
                 parentDom.find('input[name^="get_value"]').val(pair[1]);
 
 
-
                 hasParams = true;
 
             }
 
-            if(hasParams == true){
+            if (hasParams == true) {
                 $('.pes-api-article-setting li').eq(0).trigger('click')
             }
 
@@ -755,19 +903,19 @@
         /**
          * body 发送数据类型切换
          */
-        $(document).on('click', 'input[name="post-type"]', function (){
+        $(document).on('click', 'input[name="post-type"]', function () {
             $('#api-body .post-raw').hide();
 
             //清空之前的
-            $('#api-body tr').each(function (){
-                if($(this).find('th').length > 0){
+            $('#api-body tr').each(function () {
+                if ($(this).find('th').length > 0) {
                     return;
                 }
-                if($(this).find('input').hasClass('api-new-input') == false){
+                if ($(this).find('input').hasClass('api-new-input') == false) {
                     $(this).remove();
                 }
             })
-            switch ($(this).val()){
+            switch ($(this).val()) {
                 case 'raw':
                     $('#api-body .post-raw').show()
                     break;
@@ -777,23 +925,23 @@
         /**
          * 切换返回结果
          */
-        $(document).on('click', 'input[name="result-type"]', function (){
+        $(document).on('click', 'input[name="result-type"]', function () {
             var vaule = $(this).val();
             $('[id^=table_]').hide();
-            $('#table_'+vaule).show();
+            $('#table_' + vaule).show();
         })
 
         /**
          * 将内容追加到编辑器
          */
-        $(document).on('click', '.api-insert-editor', function (){
+        $(document).on('click', '.api-insert-editor', function () {
             var apiContent = $('.api-pre-content').html().trim();
-            if(ue){
+            if (ue) {
                 ue.focus();
                 ue.execCommand('inserthtml', apiContent);
             }
 
-            if(vd){
+            if (vd) {
                 vd.insertValue(vd.html2md(apiContent))
             }
         })
@@ -801,12 +949,12 @@
         /**
          * 清空编辑器内容
          */
-        $(document).on('click', '.api-clear-editor', function (){
-            if(ue){
+        $(document).on('click', '.api-clear-editor', function () {
+            if (ue) {
                 ue.setContent('')
             }
 
-            if(vd){
+            if (vd) {
                 vd.setValue('', true)
             }
         })
@@ -814,8 +962,8 @@
         /**
          * 关闭API浮窗
          */
-        $(document).on('click', '.api-close-window', function (){
-            $('.api-pre').css({position:'unset', width:'100%'});
+        $(document).on('click', '.api-close-window', function () {
+            $('.api-pre').css({position: 'unset', width: '100%'});
         })
 
         /**
@@ -824,13 +972,13 @@
         $(document).on({
             mouseenter: function () {
                 var findRemoveClass = $(this).find('.api-param-remove')
-                if(findRemoveClass.length > 0){
+                if (findRemoveClass.length > 0) {
                     findRemoveClass.html('<a href="javascript:;"><i class="am-icon-remove"></i></a>')
                 }
             },
             mouseleave: function () {
                 var findRemoveClass = $(this).find('.api-param-remove')
-                if(findRemoveClass.length > 0){
+                if (findRemoveClass.length > 0) {
                     findRemoveClass.html('')
                 }
             }
@@ -839,7 +987,7 @@
         /**
          * 删除API参数
          */
-        $(document).on('click', '.api-param-remove', function (){
+        $(document).on('click', '.api-param-remove', function () {
             $(this).parents('tr').remove();
         })
 
@@ -869,10 +1017,10 @@
         /**
          * 启用API工具
          */
-        $(document).on('click', 'input[name="using_api_tool"]', function (){
-            if($(this).val() == '1'){
+        $(document).on('click', 'input[name="using_api_tool"]', function () {
+            if ($(this).val() == '1') {
                 $('.pes-api-article').show();
-            }else{
+            } else {
                 $('.pes-api-article').hide();
             }
         })
@@ -885,7 +1033,7 @@
             let disableKey = ['9', '16', '17', '18', '20', '45', '144'];
 
             //跳开处理
-            if(disableKey.includes(e.keyCode.toString()) || e.altKey == true || e.ctrlKey == true){
+            if (disableKey.includes(e.keyCode.toString()) || e.altKey == true || e.ctrlKey == true) {
                 return false;
             }
 
@@ -920,10 +1068,10 @@
             });
         })
 
-        $(document).on('click', '#pes-article-search-dialog .am-dropdown-content a', function (){
+        $(document).on('click', '#pes-article-search-dialog .am-dropdown-content a', function () {
             let aid = $(this).attr('aid');
-            if(aid){
-                $('.pes-doc-path a[data-id="'+aid+'"]').trigger('click');
+            if (aid) {
+                $('.pes-doc-path a[data-id="' + aid + '"]').trigger('click');
                 $('#pes-article-search-dialog').dropdown('close');
                 jumpScrollforSideabr();
             }
