@@ -18,6 +18,15 @@ PESCMS DOC文档管理系统是一款以GPLv2协议发布的开源文档管理�
 2. 没有配置虚拟主机，则访问Public目录。反之，请将虚拟主机目录配置到Public
 3. 根据安装程序填写对应数据，完成软件安装。
 
+## 优雅的前端调试
+若您需要编写自己的主题或者二次开发，我们提供了前端调试方式。
+1. 安装nodejs
+2. 安装npm
+3. 执行npm install，完成基础环境安装
+4. 在bs-config.js中配置您的代理服务器
+5. 执行npm start，启动前端调试环境
+6. 根据命令窗口提示，访问http://localhost:3000 即可看到您的前端页面，修改任意代码会浏览器会实时刷新，且多端访问同步更新。
+
 ## 反馈和建议
 邮箱：sale#pescms.com  
 演示地址：[https://doc.pescms.com](http://doc.pescms.com)  
