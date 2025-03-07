@@ -1,11 +1,12 @@
 {
   "devDependencies": {
     "clean-css": "^4.2.3",
-    "uglify-js": "^3.13.10",
     "concurrently": "^9.1.1",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "uglify-js": "^3.13.10"
   },
   "dependencies": {
+    "browser-sync": "^3.0.3",
     "commander": "^8.0.0",
     "less": "^4.1.3"
   },
