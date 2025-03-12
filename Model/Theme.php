@@ -63,4 +63,25 @@ class Theme extends \Core\Model\Model {
         return is_file($themePatch) ? parse_ini_file($themePatch, true) : [];
     }
 
+    /**
+     * 获取主题配置信息
+     * @param $theme
+     * @return array|mixed
+     */
+    public static function getThemeJSON($theme) {
+        $themePatch = THEME . '/Doc/' . $theme . '/index.json';
+        return file_exists($themePatch) ? json_decode(file_get_contents($themePatch), true) : [];
+    }
+
+    /**
+     * 写入主题配置信息
+     * @param $theme
+     * @param $data
+     * @return void
+     */
+    public static function writeThemeJSON($theme, $data) {
+        $themePatch = THEME . '/Doc/' . $theme . '/index.json';
+        file_put_contents($themePatch, json_encode($data, JSON_UNESCAPED_UNICODE));
+    }
+
 }
