@@ -9,5 +9,9 @@ module.exports = {
     open: false,
     watchOptions: {
         ignored: ['**/node_modules/**', '**/dist/**']
-    }
+    },
+    // https: { //如果您的proxy地址带有https，请取消注释此部分，然后本地证书直接用mkcert生成:localhost
+    //     key: './localhost-key.pem',  // 指定密钥路径
+    //     cert: './localhost.pem'      // 指定证书路径
+    // }
 };
