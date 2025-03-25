@@ -61,7 +61,17 @@ class Article extends \Core\Controller\Controller {
         $this->assign('docVersion', $docVersion);
         $this->assign('currentVersion', $currentVersion);
         $this->assign('title', !empty($_GET['aid']) ? "{$article['article_title']} - {$doc['doc_title']}" : $doc['doc_title']);
-        $this->layout('', 'Article_layout');
+
+        if (\Model\Api::checkAuth()['status'] == 200) {
+            $_SERVER['CONTENT_TYPE'] = 'application/json';
+            $this->success([
+                'msg'  => '获取文档内容成功',
+                'data' => $article,
+            ]);
+        } else {
+            $this->layout('', 'Article_layout');
+        }
+
     }
 
     /**

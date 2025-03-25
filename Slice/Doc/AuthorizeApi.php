@@ -18,24 +18,16 @@ class AuthorizeApi extends \Core\Slice\Slice {
 
         $_SERVER['CONTENT_TYPE'] = 'application/json';
 
-        $apiStatus = \Model\Option::getOptionValue('api_status');
-        if($apiStatus == 0) {
-            $this->_404();
-        }
-
-        if (empty($_SERVER['HTTP_AUTHORIZATION'])) {
-            $this->error('请提交接口授权码');
-        }
-
-        $authorization = explode(':', base64_decode($_SERVER['HTTP_AUTHORIZATION']));
-        if (count($authorization) != 2) {
-            $this->error('接口授权码格式错误');
-        }
-
-        $api_key = \Model\Option::getOptionValue('api_key');
-        $api_secret = \Model\Option::getOptionValue('api_secret');
-        if ($authorization[0] != $api_key || $authorization[1] != $api_secret) {
-            $this->error('接口授权码错误');
+        $apiAuthStatus = \Model\Api::checkAuth();
+        switch ($apiAuthStatus['status']){
+            case 200:
+                break;
+            case 401:
+                $this->error($apiAuthStatus['msg']);
+                break;
+            case 404:
+                $this->_404();
+                break;
         }
 
         $rawData = file_get_contents('php://input');
