@@ -239,6 +239,22 @@ class Setting extends \Core\Controller\Controller {
     }
 
     /**
+     * 记录提示
+     * @return void
+     */
+    public function recordTips() {
+        $status = (int) $this->p('status');
+
+        $this->db('option')->where('option_name = :name')->update([
+            'noset' => [
+                'name' => 'read_tips',
+            ],
+            'value' => empty($status) ? 1 : $status,
+        ]);
+        $this->success('更新记录成功');
+    }
+
+    /**
      * 生成API密钥
      */
     public function generateSecret() {

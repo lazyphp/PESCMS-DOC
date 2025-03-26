@@ -3,14 +3,14 @@
     <div class="super-sidebar">
         <?php foreach (
             [
-                'Application'   => [
+                'Application' => [
                     'title' => '应用推荐',
                     'url'   => $label->url('Create-Application-index'),
                     'open'  => '打开应用商店',
                     'field' => 'app',
                     'api'   => 'Application',
                 ],
-                'Theme' => [
+                'Theme'       => [
                     'title' => '模板推荐',
                     'url'   => $label->url('Create-Theme-index'),
                     'open'  => '打开模板商店',
@@ -26,7 +26,8 @@
                 </div>
 
                 <div class="pes-<?= $item['field'] ?>-recommend" style="border-top: 1px solid #ddd;min-height: 40px;max-height: 200px;overflow-y: auto">
-                    <div class="am-margin"><i class="am-icon-spinner am-icon-spin"></i> 正在获取PT<?= $item['title'] ?>...</div>
+                    <div class="am-margin"><i class="am-icon-spinner am-icon-spin"></i> 正在获取PT<?= $item['title'] ?>...
+                    </div>
                 </div>
 
                 <ul class="pes-<?= $item['field'] ?>-str am-hide" style="display: none;">
@@ -74,18 +75,17 @@
                                 templateStr += result;
                             }
 
-                            if(templateStr.length > 0){
+                            if (templateStr.length > 0) {
                                 $('.pes-<?= $item['field'] ?>-recommend').html('<ul data-am-widget="gallery" class="am-gallery am-avg-sm-4 am-gallery-imgbordered">' + templateStr + '</ul>');
-                            }else{
+                            } else {
                                 $('.pes-<?= $item['field'] ?>-recommend').html("<div class=\"am-margin\">「<?= $item['title'] ?>」正在如火如荼地开发中...</div>");
                             }
-
 
 
                         }
 
 
-                    }).fail(function (){
+                    }).fail(function () {
                         $('.pes-<?= $item['field'] ?>-recommend').html("<div class=\"am-margin\">获取「<?= $item['title'] ?>」失败，请稍后再试！</div>");
                     })
                 })
@@ -126,6 +126,6 @@
     </div>
 
 
-
+    <?php require_once __DIR__ . '/Member_driver.php' ?>
 
 <?php endif; ?>

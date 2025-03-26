@@ -2,7 +2,7 @@
     <div class="am-text-center am-padding-top pes-left-sidebar-tool">
         <a href="javascript:;" data-link="<?= $label->url('Create-Article-index', ['id' => $doc['doc_id'], 'aid' => 'new', 'back_url' => $label->xss($_GET['back_url'] ?? '')]) ?>" data-id="new" class="am-btn am-btn-default pes-add-article"><i class="am-icon-plus"></i>
             新文档</a>
-        <a href="<?= $label->url('Create-Article-index', ['id' => $doc['doc_id']]) ?>" class="am-btn am-btn-default"><i class="am-icon-home"></i>
+        <a href="<?= $label->url('Create-Article-index', ['id' => $doc['doc_id']]) ?>" class="am-btn am-btn-default pes-doc-edit-index"><i class="am-icon-home"></i>
             文档首页</a>
 
         <div class="am-margin-top-sm am-padding-left-xs" id="pes-article-search-dialog">
@@ -53,3 +53,4 @@
 </div>
 
 <?php require_once __DIR__ . '/Article_indexjs.php' ?>
+<?php require_once __DIR__ . '/Article_index_driver.php' ?>
