@@ -54,7 +54,7 @@
                 },
                 {
                     popover: {
-                        description: '现在您已经对PESCMS DOC有了初步的了解。我们将会在后续一些地方继续指引您。<br/>后续若您使用过程中有任何疑问，可以随时联系我们。'+
+                        description: '现在您已经对PESCMS DOC有了初步的了解。我们将会在其他地方继续指引您。<br/>若您使用过程中有任何疑问，可以随时联系我们。'+
 
                             '<div class="am-margin-top-sm">推荐登录问答中心反馈问题：<a href="https://forum.pescms.com/" target="_blank">https://forum.pescms.com/</a></div>'+
 
