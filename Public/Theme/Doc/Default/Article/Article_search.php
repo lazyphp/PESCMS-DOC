@@ -18,7 +18,7 @@
                     <?php endif; ?>
 
                     <div class="search-form">
-                        <input type="text" name="keyword" class="am-form-field" value="<?= $label->xss($keyword ?? '') ?>" required>
+                        <input type="text" name="keyword" class="am-form-field" value="<?= $label->xss($keyword ?? '', false) ?>" required>
                         <button class="am-btn am-btn-default" type="submit"><span class="am-icon-search"></span> 搜索
                         </button>
                     </div>
@@ -30,7 +30,7 @@
             <?php if (empty($list)): ?>
                 <div class="am-g">
                     <div class="am-u-sm-12 am-text-center">
-                        没有找到与' <?= $label->xss($keyword ?? '') ?> '匹配的结果，请更换其他关键词再试。
+                        没有找到与' <?= $label->xss($keyword ?? '', false) ?> '匹配的结果，请更换其他关键词再试。
                     </div>
                 </div>
             <?php else: ?>

@@ -22,8 +22,17 @@ class Doc extends \Core\Controller\Controller {
                 'pageObj' => \Core\Func\CoreFunc::$param['pageObj'],
             ],
         ]);
+    }
 
+    public function path(){
+        $doc = \Model\Doc::findDocWithID();
 
+        $path = \Model\Article::recursionApiPath($doc);
+
+        $this->success([
+            'msg'  => '获取文档栏目结构成功',
+            'data' => $path,
+        ]);
     }
 
 }

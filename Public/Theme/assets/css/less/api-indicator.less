@@ -1,0 +1,66 @@
+tag {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 10px;
+  margin-right: 5px;
+  text-align: center;
+  min-width: 50px; // 统一宽度，确保左对齐
+  transition: all 0.3s ease; // 平滑过渡效果
+
+  &.api-indicator {
+    &.GET {
+      background-color: #DFF5E3;
+      color: #217A38;
+    }
+
+    &.POST {
+      background-color: #E3F2FD;
+      color: #1769AA;
+    }
+
+    &.PUT {
+      background-color: #FFF3CD;
+      color: #8A6D3B;
+    }
+
+    &.DELETE {
+      background-color: #F8D7DA;
+      color: #A71D2A;
+    }
+  }
+}
+
+// 选中状态
+li.am-active {
+  tag.api-indicator {
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.8); // 添加浅白色边框，防止颜色糊掉
+
+    &.GET {
+      background-color: #4CAF50; // 更深的绿色
+    }
+
+    &.POST {
+      background-color: #2196F3; // 更深的蓝色
+    }
+
+    &.PUT {
+      background-color: #FFB300; // 更深的黄色
+    }
+
+    &.DELETE {
+      background-color: #D32F2F; // 更深的红色
+    }
+  }
+}
+
+// 非选中状态稍微降低透明度
+tag.api-indicator {
+  opacity: 0.8;
+}
+
+li.am-active tag.api-indicator {
+  opacity: 1; // 选中时完全显示
+}
